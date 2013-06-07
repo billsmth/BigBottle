@@ -10,7 +10,7 @@ public class ReadFile {
 	 * ∂¡»°char
 	 */
 	private String readtxt1() throws IOException {
-		BufferedReader br = new BufferedReader(new FileReader("d:/sql.txt"));
+		BufferedReader br = new BufferedReader(new FileReader("d:/JavaWorkS/Test.txt"));
 		String str = "";
 		String r = br.readLine();
 		while (r != null) {
@@ -48,6 +48,10 @@ public class ReadFile {
 			}
 		}
 		return (Byte[]) (lsbytes.toArray());
+	}
+	
+	public static void main(String [] args) throws IOException{
+		System.out.println(new ReadFile().readtxt1());
 	}
 
 }
