@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hk.distribution.dao.XiaoshouDao">
+
+    <resultMap type="com.hk.distribution.model.Xiaoshou" id="xiaoshouResult">
+        <id property="xiaoshou_id" column="xiaoshou_id"/>
+        <result property="kuanhao_id" column="kuanhao_id"/>
+        <result property="yanse" column="yanse"/>
+        <result property="chima" column="chima"/>
+        <result property="shuliang" column="shuliang"/>
+        <result property="shoujia" column="shoujia"/>
+        <result property="shijishoukuan" column="shijishoukuan"/>
+        <result property="maijia_id" column="maijia_id"/>
+        <result property="maijiaxingming" column="maijiaxingming"/>
+        <result property="beizhu" column="beizhu"/>        
+    </resultMap>
+
+    <select id="getXiaoshouList" resultMap="xiaoshouResult">
+        select xiaoshou_id, kuanhao_id, yanse, chima, shuliang, shoujia, shijishoukuan, maijia_id, maijiaxingming, beizhu from xiaoshou_table
+    </select>
+    
+    <select id="getXiaoshou" resultMap="xiaoshouResult" parameterType="com.hk.distribution.model.Xiaoshou">
+        select address, show_type, target_uri from site where address = #{address}
+    </select>
+    
+    <insert id="saveXiaoshou" parameterType="com.hk.distribution.model.Xiaoshou">
+        insert into xiaoshou_table values (#{xiaoshou_id}, #{kuanhao_id}, #{jinhuoriqi}, #{yanse}, #{chima}, #{shuliang}, #{shoujia}, #{shijishoukuan}, #{maijia_id}, #{maijiaxingming}, #{beizhu})
+    </insert>
+    
+    <update id="updateXiaoshou" parameterType="com.hk.distribution.model.Xiaoshou">
+        update site set show_type = #{showType}, target_uri = #{targetURI}
+        where address = #{address}
+    </update>
+    
+    <delete id="deleteXiaoshouByAdress" parameterType="list">
+        delete from site where address in 
+        <foreach item="addr"  collection="list" open="(" separator="," close=")">
+            #{addr}
+        </foreach>
+    </delete>
+</mapper>

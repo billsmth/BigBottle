@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-module
+  type="WEB"
+  name="DistributionPlatform"
+  id="myeclipse.1371270765259"
+  context-root="/DistributionPlatform"
+  j2ee-spec="6.0"
+  archive="DistributionPlatform.war">
+  <attributes>
+    <attribute name="webrootdir" value="src/main/webapp" />
+  </attributes>
+</project-module>
+
