@@ -8,6 +8,8 @@ public interface KucunService {
 
     public List<Kucun> getKucunList();
     public List<Kucun> getKucun(Kucun Kucun);
+    
+    public Kucun getKucunbyKYC(Kucun Kucun);
 
     public void saveKucun(Kucun kucun);
 

@@ -8,6 +8,7 @@ public interface XiaoshouService {
 
     public List<Xiaoshou> getXiaoshouList();
     public List<Xiaoshou> getXiaoshou(Xiaoshou Xiaoshou);
+    public Xiaoshou getMaxID();
 
     public void saveXiaoshou(Xiaoshou kucun);
 

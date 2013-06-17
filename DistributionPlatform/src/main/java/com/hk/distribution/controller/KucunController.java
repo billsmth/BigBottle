@@ -48,12 +48,10 @@ public class KucunController {
 
     @RequestMapping("/savekucun")
     @ResponseBody
-    public String saveKucun(String editType, String kucun_id, String danhao_id, String jinhuoriqi, String kuanhao_id, String yanse, String chima, String shuliang, String jinjia, String chengbenjia, String shoujia, String beizhu) {
+    public String saveKucun(String editType, String kucun_id, String kuanhao_id, String yanse, String chima, String shuliang, String jinjia, String chengbenjia, String shoujia, String beizhu) {
 
         Kucun kucun = new Kucun();
-        kucun.setKucun_id(kucun_id);
-        kucun.setDanhao_id(danhao_id);
-        kucun.setJinhuoriqi(jinhuoriqi);
+        kucun.setKucun_id(Long.parseLong(kucun_id));
         kucun.setKuanhao_id(kuanhao_id);
         kucun.setYanse(yanse);
         kucun.setChima(chima);
@@ -63,10 +61,6 @@ public class KucunController {
         kucun.setShoujia(Float.valueOf(shoujia));
         kucun.setBeizhu(beizhu);
         
-//        kucun.setAddress(address);
-//        kucun.setShowType(Integer.valueOf(showType));
-//        kucun.setTargetURI(targetURI);
-
         if ("1".equals(editType)) {
 
             kucunService.saveKucun(kucun);

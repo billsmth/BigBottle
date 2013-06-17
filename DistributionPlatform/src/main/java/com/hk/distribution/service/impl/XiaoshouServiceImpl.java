@@ -26,6 +26,10 @@ public class XiaoshouServiceImpl implements XiaoshouService {
     public List<Xiaoshou> getXiaoshou(Xiaoshou xiaoshou) {
         return xiaoshouDao.getXiaoshou(xiaoshou);
     }
+    @Override
+    public Xiaoshou getMaxID(){
+    	return xiaoshouDao.getMaxID().get(0);
+    }
 
     @Override
     public void saveXiaoshou(Xiaoshou xiaoshou) {

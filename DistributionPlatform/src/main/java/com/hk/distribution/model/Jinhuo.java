@@ -1,8 +1,10 @@
 package com.hk.distribution.model;
 
-public class Kucun {
+public class Jinhuo {
 
-    private Long kucun_id;
+    private Long jinhuo_id;
+    private String danhao_id;
+    private String jinhuoriqi;
     private String kuanhao_id;
     private String yanse;
     private String chima;
@@ -10,25 +12,27 @@ public class Kucun {
     private float jinjia;
     private float chengbenjia;
     private float shoujia;
+    private String zhuangtai;
     private String beizhu;
     
-    public Kucun(){}
-    public Kucun(Jinhuo jinhuo){
-    	this.kuanhao_id=jinhuo.getKuanhao_id();
-    	this.yanse=jinhuo.getYanse();
-    	this.chima=jinhuo.getChima();
-    	this.shuliang=jinhuo.getShuliang();
-    	this.jinjia=jinhuo.getJinjia();
-    	this.chengbenjia=jinhuo.getChengbenjia();
-    	this.shoujia=jinhuo.getShoujia();
-    	this.beizhu=jinhuo.getBeizhu();
-    }
     
-	public Long getKucun_id() {
-		return kucun_id;
+	public Long getJinhuo_id() {
+		return jinhuo_id;
 	}
-	public void setKucun_id(Long kucun_id) {
-		this.kucun_id = kucun_id;
+	public void setJinhuo_id(Long jinhuo_id) {
+		this.jinhuo_id = jinhuo_id;
+	}
+	public String getDanhao_id() {
+		return danhao_id;
+	}
+	public void setDanhao_id(String danhao_id) {
+		this.danhao_id = danhao_id;
+	}
+	public String getJinhuoriqi() {
+		return jinhuoriqi;
+	}
+	public void setJinhuoriqi(String jinhuoriqi) {
+		this.jinhuoriqi = jinhuoriqi;
 	}
 	public String getKuanhao_id() {
 		return kuanhao_id;
@@ -72,6 +76,14 @@ public class Kucun {
 	public void setShoujia(float shoujia) {
 		this.shoujia = shoujia;
 	}
+	
+	public String getZhuangtai() {
+		return zhuangtai;
+	}
+	public void setZhuangtai(String zhuangtai) {
+		this.zhuangtai = zhuangtai;
+	}
+	
 	public String getBeizhu() {
 		return beizhu;
 	}

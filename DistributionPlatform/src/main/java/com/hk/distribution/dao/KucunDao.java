@@ -9,7 +9,9 @@ public interface KucunDao {
 	public List<Kucun> getKucunList();
 
 	public List<Kucun> getKucun(Kucun Kucun);
-
+	
+	public List<Kucun> getKucunbyKYC(Kucun Kucun);
+	
 	public void saveKucun(Kucun kucun);
 
 	public void updateKucun(Kucun kucun);

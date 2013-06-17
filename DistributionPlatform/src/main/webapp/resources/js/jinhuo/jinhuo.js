@@ -8,19 +8,19 @@ Ext.onReady(function() {
 
     /*************站点列表代码(开始)**************************/
     /*
-     * Xiaoshou Model 全局
+     * jinhuo Model 全局
      */
-    Ext.regModel('xiaoshouModel',{
+    Ext.regModel('jinhuoModel',{
         extend: 'Ext.data.Model',
-        fields: ['xiaoshou_id','kuanhao_id','yanse','chima','shuliang','shoujia','shijishoukuan','maijia_id','maijiaxingming','beizhu']
+        fields: ['jinhuo_id','danhao_id','jinhuoriqi','kuanhao_id','yanse','chima','shuliang','jinjia','chengbenjia','shoujia','zhuangtai','beizhu']
     });
 
     /*
-     * Xiaoshou Grid Store
+     * jinhuo Grid Store
      */
-    var xiaoshouStore = Ext.create('Ext.data.JsonStore',{
+    var jinhuoStore = Ext.create('Ext.data.JsonStore',{
         autoLoad:true,
-        model: 'xiaoshouModel',
+        model: 'jinhuoModel',
         proxy:{
             type:'ajax',
             url:'json/list.action',
@@ -31,15 +31,19 @@ Ext.onReady(function() {
     });
 
     /*
-     * Xiaoshou Grid Object
+     * jinhuo Grid Object
      */
     var grid = Ext.create('Ext.grid.Panel', {
-        id:'xiaoshouGrid',
-        store: xiaoshouStore,
+        id:'jinhuoGrid',
+        store: jinhuoStore,
         columnLines:true,
         selModel: Ext.create('Ext.selection.CheckboxModel'),
         columns:[{
-            header:'销售单编号',dataIndex:'xiaoshou_id', width:140
+            header:'进货单编号',dataIndex:'jinhuo_id', width:140
+        }, {
+        	header:'档口单号',dataIndex:'danhao_id', width:80
+        }, {
+        	header:'进货日期',dataIndex:'jinhuoriqi', width:80
         }, {
         	header:'款号',dataIndex:'kuanhao_id', width:80
         }, {
@@ -49,20 +53,20 @@ Ext.onReady(function() {
         }, {
         	header:'数量（件）',dataIndex:'shuliang', width:80
         }, {
-        	header:'售价',dataIndex:'shoujia', width:80
+        	header:'进价（元）',dataIndex:'jinjia', width:80
         }, {
-        	header:'实际成交金额',dataIndex:'shijishoukuan', width:80
+        	header:'成本价（元）',dataIndex:'chengbenjia', width:80
         }, {
-        	header:'买家编号',dataIndex:'maijia_id', width:80
+        	header:'售价（元）',dataIndex:'shoujia', width:80
         }, {
-        	header:'买家姓名',dataIndex:'maijiaxingming', width:80
+        	header:'进货单状态',dataIndex:'zhuangtai', width:80, renderer:showTypeChange
         }, {
         	header:'备注',dataIndex:'beizhu', flex:1
         }],
-        bbar: Ext.create('Ext.PagingToolbar', {displayInfo:true, emptyMsg:'没有记录', store:xiaoshouStore}),
+        bbar: Ext.create('Ext.PagingToolbar', {displayInfo:true, emptyMsg:'没有进货信息记录', store:jinhuoStore}),
         tbar:[{
             id:'addNew',
-            text: '新增',
+            text: '新建进货单',
             iconCls:'icon-add',
             handler:function(){
                 showAdd();
@@ -76,16 +80,45 @@ Ext.onReady(function() {
                 showEdit(obj);
             }
         }, '-', {
+            id:'tokucun',
+            text:'进货入库',
+            iconCls:'icon-edit',
+            handler:function() {
+                var obj = grid.getSelectionModel().selected.items[0];
+                Ext.Msg.confirm("请确认", "确认要将进货单信息合并到库存中吗?", function(id){
+            		if (id == "yes") {
+            			var models = grid.getSelectionModel().selected.items;
+                        var ids = '';
+                        Ext.iterate(models, function(key, value) {
+                            var tmp = key.data.jinhuo_id;
+                            if(ids.length !=0) {
+                                ids = ids + ',' + tmp;
+                            } else {
+                                ids = ids + tmp;
+                            }
+                        }, this);
+                        Ext.Ajax.request({
+                            url : '../jinhuo/ruku.action',
+                            params : {
+                            	jinhuoids : ids
+                            },
+
+                            success : function(response, option) {
+                                Ext.Msg.alert('提示','进货信息导入库存成功');
+                                grid.store.load();
+                            },
+                            failure : function() {
+                                Ext.Msg.alert('提示','进货信息导入库存失败');
+                            }
+                        });
+            		}
+            	});
+            }
+        }, '-', {
             id:'del',
             text:'删除',
             iconCls:'icon-del',
             handler:function(){
-            	
-//            	Ext.Msg.confirm("Confirm", "Sure to delete?", function(id){
-//            		if (id != "yes") {
-//            			return;
-//            		}
-//            	}); // this does not work.
             	
             	Ext.Msg.confirm("请确认", "确认要删除?", function(id){
             		if (id == "yes") {
@@ -100,7 +133,7 @@ Ext.onReady(function() {
                             }
                         }, this);
                         Ext.Ajax.request({
-                            url : '../xiaoshou/delete.action',
+                            url : '../jinhuo/delete.action',
                             params : {
                                 address : ids
                             },
@@ -129,23 +162,22 @@ Ext.onReady(function() {
     });
     
     function showTypeChange(val) {
-        if(val == '1') {
-            return '跳回官网产品简介';
-        } else {
-            return '在目标新网页打开';
+        if(val == '0') {
+            return '未入库';
+        } else if(val == '1'){
+            return '已入库';
         }
     }
     /*************站点列表代码(结束)**************************/
     
-    /*************销售单新增/编辑代码(开始)*********************/
+    /*************库存新增/编辑代码(开始)*********************/
     var editForm = new Ext.form.FormPanel({
-        
         id:'editForm',
         name:'editForm',
         labelAlign : 'right',
         labelWidth : 50,
 
-        url:'../xiaoshou/savexiaoshou.action',
+        url:'../jinhuo/savejinhuo.action',
 
         layout: 'anchor',
         defaults: {
@@ -158,6 +190,18 @@ Ext.onReady(function() {
             name: 'editType',
             value:1,
             hidden:true
+        }, {
+            xtype:'textfield',
+            fieldLabel:'档口单号',
+            id:'danhao_id',
+            name:'danhao_id',
+            allowBlank: false
+        }, {
+            xtype:'textfield',
+            fieldLabel:'进货日期',
+            id:'jinhuoriqi',
+            name:'jinhuoriqi',
+            allowBlank: true
         }, {
             xtype:'textfield',
             fieldLabel:'款号',
@@ -175,7 +219,7 @@ Ext.onReady(function() {
             fieldLabel:'尺码',
             id:'chima',
             name:'chima',
-            allowBlank: true
+            allowBlank: false
         }, {
             xtype:'textfield',
             fieldLabel:'数量',
@@ -184,28 +228,22 @@ Ext.onReady(function() {
             allowBlank: false
         }, {
             xtype:'textfield',
-            fieldLabel:'售价',
+            fieldLabel:'进价',
+            id:'jinjia',
+            name:'jinjia',
+            allowBlank: true
+        }, {
+            xtype:'textfield',
+            fieldLabel:'成本价',
+            id:'chengbenjia',
+            name:'chengbenjia',
+            allowBlank: true
+        }, {
+            xtype:'textfield',
+            fieldLabel:'建议售价',
             id:'shoujia',
             name:'shoujia',
             allowBlank: true
-        }, {
-            xtype:'textfield',
-            fieldLabel:'实际成交金额',
-            id:'shijishoukuan',
-            name:'shijishoukuan',
-            allowBlank: true
-        }, {
-            xtype:'textfield',
-            fieldLabel:'买家编号',
-            id:'maijia_id',
-            name:'maijia_id',
-            allowBlank: false
-        }, {
-            xtype:'textfield',
-            fieldLabel:'买家姓名',
-            id:'maijiaxingming',
-            name:'maijiaxingming',
-            allowBlank: false
         }, {
             xtype:'textareafield',
             fieldLabel:'备注:',
@@ -221,12 +259,12 @@ Ext.onReady(function() {
                 if (form.isValid()) {
                     form.submit({
                         success: function(form, action) {
-                            Ext.Msg.alert('提示','新增销售单保存成功');
+                            Ext.Msg.alert('提示','新建进货单保存成功');
                             editWin.close();
                             grid.store.load();
                         },
                         failure: function(form, action) {
-                            Ext.Msg.alert('提示','新增销售单保存失败');
+                            Ext.Msg.alert('提示','新建进货单保存失败');
                         }
                     });
                 }
@@ -239,27 +277,40 @@ Ext.onReady(function() {
             }
         }]
     });
+   
     
-    var editWin = new Ext.Window({
-        layout : 'fit',
-        width : 400,
-        title : '新建销售单',
-        height : 430,
-        closeAction : 'hide',
-        closable : false,
-
-        items : [editForm]
-
-    });
+    var editWin;
     
     function showEdit(data) {
         editForm.getForm().loadRecord(data);
         Ext.getCmp('editType').setValue(2);
+        editWin = new Ext.Window({
+            layout : 'fit',
+            width : 400,
+            title : '修改进货单',
+            height : 440,
+            closeAction : 'hide',
+            closable : false,
+
+            items : [editForm]
+
+        });
         editWin.show();
     }
     
     function showAdd() {
         editForm.getForm().reset();
+        editWin = new Ext.Window({
+            layout : 'fit',
+            width : 400,
+            title : '新建进货单',
+            height : 440,
+            closeAction : 'hide',
+            closable : false,
+
+            items : [editForm]
+
+        });
         editWin.show();
     }
     /*************站点新增/编辑代码(结束)*********************/

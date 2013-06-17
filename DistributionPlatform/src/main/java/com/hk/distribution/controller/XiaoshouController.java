@@ -1,6 +1,8 @@
 package com.hk.distribution.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,10 +50,20 @@ public class XiaoshouController {
 
     @RequestMapping("/savexiaoshou")
     @ResponseBody
-    public String saveXiaoshou(String editType, String xiaoshou_id, String kuanhao_id, String yanse, String chima, String shuliang,String shoujia, String shijishoukuan, String maijia_id, String maijiaxingming, String beizhu) {
+    public String saveXiaoshou(String editType, String kuanhao_id, String yanse, String chima, String shuliang,String shoujia, String shijishoukuan, String maijia_id, String maijiaxingming, String beizhu) {
 
-        Xiaoshou xiaoshou = new Xiaoshou();
-        xiaoshou.setXiaoshou_id(Long.valueOf(xiaoshou_id));
+    	Xiaoshou xiaoshou = xiaoshouService.getMaxID();
+
+    	Long xiaoshouID=xiaoshou.getXiaoshou_id();
+    	xiaoshouID=xiaoshouID/10000;
+    	Date currentTime = new Date();
+    	SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
+    	Long dateStr = Long.parseLong(formatter.format(currentTime));
+        if(dateStr>xiaoshouID){
+        	xiaoshou.setXiaoshou_id(Long.parseLong(""+dateStr+"0001"));
+        }else{
+        	xiaoshou.setXiaoshou_id(xiaoshou.getXiaoshou_id()+1);
+        }
         xiaoshou.setKuanhao_id(kuanhao_id);
         xiaoshou.setYanse(yanse);
         xiaoshou.setChima(chima);

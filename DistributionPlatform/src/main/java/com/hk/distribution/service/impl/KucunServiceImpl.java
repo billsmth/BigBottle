@@ -26,6 +26,17 @@ public class KucunServiceImpl implements KucunService {
     public List<Kucun> getKucun(Kucun kucun) {
         return kucunDao.getKucun(kucun);
     }
+    
+    @Override
+    public Kucun getKucunbyKYC(Kucun kucun){
+    	List<Kucun> list=kucunDao.getKucunbyKYC(kucun);
+    	if(list.size()>0){
+    		kucun=list.get(0);
+    	}else{
+    		kucun=null;
+    	}
+    	return kucun;
+    }
 
     @Override
     public void saveKucun(Kucun kucun) {

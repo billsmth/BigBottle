@@ -7,6 +7,8 @@ import com.hk.distribution.model.Xiaoshou;
 public interface XiaoshouDao {
 
 	public List<Xiaoshou> getXiaoshouList();
+	
+	public List<Xiaoshou> getMaxID();
 
 	public List<Xiaoshou> getXiaoshou(Xiaoshou Xiaoshou);
 
