@@ -41,19 +41,19 @@ Ext.onReady(function() {
         columns:[{
             header:'库存编号',dataIndex:'kucun_id', width:140
         }, {
-        	header:'款号',dataIndex:'kuanhao_id', width:80
+        	header:'档口款号',dataIndex:'kuanhao_id', width:80
         }, {
         	header:'颜色',dataIndex:'yanse', width:80
         }, {
         	header:'尺码',dataIndex:'chima', width:40
         }, {
-        	header:'数量（件）',dataIndex:'shuliang', width:80
+        	header:'数量(件)',dataIndex:'shuliang', width:80
         }, {
-        	header:'进价',dataIndex:'jinjia', width:80
+        	header:'进价(元)',dataIndex:'jinjia', width:80
         }, {
-        	header:'成本价',dataIndex:'chengbenjia', width:80
+        	header:'成本价(元)',dataIndex:'chengbenjia', width:80
         }, {
-        	header:'售价',dataIndex:'shoujia', width:80
+        	header:'建议售价(元)',dataIndex:'shoujia', width:80
         }, {
         	header:'备注',dataIndex:'beizhu', flex:1
         }],
@@ -63,7 +63,8 @@ Ext.onReady(function() {
             text: '创建销售单',
             iconCls:'icon-add',
             handler:function(){
-            	showAddXiaoshou();
+            	var obj = grid.getSelectionModel().selected.items[0];
+            	showAddXiaoshou(obj);
             }
         }, '-', {
             id:'edit',
@@ -72,47 +73,6 @@ Ext.onReady(function() {
             handler:function() {
                 var obj = grid.getSelectionModel().selected.items[0];
                 showEdit(obj);
-            }
-        }, '-', {
-            id:'del',
-            text:'删除',
-            iconCls:'icon-del',
-            handler:function(){
-            	
-//            	Ext.Msg.confirm("Confirm", "Sure to delete?", function(id){
-//            		if (id != "yes") {
-//            			return;
-//            		}
-//            	}); // this does not work.
-            	
-            	Ext.Msg.confirm("请确认", "确认要删除?", function(id){
-            		if (id == "yes") {
-            			var models = grid.getSelectionModel().selected.items;
-                        var ids = '';
-                        Ext.iterate(models, function(key, value) {
-                            var tmp = key.data.address;
-                            if(ids.length !=0) {
-                                ids = ids + ',' + tmp;
-                            } else {
-                                ids = ids + tmp;
-                            }
-                        }, this);
-                        Ext.Ajax.request({
-                            url : '../kucun/delete.action',
-                            params : {
-                                address : ids
-                            },
-
-                            success : function(response, option) {
-                                Ext.Msg.alert('提示','删除成功');
-                                grid.store.load();
-                            },
-                            failure : function() {
-                                Ext.Msg.alert('提示','删除失败');
-                            }
-                        });
-            		}
-            	});
             }
         }]
     });
@@ -159,39 +119,39 @@ Ext.onReady(function() {
         }, {
             xtype:'textfield',
             fieldLabel:'款号',
-            id:'xiaoshoukuanhao_id',
+            id:'kuanhao_id',
             name:'kuanhao_id',
             allowBlank: false
         }, {
             xtype:'textfield',
             fieldLabel:'颜色',
-            id:'xiaoshouyanse',
+            id:'yanse',
             name:'yanse',
             allowBlank: false
         }, {
             xtype:'textfield',
             fieldLabel:'尺码',
-            id:'xiaoshouchima',
+            id:'chima',
             name:'chima',
             allowBlank: true
         }, {
             xtype:'textfield',
-            fieldLabel:'数量',
-            id:'xiaoshoushuliang',
+            fieldLabel:'出售数量(件)',
+            id:'shuliang',
             name:'shuliang',
             allowBlank: false
         }, {
             xtype:'textfield',
-            fieldLabel:'售价',
+            fieldLabel:'建议售价(元)',
             id:'shoujia',
             name:'shoujia',
-            allowBlank: true
+            allowBlank: false
         }, {
             xtype:'textfield',
             fieldLabel:'实际成交金额',
             id:'shijishoukuan',
             name:'shijishoukuan',
-            allowBlank: true
+            allowBlank: false
         }, {
             xtype:'textfield',
             fieldLabel:'买家编号',
@@ -207,7 +167,7 @@ Ext.onReady(function() {
         }, {
             xtype:'textareafield',
             fieldLabel:'备注:',
-            id:'xiaoshoubeizhu',
+            id:'beizhu',
             name:'beizhu',
             allowBlank:true
         }],
@@ -256,8 +216,10 @@ Ext.onReady(function() {
         editWin.show();
     }
     
-    function showAddXiaoshou() {
-        editForm.getForm().reset();
+    function showAddXiaoshou(obj) {
+    	obj.data.beizhu="";
+    	obj.data.shuliang=1;
+    	editForm.getForm().loadRecord(obj);
         editWin.show();
     }
     

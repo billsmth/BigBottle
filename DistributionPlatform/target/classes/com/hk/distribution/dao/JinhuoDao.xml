@@ -14,15 +14,16 @@
         <result property="chengbenjia" column="chengbenjia"/>
         <result property="shoujia" column="shoujia"/>
         <result property="zhuangtai" column="zhuangtai"/>
+        <result property="delflg" column="delflg"/>
         <result property="beizhu" column="beizhu"/>
     </resultMap>
 
     <select id="getJinhuoList" resultMap="jinhuoResult">
-        select jinhuo_id, danhao_id, jinhuoriqi, kuanhao_id,yanse, chima,shuliang,jinjia,chengbenjia,shoujia,zhuangtai,beizhu from jinhuo_table
+        select jinhuo_id, danhao_id, jinhuoriqi, kuanhao_id,yanse, chima,shuliang,jinjia,chengbenjia,shoujia,zhuangtai,delflg,beizhu from jinhuo_table where delflg=='false'
     </select>
     
     <select id="getJinhuo" resultMap="jinhuoResult" parameterType="com.hk.distribution.model.Jinhuo">
-        select jinhuo_id, danhao_id, jinhuoriqi, kuanhao_id,yanse, chima,shuliang,jinjia,chengbenjia,shoujia,zhuangtai,beizhu from jinhuo_table where jinhuo_id = #{jinhuo_id}
+        select jinhuo_id, danhao_id, jinhuoriqi, kuanhao_id,yanse, chima,shuliang,jinjia,chengbenjia,shoujia,zhuangtai,delflg,beizhu from jinhuo_table where jinhuo_id = #{jinhuo_id}
     </select>
     
     <update id="updateJinhuoruku" parameterType="com.hk.distribution.model.Jinhuo">
@@ -30,13 +31,39 @@
     </update>
     
     <update id="updateJinhuo" parameterType="com.hk.distribution.model.Jinhuo">
-        update jinhuo_table set zhuangtai = '1' where jinhuo_id = #{jinhuo_id}
+        update jinhuo_table set danhao_id = #{danhao_id}
+        , jinhuoriqi = #{jinhuoriqi}
+        , kuanhao_id = #{kuanhao_id}
+        , yanse = #{yanse}
+        , chima = #{chima}
+        , shuliang = #{shuliang}
+        , jinjia = #{jinjia}
+        , chengbenjia = #{chengbenjia}
+        , shoujia = #{shoujia}
+        , zhuangtai = #{zhuangtai}
+        , beizhu = #{beizhu} 
+        where jinhuo_id = #{jinhuo_id}
     </update>
     
     <insert id="saveJinhuo" parameterType="com.hk.distribution.model.Jinhuo">
-        insert into jinhuo_table values (#{jinhuo_id}, #{danhao_id}, #{jinhuoriqi}, #{kuanhao_id}, #{yanse}, #{chima}, #{shuliang}, #{jinjia}, #{chengbenjia}, #{shoujia},#{zhuangtai}, #{beizhu})
+        insert into jinhuo_table values (#{jinhuo_id}, #{danhao_id}, #{jinhuoriqi}, #{kuanhao_id}, #{yanse}, #{chima}, #{shuliang}, #{jinjia}, #{chengbenjia}, #{shoujia},#{zhuangtai}, #{delflg}, #{beizhu})
     </insert>
     <select id="getMaxID" resultMap="jinhuoResult">
     	select max(jinhuo_id) jinhuo_id from jinhuo_table
     </select>
+    
+    <!-- <delete id="deleteJinhuoByID" parameterType="list">
+        delete from jinhuo_table where jinhuo_id in 
+        <foreach item="jinhuo"  collection="list" open="(" separator="," close=")">
+            #{jinhuo}
+        </foreach>
+    </delete>
+     -->
+    <delete id="deleteJinhuoByID" parameterType="list">
+        update jinhuo_table set delflg ='true'  
+        where jinhuo_id in 
+        <foreach item="jinhuo_id"  collection="list" open="(" separator="," close=")">
+            #{jinhuo_id}
+        </foreach>
+    </delete>
 </mapper>

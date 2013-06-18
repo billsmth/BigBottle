@@ -20,4 +20,6 @@ public interface JinhuoDao {
 	
 
 	public void deleteJinhuoByKuanhao_id(List<String> kuanhao_id);
+	
+	public void deleteJinhuoByID(List<String> jinhuo_id);
 }

@@ -1,8 +1,6 @@
 package com.hk.distribution.controller;
 
-import java.text.SimpleDateFormat;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,7 +53,7 @@ public class JinhuoController {
 
     @RequestMapping("/savejinhuo")
     @ResponseBody
-    public String saveJinhuo(String editType, String danhao_id, String jinhuoriqi, String kuanhao_id, String yanse, String chima, String shuliang, String jinjia, String chengbenjia, String shoujia, String beizhu) {
+    public String saveJinhuo(String editType, String jinhuo_id, String danhao_id, String jinhuoriqi, String kuanhao_id, String yanse, String chima, String shuliang, String jinjia, String chengbenjia, String shoujia, String zhuangtai, String delflg, String beizhu) {
 
     	Jinhuo jinhuo = jinhuoService.getMaxID();
     	
@@ -64,16 +62,23 @@ public class JinhuoController {
     		jinhuo.setJinhuo_id(0l);
     	}
 
-    	Long jinhuoID=jinhuo.getJinhuo_id();
-    	jinhuoID=jinhuoID/10000;
-    	
-    	Long dateStr = Tools.getDataStr();
-        if(dateStr>jinhuoID){
-        	jinhuo.setJinhuo_id(Long.parseLong(""+dateStr+"0001"));
-        }else{
-        	jinhuo.setJinhuo_id(jinhuo.getJinhuo_id()+1);
-        }
-    	
+    	if ("1".equals(editType)){
+    		Long jinhuoID=jinhuo.getJinhuo_id();
+        	jinhuoID=jinhuoID/10000;
+        	
+        	Long dateStr = Tools.getDataStr();
+            if(dateStr>jinhuoID){
+            	jinhuo.setJinhuo_id(Long.parseLong(""+dateStr+"0001"));
+            }else{
+            	jinhuo.setJinhuo_id(jinhuo.getJinhuo_id()+1);
+            }
+            jinhuo.setZhuangtai("0");
+            jinhuo.setDelflg("false");
+    	} else if ("2".equals(editType)) {
+    		jinhuo.setJinhuo_id(Long.parseLong(jinhuo_id));
+    		jinhuo.setZhuangtai(zhuangtai);
+    		jinhuo.setDelflg(delflg);
+    	}
         jinhuo.setDanhao_id(danhao_id);
         jinhuo.setJinhuoriqi(jinhuoriqi);
         jinhuo.setKuanhao_id(kuanhao_id);
@@ -83,7 +88,7 @@ public class JinhuoController {
         jinhuo.setJinjia(Float.valueOf(jinjia));
         jinhuo.setChengbenjia(Float.valueOf(chengbenjia));
         jinhuo.setShoujia(Float.valueOf(shoujia));
-        jinhuo.setZhuangtai("0");
+        
         jinhuo.setBeizhu(beizhu);
         
         if ("1".equals(editType)) {
@@ -99,11 +104,10 @@ public class JinhuoController {
     
     @RequestMapping("/delete")
     @ResponseBody
-    public String deleteJinhuo(String address) {
+    public String deleteJinhuo(String jinhuoids) {
         
-        String[] rets = address.split(",");
-        jinhuoService.deleteJinhuoByKuanhao_id(Arrays.asList(rets));
-        
+        String[] rets = jinhuoids.split(",");
+        jinhuoService.deleteJinhuoByID(Arrays.asList(rets));
         return "{'success':true}";
     }
     

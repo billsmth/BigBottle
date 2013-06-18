@@ -12,7 +12,7 @@ Ext.onReady(function() {
      */
     Ext.regModel('jinhuoModel',{
         extend: 'Ext.data.Model',
-        fields: ['jinhuo_id','danhao_id','jinhuoriqi','kuanhao_id','yanse','chima','shuliang','jinjia','chengbenjia','shoujia','zhuangtai','beizhu']
+        fields: ['jinhuo_id','danhao_id','jinhuoriqi','kuanhao_id','yanse','chima','shuliang','jinjia','chengbenjia','shoujia','zhuangtai','delflg', 'beizhu']
     });
 
     /*
@@ -61,6 +61,8 @@ Ext.onReady(function() {
         }, {
         	header:'进货单状态',dataIndex:'zhuangtai', width:80, renderer:showTypeChange
         }, {
+        	header:'是否删除',dataIndex:'delflg', width:60
+        }, {
         	header:'备注',dataIndex:'beizhu', flex:1
         }],
         bbar: Ext.create('Ext.PagingToolbar', {displayInfo:true, emptyMsg:'没有进货信息记录', store:jinhuoStore}),
@@ -72,6 +74,14 @@ Ext.onReady(function() {
                 showAdd();
             }
         }, '-', {
+            id:'addcopy',
+            text:'复制进货单',
+            iconCls:'icon-copy',
+            handler:function() {
+                var obj = grid.getSelectionModel().selected.items[0];
+                showCopy(obj);
+            }
+        },'-', {
             id:'edit',
             text:'编辑',
             iconCls:'icon-edit',
@@ -84,35 +94,50 @@ Ext.onReady(function() {
             text:'进货入库',
             iconCls:'icon-edit',
             handler:function() {
-                var obj = grid.getSelectionModel().selected.items[0];
-                Ext.Msg.confirm("请确认", "确认要将进货单信息合并到库存中吗?", function(id){
-            		if (id == "yes") {
-            			var models = grid.getSelectionModel().selected.items;
-                        var ids = '';
-                        Ext.iterate(models, function(key, value) {
-                            var tmp = key.data.jinhuo_id;
-                            if(ids.length !=0) {
-                                ids = ids + ',' + tmp;
-                            } else {
-                                ids = ids + tmp;
+                var obj = grid.getSelectionModel().selected.items;
+                if(obj.length==0){
+                	Ext.Msg.alert('提示','请先选择要入库的入库单，再点击【进货入库】按钮');
+                	return;
+                }else{
+                    Ext.Msg.confirm("请确认", "确认要将进货单信息合并到库存中吗?", function(id){
+                		if (id == "yes") {
+                			if(obj.length==1 && obj[0].data.zhuangtai=='1'){
+                            	Ext.Msg.alert('非法操作','此入库单已经导入，不能重复导入。');
+                            	return;
                             }
-                        }, this);
-                        Ext.Ajax.request({
-                            url : '../jinhuo/ruku.action',
-                            params : {
-                            	jinhuoids : ids
-                            },
+                			for(var a=0;a<obj.length;a++){
+                        		if(obj[a].data.zhuangtai=='1'){
+                                	Ext.Msg.alert('非法操作','您选择了已入库的入库单，请剔除。');
+                                	return;
+                                }
+                        	}
+                			var models = grid.getSelectionModel().selected.items;
+                            var ids = '';
+                            Ext.iterate(models, function(key, value) {
+                                var tmp = key.data.jinhuo_id;
+                                if(ids.length !=0) {
+                                    ids = ids + ',' + tmp;
+                                } else {
+                                    ids = ids + tmp;
+                                }
+                            }, this);
+                            Ext.Ajax.request({
+                                url : '../jinhuo/ruku.action',
+                                params : {
+                                	jinhuoids : ids
+                                },
 
-                            success : function(response, option) {
-                                Ext.Msg.alert('提示','进货信息导入库存成功');
-                                grid.store.load();
-                            },
-                            failure : function() {
-                                Ext.Msg.alert('提示','进货信息导入库存失败');
-                            }
-                        });
-            		}
-            	});
+                                success : function(response, option) {
+                                    Ext.Msg.alert('提示','进货信息导入库存成功');
+                                    grid.store.load();
+                                },
+                                failure : function() {
+                                    Ext.Msg.alert('提示','进货信息导入库存失败');
+                                }
+                            });
+                		}
+                	});
+                }
             }
         }, '-', {
             id:'del',
@@ -123,9 +148,16 @@ Ext.onReady(function() {
             	Ext.Msg.confirm("请确认", "确认要删除?", function(id){
             		if (id == "yes") {
             			var models = grid.getSelectionModel().selected.items;
+            			for(var a=0;a<models.length;a++){
+                    		if(obj[a].data.zhuangtai=='1'){
+                            	Ext.Msg.alert('非法操作','已入库的入库单不能被删除,您选择了已入库的入库单，请剔除。');
+                            	return;
+                            }
+                    	}
+            			
                         var ids = '';
                         Ext.iterate(models, function(key, value) {
-                            var tmp = key.data.address;
+                            var tmp = key.data.jinhuo_id;
                             if(ids.length !=0) {
                                 ids = ids + ',' + tmp;
                             } else {
@@ -135,15 +167,15 @@ Ext.onReady(function() {
                         Ext.Ajax.request({
                             url : '../jinhuo/delete.action',
                             params : {
-                                address : ids
+                                jinhuoids : ids
                             },
 
                             success : function(response, option) {
-                                Ext.Msg.alert('提示','删除成功');
+                                Ext.Msg.alert('提示','进货单删除成功');
                                 grid.store.load();
                             },
                             failure : function() {
-                                Ext.Msg.alert('提示','删除失败');
+                                Ext.Msg.alert('提示','进货单删除失败');
                             }
                         });
             		}
@@ -189,6 +221,13 @@ Ext.onReady(function() {
             id:'editType',
             name: 'editType',
             value:1,
+            hidden:true
+        }, {
+            xtype:'textfield',
+            fieldLabel:'进货单号',
+            id:'jinhuo_id',
+            name:'jinhuo_id',
+            allowBlank: true,
             hidden:true
         }, {
             xtype:'textfield',
@@ -245,6 +284,13 @@ Ext.onReady(function() {
             name:'shoujia',
             allowBlank: true
         }, {
+            xtype:'textfield',
+            fieldLabel:'进货单状态',
+            id:'zhuangtai',
+            name:'zhuangtai',
+            allowBlank: true,
+            hidden:true
+        }, {
             xtype:'textareafield',
             fieldLabel:'备注:',
             id:'beizhu',
@@ -259,12 +305,12 @@ Ext.onReady(function() {
                 if (form.isValid()) {
                     form.submit({
                         success: function(form, action) {
-                            Ext.Msg.alert('提示','新建进货单保存成功');
+                            Ext.Msg.alert('提示','新建或修改进货单保存成功');
                             editWin.close();
                             grid.store.load();
                         },
                         failure: function(form, action) {
-                            Ext.Msg.alert('提示','新建进货单保存失败');
+                            Ext.Msg.alert('提示','新建或修改进货单保存失败');
                         }
                     });
                 }
@@ -291,7 +337,22 @@ Ext.onReady(function() {
             height : 440,
             closeAction : 'hide',
             closable : false,
+            items : [editForm]
 
+        });
+        editWin.show();
+    }
+    
+    function showCopy(data) {
+        editForm.getForm().loadRecord(data);
+        Ext.getCmp('editType').setValue(1);
+        editWin = new Ext.Window({
+            layout : 'fit',
+            width : 400,
+            title : '复制进货单',
+            height : 440,
+            closeAction : 'hide',
+            closable : false,
             items : [editForm]
 
         });
@@ -307,9 +368,7 @@ Ext.onReady(function() {
             height : 440,
             closeAction : 'hide',
             closable : false,
-
             items : [editForm]
-
         });
         editWin.show();
     }

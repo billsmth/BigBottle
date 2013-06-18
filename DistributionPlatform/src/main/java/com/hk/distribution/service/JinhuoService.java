@@ -17,4 +17,5 @@ public interface JinhuoService {
     public void updateJinhuoruku(Jinhuo jinhuo);
 
     public void deleteJinhuoByKuanhao_id(List<String> Kuanhao_id);
+    public void deleteJinhuoByID(List<String> jinhuo_id);
 }

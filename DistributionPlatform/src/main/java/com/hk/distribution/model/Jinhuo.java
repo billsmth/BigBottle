@@ -13,6 +13,7 @@ public class Jinhuo {
     private float chengbenjia;
     private float shoujia;
     private String zhuangtai;
+    private String delflg;
     private String beizhu;
     
     
@@ -84,6 +85,12 @@ public class Jinhuo {
 		this.zhuangtai = zhuangtai;
 	}
 	
+	public String getDelflg() {
+		return delflg;
+	}
+	public void setDelflg(String delflg) {
+		this.delflg = delflg;
+	}
 	public String getBeizhu() {
 		return beizhu;
 	}

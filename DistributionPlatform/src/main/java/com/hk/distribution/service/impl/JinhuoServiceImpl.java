@@ -50,6 +50,11 @@ public class JinhuoServiceImpl implements JinhuoService {
     public void deleteJinhuoByKuanhao_id(List<String> Kuanhao_id) {
         jinhuoDao.deleteJinhuoByKuanhao_id(Kuanhao_id);
     }
+    
+    @Override
+    public void deleteJinhuoByID(List<String> jinhuo_id){
+    	jinhuoDao.deleteJinhuoByID(jinhuo_id);
+    }
 
     public void setJinhuoDao(JinhuoDao jinhuoDao) {
         this.jinhuoDao = jinhuoDao;
