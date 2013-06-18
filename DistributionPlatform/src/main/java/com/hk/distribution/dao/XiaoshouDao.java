@@ -15,6 +15,8 @@ public interface XiaoshouDao {
 	public void saveXiaoshou(Xiaoshou xiaoshou);
 
 	public void updateXiaoshou(Xiaoshou xiaoshou);
-
+	
+	public void updateXiaoshouruku(Xiaoshou xiaoshou);
+	
 	public void deleteXiaoshouByKuanhao_id(List<String> kuanhao_id);
 }

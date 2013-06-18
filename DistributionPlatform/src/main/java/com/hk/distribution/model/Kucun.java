@@ -24,6 +24,10 @@ public class Kucun {
     	this.beizhu=jinhuo.getBeizhu();
     }
     
+    public Kucun(Xiaoshou xiaoshou){
+    	this.kucun_id=xiaoshou.getKucun_id();
+    }
+    
 	public Long getKucun_id() {
 		return kucun_id;
 	}

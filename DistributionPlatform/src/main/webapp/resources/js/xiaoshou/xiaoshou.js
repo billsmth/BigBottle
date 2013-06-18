@@ -12,7 +12,7 @@ Ext.onReady(function() {
      */
     Ext.regModel('xiaoshouModel',{
         extend: 'Ext.data.Model',
-        fields: ['xiaoshou_id','kuanhao_id','yanse','chima','shuliang','shoujia','shijishoukuan','maijia_id','maijiaxingming','beizhu']
+        fields: ['xiaoshou_id','kuanhao_id','yanse','chima','shuliang','shoujia','shijishoukuan','maijia_id','maijiaxingming','zhuangtai','delflg','beizhu']
     });
 
     /*
@@ -57,6 +57,10 @@ Ext.onReady(function() {
         }, {
         	header:'买家姓名',dataIndex:'maijiaxingming', width:80
         }, {
+        	header:'状态',dataIndex:'zhuangtai', width:50, renderer:showTypeChange
+        }, {
+        	header:'是否删除',dataIndex:'delflg', width:60
+        }, {
         	header:'备注',dataIndex:'beizhu', flex:1
         }],
         bbar: Ext.create('Ext.PagingToolbar', {displayInfo:true, emptyMsg:'没有记录', store:xiaoshouStore}),
@@ -68,12 +72,70 @@ Ext.onReady(function() {
                 showAdd();
             }
         }, '-', {
+            id:'addcopy',
+            text:'复制销售单',
+            iconCls:'icon-copy',
+            handler:function() {
+                var obj = grid.getSelectionModel().selected.items[0];
+                showCopy(obj);
+            }
+        }, '-', {
             id:'edit',
             text:'编辑',
             iconCls:'icon-edit',
             handler:function() {
                 var obj = grid.getSelectionModel().selected.items[0];
                 showEdit(obj);
+            }
+        }, '-', {
+            id:'tokucun',
+            text:'销售入库',
+            iconCls:'icon-checkin',
+            handler:function() {
+                var obj = grid.getSelectionModel().selected.items;
+                if(obj.length==0){
+                	Ext.Msg.alert('提示','请先选择要入库的销售单，再点击【销售入库】按钮');
+                	return;
+                }else{
+                    Ext.Msg.confirm("请确认", "确认要将销售单信息合并到库存中吗?", function(id){
+                		if (id == "yes") {
+                			if(obj.length==1 && obj[0].data.zhuangtai=='1'){
+                            	Ext.Msg.alert('非法操作','此销售单已经导入，不能重复导入。');
+                            	return;
+                            }
+                			for(var a=0;a<obj.length;a++){
+                        		if(obj[a].data.zhuangtai=='1'){
+                                	Ext.Msg.alert('非法操作','您选择了已入库的销售单，请剔除。');
+                                	return;
+                                }
+                        	}
+                			var models = grid.getSelectionModel().selected.items;
+                            var ids = '';
+                            Ext.iterate(models, function(key, value) {
+                                var tmp = key.data.xiaoshou_id;
+                                if(ids.length !=0) {
+                                    ids = ids + ',' + tmp;
+                                } else {
+                                    ids = ids + tmp;
+                                }
+                            }, this);
+                            Ext.Ajax.request({
+                                url : '../xiaoshou/ruku.action',
+                                params : {
+                                	xiaoshoids : ids
+                                },
+
+                                success : function(response, option) {
+                                    Ext.Msg.alert('提示','进货信息导入库存成功');
+                                    grid.store.load();
+                                },
+                                failure : function() {
+                                    Ext.Msg.alert('提示','进货信息导入库存失败');
+                                }
+                            });
+                		}
+                	});
+                }
             }
         }, '-', {
             id:'del',
@@ -129,10 +191,10 @@ Ext.onReady(function() {
     });
     
     function showTypeChange(val) {
-        if(val == '1') {
-            return '跳回官网产品简介';
-        } else {
-            return '在目标新网页打开';
+    	if(val == '0') {
+            return '未入库';
+        } else if(val == '1'){
+            return '已入库';
         }
     }
     /*************站点列表代码(结束)**************************/
@@ -157,6 +219,13 @@ Ext.onReady(function() {
             id:'editType',
             name: 'editType',
             value:1,
+            hidden:true
+        }, {
+            xtype:'textfield',
+            fieldLabel:'销售编号',
+            id:'xiaoshou_id',
+            name:'xiaoshou_id',
+            allowBlank: true,
             hidden:true
         }, {
             xtype:'textfield',
@@ -221,12 +290,12 @@ Ext.onReady(function() {
                 if (form.isValid()) {
                     form.submit({
                         success: function(form, action) {
-                            Ext.Msg.alert('提示','新增销售单保存成功');
+                            Ext.Msg.alert('成功提示','新增或编辑销售单成功');
                             editWin.close();
                             grid.store.load();
                         },
                         failure: function(form, action) {
-                            Ext.Msg.alert('提示','新增销售单保存失败');
+                            Ext.Msg.alert('错误提示','新增或编辑销售单失败');
                         }
                     });
                 }
@@ -255,11 +324,29 @@ Ext.onReady(function() {
     function showEdit(data) {
         editForm.getForm().loadRecord(data);
         Ext.getCmp('editType').setValue(2);
+        editWin.title='编辑销售单';
+        editWin.show();
+    }
+    
+    function showCopy(data) {
+        editForm.getForm().loadRecord(data);
+        Ext.getCmp('editType').setValue(1);
+        editWin = new Ext.Window({
+            layout : 'fit',
+            width : 400,
+            title : '复制销售单',
+            height : 440,
+            closeAction : 'hide',
+            closable : false,
+            items : [editForm]
+
+        });
         editWin.show();
     }
     
     function showAdd() {
         editForm.getForm().reset();
+        editWin.title='新建销售单';
         editWin.show();
     }
     /*************站点新增/编辑代码(结束)*********************/

@@ -92,22 +92,22 @@ Ext.onReady(function() {
         }, '-', {
             id:'tokucun',
             text:'进货入库',
-            iconCls:'icon-edit',
+            iconCls:'icon-checkin',
             handler:function() {
                 var obj = grid.getSelectionModel().selected.items;
                 if(obj.length==0){
-                	Ext.Msg.alert('提示','请先选择要入库的入库单，再点击【进货入库】按钮');
+                	Ext.Msg.alert('提示','请先选择要入库的进货单，再点击【进货入库】按钮');
                 	return;
                 }else{
                     Ext.Msg.confirm("请确认", "确认要将进货单信息合并到库存中吗?", function(id){
                 		if (id == "yes") {
                 			if(obj.length==1 && obj[0].data.zhuangtai=='1'){
-                            	Ext.Msg.alert('非法操作','此入库单已经导入，不能重复导入。');
+                            	Ext.Msg.alert('非法操作','此进货单已经导入，不能重复导入。');
                             	return;
                             }
                 			for(var a=0;a<obj.length;a++){
                         		if(obj[a].data.zhuangtai=='1'){
-                                	Ext.Msg.alert('非法操作','您选择了已入库的入库单，请剔除。');
+                                	Ext.Msg.alert('非法操作','您选择了已入库的进货单，请剔除。');
                                 	return;
                                 }
                         	}
