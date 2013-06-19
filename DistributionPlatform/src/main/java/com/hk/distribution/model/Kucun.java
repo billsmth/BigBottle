@@ -13,8 +13,8 @@ public class Kucun {
     private String beizhu;
     
     public Kucun(){}
-    public Kucun(Long kucu_id){
-    	this.kucun_id=kucu_id;
+    public Kucun(Long kucun_id){
+    	this.kucun_id=kucun_id;
     }
     public Kucun(Jinhuo jinhuo){
     	this.kuanhao_id=jinhuo.getKuanhao_id();

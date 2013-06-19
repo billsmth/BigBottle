@@ -16,5 +16,11 @@
     "cls" : "forum-ct",
     "leaf": true,
     "qtitle" : "jinhuo/jinhuomgt.action"
+    }, {
+    "id" : "4",
+    "text" : "客户管理",
+    "cls" : "forum-ct",
+    "leaf": true,
+    "qtitle" : "kehu/kehumgt.action"
     }
 ]

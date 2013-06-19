@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hk.distribution.dao.KehuDao">
+
+    <resultMap type="com.hk.distribution.model.Kehu" id="kehuResult">
+        <id property="kucun_id" column="kucun_id"/>
+        <result property="kuanhao_id" column="kuanhao_id"/>
+        <result property="kehuname" column="kehuname"/>
+	    <result property="kehusex" column="kehusex"/>
+	    <result property="age" column="age"/>
+	    <result property="biecheng" column="biecheng"/>
+	    <result property="dianming" column="dianming"/>
+	    <result property="phone1" column="phone1"/>
+	    <result property="phone2" column="phone2"/>
+	    <result property="address1" column="address1"/>
+	    <result property="address2" column="address2"/>
+	    <result property="infor1" column="infor1"/>
+	    <result property="infor2" column="infor2"/>
+	    <result property="infor3" column="infor3"/>
+	    <result property="infor4" column="infor4"/>
+	    <result property="zuqun_id" column="zuqun_id"/>
+	    <result property="zhuangtai" column="zhuangtai"/>
+	    <result property="zhuceriqi" column="zhuceriqi"/>
+	    <result property="qq" column="qq"/>
+	    <result property="weixin" column="weixin"/>
+	    <result property="taobao" column="taobao"/>
+	    <result property="beizhu" column="beizhu"/>
+    </resultMap>
+    
+    <select id="getKehuList" resultMap="kehuResult">
+        select kucun_id, kehuname, kehusex, age, biecheng, dianming, phone1, phone2, address1, address2, infor1, infor2, infor3, infor4, zuqun_id, zhuangtai, zhuceriqi, qq, weixin, taobao, beizhu from kehu_table
+    </select>
+</mapper>
