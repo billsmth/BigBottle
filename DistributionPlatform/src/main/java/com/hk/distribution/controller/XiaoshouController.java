@@ -53,8 +53,14 @@ public class XiaoshouController {
 
     @RequestMapping("/savexiaoshou")
     @ResponseBody
-    public String saveXiaoshou(String editType,String xiaoshou_id, String kuanhao_id, String yanse, String chima, String shuliang,String shoujia, String shijishoukuan, String maijia_id, String maijiaxingming, String zhuangtai, String delflg, String beizhu) {
+    public String saveXiaoshou(String editType,String xiaoshou_id, String kucun_id, String kuanhao_id, String yanse, String chima, String shuliang,String shoujia, String shijishoukuan, String maijia_id, String maijiaxingming, String zhuangtai, String delflg, String beizhu) {
 
+    	Kucun kucun=new Kucun(Long.parseLong(kucun_id));
+    	kucun=kucunService.getKucun(kucun);
+    	if(kucun==null){
+    		return  "{'error':1}";
+    	}
+    	
     	Xiaoshou xiaoshou = xiaoshouService.getMaxID();
     	if(xiaoshou==null){
     		xiaoshou=new Xiaoshou();
@@ -77,6 +83,7 @@ public class XiaoshouController {
     		xiaoshou.setZhuangtai(zhuangtai);
     		xiaoshou.setDelflg(delflg);
     	}
+    	xiaoshou.setKucun_id(Long.parseLong(kucun_id));
         xiaoshou.setKuanhao_id(kuanhao_id);
         xiaoshou.setYanse(yanse);
         xiaoshou.setChima(chima);
@@ -124,35 +131,24 @@ public class XiaoshouController {
         String[] rets = xiaoshouids.split(",");
         List<String> idList=Arrays.asList(rets);
         Xiaoshou xiaoshou;
-        Kucun kucunNew,kucunOld;
-        float jinjia=0,chengben=0;
+        Kucun kucun;
         for(int i=0;i<idList.size();i++){
-        	xiaoshou=new Xiaoshou();
-        	xiaoshou.setXiaoshou_id(Long.parseLong(idList.get(i)));
+        	xiaoshou=new Xiaoshou(Long.parseLong(idList.get(i)));
         	xiaoshou=xiaoshouService.getXiaoshou(xiaoshou);
         	if(xiaoshou!=null){
-        		kucunNew=new Kucun(xiaoshou);
-        		kucunOld=kucunService.getKucunbyKYC(kucunNew);
-        		if(kucunOld==null){
-        			kucunOld=kucunNew;
-        			kucunOld.setKucun_id(Long.parseLong(Tools.getDataStr()+Tools.WEIHAO_0001));
-        			kucunService.saveKucun(kucunOld);
-        		}else{
-        			// count changed
-        			kucunOld.setShuliang(kucunNew.getShuliang()+kucunOld.getShuliang());
-        			// jinjia changed
-        			jinjia=(kucunOld.getJinjia()*kucunOld.getShuliang()+kucunNew.getJinjia()*kucunNew.getShuliang())/(kucunNew.getShuliang()+kucunOld.getShuliang());
-        			kucunOld.setJinjia(jinjia);
-        			// chengben changed
-        			chengben=(kucunOld.getChengbenjia()*kucunOld.getShuliang()+kucunNew.getChengbenjia()*kucunNew.getShuliang())/(kucunNew.getShuliang()+kucunOld.getShuliang());
-        			kucunOld.setChengbenjia(chengben);
-        			kucunService.updateKucun(kucunOld);
+        		kucun=new Kucun(xiaoshou);
+        		kucun=kucunService.getKucun(kucun);
+    			// count changed
+        		int count=kucun.getShuliang()-xiaoshou.getShuliang();
+        		if(count<0){
+        			return "{'msg':'1'}";
         		}
-        		xiaoshouService.updateJinhuo(jinhuo);
+    			kucun.setShuliang(count);
+    			kucunService.updateKucun(kucun);
+    			xiaoshouService.updateXiaoshouruku(xiaoshou);
         	}
-        	
-        }
-        
-        return "{'success':true}";
+       	}
+
+        return "{'msg':'0'}";
     }
 }

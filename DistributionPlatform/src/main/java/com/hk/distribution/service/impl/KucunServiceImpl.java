@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.hk.distribution.dao.KucunDao;
 import com.hk.distribution.model.Kucun;
+import com.hk.distribution.model.Xiaoshou;
 import com.hk.distribution.service.KucunService;
 
 @Transactional
@@ -23,8 +24,8 @@ public class KucunServiceImpl implements KucunService {
     }
     
     @Override
-    public List<Kucun> getKucun(Kucun kucun) {
-        return kucunDao.getKucun(kucun);
+    public Kucun getKucun(Kucun kucun) {
+        return kucunDao.getKucun(kucun).get(0);
     }
     
     @Override
@@ -38,6 +39,11 @@ public class KucunServiceImpl implements KucunService {
     	return kucun;
     }
 
+    @Override
+    public Kucun getMaxID(){
+    	return kucunDao.getMaxID().get(0);
+    }
+    
     @Override
     public void saveKucun(Kucun kucun) {
         kucunDao.saveKucun(kucun);

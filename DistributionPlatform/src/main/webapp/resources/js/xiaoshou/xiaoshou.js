@@ -12,7 +12,7 @@ Ext.onReady(function() {
      */
     Ext.regModel('xiaoshouModel',{
         extend: 'Ext.data.Model',
-        fields: ['xiaoshou_id','kuanhao_id','yanse','chima','shuliang','shoujia','shijishoukuan','maijia_id','maijiaxingming','zhuangtai','delflg','beizhu']
+        fields: ['xiaoshou_id','kucun_id','kuanhao_id','yanse','chima','shuliang','shoujia','shijishoukuan','maijia_id','maijiaxingming','zhuangtai','delflg','beizhu']
     });
 
     /*
@@ -39,7 +39,9 @@ Ext.onReady(function() {
         columnLines:true,
         selModel: Ext.create('Ext.selection.CheckboxModel'),
         columns:[{
-            header:'销售单编号',dataIndex:'xiaoshou_id', width:140
+            header:'销售单编号',dataIndex:'xiaoshou_id', width:120
+        }, {
+        	header:'库存编号',dataIndex:'kucun_id', width:120
         }, {
         	header:'款号',dataIndex:'kuanhao_id', width:80
         }, {
@@ -122,15 +124,20 @@ Ext.onReady(function() {
                             Ext.Ajax.request({
                                 url : '../xiaoshou/ruku.action',
                                 params : {
-                                	xiaoshoids : ids
+                                	xiaoshouids : ids
                                 },
 
                                 success : function(response, option) {
-                                    Ext.Msg.alert('提示','进货信息导入库存成功');
+                                	var result = Ext.decode(response.responseText);
+                                	if(result.msg=="1"){
+                                		Ext.Msg.alert('错误','销售数量超过库存数量，本系统暂不支持负库存。');
+                                	}else if(result.msg=="0"){
+                                		Ext.Msg.alert('提示','销售信息导入库存成功');	
+                                	}
                                     grid.store.load();
                                 },
                                 failure : function() {
-                                    Ext.Msg.alert('提示','进货信息导入库存失败');
+                                    Ext.Msg.alert('提示','销售信息导入库存失败');
                                 }
                             });
                 		}
@@ -227,6 +234,12 @@ Ext.onReady(function() {
             name:'xiaoshou_id',
             allowBlank: true,
             hidden:true
+        }, {
+            xtype:'textfield',
+            fieldLabel:'库存编号',
+            id:'kucun_id',
+            name:'kucun_id',
+            allowBlank: false
         }, {
             xtype:'textfield',
             fieldLabel:'款号',

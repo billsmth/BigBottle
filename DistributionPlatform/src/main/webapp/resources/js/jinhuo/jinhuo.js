@@ -86,6 +86,13 @@ Ext.onReady(function() {
             text:'编辑',
             iconCls:'icon-edit',
             handler:function() {
+            	if(grid.getSelectionModel().selected.items.length<1){
+            		Ext.Msg.alert('提示','请选择要编辑的进货单，再点击【编辑】按钮');
+                	return;
+            	}else if(grid.getSelectionModel().selected.items.length>1){
+            		Ext.Msg.alert('提示','请选择一条要编辑的进货单，本系统咱不支持多条编辑');
+                	return;
+            	}
                 var obj = grid.getSelectionModel().selected.items[0];
                 showEdit(obj);
             }
@@ -328,6 +335,10 @@ Ext.onReady(function() {
     var editWin;
     
     function showEdit(data) {
+    	if(data.data.zhuangtai=='1'){
+        	Ext.Msg.alert('非法操作','已入库的进货单不能被编辑,请选择未入库的进货单。');
+        	return;
+    	}
         editForm.getForm().loadRecord(data);
         Ext.getCmp('editType').setValue(2);
         editWin = new Ext.Window({

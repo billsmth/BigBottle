@@ -9,6 +9,7 @@ public interface KucunDao {
 	public List<Kucun> getKucunList();
 
 	public List<Kucun> getKucun(Kucun Kucun);
+	public List<Kucun> getMaxID();
 	
 	public List<Kucun> getKucunbyKYC(Kucun Kucun);
 	

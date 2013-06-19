@@ -4,7 +4,7 @@
 
     <resultMap type="com.hk.distribution.model.Xiaoshou" id="xiaoshouResult">
         <id property="xiaoshou_id" column="xiaoshou_id"/>
-        <result property="kucu_id" column="kucu_id"/>
+        <result property="kucun_id" column="kucun_id"/>
         <result property="kuanhao_id" column="kuanhao_id"/>
         <result property="yanse" column="yanse"/>
         <result property="chima" column="chima"/>
@@ -25,11 +25,11 @@
     	select max(xiaoshou_id) xiaoshou_id from xiaoshou_table
     </select>
     <select id="getXiaoshou" resultMap="xiaoshouResult" parameterType="com.hk.distribution.model.Xiaoshou">
-        select address, show_type, target_uri from site where address = #{address}
+        select xiaoshou_id, kucun_id, kuanhao_id, yanse, chima, shuliang, shoujia, shijishoukuan, maijia_id, maijiaxingming, zhuangtai, delflg, beizhu from xiaoshou_table where xiaoshou_id = #{xiaoshou_id}
     </select>
     
     <insert id="saveXiaoshou" parameterType="com.hk.distribution.model.Xiaoshou">
-        insert into xiaoshou_table values (#{xiaoshou_id}, #{kuanhao_id}, #{yanse}, #{chima}, #{shuliang}, #{shoujia}, #{shijishoukuan}, #{maijia_id}, #{maijiaxingming}, #{zhuangtai}, #{delflg}, #{beizhu})
+        insert into xiaoshou_table values (#{xiaoshou_id}, #{kucun_id}, #{kuanhao_id}, #{yanse}, #{chima}, #{shuliang}, #{shoujia}, #{shijishoukuan}, #{maijia_id}, #{maijiaxingming}, #{zhuangtai}, #{delflg}, #{beizhu})
     </insert>
     
     <update id="updateXiaoshouruku" parameterType="com.hk.distribution.model.Xiaoshou">

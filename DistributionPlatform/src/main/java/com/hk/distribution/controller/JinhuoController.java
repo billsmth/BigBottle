@@ -12,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.hk.distribution.common.tools.Tools;
 import com.hk.distribution.model.Jinhuo;
 import com.hk.distribution.model.Kucun;
+import com.hk.distribution.model.Xiaoshou;
 import com.hk.distribution.service.JinhuoService;
 import com.hk.distribution.service.KucunService;
 
@@ -128,21 +129,36 @@ public class JinhuoController {
         		kucunNew=new Kucun(jinhuo);
         		kucunOld=kucunService.getKucunbyKYC(kucunNew);
         		if(kucunOld==null){
+        			kucunOld=kucunService.getMaxID();
+        			
+        			if(kucunOld==null){
+        				kucunNew.setKucun_id(0l);
+        	    	}else{
+        	    		kucunNew.setKucun_id(kucunOld.getKucun_id());
+        	    	}
         			kucunOld=kucunNew;
-        			kucunOld.setKucun_id(Long.parseLong(Tools.getDataStr()+Tools.WEIHAO_0001));
+        			Long kucunID=kucunOld.getKucun_id();
+        			kucunID=kucunID/10000;
+            		Long dateStr = Tools.getDataStr();
+            		
+            		if(dateStr>kucunID){
+            			kucunOld.setKucun_id(Long.parseLong(""+dateStr+"0001"));
+        	        }else{
+        	        	kucunOld.setKucun_id(kucunOld.getKucun_id()+1);
+        	        }
         			kucunService.saveKucun(kucunOld);
         		}else{
-        			// count changed
-        			kucunOld.setShuliang(kucunNew.getShuliang()+kucunOld.getShuliang());
         			// jinjia changed
         			jinjia=(kucunOld.getJinjia()*kucunOld.getShuliang()+kucunNew.getJinjia()*kucunNew.getShuliang())/(kucunNew.getShuliang()+kucunOld.getShuliang());
         			kucunOld.setJinjia(jinjia);
         			// chengben changed
         			chengben=(kucunOld.getChengbenjia()*kucunOld.getShuliang()+kucunNew.getChengbenjia()*kucunNew.getShuliang())/(kucunNew.getShuliang()+kucunOld.getShuliang());
+        			// count changed
+        			kucunOld.setShuliang(kucunNew.getShuliang()+kucunOld.getShuliang());
         			kucunOld.setChengbenjia(chengben);
         			kucunService.updateKucun(kucunOld);
         		}
-        		jinhuoService.updateJinhuo(jinhuo);
+        		jinhuoService.updateJinhuoruku(jinhuo);
         	}
         	
         }

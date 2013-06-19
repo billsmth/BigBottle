@@ -5,8 +5,13 @@ import java.util.Date;
 
 public class Tools {
 	public static String WEIHAO_0001="0001";
-	public static SimpleDateFormat FORMATTER = new SimpleDateFormat("yyyyMMdd");
+	public static SimpleDateFormat FORMATTER1 = new SimpleDateFormat("yyyyMMdd");
+	public static SimpleDateFormat FORMATTER2 = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 	public static Long getDataStr(){
-    	return Long.parseLong(FORMATTER.format(new Date()));
+    	return Long.parseLong(FORMATTER1.format(new Date()));
+	}
+	
+	public static String getDataTime(){
+    	return String.valueOf(FORMATTER2.format(new Date()));
 	}
 }

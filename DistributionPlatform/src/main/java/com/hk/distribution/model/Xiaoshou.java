@@ -16,6 +16,10 @@ public class Xiaoshou {
     private String delflg;
     private String beizhu;
     
+    public Xiaoshou(){}
+    public Xiaoshou(Long xiaoshou_id){
+    	this.xiaoshou_id=xiaoshou_id;
+    }
     
 	public Long getXiaoshou_id() {
 		return xiaoshou_id;

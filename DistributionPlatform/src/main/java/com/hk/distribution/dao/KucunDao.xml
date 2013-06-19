@@ -3,8 +3,7 @@
 <mapper namespace="com.hk.distribution.dao.KucunDao">
 
     <resultMap type="com.hk.distribution.model.Kucun" id="kucunResult">
-        <id property="address" column="address"/>
-        <result property="kucun_id" column="kucun_id"/>
+        <id property="kucun_id" column="kucun_id"/>
         <result property="kuanhao_id" column="kuanhao_id"/>
         <result property="yanse" column="yanse"/>
         <result property="chima" column="chima"/>
@@ -18,7 +17,12 @@
     <select id="getKucunList" resultMap="kucunResult">
         select kucun_id, kuanhao_id,yanse, chima,shuliang,jinjia,chengbenjia,shoujia,beizhu from kucun_table
     </select>
-    
+    <select id="getMaxID" resultMap="kucunResult">
+    	select max(kucun_id) kucun_id from kucun_table
+    </select>
+    <select id="getKucun" resultMap="kucunResult" parameterType="com.hk.distribution.model.Kucun">
+        select kucun_id, kuanhao_id,yanse, chima,shuliang,jinjia,chengbenjia,shoujia,beizhu from kucun_table where kucun_id=#{kucun_id}
+    </select>
     <select id="getKucunbyKYC" resultMap="kucunResult" parameterType="com.hk.distribution.model.Kucun">
         select kucun_id, kuanhao_id,yanse, chima,shuliang,jinjia,chengbenjia,shoujia,beizhu from kucun_table where 
         kuanhao_id= #{kuanhao_id} and yanse= #{yanse} and chima= #{chima}
@@ -29,7 +33,15 @@
     </insert>
     
     <update id="updateKucun" parameterType="com.hk.distribution.model.Kucun">
-        update kucun_table set shuliang = #{shuliang}, jinjia = #{jinjia}, chengbenjia = #{chengbenjia}
+        update kucun_table set 
+	        kuanhao_id = #{kuanhao_id}, 
+	        yanse = #{yanse}, 
+	        chima = #{chima}, 
+	        shuliang = #{shuliang}, 
+	        jinjia = #{jinjia}, 
+	        chengbenjia = #{chengbenjia}, 
+	        shoujia = #{shoujia}, 
+	        beizhu = #{beizhu}
         where kucun_id = #{kucun_id}
     </update>
     
