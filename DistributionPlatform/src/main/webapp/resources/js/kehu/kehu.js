@@ -61,7 +61,7 @@ Ext.onReady(function() {
         }, {
         	header:'组群',dataIndex:'zuqun_id', width:80
         }, {
-        	header:'状态',dataIndex:'zhuangtai', width:80
+        	header:'状态',dataIndex:'zhuangtai', width:80, renderer:showZhuangtai
         }, {
         	header:'注册日期',dataIndex:'zhuceriqi', width:80
         }, {
@@ -121,6 +121,12 @@ Ext.onReady(function() {
             return '女';
         } else {
             return '男';
+        }
+    }
+    
+    function showZhuangtai(val) {
+        if(val == '0') {
+            return '正常';
         }
     }
     /*************站点列表代码(结束)**************************/
