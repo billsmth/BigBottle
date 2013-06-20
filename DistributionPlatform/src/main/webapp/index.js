@@ -58,7 +58,7 @@ Ext.onReady(function() {
             id : 'welcome',
             title : 'Welcome',
             closable : true,
-            html : '<h1>欢迎使用<h1/>'
+            html : '<center><img src="resources/img/6lsm727_727.jpg"/></center>'
         }]
     });
 
