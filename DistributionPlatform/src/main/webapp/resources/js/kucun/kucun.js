@@ -63,6 +63,13 @@ Ext.onReady(function() {
             text: '创建销售单',
             iconCls:'icon-add',
             handler:function(){
+            	if(grid.getSelectionModel().selected.items.length<1){
+            		Ext.Msg.alert('提示','请先选择库存记录，再点击【创建销售单】按钮');
+                	return;
+            	}else if(grid.getSelectionModel().selected.items.length>1){
+            		Ext.Msg.alert('提示','请选择一条库存记录，本系统咱不支持多条创建');
+                	return;
+            	}
             	var obj = grid.getSelectionModel().selected.items[0];
             	showAddXiaoshou(obj);
             }
@@ -71,6 +78,13 @@ Ext.onReady(function() {
             text:'编辑',
             iconCls:'icon-edit',
             handler:function() {
+            	if(grid.getSelectionModel().selected.items.length<1){
+            		Ext.Msg.alert('提示','请先选择库存记录，再点击【编辑】按钮');
+                	return;
+            	}else if(grid.getSelectionModel().selected.items.length>1){
+            		Ext.Msg.alert('提示','请选择一条库存记录，本系统咱不支持多条编辑');
+                	return;
+            	}
                 var obj = grid.getSelectionModel().selected.items[0];
                 showEdit(obj);
             }
@@ -102,6 +116,7 @@ Ext.onReady(function() {
         name:'editForm',
         labelAlign : 'right',
         labelWidth : 50,
+        bodyStyle:"padding:10px 7px 0px 7px",
 
         url:'../xiaoshou/savexiaoshou.action',
 
@@ -211,6 +226,7 @@ var editkucunForm = new Ext.form.FormPanel({
         name:'editkucunForm',
         labelAlign : 'right',
         labelWidth : 50,
+        bodyStyle:"padding:10px 7px 0px 7px",
 
         url:'../kucun/savekucun.action',
 

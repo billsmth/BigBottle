@@ -39,52 +39,68 @@ Ext.onReady(function() {
         columnLines:true,
         selModel: Ext.create('Ext.selection.CheckboxModel'),
         columns:[{
-            header:'客户编号',dataIndex:'kehu_id', width:140
+            header:'客户编号',dataIndex:'kehu_id', width:90
         }, {
-        	header:'客户姓名',dataIndex:'kehuname', width:80
+        	header:'姓名',dataIndex:'kehuname', width:80
         }, {
-        	header:'客户性别',dataIndex:'kehusex', width:80
+        	header:'性别',dataIndex:'kehusex', width:40, renderer:showSex
         }, {
-        	header:'年龄',dataIndex:'age', width:80
+        	header:'年龄',dataIndex:'age', width:40
         }, {
         	header:'别称',dataIndex:'biecheng', width:80
         }, {
         	header:'店名',dataIndex:'dianming', width:80
         }, {
-        	header:'电话1',dataIndex:'phone1', width:80
+        	header:'电话 1',dataIndex:'phone1', width:80
         }, {
-        	header:'电话2',dataIndex:'phone2', width:80
+        	header:'电话 2',dataIndex:'phone2', width:80
         }, {
-        	header:'地址1',dataIndex:'address1', width:80
+        	header:'地址 1',dataIndex:'address1', width:80
         }, {
-        	header:'地址2',dataIndex:'address2', width:80
-        }, {
-        	header:'信息1',dataIndex:'infor1', width:80
-        }, {
-        	header:'信息2',dataIndex:'infor2', width:80
-        }, {
-        	header:'信息3',dataIndex:'infor3', width:80
-        }, {
-        	header:'信息4',dataIndex:'infor4', width:80
+        	header:'地址 2',dataIndex:'address2', width:80
         }, {
         	header:'组群',dataIndex:'zuqun_id', width:80
-        },  { 'zhuangtai', 'zhuceriqi', 'qq', 'weixin', 'taobao', 'beizhu'
-        	header:'备注',dataIndex:'beizhu', flex:1
+        }, {
+        	header:'状态',dataIndex:'zhuangtai', width:80
+        }, {
+        	header:'注册日期',dataIndex:'zhuceriqi', width:80
+        }, {
+        	header:'QQ号码',dataIndex:'qq', width:80
+        }, {
+        	header:'微信号码',dataIndex:'weixin', width:80
+        }, {
+        	header:'淘宝号码',dataIndex:'taobao', width:80
+        }, {
+        	header:'备注信息',dataIndex:'beizhu', width:80
+        }, {
+        	header:'信息 1',dataIndex:'infor1', width:80
+        }, {
+        	header:'信息 2',dataIndex:'infor2', width:80
+        }, {
+        	header:'信息 3',dataIndex:'infor3', width:80
+        }, {
+        	header:'信息 4',dataIndex:'infor4', width:80
         }],
         bbar: Ext.create('Ext.PagingToolbar', {displayInfo:true, emptyMsg:'没有记录', store:kehuStore}),
         tbar:[{
             id:'addNew',
-            text: '创建销售单',
+            text: '新建客户',
             iconCls:'icon-add',
             handler:function(){
-            	var obj = grid.getSelectionModel().selected.items[0];
-            	showAddXiaoshou(obj);
+            	showAdd();
             }
         }, '-', {
             id:'edit',
             text:'编辑',
             iconCls:'icon-edit',
             handler:function() {
+            	if(grid.getSelectionModel().selected.items.length<1){
+            		Ext.Msg.alert('提示','请先选择要编辑的客户记录，再点击【编辑】按钮');
+                	return;
+            	}else if(grid.getSelectionModel().selected.items.length>1){
+            		Ext.Msg.alert('提示','请选择一条客户记录，本系统咱不支持多条编辑');
+                	return;
+            	}
                 var obj = grid.getSelectionModel().selected.items[0];
                 showEdit(obj);
             }
@@ -100,11 +116,11 @@ Ext.onReady(function() {
         renderTo : Ext.getBody()
     });
     
-    function showTypeChange(val) {
+    function showSex(val) {
         if(val == '1') {
-            return '跳回官网产品简介';
+            return '女';
         } else {
-            return '在目标新网页打开';
+            return '男';
         }
     }
     /*************站点列表代码(结束)**************************/
@@ -114,11 +130,11 @@ Ext.onReady(function() {
         
         id:'editForm',
         name:'editForm',
-        labelAlign : 'right',
+        labelAlign:'right',
         labelWidth : 50,
-
-        url:'../xiaoshou/savexiaoshou.action',
-
+        bodyStyle:"padding:10px 7px 0px 7px",
+        autoScroll:true,
+        url:'../kehu/savekehu.action',
         layout: 'anchor',
         defaults: {
             anchor: '100%'
@@ -132,65 +148,140 @@ Ext.onReady(function() {
             hidden:true
         }, {
             xtype:'textfield',
-            fieldLabel:'款号',
-            id:'kuanhao_id',
-            name:'kuanhao_id',
-            allowBlank: false
-        }, {
-            xtype:'textfield',
-            fieldLabel:'库存编号',
+            fieldLabel:'客户编号',
             id:'kehu_id',
             name:'kehu_id',
-            allowBlank:true,
+            allowBlank: true,
             hidden:true
         }, {
             xtype:'textfield',
-            fieldLabel:'颜色',
-            id:'yanse',
-            name:'yanse',
+            fieldLabel:'客户姓名',
+            id:'kehuname',
+            name:'kehuname',
+            emptyText:"请输入客户姓名(必填)",
             allowBlank: false
         }, {
+        	xtype:'combo',
+        	name:'kehusex',
+            fieldLabel:'性别',
+            hiddenName:'kehusex',
+            valueField:'id',
+            displayField:'name',
+            triggerAtion:"all",
+            emptyText:'请选择',
+            mode:"local",
+            value:1,
+            store:new Ext.data.ArrayStore({fields:["id","name"],data:[[1,"女"],[2,"男"]]})
+        }, {
             xtype:'textfield',
-            fieldLabel:'尺码',
-            id:'chima',
-            name:'chima',
+            fieldLabel:'年龄',
+            id:'age',
+            name:'age',
             allowBlank: true
         }, {
             xtype:'textfield',
-            fieldLabel:'出售数量(件)',
-            id:'shuliang',
-            name:'shuliang',
-            allowBlank: false
+            fieldLabel:'别称',
+            id:'biecheng',
+            name:'biecheng',
+            allowBlank: true
         }, {
             xtype:'textfield',
-            fieldLabel:'建议售价(元)',
-            id:'shoujia',
-            name:'shoujia',
-            allowBlank: false
+            fieldLabel:'店名',
+            id:'dianming',
+            name:'dianming',
+            allowBlank: true
         }, {
             xtype:'textfield',
-            fieldLabel:'实际成交金额',
-            id:'shijishoukuan',
-            name:'shijishoukuan',
-            allowBlank: false
+            fieldLabel:'电话1',
+            id:'phone1',
+            name:'phone1',
+            allowBlank: true
         }, {
             xtype:'textfield',
-            fieldLabel:'买家编号',
-            id:'maijia_id',
-            name:'maijia_id',
-            allowBlank: false
+            fieldLabel:'电话2',
+            id:'phone2',
+            name:'phone2',
+            allowBlank: true
         }, {
             xtype:'textfield',
-            fieldLabel:'买家姓名',
-            id:'maijiaxingming',
-            name:'maijiaxingming',
-            allowBlank: false
+            fieldLabel:'地址一',
+            id:'address1',
+            name:'address1',
+            allowBlank: true
+        }, {
+            xtype:'textfield',
+            fieldLabel:'地址二',
+            id:'address2',
+            name:'address2',
+            allowBlank: true
+        }, {
+            xtype:'textfield',
+            fieldLabel:'附加信息一',
+            id:'infor1',
+            name:'infor1',
+            allowBlank: true
+        }, {
+            xtype:'textfield',
+            fieldLabel:'附加信息二',
+            id:'infor2',
+            name:'infor2',
+            allowBlank: true
+        }, {
+            xtype:'textfield',
+            fieldLabel:'附加信息三',
+            id:'infor3',
+            name:'infor3',
+            allowBlank: true
+        }, {
+            xtype:'textfield',
+            fieldLabel:'附加信息四',
+            id:'infor4',
+            name:'infor4',
+            allowBlank: true
+        }, {
+            xtype:'textfield',
+            fieldLabel:'组群编号',
+            id:'zuqun_id',
+            name:'zuqun_id',
+            allowBlank: true
+        }, {
+            xtype:'textfield',
+            fieldLabel:'状态',
+            id:'zhuangtai',
+            name:'zhuangtai',
+            allowBlank: true,
+            hidden:true
+        }, {
+            xtype:'textfield',
+            fieldLabel:'注册日期',
+            id:'zhuceriqi',
+            name:'zhuceriqi',
+            allowBlank: true,
+            hidden:true
+        }, {
+            xtype:'textfield',
+            fieldLabel:'QQ号码',
+            id:'qq',
+            name:'qq',
+            allowBlank: true
+        }, {
+            xtype:'textfield',
+            fieldLabel:'微信号码',
+            id:'weixin',
+            name:'weixin',
+            allowBlank: true
+        }, {
+            xtype:'textfield',
+            fieldLabel:'淘宝账号',
+            id:'taobao',
+            name:'taobao',
+            allowBlank: true
         }, {
             xtype:'textareafield',
-            fieldLabel:'备注:',
+            fieldLabel:'备注',
             id:'beizhu',
             name:'beizhu',
-            allowBlank:true
+            allowBlank: true
         }],
         buttons:[{
             text: '保存',
@@ -200,12 +291,12 @@ Ext.onReady(function() {
                 if (form.isValid()) {
                     form.submit({
                         success: function(form, action) {
-                            Ext.Msg.alert('提示','新建销售单存保存成功');
+                            Ext.Msg.alert('提示','新建客户保存成功');
                             editWin.close();
                             grid.store.load();
                         },
                         failure: function(form, action) {
-                            Ext.Msg.alert('提示','新建销售单保存失败');
+                            Ext.Msg.alert('提示','新建客户保存失败');
                         }
                     });
                 }
@@ -219,143 +310,28 @@ Ext.onReady(function() {
         }]
     });
     
-var editkehuForm = new Ext.form.FormPanel({
-        
-        id:'editkehuForm',
-        name:'editkehuForm',
-        labelAlign : 'right',
-        labelWidth : 50,
-
-        url:'../kehu/savekehu.action',
-
-        layout: 'anchor',
-        defaults: {
-            anchor: '100%'
-        },
-
-        items:[{
-            xtype:'textfield',
-            id:'kehueditType',
-            name: 'editType',
-            value:1,
-            hidden:true
-        }, {
-            xtype:'textfield',
-            fieldLabel:'库存编号',
-            id:'kehukehu_id',
-            name:'kehu_id',
-            allowBlank:true,
-            hidden:true
-        }, {
-            xtype:'textfield',
-            fieldLabel:'款号',
-            id:'kehukuanhao_id',
-            name:'kuanhao_id',
-            allowBlank: false
-        }, {
-            xtype:'textfield',
-            fieldLabel:'颜色',
-            id:'kehuyanse',
-            name:'yanse',
-            allowBlank: false
-        }, {
-            xtype:'textfield',
-            fieldLabel:'尺码',
-            id:'kehuchima',
-            name:'chima',
-            allowBlank: true
-        }, {
-            xtype:'textfield',
-            fieldLabel:'库存数量(件)',
-            id:'kehushuliang',
-            name:'shuliang',
-            allowBlank: false
-        }, {
-            xtype:'textfield',
-            fieldLabel:'进价(元)',
-            id:'jinjia',
-            name:'jinjia',
-            allowBlank: false
-        }, {
-            xtype:'textfield',
-            fieldLabel:'成本(元)',
-            id:'chengbenjia',
-            name:'chengbenjia',
-            allowBlank: false
-        }, {
-            xtype:'textfield',
-            fieldLabel:'建议售价(元)',
-            id:'kehushoujia',
-            name:'shoujia',
-            allowBlank: false
-        }, {
-            xtype:'textareafield',
-            fieldLabel:'备注:',
-            id:'kehubeizhu',
-            name:'beizhu',
-            allowBlank:true
-        }],
-        buttons:[{
-            text: '保存',
-            iconCls : 'icon-submit',
-            handler: function() {
-                var form = editkehuForm.getForm();
-                if (form.isValid()) {
-                    form.submit({
-                        success: function(form, action) {
-                            Ext.Msg.alert('提示','编辑库存成功');
-                            editkehuWin.close();
-                            grid.store.load();
-                        },
-                        failure: function(form, action) {
-                            Ext.Msg.alert('提示','编辑库存失败');
-                        }
-                    });
-                }
-            }
-        }, {
-            text: '关闭',
-            iconCls : 'icon-cancel',
-            handler: function() {
-                editkehuWin.close();
-            }
-        }]
-    });
-   
     
     var editWin = new Ext.Window({
         layout : 'fit',
         width : 400,
         title : '新建客户',
-        height : 440,
+        height : 450,
         closeAction : 'hide',
-        closable : false,
+        modal:true,
         items : [editForm]
 
     });
-    
-    var editkehuWin = new Ext.Window({
-        layout : 'fit',
-        width : 400,
-        title : '编辑库存',
-        height : 440,
-        closeAction : 'hide',
-        closable : false,
-        items : [editkehuForm]
-
-    });
-    
     function showEdit(data) {
-        editkehuForm.getForm().loadRecord(data);
-        Ext.getCmp('kehueditType').setValue(2);
-        editkehuWin.show();
+    	editForm.getForm().loadRecord(data);
+        Ext.getCmp('editType').setValue(2);
+        editWin.title='编辑客户';
+        editWin.show();
     }
     
-    function showAddXiaoshou(obj) {
-    	obj.data.beizhu="";
-    	obj.data.shuliang=1;
-    	editForm.getForm().loadRecord(obj);
-        editWin.show();
+    function showAdd(obj) {
+    	editForm.getForm().reset();
+    	editWin.title='新建客户';
+    	editWin.show();
     }
     
     /*************站点新增/编辑代码(结束)*********************/

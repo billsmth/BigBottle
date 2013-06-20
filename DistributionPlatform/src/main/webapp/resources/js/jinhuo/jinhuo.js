@@ -78,6 +78,13 @@ Ext.onReady(function() {
             text:'复制进货单',
             iconCls:'icon-copy',
             handler:function() {
+            	if(grid.getSelectionModel().selected.items.length<1){
+            		Ext.Msg.alert('提示','请选择要复制的进货单，再点击【复制进货单】按钮');
+                	return;
+            	}else if(grid.getSelectionModel().selected.items.length>1){
+            		Ext.Msg.alert('提示','请选择一条要复制的进货单，本系统咱不支持多条复制');
+                	return;
+            	}
                 var obj = grid.getSelectionModel().selected.items[0];
                 showCopy(obj);
             }
@@ -151,7 +158,10 @@ Ext.onReady(function() {
             text:'删除',
             iconCls:'icon-del',
             handler:function(){
-            	
+            	if(grid.getSelectionModel().selected.items.length<1){
+            		Ext.Msg.alert('提示','请选择要删除的进货单(支持多选)，再点击【删除】按钮');
+                	return;
+            	}
             	Ext.Msg.confirm("请确认", "确认要删除?", function(id){
             		if (id == "yes") {
             			var models = grid.getSelectionModel().selected.items;
@@ -215,7 +225,8 @@ Ext.onReady(function() {
         name:'editForm',
         labelAlign : 'right',
         labelWidth : 50,
-
+        bodyStyle:"padding:10px 7px 0px 7px",
+        autoScroll:true,
         url:'../jinhuo/savejinhuo.action',
 
         layout: 'anchor',

@@ -78,6 +78,13 @@ Ext.onReady(function() {
             text:'复制销售单',
             iconCls:'icon-copy',
             handler:function() {
+            	if(grid.getSelectionModel().selected.items.length<1){
+            		Ext.Msg.alert('提示','请选择要复制的销售单，再点击【复制销售单】按钮');
+                	return;
+            	}else if(grid.getSelectionModel().selected.items.length>1){
+            		Ext.Msg.alert('提示','请选择一条要复制的销售单，本系统咱不支持多条复制');
+                	return;
+            	}
                 var obj = grid.getSelectionModel().selected.items[0];
                 showCopy(obj);
             }
@@ -86,6 +93,13 @@ Ext.onReady(function() {
             text:'编辑',
             iconCls:'icon-edit',
             handler:function() {
+            	if(grid.getSelectionModel().selected.items.length<1){
+            		Ext.Msg.alert('提示','请选择要编辑的销售单，再点击【编辑】按钮');
+                	return;
+            	}else if(grid.getSelectionModel().selected.items.length>1){
+            		Ext.Msg.alert('提示','请选择一条要编辑的销售单，本系统咱不支持多条编辑');
+                	return;
+            	}
                 var obj = grid.getSelectionModel().selected.items[0];
                 showEdit(obj);
             }
@@ -94,6 +108,10 @@ Ext.onReady(function() {
             text:'销售入库',
             iconCls:'icon-checkin',
             handler:function() {
+            	if(grid.getSelectionModel().selected.items.length<1){
+            		Ext.Msg.alert('提示','请选择要入库的销售单(支持多选)，再点击【销售入库】按钮');
+                	return;
+            	}
                 var obj = grid.getSelectionModel().selected.items;
                 if(obj.length==0){
                 	Ext.Msg.alert('提示','请先选择要入库的销售单，再点击【销售入库】按钮');
@@ -150,11 +168,10 @@ Ext.onReady(function() {
             iconCls:'icon-del',
             handler:function(){
             	
-//            	Ext.Msg.confirm("Confirm", "Sure to delete?", function(id){
-//            		if (id != "yes") {
-//            			return;
-//            		}
-//            	}); // this does not work.
+            	if(grid.getSelectionModel().selected.items.length<1){
+            		Ext.Msg.alert('提示','请选择要删除的销售单(支持多选)，再点击【删除】按钮');
+                	return;
+            	}
             	
             	Ext.Msg.confirm("请确认", "确认要删除?", function(id){
             		if (id == "yes") {
@@ -213,7 +230,8 @@ Ext.onReady(function() {
         name:'editForm',
         labelAlign : 'right',
         labelWidth : 50,
-
+        bodyStyle:"padding:10px 7px 0px 7px",
+        autoScroll:true,
         url:'../xiaoshou/savexiaoshou.action',
 
         layout: 'anchor',

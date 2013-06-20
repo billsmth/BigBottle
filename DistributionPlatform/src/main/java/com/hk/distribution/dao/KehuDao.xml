@@ -3,7 +3,7 @@
 <mapper namespace="com.hk.distribution.dao.KehuDao">
 
     <resultMap type="com.hk.distribution.model.Kehu" id="kehuResult">
-        <id property="kucun_id" column="kucun_id"/>
+        <id property="kehu_id" column="kehu_id"/>
         <result property="kuanhao_id" column="kuanhao_id"/>
         <result property="kehuname" column="kehuname"/>
 	    <result property="kehusex" column="kehusex"/>
@@ -28,6 +28,39 @@
     </resultMap>
     
     <select id="getKehuList" resultMap="kehuResult">
-        select kucun_id, kehuname, kehusex, age, biecheng, dianming, phone1, phone2, address1, address2, infor1, infor2, infor3, infor4, zuqun_id, zhuangtai, zhuceriqi, qq, weixin, taobao, beizhu from kehu_table
+        select kehu_id, kehuname, kehusex, age, biecheng, dianming, phone1, phone2, address1, address2, infor1, infor2, infor3, infor4, zuqun_id, zhuangtai, zhuceriqi, qq, weixin, taobao, beizhu from kehu_table
     </select>
+    
+    <select id="getMaxID" resultMap="kehuResult">
+    	select max(kehu_id) kehu_id from kehu_table
+    </select>
+    
+    <insert id="saveKehu" parameterType="com.hk.distribution.model.Kehu">
+        insert into kehu_table values (#{kehu_id}, #{kehuname}, #{kehusex}, #{age}, #{biecheng}, #{dianming}, #{phone1}, #{phone2}, #{address1}, #{address2}, #{infor1}, #{infor2}, #{infor3}, #{infor4}, #{zuqun_id}, #{zhuangtai}, #{zhuceriqi}, #{qq}, #{weixin}, #{taobao}, #{beizhu})
+    </insert>
+    
+    <update id="updateKehu" parameterType="com.hk.distribution.model.Kehu">
+        update kehu_table set 
+			kehuname = #{kehuname},
+			kehusex = #{kehusex},
+			age = #{age},
+			biecheng = #{biecheng},
+			dianming = #{dianming},
+			phone1 = #{phone1},
+			phone2 = #{phone2},
+			address1 = #{address1},
+			address2 = #{address2},
+			infor1 = #{infor1},
+			infor2 = #{infor2},
+			infor3 = #{infor3},
+			infor4 = #{infor4},
+			zuqun_id = #{zuqun_id},
+			zhuangtai = #{zhuangtai},
+			zhuceriqi = #{zhuceriqi},
+			qq = #{qq},
+			weixin = #{weixin},
+			taobao = #{taobao},
+			beizhu = #{beizhu} 
+		where kehu_id = #{kehu_id}
+    </update>
 </mapper>

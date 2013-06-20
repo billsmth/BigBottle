@@ -71,7 +71,7 @@ Ext.onReady(function() {
             id : 'header',
             layout : 'border',
             region : 'north',
-            height : 100,
+            height : 30,
             html:"<img src='resources/img/logo.jpg'/>"
         }, treePanel, mainPanel],
         renderTo : Ext.getBody()

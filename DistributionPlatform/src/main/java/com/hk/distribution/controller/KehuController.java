@@ -3,24 +3,26 @@ package com.hk.distribution.controller;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.hk.distribution.model.Kucun;
-import com.hk.distribution.service.KucunService;
+import com.hk.distribution.model.Kehu;
+import com.hk.distribution.service.KehuService;
 
 @Controller
 @RequestMapping("/kehu")
 public class KehuController {
 
     @Autowired
-    private KucunService kucunService;
+    private KehuService kehuService;
 
     @RequestMapping("/kehumgt")
-    public ModelAndView listKucun() {
+    public ModelAndView listKehu() {
 
         ModelAndView mav = new ModelAndView();
 
@@ -28,45 +30,53 @@ public class KehuController {
         return mav;
     }
     
-    @RequestMapping("/releasekucunstatusmg")
-    public ModelAndView listKucunProducts() {
-
-        ModelAndView mav = new ModelAndView();
-
-        mav.setViewName("kucun/releasekucunstatusmg");
-        return mav;
-    }
-    
-    @RequestMapping("/productkucunapprove")
-    public ModelAndView listProductsMG() {
-
-        ModelAndView mav = new ModelAndView();
-
-        mav.setViewName("kucun/productkucunapprove");
-        return mav;
-    }
-
-    @RequestMapping("/savekucun")
+    @RequestMapping("/savekehu")
     @ResponseBody
-    public String saveKucun(String editType, String kucun_id, String kuanhao_id, String yanse, String chima, String shuliang, String jinjia, String chengbenjia, String shoujia, String beizhu) {
+    public String saveKehu(HttpServletRequest request, String editType, String kehu_id) {
+    	Kehu kehu=null;
+    	if ("1".equals(editType)){
+    		//have another?
+    		
+    		// this is a new kehu
+    		Kehu IdKehu=kehuService.getMaxID();
+    		kehu = new Kehu(IdKehu.getKehu_id()+1);
+    		kehu.setZhuangtai("0");
+    	} else if ("2".equals(editType)) {
+    		kehu = new Kehu(Long.parseLong(request.getParameter("kehu_id")));
+    	}
+        
+        kehu.setKehuname(request.getParameter("kehuname"));
+        kehu.setKehusex(request.getParameter("kehusex"));
+        String age=request.getParameter("age");
+        if(null==age || "".equals(age)){
+        	age="0";
+        }
+        kehu.setAge(Long.parseLong(age));
+        kehu.setBiecheng(request.getParameter("biecheng"));
+        kehu.setDianming(request.getParameter("dianming"));
+        kehu.setPhone1(request.getParameter("phone1"));
+        kehu.setPhone2(request.getParameter("phone2"));
+        kehu.setAddress1(request.getParameter("address1"));
+        kehu.setAddress2(request.getParameter("address2"));
+        kehu.setInfor1(request.getParameter("infor1"));
+        kehu.setInfor2(request.getParameter("infor2"));
+        kehu.setInfor3(request.getParameter("infor3"));
+        kehu.setInfor4(request.getParameter("infor4"));
+        kehu.setZuqun_id(request.getParameter("zuqun_id"));
+        kehu.setZhuangtai(request.getParameter("zhuangtai"));
+        kehu.setZhuceriqi(request.getParameter("zhuceriqi"));
+        kehu.setQq(request.getParameter("qq"));
+        kehu.setWeixin(request.getParameter("weixin"));
+        kehu.setTaobao(request.getParameter("taobao"));
+        kehu.setBeizhu(request.getParameter("beizhu"));
 
-        Kucun kucun = new Kucun();
-        kucun.setKucun_id(Long.parseLong(kucun_id));
-        kucun.setKuanhao_id(kuanhao_id);
-        kucun.setYanse(yanse);
-        kucun.setChima(chima);
-        kucun.setShuliang(Integer.valueOf(shuliang));
-        kucun.setJinjia(Float.valueOf(jinjia));
-        kucun.setChengbenjia(Float.valueOf(chengbenjia));
-        kucun.setShoujia(Float.valueOf(shoujia));
-        kucun.setBeizhu(beizhu);
         
         if ("1".equals(editType)) {
 
-            kucunService.saveKucun(kucun);
+            kehuService.saveKehu(kehu);
         } else if ("2".equals(editType)) {
 
-            kucunService.updateKucun(kucun);
+            kehuService.updateKehu(kehu);
         }
 
         return "{'success':true}";
@@ -74,19 +84,19 @@ public class KehuController {
     
     @RequestMapping("/delete")
     @ResponseBody
-    public String deleteKucun(String address) {
+    public String deleteKehu(String address) {
         
         String[] rets = address.split(",");
-        kucunService.deleteKucunByKuanhao_id(Arrays.asList(rets));
+        kehuService.deleteKehuByKuanhao_id(Arrays.asList(rets));
         
         return "{'success':true}";
     }
 
     @RequestMapping("/json/list")
     @ResponseBody
-    public List<Kucun> getKucunListByJson() {
+    public List<Kehu> getKehuListByJson() {
 
-        List<Kucun> list = kucunService.getKucunList();
+        List<Kehu> list = kehuService.getKehuList();
         return list;
     }
 }

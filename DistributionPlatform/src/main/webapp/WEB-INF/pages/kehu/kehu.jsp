@@ -4,7 +4,7 @@
     <head>
         <%@ include file="../common.jsp" %>
 
-        <title>库存 列表</title>
+        <title>客户 列表</title>
         <script type="text/javascript" src="../resources/js/kehu/kehu.js"></script>
 
     </head>
