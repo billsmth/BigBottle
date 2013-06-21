@@ -16,7 +16,7 @@ import com.hk.distribution.service.KehuService;
 
 @Controller
 @RequestMapping("/kehu")
-public class KehuController {
+public class BaobiaoController {
 
     @Autowired
     private KehuService kehuService;
@@ -97,15 +97,6 @@ public class KehuController {
     public List<Kehu> getKehuListByJson() {
 
         List<Kehu> list = kehuService.getKehuList();
-        return list;
-    }
-    
-    @RequestMapping("/json/search")
-    @ResponseBody
-    public List<Kehu> getKehuListByJson(String kehu_id) {
-    	Kehu kehu=new Kehu();
-    	kehu.setKehu_id(Long.parseLong(kehu_id));
-        List<Kehu> list = kehuService.getKehuList(kehu);
         return list;
     }
 }

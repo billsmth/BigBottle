@@ -7,7 +7,7 @@ import com.hk.distribution.model.Kehu;
 public interface KehuDao {
 
 	public List<Kehu> getKehuList();
-
+	public List<Kehu> searchKehuList(Kehu kehu);
 	public List<Kehu> getKehu(Kehu Kehu);
 	public List<Kehu> getMaxID();
 	

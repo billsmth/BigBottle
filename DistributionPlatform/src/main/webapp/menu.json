@@ -22,5 +22,17 @@
     "cls" : "forum-ct",
     "leaf": true,
     "qtitle" : "kehu/kehumgt.action"
+    }, {
+    "id" : "5",
+    "text" : "报表统计",
+    "cls" : "forum-ct",
+    "leaf": true,
+    "qtitle" : "baobiao/baobiaomgt.action"
+    }, {
+    "id" : "6",
+    "text" : "测试",
+    "cls" : "forum-ct",
+    "leaf": true,
+    "qtitle" : "test/testmgt.action"
     }
 ]

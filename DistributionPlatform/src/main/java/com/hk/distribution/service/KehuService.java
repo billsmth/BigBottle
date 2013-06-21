@@ -7,6 +7,7 @@ import com.hk.distribution.model.Kehu;
 public interface KehuService {
 
     public List<Kehu> getKehuList();
+    public List<Kehu> getKehuList(Kehu kehu);
     public Kehu getKehu(Kehu Kehu);
     
     public Kehu getKehubyKYC(Kehu Kehu);

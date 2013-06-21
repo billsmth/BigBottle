@@ -31,6 +31,23 @@
         select kehu_id, kehuname, kehusex, age, biecheng, dianming, phone1, phone2, address1, address2, infor1, infor2, infor3, infor4, zuqun_id, zhuangtai, zhuceriqi, qq, weixin, taobao, beizhu from kehu_table
     </select>
     
+    <select id="searchKehuList" resultMap="kehuResult" parameterType="com.hk.distribution.model.Kehu">
+        select kehu_id, kehuname, kehusex, age, biecheng, dianming, phone1, phone2, address1, address2, infor1, infor2, infor3, infor4, zuqun_id, zhuangtai, zhuceriqi, qq, weixin, taobao, beizhu 
+        	from kehu_table 
+        	<trim prefix="where" prefixOverrides="and|or">
+        		<if test="kehu_id != null">
+        			 kehu_id=#{kehu_id}
+        		</if>
+        		<if test="kehuname != null">
+        			 or kehuname=#{kehuname}
+        		</if>
+        		
+        		<if test="biecheng != null">
+        			or biecheng=#{biecheng}
+        		</if>
+        	</trim>
+    </select>
+    
     <select id="getMaxID" resultMap="kehuResult">
     	select max(kehu_id) kehu_id from kehu_table
     </select>

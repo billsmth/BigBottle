@@ -14,4 +14,11 @@ public class Tools {
 	public static String getDataTime(){
     	return String.valueOf(FORMATTER2.format(new Date()));
 	}
+	
+	public static boolean isBlank(String str){
+		if(null==str||str.equals("")||str.trim().equals("")){
+			return true;
+		}
+		return false;
+	}
 }

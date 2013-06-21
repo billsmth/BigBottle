@@ -23,6 +23,11 @@ public class KehuServiceImpl implements KehuService {
     }
     
     @Override
+    public List<Kehu> getKehuList(Kehu kehu) {
+        return kehuDao.searchKehuList(kehu);
+    }
+    
+    @Override
     public Kehu getKehu(Kehu kehu) {
         return kehuDao.getKehu(kehu).get(0);
     }
