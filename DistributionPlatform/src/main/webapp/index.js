@@ -13,7 +13,7 @@ Ext.onReady(function() {
 
     var treePanel = Ext.create('Ext.tree.Panel', {
         id : 'tree-panel',
-        title : '菜单',
+        title : '系统菜单',
         region : 'west',
         expanded : true,
         collapsible : true,
@@ -44,7 +44,7 @@ Ext.onReady(function() {
                     id: record.get('id'),
                     title: record.get('text'),
                     closable: true,
-                    html:'<iframe id="aaa" frameborder="0" noresize=\'noresize\' width="100%" height="100%" src=\''+record.get('qtitle')+'\'>'
+                    html:'<iframe id="contentFrame" frameborder="0" noresize=\'noresize\' width="100%" height="100%" src=\''+record.get('qtitle')+'\'>'
                 }).show();
             }
         }// /listeners
@@ -58,7 +58,7 @@ Ext.onReady(function() {
             id : 'welcome',
             title : 'Welcome',
             closable : true,
-            html : '<h1>欢迎使用<h1/>'
+            html : '<center><img src="resources/img/6lsm727_727.jpg"/></center>'
         }]
     });
 
