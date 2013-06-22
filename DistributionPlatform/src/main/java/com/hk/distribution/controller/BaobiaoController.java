@@ -11,72 +11,72 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.hk.distribution.model.Kehu;
-import com.hk.distribution.service.KehuService;
+import com.hk.distribution.model.Baobiao;
+import com.hk.distribution.service.BaobiaoService;
 
 @Controller
-@RequestMapping("/kehu")
+@RequestMapping("/baobiao")
 public class BaobiaoController {
 
     @Autowired
-    private KehuService kehuService;
+    private BaobiaoService baobiaoService;
 
-    @RequestMapping("/kehumgt")
-    public ModelAndView listKehu() {
+    @RequestMapping("/baobiaomgt")
+    public ModelAndView listBaobiao() {
 
         ModelAndView mav = new ModelAndView();
 
-        mav.setViewName("kehu/kehu");
+        mav.setViewName("baobiao/baobiao");
         return mav;
     }
     
-    @RequestMapping("/savekehu")
+    @RequestMapping("/savebaobiao")
     @ResponseBody
-    public String saveKehu(HttpServletRequest request, String editType, String kehu_id) {
-    	Kehu kehu=null;
+    public String saveBaobiao(HttpServletRequest request, String editType, String baobiao_id) {
+    	Baobiao baobiao=null;
     	if ("1".equals(editType)){
     		//have another?
     		
-    		// this is a new kehu
-    		Kehu IdKehu=kehuService.getMaxID();
-    		kehu = new Kehu(IdKehu.getKehu_id()+1);
-    		kehu.setZhuangtai("0");
+    		// this is a new baobiao
+    		Baobiao IdBaobiao=baobiaoService.getMaxID();
+//    		baobiao = new Baobiao(IdBaobiao.getBaobiao_id()+1);
+    		baobiao.setZhuangtai("0");
     	} else if ("2".equals(editType)) {
-    		kehu = new Kehu(Long.parseLong(request.getParameter("kehu_id")));
+    		baobiao = new Baobiao(Long.parseLong(request.getParameter("baobiao_id")));
     	}
         
-        kehu.setKehuname(request.getParameter("kehuname"));
-        kehu.setKehusex(request.getParameter("kehusex"));
+//        baobiao.setBaobiaoname(request.getParameter("baobiaoname"));
+//        baobiao.setBaobiaosex(request.getParameter("baobiaosex"));
         String age=request.getParameter("age");
         if(null==age || "".equals(age)){
         	age="0";
         }
-        kehu.setAge(Long.parseLong(age));
-        kehu.setBiecheng(request.getParameter("biecheng"));
-        kehu.setDianming(request.getParameter("dianming"));
-        kehu.setPhone1(request.getParameter("phone1"));
-        kehu.setPhone2(request.getParameter("phone2"));
-        kehu.setAddress1(request.getParameter("address1"));
-        kehu.setAddress2(request.getParameter("address2"));
-        kehu.setInfor1(request.getParameter("infor1"));
-        kehu.setInfor2(request.getParameter("infor2"));
-        kehu.setInfor3(request.getParameter("infor3"));
-        kehu.setInfor4(request.getParameter("infor4"));
-        kehu.setZuqun_id(request.getParameter("zuqun_id"));
-        kehu.setZhuangtai(request.getParameter("zhuangtai"));
-        kehu.setZhuceriqi(request.getParameter("zhuceriqi"));
-        kehu.setQq(request.getParameter("qq"));
-        kehu.setWeixin(request.getParameter("weixin"));
-        kehu.setTaobao(request.getParameter("taobao"));
-        kehu.setBeizhu(request.getParameter("beizhu"));
+        baobiao.setAge(Long.parseLong(age));
+        baobiao.setBiecheng(request.getParameter("biecheng"));
+        baobiao.setDianming(request.getParameter("dianming"));
+        baobiao.setPhone1(request.getParameter("phone1"));
+        baobiao.setPhone2(request.getParameter("phone2"));
+        baobiao.setAddress1(request.getParameter("address1"));
+        baobiao.setAddress2(request.getParameter("address2"));
+        baobiao.setInfor1(request.getParameter("infor1"));
+        baobiao.setInfor2(request.getParameter("infor2"));
+        baobiao.setInfor3(request.getParameter("infor3"));
+        baobiao.setInfor4(request.getParameter("infor4"));
+        baobiao.setZuqun_id(request.getParameter("zuqun_id"));
+        baobiao.setZhuangtai(request.getParameter("zhuangtai"));
+        baobiao.setZhuceriqi(request.getParameter("zhuceriqi"));
+        baobiao.setQq(request.getParameter("qq"));
+        baobiao.setWeixin(request.getParameter("weixin"));
+        baobiao.setTaobao(request.getParameter("taobao"));
+        baobiao.setBeizhu(request.getParameter("beizhu"));
 
         
         if ("1".equals(editType)) {
 
-            kehuService.saveKehu(kehu);
+            baobiaoService.saveBaobiao(baobiao);
         } else if ("2".equals(editType)) {
 
-            kehuService.updateKehu(kehu);
+            baobiaoService.updateBaobiao(baobiao);
         }
 
         return "{'success':true}";
@@ -84,19 +84,19 @@ public class BaobiaoController {
     
     @RequestMapping("/delete")
     @ResponseBody
-    public String deleteKehu(String address) {
+    public String deleteBaobiao(String address) {
         
         String[] rets = address.split(",");
-        kehuService.deleteKehuByKuanhao_id(Arrays.asList(rets));
+        baobiaoService.deleteBaobiaoByKuanhao_id(Arrays.asList(rets));
         
         return "{'success':true}";
     }
 
     @RequestMapping("/json/list")
     @ResponseBody
-    public List<Kehu> getKehuListByJson() {
+    public List<Baobiao> getBaobiaoListByJson() {
 
-        List<Kehu> list = kehuService.getKehuList();
+        List<Baobiao> list = baobiaoService.getBaobiaoList();
         return list;
     }
 }
