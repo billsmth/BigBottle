@@ -53,9 +53,9 @@ Ext.onReady(function() {
         }, {
         	header:'数量（件）',dataIndex:'shuliang', width:80
         }, {
-        	header:'进价（元）',dataIndex:'jinjia', width:80
+        	header:'进价（元）',dataIndex:'jinjia', width:80//,hidden: true,hideable: false
         }, {
-        	header:'成本价（元）',dataIndex:'chengbenjia', width:80
+        	header:'成本价（元）',dataIndex:'chengbenjia', width:80//,hidden: true,hideable: false
         }, {
         	header:'售价（元）',dataIndex:'shoujia', width:80
         }, {
@@ -166,7 +166,7 @@ Ext.onReady(function() {
             		if (id == "yes") {
             			var models = grid.getSelectionModel().selected.items;
             			for(var a=0;a<models.length;a++){
-                    		if(obj[a].data.zhuangtai=='1'){
+                    		if(models[a].data.zhuangtai=='1'){
                             	Ext.Msg.alert('非法操作','已入库的入库单不能被删除,您选择了已入库的入库单，请剔除。');
                             	return;
                             }
@@ -288,13 +288,15 @@ Ext.onReady(function() {
             fieldLabel:'进价',
             id:'jinjia',
             name:'jinjia',
-            allowBlank: true
+            allowBlank: true,
+            hidden:true
         }, {
             xtype:'textfield',
             fieldLabel:'成本价',
             id:'chengbenjia',
             name:'chengbenjia',
-            allowBlank: true
+            allowBlank: true,
+            hidden:true
         }, {
             xtype:'textfield',
             fieldLabel:'建议售价',
@@ -341,7 +343,17 @@ Ext.onReady(function() {
             }
         }]
     });
-   
+    if(group=="1"||group=="2"){
+    	Ext.getCmp('jinjia').hidden=false;
+    	Ext.getCmp('chengbenjia').hidden=false;
+    }
+    
+    if(group==null||group=="3"){
+    	grid.columns[8].hideable=false;
+    	grid.columns[8].hidden=true;
+    	grid.columns[9].hideable=false;
+    	grid.columns[9].hidden=true;
+    }
     
     var editWin;
     

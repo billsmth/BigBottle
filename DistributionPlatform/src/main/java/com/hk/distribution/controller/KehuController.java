@@ -69,7 +69,6 @@ public class KehuController {
         kehu.setWeixin(request.getParameter("weixin"));
         kehu.setTaobao(request.getParameter("taobao"));
         kehu.setBeizhu(request.getParameter("beizhu"));
-
         
         if ("1".equals(editType)) {
 

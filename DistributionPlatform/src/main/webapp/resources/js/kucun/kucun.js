@@ -29,36 +29,10 @@ Ext.onReady(function() {
             }
         }
     });
-
-    /*
-     * Kucun Grid Object
-     */
-    var grid = Ext.create('Ext.grid.Panel', {
-        id:'kucunGrid',
-        store: kucunStore,
-        columnLines:true,
-        selModel: Ext.create('Ext.selection.CheckboxModel'),
-        columns:[{
-            header:'库存编号',dataIndex:'kucun_id', width:140
-        }, {
-        	header:'档口款号',dataIndex:'kuanhao_id', width:80
-        }, {
-        	header:'颜色',dataIndex:'yanse', width:80
-        }, {
-        	header:'尺码',dataIndex:'chima', width:40
-        }, {
-        	header:'数量(件)',dataIndex:'shuliang', width:80
-        }, {
-        	header:'进价(元)',dataIndex:'jinjia', width:80
-        }, {
-        	header:'成本价(元)',dataIndex:'chengbenjia', width:80
-        }, {
-        	header:'建议售价(元)',dataIndex:'shoujia', width:80
-        }, {
-        	header:'备注',dataIndex:'beizhu', flex:1
-        }],
-        bbar: Ext.create('Ext.PagingToolbar', {displayInfo:true, emptyMsg:'没有记录', store:kucunStore}),
-        tbar:[{
+    
+    var userMenu;
+    if(group=="1"||group=="2"){
+    	userMenu=[{
             id:'addNew',
             text: '创建销售单',
             iconCls:'icon-add',
@@ -88,7 +62,55 @@ Ext.onReady(function() {
                 var obj = grid.getSelectionModel().selected.items[0];
                 showEdit(obj);
             }
-        }]
+        }];
+    } else {
+    	userMenu=[{
+            id:'addNew',
+            text: '创建销售单',
+            iconCls:'icon-add',
+            handler:function(){
+            	if(grid.getSelectionModel().selected.items.length<1){
+            		Ext.Msg.alert('提示','请先选择库存记录，再点击【创建销售单】按钮');
+                	return;
+            	}else if(grid.getSelectionModel().selected.items.length>1){
+            		Ext.Msg.alert('提示','请选择一条库存记录，本系统咱不支持多条创建');
+                	return;
+            	}
+            	var obj = grid.getSelectionModel().selected.items[0];
+            	showAddXiaoshou(obj);
+            }
+        }];
+    }
+
+    /*
+     * Kucun Grid Object
+     */
+    var grid = Ext.create('Ext.grid.Panel', {
+        id:'kucunGrid',
+        store: kucunStore,
+        columnLines:true,
+        selModel: Ext.create('Ext.selection.CheckboxModel'),
+        columns:[{
+            header:'库存编号',dataIndex:'kucun_id', width:140
+        }, {
+        	header:'档口款号',dataIndex:'kuanhao_id', width:80
+        }, {
+        	header:'颜色',dataIndex:'yanse', width:80
+        }, {
+        	header:'尺码',dataIndex:'chima', width:40
+        }, {
+        	header:'数量(件)',dataIndex:'shuliang', width:80
+        }, {
+        	header:'进价(元)',dataIndex:'jinjia', width:80
+        }, {
+        	header:'成本价(元)',dataIndex:'chengbenjia', width:80
+        }, {
+        	header:'建议售价(元)',dataIndex:'shoujia', width:80
+        }, {
+        	header:'备注',dataIndex:'beizhu', flex:1
+        }],
+        bbar: Ext.create('Ext.PagingToolbar', {displayInfo:true, emptyMsg:'没有记录', store:kucunStore}),
+        tbar:userMenu
     });
     
     /*
@@ -277,13 +299,15 @@ var editkucunForm = new Ext.form.FormPanel({
             fieldLabel:'进价(元)',
             id:'jinjia',
             name:'jinjia',
-            allowBlank: false
+            allowBlank: false,
+            hidden:true
         }, {
             xtype:'textfield',
             fieldLabel:'成本(元)',
             id:'chengbenjia',
             name:'chengbenjia',
-            allowBlank: false
+            allowBlank: false,
+            hidden:true
         }, {
             xtype:'textfield',
             fieldLabel:'建议售价(元)',
@@ -324,7 +348,18 @@ var editkucunForm = new Ext.form.FormPanel({
         }]
     });
    
-    
+	if(group=="1"||group=="2"){
+		Ext.getCmp('jinjia').hidden=false;
+		Ext.getCmp('chengbenjia').hidden=false;
+	}
+	
+	if(group==null||group=="3"){
+    	grid.columns[6].hideable=false;
+    	grid.columns[6].hidden=true;
+    	grid.columns[7].hideable=false;
+    	grid.columns[7].hidden=true;
+    }
+	
     var editWin = new Ext.Window({
         layout : 'fit',
         width : 400,

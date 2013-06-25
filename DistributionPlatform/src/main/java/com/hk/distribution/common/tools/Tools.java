@@ -1,7 +1,10 @@
 package com.hk.distribution.common.tools;
 
+import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import javax.servlet.http.HttpServletRequest;
 
 public class Tools {
 	public static String WEIHAO_0001="0001";
@@ -20,5 +23,14 @@ public class Tools {
 			return true;
 		}
 		return false;
+	}
+	
+	public static String getReqPram(HttpServletRequest request, String param){
+		try {
+			return new String(request.getParameter(param).getBytes("ISO-8859-1"), "utf-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 }

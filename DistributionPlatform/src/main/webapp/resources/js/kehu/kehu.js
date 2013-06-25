@@ -130,7 +130,24 @@ Ext.onReady(function() {
         }
     }
     /*************站点列表代码(结束)**************************/
-    
+    var radiogroup = new Ext.form.RadioGroup({
+        fieldLabel: '性别',
+        width: 100,
+        items: [{
+            name: 'sex',
+            inputValue: '1',
+            boxLabel: '女士',
+            checked: true
+        }, {
+            name: 'sex',
+            inputValue: '2',
+            boxLabel: '男士'
+        }]
+    });
+    //获取单选组的值
+    radiogroup.on('change', function (rdgroup, checked) {
+        alert(checked.getRawValue());
+    });
     /*************库存新增/编辑代码(开始)*********************/
     var editForm = new Ext.form.FormPanel({
         
@@ -166,7 +183,8 @@ Ext.onReady(function() {
             name:'kehuname',
             emptyText:"请输入客户姓名(必填)",
             allowBlank: false
-        }, {
+        },radiogroup
+        /*{
         	xtype:'combo',
         	name:'kehusex',
             fieldLabel:'性别',
@@ -178,7 +196,7 @@ Ext.onReady(function() {
             mode:"local",
             value:1,
             store:new Ext.data.ArrayStore({fields:["id","name"],data:[[1,"女"],[2,"男"]]})
-        }, {
+        }*/, {
             xtype:'textfield',
             fieldLabel:'年龄',
             id:'age',
