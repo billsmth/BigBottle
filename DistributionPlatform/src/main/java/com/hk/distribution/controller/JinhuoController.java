@@ -74,7 +74,7 @@ public class JinhuoController {
             	jinhuo.setJinhuo_id(jinhuo.getJinhuo_id()+1);
             }
             jinhuo.setZhuangtai("0");
-            jinhuo.setDelflg("false");
+            jinhuo.setDelflg("0");
     	} else if ("2".equals(editType)) {
     		jinhuo.setJinhuo_id(Long.parseLong(jinhuo_id));
     		jinhuo.setZhuangtai(zhuangtai);

@@ -1,12 +1,15 @@
 package com.hk.distribution.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import com.hk.distribution.model.Xiaoshou;
 
 public interface XiaoshouDao {
 
 	public List<Xiaoshou> getXiaoshouList();
+	
+	public List<Xiaoshou> getSaleMgtList(Map<String,String> map);
 	
 	public List<Xiaoshou> getMaxID();
 
@@ -18,5 +21,5 @@ public interface XiaoshouDao {
 	
 	public void updateXiaoshouruku(Xiaoshou xiaoshou);
 	
-	public void deleteXiaoshouByKuanhao_id(List<String> kuanhao_id);
+	public void deleteXiaoshouByID(List<String> xiaoshou_id);
 }

@@ -1,6 +1,7 @@
 package com.hk.distribution.service.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,11 @@ public class XiaoshouServiceImpl implements XiaoshouService {
     @Override
     public List<Xiaoshou> getXiaoshouList() {
         return xiaoshouDao.getXiaoshouList();
+    }
+    
+    @Override
+    public List<Xiaoshou> getSaleMgtList(Map<String,String> map) {
+        return xiaoshouDao.getSaleMgtList(map);
     }
     
     @Override
@@ -53,8 +59,8 @@ public class XiaoshouServiceImpl implements XiaoshouService {
     }
 
     @Override
-    public void deleteXiaoshouByKuanhao_id(List<String> Kuanhao_id) {
-        xiaoshouDao.deleteXiaoshouByKuanhao_id(Kuanhao_id);
+    public void deleteXiaoshouByID(List<String> xiaoshou_id) {
+        xiaoshouDao.deleteXiaoshouByID(xiaoshou_id);
     }
 
     public void setXiaoshouDao(XiaoshouDao xiaoshouDao) {

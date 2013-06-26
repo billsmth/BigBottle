@@ -61,7 +61,7 @@ Ext.onReady(function() {
         }, {
         	header:'进货单状态',dataIndex:'zhuangtai', width:80, renderer:showTypeChange
         }, {
-        	header:'是否删除',dataIndex:'delflg', width:60
+        	header:'是否删除',dataIndex:'delflg', width:60, renderer:showDelStatus
         }, {
         	header:'备注',dataIndex:'beizhu', flex:1
         }],
@@ -101,6 +101,12 @@ Ext.onReady(function() {
                 	return;
             	}
                 var obj = grid.getSelectionModel().selected.items[0];
+                
+                if(obj.data.zhuangtai=='1'){
+                	Ext.Msg.alert('提示','此进货单已经入库，不能再进行编辑。');
+                	return;
+                }
+                
                 showEdit(obj);
             }
         }, '-', {
@@ -215,6 +221,14 @@ Ext.onReady(function() {
             return '未入库';
         } else if(val == '1'){
             return '已入库';
+        }
+    }
+    
+    function showDelStatus(val) {
+        if(val == '0') {
+            return '未删除';
+        } else if(val == '1'){
+            return '已删除';
         }
     }
     /*************站点列表代码(结束)**************************/

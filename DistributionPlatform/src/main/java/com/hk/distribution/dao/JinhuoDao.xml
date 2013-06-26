@@ -19,7 +19,7 @@
     </resultMap>
 
     <select id="getJinhuoList" resultMap="jinhuoResult">
-        select jinhuo_id, danhao_id, jinhuoriqi, kuanhao_id,yanse, chima,shuliang,jinjia,chengbenjia,shoujia,zhuangtai,delflg,beizhu from jinhuo_table where delflg=='false'
+        select jinhuo_id, danhao_id, jinhuoriqi, kuanhao_id,yanse, chima,shuliang,jinjia,chengbenjia,shoujia,zhuangtai,delflg,beizhu from jinhuo_table where delflg='0'
     </select>
     
     <select id="getJinhuo" resultMap="jinhuoResult" parameterType="com.hk.distribution.model.Jinhuo">
@@ -60,7 +60,7 @@
     </delete>
      -->
     <delete id="deleteJinhuoByID" parameterType="list">
-        update jinhuo_table set delflg ='true'  
+        update jinhuo_table set delflg ='1'  
         where jinhuo_id in 
         <foreach item="jinhuo_id"  collection="list" open="(" separator="," close=")">
             #{jinhuo_id}

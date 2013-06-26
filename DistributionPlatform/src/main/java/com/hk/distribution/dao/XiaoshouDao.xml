@@ -19,8 +19,16 @@
     </resultMap>
     
     <select id="getXiaoshouList" resultMap="xiaoshouResult">
-        select xiaoshou_id, kucun_id, kuanhao_id, yanse, chima, shuliang, shoujia, shijishoukuan, maijia_id, maijiaxingming, zhuangtai, delflg, beizhu from xiaoshou_table where delflg=='false'
+        select xiaoshou_id, kucun_id, kuanhao_id, yanse, chima, shuliang, shoujia, shijishoukuan, maijia_id, maijiaxingming, zhuangtai, delflg, beizhu from xiaoshou_table where delflg='0'
     </select>
+    
+    <select id="getSaleMgtList" resultMap="xiaoshouResult" parameterType="java.util.Map">
+        select kuanhao_id,yanse,chima,sum(shuliang) shuliang,shoujia,sum(shijishoukuan) shijishoukuan  
+        from xiaoshou_table 
+        where xiaoshou_id>201306000000  
+        group by kuanhao_id,yanse,chima
+    </select>
+    
     <select id="getMaxID" resultMap="xiaoshouResult">
     	select max(xiaoshou_id) xiaoshou_id from xiaoshou_table
     </select>
@@ -49,10 +57,11 @@
         where xiaoshou_id = #{xiaoshou_id}
     </update>
     
-    <delete id="deleteXiaoshouByAdress" parameterType="list">
-        delete from site where address in 
-        <foreach item="addr"  collection="list" open="(" separator="," close=")">
-            #{addr}
+    <delete id="deleteXiaoshouByID" parameterType="list">
+        update xiaoshou_table set delflg ='1'  
+        where xiaoshou_id in 
+        <foreach item="xiaoshou_id"  collection="list" open="(" separator="," close=")">
+            #{xiaoshou_id}
         </foreach>
     </delete>
 </mapper>

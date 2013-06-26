@@ -31,14 +31,14 @@
 				    "text" : "销售统计",
 				    "cls" : "forum-ct",
 				    "leaf": true,
-				    "qtitle" : "baobiao/baobiaomgt.action"
-				    },{
+				    "qtitle" : "salemgt/salemgt.action"
+				 },{
 				    "id" : "52",
 				    "text" : "财务统计",
 				    "cls" : "forum-ct",
 				    "leaf": true,
 				    "qtitle" : "baobiao/baobiaomgt.action"
-				    }]
+				 }]
     }, {
     "id" : "6",
     "text" : "测试",

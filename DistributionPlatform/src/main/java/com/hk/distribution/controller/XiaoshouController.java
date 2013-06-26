@@ -77,7 +77,7 @@ public class XiaoshouController {
 	        	xiaoshou.setXiaoshou_id(xiaoshou.getXiaoshou_id()+1);
 	        }
 	        xiaoshou.setZhuangtai("0");
-	        xiaoshou.setDelflg("false");
+	        xiaoshou.setDelflg("0");
     	} else if ("2".equals(editType)) {
     		xiaoshou.setXiaoshou_id(Long.parseLong(xiaoshou_id));
     		xiaoshou.setZhuangtai(zhuangtai);
@@ -107,10 +107,10 @@ public class XiaoshouController {
     
     @RequestMapping("/delete")
     @ResponseBody
-    public String deleteXiaoshou(String address) {
+    public String deleteXiaoshou(String xiaoshouids) {
         
-        String[] rets = address.split(",");
-        xiaoshouService.deleteXiaoshouByKuanhao_id(Arrays.asList(rets));
+        String[] rets = xiaoshouids.split(",");
+        xiaoshouService.deleteXiaoshouByID(Arrays.asList(rets));
         
         return "{'success':true}";
     }

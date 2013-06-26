@@ -61,7 +61,7 @@ Ext.onReady(function() {
         }, {
         	header:'状态',dataIndex:'zhuangtai', width:50, renderer:showTypeChange
         }, {
-        	header:'是否删除',dataIndex:'delflg', width:60
+        	header:'是否删除',dataIndex:'delflg', width:60, renderer:showDelStatus
         }, {
         	header:'备注',dataIndex:'beizhu', flex:1
         }],
@@ -101,6 +101,11 @@ Ext.onReady(function() {
                 	return;
             	}
                 var obj = grid.getSelectionModel().selected.items[0];
+                
+                if(obj.data.zhuangtai=='1'){
+                	Ext.Msg.alert('提示','此销售单已经入库，不能再进行编辑。');
+                	return;
+                }
                 showEdit(obj);
             }
         }, '-', {
@@ -176,9 +181,17 @@ Ext.onReady(function() {
             	Ext.Msg.confirm("请确认", "确认要删除?", function(id){
             		if (id == "yes") {
             			var models = grid.getSelectionModel().selected.items;
+            			
+            			for(var a=0;a<models.length;a++){
+                    		if(models[a].data.zhuangtai=='1'){
+                            	Ext.Msg.alert('非法操作','已入库的销售单不能被删除,您选择了已入库的销售单，请剔除。');
+                            	return;
+                            }
+                    	}
+            			
                         var ids = '';
                         Ext.iterate(models, function(key, value) {
-                            var tmp = key.data.address;
+                            var tmp = key.data.xiaoshou_id;
                             if(ids.length !=0) {
                                 ids = ids + ',' + tmp;
                             } else {
@@ -188,7 +201,7 @@ Ext.onReady(function() {
                         Ext.Ajax.request({
                             url : '../xiaoshou/delete.action',
                             params : {
-                                address : ids
+                            	xiaoshouids : ids
                             },
 
                             success : function(response, option) {
@@ -219,6 +232,13 @@ Ext.onReady(function() {
             return '未入库';
         } else if(val == '1'){
             return '已入库';
+        }
+    }
+    function showDelStatus(val) {
+        if(val == '0') {
+            return '未删除';
+        } else if(val == '1'){
+            return '已删除';
         }
     }
     /*************站点列表代码(结束)**************************/
