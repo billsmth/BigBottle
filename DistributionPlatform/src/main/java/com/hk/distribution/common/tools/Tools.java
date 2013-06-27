@@ -10,12 +10,17 @@ public class Tools {
 	public static String WEIHAO_0001="0001";
 	public static SimpleDateFormat FORMATTER1 = new SimpleDateFormat("yyyyMMdd");
 	public static SimpleDateFormat FORMATTER2 = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+	public static SimpleDateFormat FORMATTER3 = new SimpleDateFormat("yyyy-MM-dd");
 	public static Long getDataStr(){
     	return Long.parseLong(FORMATTER1.format(new Date()));
 	}
 	
 	public static String getDataTime(){
     	return String.valueOf(FORMATTER2.format(new Date()));
+	}
+	
+	public static String getData(){
+    	return String.valueOf(FORMATTER3.format(new Date()));
 	}
 	
 	public static boolean isBlank(String str){
@@ -32,5 +37,8 @@ public class Tools {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	public static SimpleDateFormat getDateFormat(){
+		return FORMATTER3;
 	}
 }

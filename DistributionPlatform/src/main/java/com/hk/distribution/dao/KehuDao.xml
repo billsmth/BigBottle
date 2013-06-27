@@ -14,6 +14,7 @@
 	    <result property="phone2" column="phone2"/>
 	    <result property="address1" column="address1"/>
 	    <result property="address2" column="address2"/>
+	    <result property="level" column="level"/>
 	    <result property="infor1" column="infor1"/>
 	    <result property="infor2" column="infor2"/>
 	    <result property="infor3" column="infor3"/>
@@ -28,11 +29,11 @@
     </resultMap>
     
     <select id="getKehuList" resultMap="kehuResult">
-        select kehu_id, kehuname, kehusex, age, biecheng, dianming, phone1, phone2, address1, address2, infor1, infor2, infor3, infor4, zuqun_id, zhuangtai, zhuceriqi, qq, weixin, taobao, beizhu from kehu_table
+        select kehu_id, kehuname, kehusex, age, biecheng, dianming, phone1, phone2, address1, address2, level, infor1, infor2, infor3, infor4, zuqun_id, zhuangtai, zhuceriqi, qq, weixin, taobao, beizhu from kehu_table
     </select>
     
     <select id="searchKehuList" resultMap="kehuResult" parameterType="com.hk.distribution.model.Kehu">
-        select kehu_id, kehuname, kehusex, age, biecheng, dianming, phone1, phone2, address1, address2, infor1, infor2, infor3, infor4, zuqun_id, zhuangtai, zhuceriqi, qq, weixin, taobao, beizhu 
+        select kehu_id, kehuname, kehusex, age, biecheng, dianming, phone1, phone2, address1, address2, level, infor1, infor2, infor3, infor4, zuqun_id, zhuangtai, zhuceriqi, qq, weixin, taobao, beizhu 
         	from kehu_table 
         	<trim prefix="where" prefixOverrides="and|or">
         		<if test="kehu_id != null">
@@ -53,7 +54,7 @@
     </select>
     
     <insert id="saveKehu" parameterType="com.hk.distribution.model.Kehu">
-        insert into kehu_table values (#{kehu_id}, #{kehuname}, #{kehusex}, #{age}, #{biecheng}, #{dianming}, #{phone1}, #{phone2}, #{address1}, #{address2}, #{infor1}, #{infor2}, #{infor3}, #{infor4}, #{zuqun_id}, #{zhuangtai}, #{zhuceriqi}, #{qq}, #{weixin}, #{taobao}, #{beizhu})
+        insert into kehu_table values (#{kehu_id}, #{kehuname}, #{kehusex}, #{age}, #{biecheng}, #{dianming}, #{phone1}, #{phone2}, #{address1}, #{address2}, #{level}, #{infor1}, #{infor2}, #{infor3}, #{infor4}, #{zuqun_id}, #{zhuangtai}, #{zhuceriqi}, #{qq}, #{weixin}, #{taobao}, #{beizhu})
     </insert>
     
     <update id="updateKehu" parameterType="com.hk.distribution.model.Kehu">
@@ -67,6 +68,7 @@
 			phone2 = #{phone2},
 			address1 = #{address1},
 			address2 = #{address2},
+			level = #{level},
 			infor1 = #{infor1},
 			infor2 = #{infor2},
 			infor3 = #{infor3},

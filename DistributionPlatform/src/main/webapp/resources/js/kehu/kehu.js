@@ -12,7 +12,7 @@ Ext.onReady(function() {
      */
     Ext.regModel('kehuModel',{
         extend: 'Ext.data.Model',
-        fields: ['kehu_id', 'kehuname', 'kehusex', 'age', 'biecheng', 'dianming', 'phone1', 'phone2', 'address1', 'address2', 'infor1', 'infor2', 'infor3', 'infor4', 'zuqun_id', 'zhuangtai', 'zhuceriqi', 'qq', 'weixin', 'taobao', 'beizhu']
+        fields: ['kehu_id', 'kehuname', 'kehusex', 'age', 'biecheng', 'dianming', 'phone1', 'phone2', 'address1', 'address2', 'level', 'infor1', 'infor2', 'infor3', 'infor4', 'zuqun_id', 'zhuangtai', 'zhuceriqi', 'qq', 'weixin', 'taobao', 'beizhu']
     });
 
     /*
@@ -39,7 +39,7 @@ Ext.onReady(function() {
         columnLines:true,
         selModel: Ext.create('Ext.selection.CheckboxModel'),
         columns:[{
-            header:'客户编号',dataIndex:'kehu_id', width:90
+            header:'客户编号',dataIndex:'kehu_id', width:80
         }, {
         	header:'姓名',dataIndex:'kehuname', width:80
         }, {
@@ -49,7 +49,7 @@ Ext.onReady(function() {
         }, {
         	header:'别称',dataIndex:'biecheng', width:80
         }, {
-        	header:'店名',dataIndex:'dianming', width:80
+        	header:'店名',dataIndex:'dianming', width:120
         }, {
         	header:'电话 1',dataIndex:'phone1', width:80
         }, {
@@ -59,9 +59,11 @@ Ext.onReady(function() {
         }, {
         	header:'地址 2',dataIndex:'address2', width:80
         }, {
-        	header:'组群',dataIndex:'zuqun_id', width:80
+        	header:'级别',dataIndex:'level', width:45
         }, {
-        	header:'状态',dataIndex:'zhuangtai', width:80, renderer:showZhuangtai
+        	header:'组群',dataIndex:'zuqun_id', width:45
+        }, {
+        	header:'状态',dataIndex:'zhuangtai', width:60, renderer:showZhuangtai
         }, {
         	header:'注册日期',dataIndex:'zhuceriqi', width:80
         }, {
@@ -130,24 +132,6 @@ Ext.onReady(function() {
         }
     }
     /*************站点列表代码(结束)**************************/
-    var radiogroup = new Ext.form.RadioGroup({
-        fieldLabel: '性别',
-        width: 100,
-        items: [{
-            name: 'sex',
-            inputValue: '1',
-            boxLabel: '女士',
-            checked: true
-        }, {
-            name: 'sex',
-            inputValue: '2',
-            boxLabel: '男士'
-        }]
-    });
-    //获取单选组的值
-    radiogroup.on('change', function (rdgroup, checked) {
-        alert(checked.getRawValue());
-    });
     /*************库存新增/编辑代码(开始)*********************/
     var editForm = new Ext.form.FormPanel({
         
@@ -183,20 +167,23 @@ Ext.onReady(function() {
             name:'kehuname',
             emptyText:"请输入客户姓名(必填)",
             allowBlank: false
-        },radiogroup
-        /*{
-        	xtype:'combo',
-        	name:'kehusex',
-            fieldLabel:'性别',
-            hiddenName:'kehusex',
-            valueField:'id',
-            displayField:'name',
-            triggerAtion:"all",
-            emptyText:'请选择',
-            mode:"local",
-            value:1,
-            store:new Ext.data.ArrayStore({fields:["id","name"],data:[[1,"女"],[2,"男"]]})
-        }*/, {
+        },new Ext.form.RadioGroup({
+            fieldLabel: '性别',
+            id:'kehusex',
+            name:'kehusex',
+            value:0,
+            width: 100,
+            items: [{
+                name: 'kehusex',
+                inputValue: '0',
+                boxLabel: '女士',
+                checked: true
+            }, {
+                name: 'kehusex',
+                inputValue: '1',
+                boxLabel: '男士'
+            }]
+        }), {
             xtype:'textfield',
             fieldLabel:'年龄',
             id:'age',
@@ -237,6 +224,12 @@ Ext.onReady(function() {
             fieldLabel:'地址二',
             id:'address2',
             name:'address2',
+            allowBlank: true
+        }, {
+            xtype:'textfield',
+            fieldLabel:'级别',
+            id:'level',
+            name:'level',
             allowBlank: true
         }, {
             xtype:'textfield',

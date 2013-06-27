@@ -1,5 +1,8 @@
 package com.hk.distribution.model;
 
+import java.util.Date;
+
+
 public class Kehu {
 
     private Long kehu_id;
@@ -12,11 +15,12 @@ public class Kehu {
     private String phone2;
     private String address1;
     private String address2;
+    private int level;
     private String infor1;
     private String infor2;
     private String infor3;
     private String infor4;
-    private String zuqun_id;
+    private int zuqun_id;
     private String zhuangtai;
     private String zhuceriqi;
     private String qq;
@@ -114,6 +118,13 @@ public class Kehu {
 	public void setAddress2(String address2) {
 		this.address2 = address2;
 	}
+	
+	public int getLevel() {
+		return level;
+	}
+	public void setLevel(int level) {
+		this.level = level;
+	}
 	public String getInfor1() {
 		return infor1;
 	}
@@ -138,10 +149,10 @@ public class Kehu {
 	public void setInfor4(String infor4) {
 		this.infor4 = infor4;
 	}
-	public String getZuqun_id() {
+	public int getZuqun_id() {
 		return zuqun_id;
 	}
-	public void setZuqun_id(String zuqun_id) {
+	public void setZuqun_id(int zuqun_id) {
 		this.zuqun_id = zuqun_id;
 	}
 	public String getZhuangtai() {
