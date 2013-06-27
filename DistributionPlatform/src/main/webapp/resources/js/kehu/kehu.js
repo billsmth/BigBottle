@@ -117,7 +117,7 @@ Ext.onReady(function() {
     });
     
     function showSex(val) {
-        if(val == '1') {
+        if(val == '0') {
             return '女';
         } else {
             return '男';

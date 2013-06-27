@@ -33,22 +33,50 @@ Ext.onReady(function(){
 	        name:'kehuname',
 	        allowBlank: true
 	    }, {
-	    	xtype:'combo',
-	    	name:'kehusex',
-	        fieldLabel:'性别',
-	        hiddenName:'kehusex',
-	        valueField:'id',
-	        displayField:'name',
-	        triggerAtion:"all",
-	        emptyText:'请选择',
-	        mode:"local",
-	        value:1,
-	        store:new Ext.data.ArrayStore({fields:["id","name"],data:[[1,"女"],[2,"男"]]})
-	    }, {
 	        xtype:'textfield',
 	        fieldLabel:'别称',
 	        id:'biecheng',
 	        name:'biecheng',
+	        allowBlank: true
+	    }, {
+	        xtype:'textfield',
+	        fieldLabel:'库存编号',
+	        id:'kucun_id',
+	        name:'kucun_id',
+	        allowBlank: true
+	    }, {
+	        xtype:'textfield',
+	        fieldLabel:'档口款号',
+	        id:'kuanhao_id',
+	        name:'kuanhao_id',
+	        allowBlank: true
+	    }, {
+	        xtype:'textfield',
+	        fieldLabel:'颜色',
+	        id:'yanse',
+	        name:'yanse',
+	        allowBlank: true
+	    }, {
+	        xtype:'textfield',
+	        fieldLabel:'尺码',
+	        id:'chima',
+	        name:'chima',
+	        allowBlank: true
+	    }, {
+	        xtype:'datefield',
+	        fieldLabel:'售出日期(始)',
+	        id:'startdate',
+	        name:'startdate',
+	        format:'Y-m-d',
+	        maxValue: new Date(),
+	        allowBlank: true
+	    }, {
+	        xtype:'datefield',
+	        fieldLabel:'售出日期(终)',
+	        id:'enddate',
+	        name:'enddate',
+	        format:'Y-m-d',
+	        maxValue: new Date(),
 	        allowBlank: true
 	    }],
 	    buttons:[{
