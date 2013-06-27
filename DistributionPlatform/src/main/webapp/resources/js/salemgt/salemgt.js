@@ -64,7 +64,7 @@ Ext.onReady(function(){
 	        allowBlank: true
 	    }, {
 	        xtype:'datefield',
-	        fieldLabel:'售出日期(始)',
+	        fieldLabel:'统计日期(始)',
 	        id:'startdate',
 	        name:'startdate',
 	        format:'Y-m-d',
@@ -72,7 +72,7 @@ Ext.onReady(function(){
 	        allowBlank: true
 	    }, {
 	        xtype:'datefield',
-	        fieldLabel:'售出日期(终)',
+	        fieldLabel:'统计日期(终)',
 	        id:'enddate',
 	        name:'enddate',
 	        format:'Y-m-d',
