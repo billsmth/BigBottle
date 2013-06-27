@@ -18,17 +18,39 @@
         <result property="beizhu" column="beizhu"/>        
     </resultMap>
     
+    <resultMap type="com.hk.distribution.model.SaleMgt" id="salemgtResult">
+        <id property="kucun_id" column="kucun_id"/>
+        <result property="kucun_shuliang" column="kucun_shuliang"/>
+        <result property="kuanhao_id" column="kuanhao_id"/>
+        <result property="yanse" column="yanse"/>
+        <result property="chima" column="chima"/>
+        <result property="xiaoshou_shuliang" column="xiaoshou_shuliang"/>
+        <result property="jinjia" column="jinjia"/>
+        <result property="chengbenjia" column="chengbenjia"/>
+        <result property="shoujia" column="shoujia"/>
+        <result property="zongchengben" column="zongchengben"/>
+        <result property="zongjia" column="zongjia"/>
+        <result property="shijishoukuan" column="shijishoukuan"/>
+        <result property="lirun" column="lirun"/>
+    </resultMap>
+    
     <select id="getXiaoshouList" resultMap="xiaoshouResult">
         select xiaoshou_id, kucun_id, kuanhao_id, yanse, chima, shuliang, shoujia, shijishoukuan, maijia_id, maijiaxingming, zhuangtai, delflg, beizhu from xiaoshou_table where delflg='0'
     </select>
     
-    <select id="getSaleMgtList" resultMap="xiaoshouResult" parameterType="java.util.Map">
+    <!--select id="getSaleMgtList" resultMap="xiaoshouResult" parameterType="java.util.Map">
         select kuanhao_id,yanse,chima,sum(shuliang) shuliang,shoujia,sum(shijishoukuan) shijishoukuan  
         from xiaoshou_table 
         where xiaoshou_id>201306000000  
         group by kuanhao_id,yanse,chima
+    </select-->
+    <select id="getSaleMgtList" resultMap="salemgtResult" parameterType="java.util.Map">
+    select x.kucun_id,k.shuliang kucun_shuliang,x.kuanhao_id,x.yanse,x.chima,sum(x.shuliang) xiaoshou_shuliang,k.jinjia,k.chengbenjia,x.shoujia, 
+		sum(x.shuliang*k.chengbenjia) zongchengben,sum(x.shuliang*x.shoujia) zongjia,sum(x.shijishoukuan) shijishoukuan,  sum(shijishoukuan-x.shuliang*k.chengbenjia) lirun
+        from xiaoshou_table x,kucun_table k 
+        where x.kucun_id=k.kucun_id and x.zhuangtai=1 and x.delflg=0 and x.xiaoshou_id>201306000000  
+        group by x.kuanhao_id,x.yanse,x.chima
     </select>
-    
     <select id="getMaxID" resultMap="xiaoshouResult">
     	select max(xiaoshou_id) xiaoshou_id from xiaoshou_table
     </select>

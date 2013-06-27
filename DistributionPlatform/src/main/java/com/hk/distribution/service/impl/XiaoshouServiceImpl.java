@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.hk.distribution.dao.XiaoshouDao;
+import com.hk.distribution.model.SaleMgt;
 import com.hk.distribution.model.Xiaoshou;
 import com.hk.distribution.service.XiaoshouService;
 
@@ -24,7 +25,7 @@ public class XiaoshouServiceImpl implements XiaoshouService {
     }
     
     @Override
-    public List<Xiaoshou> getSaleMgtList(Map<String,String> map) {
+    public List<SaleMgt> getSaleMgtList(Map<String,String> map) {
         return xiaoshouDao.getSaleMgtList(map);
     }
     

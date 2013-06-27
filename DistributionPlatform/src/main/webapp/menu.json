@@ -31,7 +31,7 @@
 				    "text" : "销售统计",
 				    "cls" : "forum-ct",
 				    "leaf": true,
-				    "qtitle" : "salemgt/salemgt.action"
+				    "qtitle" : "salemgt/getsalemgt.action"
 				 },{
 				    "id" : "52",
 				    "text" : "财务统计",

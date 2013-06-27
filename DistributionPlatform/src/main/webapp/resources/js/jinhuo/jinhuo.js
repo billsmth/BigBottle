@@ -268,10 +268,12 @@ Ext.onReady(function() {
             name:'danhao_id',
             allowBlank: false
         }, {
-            xtype:'textfield',
+            xtype:'datefield',
             fieldLabel:'进货日期',
             id:'jinhuoriqi',
+            format:'Y-m-d',
             name:'jinhuoriqi',
+            maxValue: new Date(),
             allowBlank: true
         }, {
             xtype:'textfield',

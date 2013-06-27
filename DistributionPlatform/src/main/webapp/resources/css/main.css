@@ -19,3 +19,19 @@
 .icon-copy {
     background-image:url(../img/copy.png) !important;
 }
+.x-grid-cell.yellow
+{
+    background-color: #FFFF00;
+}
+.x-grid-cell.green
+{
+    background-color: #66CD00;
+}
+.x-grid-cell.red
+{
+    background-color: #FF0000;
+}
+.x-grid-cell.blue
+{
+    background-color: #6CA6CD;
+}

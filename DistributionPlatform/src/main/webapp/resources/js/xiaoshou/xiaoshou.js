@@ -227,10 +227,12 @@ Ext.onReady(function() {
         renderTo : Ext.getBody()
     });
     
-    function showTypeChange(val) {
+    function showTypeChange(val, meta) {
     	if(val == '0') {
+    		meta.tdCls = 'red';
             return '未入库';
         } else if(val == '1'){
+        	meta.tdCls = 'green';
             return '已入库';
         }
     }
@@ -304,10 +306,26 @@ Ext.onReady(function() {
             allowBlank: false
         }, {
             xtype:'textfield',
-            fieldLabel:'售价',
+            fieldLabel:'建议售价(元)',
             id:'shoujia',
             name:'shoujia',
-            allowBlank: true
+            allowBlank: true,
+            listeners:{
+            	'blur':function(){
+            		if(Ext.getCmp("shuliang").getValue()!=null&&Ext.getCmp("shoujia").getValue()!=null){
+            			Ext.getCmp("count").setValue(Ext.getCmp("shuliang").getValue()*Ext.getCmp("shoujia").getValue()+" 元");
+            		}
+            	}
+            }
+        }, {
+            xtype:'textfield',
+            fieldLabel:'总价(元)',
+            id:'count',
+            name:'count',
+            renderer: function (value, meta, record) {
+                Ext.getCmp("count-inputEl").addClass("red");
+                return value;
+            }
         }, {
             xtype:'textfield',
             fieldLabel:'实际成交金额',
@@ -374,13 +392,16 @@ Ext.onReady(function() {
     
     function showEdit(data) {
         editForm.getForm().loadRecord(data);
+        Ext.getCmp("count").setValue(Ext.getCmp("shuliang").getValue()*Ext.getCmp("shoujia").getValue()+" 元");
         Ext.getCmp('editType').setValue(2);
         editWin.title='编辑销售单';
         editWin.show();
     }
     
     function showCopy(data) {
+    	editForm.getForm().reset();
         editForm.getForm().loadRecord(data);
+        Ext.getCmp("count").setValue(Ext.getCmp("shuliang").getValue()*Ext.getCmp("shoujia").getValue()+" 元");
         Ext.getCmp('editType').setValue(1);
         editWin = new Ext.Window({
             layout : 'fit',

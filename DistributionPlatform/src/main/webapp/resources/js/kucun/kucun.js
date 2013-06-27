@@ -45,6 +45,10 @@ Ext.onReady(function() {
                 	return;
             	}
             	var obj = grid.getSelectionModel().selected.items[0];
+            	if(obj.data.shuliang==0){
+                	Ext.Msg.alert('提示','此商品已经售完，不能继续销售。');
+                	return;
+                }
             	showAddXiaoshou(obj);
             }
         }, '-', {
@@ -77,6 +81,10 @@ Ext.onReady(function() {
                 	return;
             	}
             	var obj = grid.getSelectionModel().selected.items[0];
+            	if(obj.data.shuliang==0){
+                	Ext.Msg.alert('提示','此商品已经售完，不能继续销售。');
+                	return;
+                }
             	showAddXiaoshou(obj);
             }
         }];
@@ -99,7 +107,21 @@ Ext.onReady(function() {
         }, {
         	header:'尺码',dataIndex:'chima', width:40
         }, {
-        	header:'数量(件)',dataIndex:'shuliang', width:80
+        	header:'数量(件)',
+        	dataIndex:'shuliang', 
+        	width:80,
+        	renderer: function (value, meta) {
+        		if(value==0){
+        			meta.tdCls ='red';
+        		}else if(value<5){
+        			meta.tdCls ='yellow';
+        		}else if(value<10){
+        			meta.tdCls ='green';
+        		}else{
+        			meta.tdCls ='blue';
+        		}
+                return value;
+            }
         }, {
         	header:'进价(元)',dataIndex:'jinjia', width:80
         }, {
@@ -189,7 +211,21 @@ Ext.onReady(function() {
             fieldLabel:'建议售价(元)',
             id:'shoujia',
             name:'shoujia',
-            allowBlank: false
+            allowBlank: false,
+            listeners:{
+            	'blur':function(){
+            		if(Ext.getCmp("shuliang").getValue()!=null&&Ext.getCmp("shoujia").getValue()!=null){
+            			Ext.getCmp("count").setValue(Ext.getCmp("shuliang").getValue()*Ext.getCmp("shoujia").getValue()+" 元");
+            		}
+            	}
+            }
+        }, {
+            xtype:'textfield',
+            fieldLabel:'总价(元)',
+            id:'count',
+            name:'count',
+            textColor :'#ffc',
+            backgroundColor:'#ffc'
         }, {
             xtype:'textfield',
             fieldLabel:'实际成交金额',
@@ -383,15 +419,18 @@ var editkucunForm = new Ext.form.FormPanel({
     });
     
     function showEdit(data) {
+    	editkucunForm.getForm().reset();
         editkucunForm.getForm().loadRecord(data);
         Ext.getCmp('kucuneditType').setValue(2);
         editkucunWin.show();
     }
     
     function showAddXiaoshou(obj) {
+    	editForm.getForm().reset();
     	obj.data.beizhu="";
     	obj.data.shuliang=1;
     	editForm.getForm().loadRecord(obj);
+    	Ext.getCmp("count").setValue(Ext.getCmp("shuliang").getValue()*Ext.getCmp("shoujia").getValue()+" 元");
         editWin.show();
     }
     

@@ -6,7 +6,6 @@
 
         <title></title>
         <script type="text/javascript" src="../resources/js/salemgt/salemgt.js"></script>
-
     </head>
     <body>
     </body>

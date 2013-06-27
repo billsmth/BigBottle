@@ -3,13 +3,14 @@ package com.hk.distribution.service;
 import java.util.List;
 import java.util.Map;
 
+import com.hk.distribution.model.SaleMgt;
 import com.hk.distribution.model.Xiaoshou;
 
 public interface XiaoshouService {
 
     public List<Xiaoshou> getXiaoshouList();
     
-    public List<Xiaoshou> getSaleMgtList(Map<String,String> map);
+    public List<SaleMgt> getSaleMgtList(Map<String,String> map);
     
     public Xiaoshou getXiaoshou(Xiaoshou Xiaoshou);
     

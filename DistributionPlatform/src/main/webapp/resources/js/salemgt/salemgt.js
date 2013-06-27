@@ -65,17 +65,17 @@ Ext.onReady(function(){
 	/*
      * Kehu Model 全局
      */
-    Ext.regModel('kehuModel',{
+    Ext.regModel('salemgtModel',{
         extend: 'Ext.data.Model',
-        fields: ['kehu_id', 'kehuname', 'kehusex', 'age', 'biecheng', 'dianming', 'phone1', 'phone2', 'address1', 'address2', 'infor1', 'infor2', 'infor3', 'infor4', 'zuqun_id', 'zhuangtai', 'zhuceriqi', 'qq', 'weixin', 'taobao', 'beizhu']
+        fields: ['kucun_id', 'kucun_shuliang', 'kuanhao_id', 'yanse', 'chima', 'xiaoshou_shuliang', 'jinjia', 'chengbenjia', 'shoujia', 'zongchengben', 'zongjia', 'shijishoukuan', 'lirun']
     });
 
     /*
      * Kehu Grid Store
      */
-    var kehuStore = Ext.create('Ext.data.JsonStore',{
+    var salemgtStore = Ext.create('Ext.data.JsonStore',{
         autoLoad:true,
-        model: 'kehuModel',
+        model: 'salemgtModel',
         proxy:{
             type:'ajax',
             url:'json/list.action',
@@ -86,114 +86,51 @@ Ext.onReady(function(){
     });
     
     var grid = Ext.create('Ext.grid.Panel', {
-        id:'kehuGrid',
-        store: kehuStore,
+        id:'salemgtGrid',
+        store: salemgtStore,
         region : 'center',
         columnLines:true,
         selModel: Ext.create('Ext.selection.CheckboxModel'),
         columns:[{
-            header:'客户编号',dataIndex:'kehu_id', width:90
+            header:'库存编号',dataIndex:'kucun_id', width:90
         }, {
-        	header:'姓名',dataIndex:'kehuname', width:80
+        	header:'库存数量(件)',dataIndex:'kucun_shuliang', width:80
         }, {
-        	header:'性别',dataIndex:'kehusex', width:40
+        	header:'档口款号',dataIndex:'kuanhao_id', width:80
         }, {
-        	header:'年龄',dataIndex:'age', width:40
+        	header:'颜色',dataIndex:'yanse', width:80
         }, {
-        	header:'别称',dataIndex:'biecheng', width:80
+        	header:'尺码',dataIndex:'chima', width:80
         }, {
-        	header:'店名',dataIndex:'dianming', width:80
+        	header:'售出数量(件)',dataIndex:'xiaoshou_shuliang', width:80
         }, {
-        	header:'电话 1',dataIndex:'phone1', width:80
+        	header:'进价(元)',dataIndex:'jinjia', width:80
         }, {
-        	header:'电话 2',dataIndex:'phone2', width:80
+        	header:'成本价(元)',dataIndex:'chengbenjia', width:80
         }, {
-        	header:'地址 1',dataIndex:'address1', width:80
+        	header:'建议售价(元)',dataIndex:'shoujia', width:80
         }, {
-        	header:'地址 2',dataIndex:'address2', width:80
+        	header:'总成本(元)',dataIndex:'zongchengben', width:80
         }, {
-        	header:'组群',dataIndex:'zuqun_id', width:80
+        	header:'总价(元)',dataIndex:'zongjia', width:80
         }, {
-        	header:'状态',dataIndex:'zhuangtai', width:80
+        	header:'实际收款(元)',dataIndex:'shijishoukuan', width:80
         }, {
-        	header:'注册日期',dataIndex:'zhuceriqi', width:80
-        }, {
-        	header:'QQ号码',dataIndex:'qq', width:80
-        }, {
-        	header:'微信号码',dataIndex:'weixin', width:80
-        }, {
-        	header:'淘宝号码',dataIndex:'taobao', width:80
-        }, {
-        	header:'备注信息',dataIndex:'beizhu', width:80
-        }, {
-        	header:'信息 1',dataIndex:'infor1', width:80
-        }, {
-        	header:'信息 2',dataIndex:'infor2', width:80
-        }, {
-        	header:'信息 3',dataIndex:'infor3', width:80
-        }, {
-        	header:'信息 4',dataIndex:'infor4', width:80
+        	header:'利润(元)',
+        	dataIndex:'lirun', 
+        	flex:1,
+        	renderer: function (value, meta, record) {
+                meta.tdCls = record.get('lirun')>0 ? 'yellow' : 'red';
+                return value;
+            }
         }],
-        bbar: Ext.create('Ext.PagingToolbar', {displayInfo:true, emptyMsg:'没有记录', store:kehuStore}),
-        tbar:[{
-            id:'addNew',
-            text: '新建客户',
-            iconCls:'icon-add',
-            handler:function(){
-            	showAdd();
-            }
-        }, '-', {
-            id:'edit',
-            text:'编辑',
-            iconCls:'icon-edit',
-            handler:function() {
-            	if(grid.getSelectionModel().selected.items.length<1){
-            		Ext.Msg.alert('提示','请先选择要编辑的客户记录，再点击【编辑】按钮');
-                	return;
-            	}else if(grid.getSelectionModel().selected.items.length>1){
-            		Ext.Msg.alert('提示','请选择一条客户记录，本系统咱不支持多条编辑');
-                	return;
-            	}
-                var obj = grid.getSelectionModel().selected.items[0];
-                showEdit(obj);
-            }
-        }]
+        bbar: Ext.create('Ext.PagingToolbar', {displayInfo:true, emptyMsg:'没有记录', store:salemgtStore})
     });
 	
 	var viewport=new Ext.Viewport({
 		layout:'border',
 		renderTo:Ext.getBody(),
-		items:[searchForm,
-		       /*{
-				title:"查询条件",
-				region:"north",
-				xtype : 'panel',
-				id : 'header',
-				layout : 'border',
-				//split:true,
-				//border:true,
-				collapsible:true,
-				height:200,
-	            items:[searchForm]
-			},
-			/*{
-	            xtype : 'panel',
-	            title:"center",
-	            id : 'contentbody',
-	            layout : 'border',
-	            region : 'center',
-	            items:[grid]
-	        }*/
-			grid,{
-				title:"south",
-				region:"south",
-				split:true,
-				border:true,
-				collapsible:true,
-				height:100,
-				minsize:100,
-				maxsize:120
-			}]
+		items:[searchForm, grid]
 	});
 	 
 });
