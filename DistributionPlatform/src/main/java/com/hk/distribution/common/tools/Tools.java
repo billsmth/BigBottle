@@ -36,12 +36,16 @@ public class Tools {
 	}
 	
 	public static String getReqPram(HttpServletRequest request, String param){
+		String val=null;
+		if(isBlank(request.getParameter(param))){
+			return val;
+		}
 		try {
-			return new String(request.getParameter(param).getBytes("ISO-8859-1"), "utf-8");
+			val= new String(request.getParameter(param).getBytes("ISO-8859-1"), "utf-8");
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
-		return null;
+		return val;
 	}
 	
 	public static void addParam(HttpServletRequest request, Map<String, String> map,String paramStr){

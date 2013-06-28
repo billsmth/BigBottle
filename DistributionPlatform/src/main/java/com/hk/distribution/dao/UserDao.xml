@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hk.distribution.dao.UserDao">
+
+    <resultMap type="com.hk.distribution.model.User" id="userResult">
+        <id property="userID" column="userID"/>
+        <result property="userName" column="userName"/>
+        <result property="userPwd" column="userPwd"/>
+        <result property="userGroup" column="userGroup"/>
+        <result property="status" column="status"/>
+        <result property="note" column="note"/>
+    </resultMap>
+    
+    <select id="getUserList" resultMap="userResult">
+        select userID, userName, userPwd, userGroup, status, note from user_table
+    </select>
+    
+    <select id="getUserList2" resultMap="userResult" parameterType="java.util.Map">
+    select userID, userName, userPwd, userGroup, status, note from user_table
+    </select>
+    <select id="getMaxID" resultMap="userResult">
+    	select max(user_id) user_id from user_table
+    </select>
+    <select id="getUser" resultMap="userResult" parameterType="com.hk.distribution.model.User">
+        select userID, userName, userPwd, userGroup, status, note from user_table where lower(userName)=lower(#{userName})  
+    </select>
+    
+    <select id="getLoginUser" resultMap="userResult" parameterType="com.hk.distribution.model.User">
+        select userID, userName, userPwd, userGroup, status, note from user_table where lower(userName)=lower(#{userName}) and userPwd=#{userPwd} 
+    </select>
+    
+    <insert id="saveUser" parameterType="com.hk.distribution.model.User">
+        insert into user_table values (#{user_id}, #{kucun_id}, #{kuanhao_id}, #{yanse}, #{chima}, #{shuliang}, #{shoujia}, #{shijishoukuan}, #{maijia_id}, #{maijiaxingming}, #{zhuangtai}, #{delflg}, #{beizhu})
+    </insert>
+    
+    
+    <update id="updateUser" parameterType="com.hk.distribution.model.User">
+        update user_table set kuanhao_id = #{kuanhao_id}
+        , yanse = #{yanse}
+        , chima = #{chima}
+        , shuliang = #{shuliang}
+        , shoujia = #{shoujia}
+        , shijishoukuan = #{shijishoukuan}
+        , maijia_id = #{maijia_id}
+        , maijiaxingming = #{maijiaxingming}
+        , beizhu = #{beizhu}
+        where user_id = #{user_id}
+    </update>
+    
+    <delete id="deleteUserByID" parameterType="list">
+        update user_table set delflg ='1'  
+        where user_id in 
+        <foreach item="user_id"  collection="list" open="(" separator="," close=")">
+            #{user_id}
+        </foreach>
+    </delete>
+</mapper>

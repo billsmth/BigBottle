@@ -5,3 +5,10 @@
 <link rel="stylesheet" type="text/css" href="../resources/extjs/resources/css/ext-all.css"/>
 <link rel="stylesheet" type="text/css" href="../resources/extjs/examples/shared/example.css"/>
 <link rel="stylesheet" type="text/css" href="../resources/css/main.css"/>
+<script type="text/javascript">
+	<%
+		HttpSession ses=request.getSession();
+		String group= (String)ses.getAttribute("Group") ;
+	%>
+	var group=<%=group%>;
+</script>

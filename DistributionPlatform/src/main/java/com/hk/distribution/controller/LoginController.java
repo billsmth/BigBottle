@@ -5,45 +5,33 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hk.distribution.model.User;
+import com.hk.distribution.service.UserService;
 
 @Controller
 @RequestMapping("/login")
 public class LoginController {
-	
+	@Autowired
+    private UserService userService;
 	static List<User> userList=new ArrayList<User>();
     
-	static {
-		User user=new User("su","123","2");
-		userList.add(user);
-		user=new User("mei","123","3");
-		userList.add(user);
-		user=new User("liang","123","1");
-		userList.add(user);
-		
-	}
 	@RequestMapping("/doLogin")
 	@ResponseBody
     public String doLogin(HttpServletRequest request) {
-		User u;
+		
+		User u=new User(request.getParameter("username"),request.getParameter("userpwd"));
 		String msg="";
-    	String userName=request.getParameter("username");
-    	String userPwd=request.getParameter("userpwd");
-    	int i=0;
-    	for(;i<userList.size();i++){
-    		u=userList.get(i);
-    		if(u.getUserName().equals(userName)&&u.getUserPwd().equals(userPwd)){
-    			request.getSession().setAttribute("User", u);
-    			request.getSession().setAttribute("Group", u.getGroup());
-    			msg="{success:true,msg:'1'}";
-    			break;
-    		}
-    	}
-    	if(i>=userList.size()){
+    	u=userService.getLoginUser(u);
+		if(u!=null){
+			request.getSession().setAttribute("User", u);
+			request.getSession().setAttribute("Group", u.getUserGroup());
+			msg="{success:true,msg:'1'}";
+		}else{
     		msg="{success:true,msg:'2'}";
     	}
     	return msg;

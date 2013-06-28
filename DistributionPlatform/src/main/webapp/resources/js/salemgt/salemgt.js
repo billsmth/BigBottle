@@ -25,42 +25,49 @@ Ext.onReady(function(){
 	        fieldLabel:'客户编号',
 	        id:'kehu_id',
 	        name:'kehu_id',
+	        emptyText:"支持模糊查询,前后任意一致",
 	        allowBlank: true
 	    }, {
 	        xtype:'textfield',
 	        fieldLabel:'客户姓名',
 	        id:'kehuname',
 	        name:'kehuname',
+	        emptyText:"支持模糊查询,前后任意一致",
 	        allowBlank: true
 	    }, {
 	        xtype:'textfield',
 	        fieldLabel:'库存编号',
 	        id:'kucun_id',
 	        name:'kucun_id',
+	        emptyText:"支持模糊查询,前后任意一致",
 	        allowBlank: true
 	    }, {
 	        xtype:'textfield',
 	        fieldLabel:'档口款号',
 	        id:'kuanhao_id',
 	        name:'kuanhao_id',
+	        emptyText:"支持模糊查询,前后任意一致(区分字母大小写)",
 	        allowBlank: true
 	    }, {
 	        xtype:'textfield',
 	        fieldLabel:'颜色',
 	        id:'yanse',
 	        name:'yanse',
+	        emptyText:"支持模糊查询,前后任意一致",
 	        allowBlank: true
 	    }, {
 	        xtype:'textfield',
 	        fieldLabel:'尺码',
 	        id:'chima',
 	        name:'chima',
+	        emptyText:"支持模糊查询,前后任意一致(区分字母大小写)",
 	        allowBlank: true
 	    }, {
 	        xtype:'datefield',
 	        fieldLabel:'统计日期(始)',
 	        id:'startdate',
 	        name:'startdate',
+	        emptyText:"结果包含当前日期",
 	        format:'Y-m-d',
 	        maxValue: new Date(),
 	        allowBlank: true
@@ -69,6 +76,7 @@ Ext.onReady(function(){
 	        fieldLabel:'统计日期(终)',
 	        id:'enddate',
 	        name:'enddate',
+	        emptyText:"结果包含当前日期",
 	        format:'Y-m-d',
 	        maxValue: new Date(),
 	        allowBlank: true
@@ -116,7 +124,21 @@ Ext.onReady(function(){
         columns:[{
             header:'库存编号',dataIndex:'kucun_id', width:90
         }, {
-        	header:'库存数量(件)',dataIndex:'kucun_shuliang', width:80
+        	header:'库存数量(件)',
+        	dataIndex:'kucun_shuliang', 
+        	width:80, 
+        	renderer: function (value, meta) {
+        		if(value==0){
+        			meta.tdCls ='red';
+        		}else if(value<5){
+        			meta.tdCls ='yellow';
+        		}else if(value<10){
+        			meta.tdCls ='green';
+        		}else{
+        			meta.tdCls ='blue';
+        		}
+                return value;
+            }
         }, {
         	header:'档口款号',dataIndex:'kuanhao_id', width:80
         }, {
@@ -148,6 +170,17 @@ Ext.onReady(function(){
         }],
         bbar: Ext.create('Ext.PagingToolbar', {displayInfo:true, emptyMsg:'没有记录', store:salemgtStore})
     });
+    
+    if(group==null||group=="3"){
+    	grid.columns[6].hideable=false;
+    	grid.columns[6].hidden=true;
+    	grid.columns[7].hideable=false;
+    	grid.columns[7].hidden=true;
+    	grid.columns[9].hideable=false;
+    	grid.columns[9].hidden=true;
+    	grid.columns[12].hideable=false;
+    	grid.columns[12].hidden=true;
+    }
 	
 	var viewport=new Ext.Viewport({
 		layout:'border',
