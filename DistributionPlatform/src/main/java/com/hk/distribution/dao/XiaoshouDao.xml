@@ -48,7 +48,31 @@
     select x.kucun_id,k.shuliang kucun_shuliang,x.kuanhao_id,x.yanse,x.chima,sum(x.shuliang) xiaoshou_shuliang,k.jinjia,k.chengbenjia,x.shoujia, 
 		sum(x.shuliang*k.chengbenjia) zongchengben,sum(x.shuliang*x.shoujia) zongjia,sum(x.shijishoukuan) shijishoukuan,  sum(shijishoukuan-x.shuliang*k.chengbenjia) lirun
         from xiaoshou_table x,kucun_table k 
-        where x.kucun_id=k.kucun_id and x.zhuangtai=1 and x.delflg=0 and x.xiaoshou_id>201306000000  
+        where x.kucun_id=k.kucun_id and x.zhuangtai=1 and x.delflg=0  
+        <if test="kehu_id != null">
+          and x.maijia_id like '%${kehu_id}%' 
+        </if>
+        <if test="kehuname != null">
+          and x.maijiaxingming like '%${kehuname}%' 
+        </if>
+        <if test="kucun_id != null">
+          and x.kucun_id like '%${kucun_id}%' 
+        </if>
+        <if test="kuanhao_id != null">
+          and x.kuanhao_id like '%${kuanhao_id}%' 
+        </if>
+        <if test="yanse != null">
+          and x.yanse like '%${yanse}%' 
+        </if>
+        <if test="chima != null">
+          and x.chima like '%${chima}%' 
+        </if>
+        <if test="startdate != null">
+          and x.xiaoshou_id>#{startdate} 
+        </if>
+        <if test="enddate != null">
+          and x.xiaoshou_id<![CDATA[<]]>#{enddate} 
+        </if>
         group by x.kuanhao_id,x.yanse,x.chima
     </select>
     <select id="getMaxID" resultMap="xiaoshouResult">

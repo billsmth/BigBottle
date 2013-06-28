@@ -34,12 +34,6 @@ Ext.onReady(function(){
 	        allowBlank: true
 	    }, {
 	        xtype:'textfield',
-	        fieldLabel:'别称',
-	        id:'biecheng',
-	        name:'biecheng',
-	        allowBlank: true
-	    }, {
-	        xtype:'textfield',
 	        fieldLabel:'库存编号',
 	        id:'kucun_id',
 	        name:'kucun_id',
