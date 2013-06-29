@@ -43,7 +43,6 @@ public class KehuController {
     		// this is a new kehu
     		Kehu IdKehu=kehuService.getMaxID();
     		kehu = new Kehu(IdKehu.getKehu_id()+1);
-    		kehu.setZhuangtai("0");
     	} else if ("2".equals(editType)) {
     		kehu = new Kehu(Long.parseLong(request.getParameter("kehu_id")));
     	}
@@ -75,7 +74,7 @@ public class KehuController {
         	zuqun_id="0";
         }
         kehu.setZuqun_id(Integer.parseInt(zuqun_id));
-        kehu.setZhuangtai(request.getParameter("zhuangtai"));
+        
         
         kehu.setQq(request.getParameter("qq"));
         kehu.setWeixin(request.getParameter("weixin"));
@@ -84,9 +83,11 @@ public class KehuController {
         
         if ("1".equals(editType)) {
         	kehu.setZhuceriqi(Tools.getData());
+        	kehu.setZhuangtai("0");
             kehuService.saveKehu(kehu);
         } else if ("2".equals(editType)) {
         	kehu.setZhuceriqi(request.getParameter("zhuceriqi"));
+        	kehu.setZhuangtai(request.getParameter("zhuangtai"));
             kehuService.updateKehu(kehu);
         }
 
