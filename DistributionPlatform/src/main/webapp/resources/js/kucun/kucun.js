@@ -60,7 +60,7 @@ Ext.onReady(function() {
             		Ext.Msg.alert('提示','请先选择库存记录，再点击【编辑】按钮');
                 	return;
             	}else if(grid.getSelectionModel().selected.items.length>1){
-            		Ext.Msg.alert('提示','请选择一条库存记录，本系统咱不支持多条编辑');
+            		Ext.Msg.alert('提示','请选择一条库存记录，本系统暂不支持多条编辑');
                 	return;
             	}
                 var obj = grid.getSelectionModel().selected.items[0];
@@ -402,6 +402,8 @@ var editkucunForm = new Ext.form.FormPanel({
         title : '新建销售单',
         height : 440,
         closeAction : 'hide',
+        resizable:false,
+        modal:true,
         closable : false,
         items : [editForm]
 
@@ -413,6 +415,8 @@ var editkucunForm = new Ext.form.FormPanel({
         title : '编辑库存',
         height : 440,
         closeAction : 'hide',
+        resizable:false,
+        modal:true,
         closable : false,
         items : [editkucunForm]
 

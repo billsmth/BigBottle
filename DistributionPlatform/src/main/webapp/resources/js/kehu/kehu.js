@@ -100,7 +100,7 @@ Ext.onReady(function() {
             		Ext.Msg.alert('提示','请先选择要编辑的客户记录，再点击【编辑】按钮');
                 	return;
             	}else if(grid.getSelectionModel().selected.items.length>1){
-            		Ext.Msg.alert('提示','请选择一条客户记录，本系统咱不支持多条编辑');
+            		Ext.Msg.alert('提示','请选择一条客户记录，本系统暂不支持多条编辑');
                 	return;
             	}
                 var obj = grid.getSelectionModel().selected.items[0];
@@ -334,6 +334,8 @@ Ext.onReady(function() {
         title : '新建客户',
         height : 450,
         closeAction : 'hide',
+        resizable:false,
+        modal:true,
         modal:true,
         items : [editForm]
 

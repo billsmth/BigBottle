@@ -58,8 +58,14 @@ Ext.onReady(function(){
 	        allowBlank: true
 	    }],
 	    buttons:[{
-            text: '查询',
-            iconCls : 'icon-submit',
+            text: '重置条件',
+            iconCls : 'icon-reset',
+            handler: function() {
+            	searchForm.getForm().reset();
+            }
+        }, {
+            text: '查     询',
+            iconCls : 'icon-search',
             handler: function() {
             	var form = searchForm.getForm();
             	grid.store.load({params:form.getValues()});
@@ -85,6 +91,7 @@ Ext.onReady(function(){
         proxy:{
             type:'ajax',
             url:'json/list.action',
+            actionMethods: {read:'post'},
             reader: {
                 type: 'json'
             }
@@ -96,7 +103,7 @@ Ext.onReady(function(){
     	userMenu=[{
             id:'addNew',
             text: '创建用户',
-            iconCls:'icon-add',
+            iconCls:'icon-adduser',
             handler:function(){
             	showAddUser();
             }
@@ -106,21 +113,31 @@ Ext.onReady(function(){
             iconCls:'icon-edit',
             handler:function() {
             	if(grid.getSelectionModel().selected.items.length<1){
-            		Ext.Msg.alert('提示','请先选择库存记录，再点击【编辑】按钮');
+            		Ext.Msg.alert('提示','请先选择用户记录，再点击【编辑】按钮');
                 	return;
             	}else if(grid.getSelectionModel().selected.items.length>1){
-            		Ext.Msg.alert('提示','请选择一条库存记录，本系统咱不支持多条编辑');
+            		Ext.Msg.alert('提示','请选择一条用户记录，本系统暂不支持多条编辑');
                 	return;
             	}
                 var obj = grid.getSelectionModel().selected.items[0];
                 showEdit(obj);
             }
-        }];
+        }, '-', {
+            id:'changepwd',
+            text: '变更密码',
+            iconCls:'icon-changepwd',
+            handler:function(){
+            	changePwd();
+            }
+        } ];
     } else {
     	userMenu=[{
-            id:'addNew',
-            text: '创建销售单',
-            iconCls:'icon-add'
+            id:'changepwd',
+            text: '变更密码',
+            iconCls:'icon-changepwd',
+            handler:function(){
+            	changePwd();
+            }
         }];
     }
 
@@ -156,9 +173,10 @@ Ext.onReady(function(){
 	function showStatus(val, meta){
         if(val == '0') {
         	meta.tdCls ='green';
-            return '正常';
+            return '启用';
         } else if(val == '1'){
-            return '其他';
+        	meta.tdCls ='yellow';
+            return '停用';
         }
     }
 	
@@ -184,12 +202,19 @@ Ext.onReady(function(){
             hidden:true
         }, {
             xtype:'textfield',
+            fieldLabel:'用户编号',
+            id:'userID2',
+            name:'userID',
+            allowBlank: true,
+            hidden:true
+        }, {
+            xtype:'textfield',
             fieldLabel:'用户名',
             id:'userName2',
             name:'userName',
             allowBlank: false,
             emptyText:"请输入用户名【必须】"
-        },{
+        }, {
             xtype:'textfield',
             fieldLabel:'登录密码',
             id:'userPwd2',
@@ -203,14 +228,22 @@ Ext.onReady(function(){
             name:'userGroup',
             value:'3',
             allowBlank: true
-        },{
-            xtype:'textfield',
-            fieldLabel:'状态',
+        },new Ext.form.RadioGroup({
+            fieldLabel: '用户状态',
             id:'status2',
             name:'status',
-            value:'0',
-            allowBlank: true
-        },{
+            width: 100,
+            items: [{
+                name: 'status',
+                inputValue: '0',
+                boxLabel: '启用',
+                checked: true
+            }, {
+                name: 'status',
+                inputValue: '1',
+                boxLabel: '停用'
+            }]
+        }),{
             xtype:'textareafield',
             fieldLabel:'备注',
             id:'note2',
@@ -225,9 +258,21 @@ Ext.onReady(function(){
                 if (form.isValid()) {
                     form.submit({
                         success: function(form, action) {
-                            Ext.Msg.alert('提示','新建用户保存成功');
-                            editWin.close();
-                            grid.store.load();
+                        	if(action.result.msg=="1"){
+                        		Ext.Msg.alert('创建错误','用户名已经存在，请使用其他用户名。');
+                        		return;
+                        	}else if(action.result.msg=="2"){
+                        		Ext.Msg.alert('更新错误','用户名已经存在，请使用其他用户名。');
+                        		return;
+                        	}else if(action.result.msg=="0"){
+                        		Ext.Msg.alert('提示','创建用户保存成功');
+                                editWin.close();
+                                grid.store.load();	
+                        	}else if(action.result.msg=="4"){
+                        		Ext.Msg.alert('提示','更新用户信息成功');
+                                editWin.close();
+                                grid.store.load();	
+                        	}
                         },
                         failure: function(form, action) {
                             Ext.Msg.alert('提示','新建用户保存失败');
@@ -243,21 +288,141 @@ Ext.onReady(function(){
             }
         }]
     });
+	
+	var pwdForm = new Ext.form.FormPanel({
+        id:'pwdForm',
+        name:'pwdForm',
+        labelAlign : 'right',
+        labelWidth : 50,
+        bodyStyle:"padding:10px 7px 0px 7px",
 
-	var editWin = new Ext.Window({
+        url:'../user/changepwd.action',
+
+        layout: 'anchor',
+        defaults: {
+            anchor: '100%'
+        },
+
+        items:[{
+            xtype:'textfield',
+            fieldLabel:'原密码',
+            inputType : 'password',
+            id:'oldpwd',
+            name:'oldpwd',
+            allowBlank: false,
+            emptyText:"请输入原密码【必须】"
+        }, {
+            xtype:'textfield',
+            fieldLabel:'新密码',
+            inputType : 'password',
+            id:'newpwd',
+            name:'newpwd',
+            allowBlank: false,
+            emptyText:"请输入新密码【必须】"
+        }, {
+            xtype:'textfield',
+            fieldLabel:'确认密码',
+            inputType : 'password',
+            id:'confirm',
+            name:'confirm',
+            allowBlank: false,
+            emptyText:"请再次输入新密码【必须】",
+            listeners:{
+            	'blur':function(){
+            		if(Ext.getCmp("newpwd").getValue()!=null){
+            			if(Ext.getCmp("newpwd").getValue()!=Ext.getCmp("confirm").getValue()){
+            				Ext.Msg.alert('错误提示','两次输入的新密码不一致，请更正');
+            			}
+            		}
+            	}
+            }
+        }],
+        buttons:[{
+            text: '保存',
+            iconCls : 'icon-submit',
+            handler: function() {
+                var form = pwdForm.getForm();
+                if (form.isValid()) {
+                	if(Ext.getCmp("newpwd").getValue()!=Ext.getCmp("confirm").getValue()){
+        				Ext.Msg.alert('错误提示','两次输入的新密码不一致，请更正');
+        				return;
+        			}
+                    form.submit({
+                        success: function(form, action) {
+                        	if(action.result.msg=="0"){
+                        		Ext.Msg.alert('提示','用户密码变更成功！');
+                        		pwdWin.close();
+                        		return;
+                        	}
+                        },
+                        failure: function(form, action) {
+                            Ext.Msg.alert('提示','新密码保存失败');
+                        }
+                    });
+                }
+            }
+        }, {
+            text: '关闭',
+            iconCls : 'icon-cancel',
+            handler: function() {
+                pwdWin.close();
+            }
+        }]
+    });
+
+	var editWin;
+	
+	var pwdWin=new Ext.Window({
         layout : 'fit',
         width : 300,
-        title : '新建用户',
-        height : 270,
+        title : '更改当前用户密码',
+        height : 170,
         closeAction : 'hide',
+        resizable:false,
+        modal:true,
         closable : false,
-        items : [editForm]
+        items : [pwdForm]
     });
 	
 	function showAddUser() {
     	editForm.getForm().reset();
+    	editWin=new Ext.Window({
+            layout : 'fit',
+            width : 320,
+            title : '新建用户',
+            height : 290,
+            closeAction : 'hide',
+            resizable:false,
+            modal:true,
+            closable : false,
+            items : [editForm]
+        });
     	editWin.show();
     }
+	
+	function showEdit(data) {
+		editForm.getForm().reset();
+		editForm.getForm().loadRecord(data);
+        Ext.getCmp('editType').setValue(2);
+        editWin=new Ext.Window({
+            layout : 'fit',
+            width : 320,
+            title : '修改用户',
+            height : 290,
+            closeAction : 'hide',
+            resizable:false,
+            modal:true,
+            closable : false,
+            items : [editForm]
+        });
+        editWin.show();
+    }
+	
+	function changePwd() {
+		pwdForm.getForm().reset();
+		pwdWin.show();
+	}
+	
 	var viewport=new Ext.Viewport({
 		layout:'border',
 		renderTo:Ext.getBody(),

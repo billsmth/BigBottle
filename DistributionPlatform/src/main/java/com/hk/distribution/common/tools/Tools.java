@@ -40,11 +40,12 @@ public class Tools {
 		if(isBlank(request.getParameter(param))){
 			return val;
 		}
-		try {
-			val= new String(request.getParameter(param).getBytes("ISO-8859-1"), "utf-8");
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
+//		try {
+//			val= new String(request.getParameter(param).getBytes("ISO-8859-1"), "utf-8");
+//		} catch (UnsupportedEncodingException e) {
+//			e.printStackTrace();
+//		}
+		val=request.getParameter(param);
 		return val;
 	}
 	

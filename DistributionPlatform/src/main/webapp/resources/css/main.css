@@ -19,6 +19,18 @@
 .icon-copy {
     background-image:url(../img/copy.png) !important;
 }
+.icon-reset {
+    background-image:url(../img/reset.png) !important;
+}
+.icon-search {
+    background-image:url(../img/search.png) !important;
+}
+.icon-adduser {
+    background-image:url(../img/user.png) !important;
+}
+.icon-changepwd {
+    background-image:url(../img/pwd.png) !important;
+}
 .x-grid-cell.yellow
 {
     background-color: #FFFF00;

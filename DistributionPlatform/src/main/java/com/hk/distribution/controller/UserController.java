@@ -36,28 +36,32 @@ public class UserController {
     @ResponseBody
     public String saveUser(HttpServletRequest request, String editType) {
     	User u=new User();
+    	u.setUserName(Tools.getReqPram(request, "userName"));
+		u=userService.getUser(u);
     	if ("1".equals(editType)){
-    		u.setUserName(Tools.getReqPram(request, "userName2"));
-    		u=userService.getUser(u);
+    		
     		if(u!=null){
-    			return "{'msg':'1'}";
+    			return "{success:true,msg:'1'}";
     		}
     		u=new User();
+    		u.setUserName(Tools.getReqPram(request, "userName"));
     		u.setUserID(userService.getMaxID().getUserID()+1);
     	} else if ("2".equals(editType)) {
-    		u.setUserName(Tools.getReqPram(request, "userName2"));
-    		u=userService.getUser(u);
-    		if(u!=null){
-    			return "{'msg':'1'}";
+    		if(u==null){
+    			u=new User();
+    			u.setUserName(Tools.getReqPram(request, "userName"));
+    			u.setUserID(Integer.parseInt(Tools.getReqPram(request, "userID")));
+    		}if(u!=null&&u.getUserID().intValue()==Integer.parseInt(Tools.getReqPram(request, "userID"))){
+    		}else if(u!=null&&u.getUserID().intValue()!=Integer.parseInt(Tools.getReqPram(request, "userID"))){
+    			return "{success:true,msg:'2'}";
     		}
-    		u.setUserID(Integer.parseInt(Tools.getReqPram(request, "userID2")));
     	}
     	
     	
-    	u.setUserGroup(Tools.getReqPram(request, "userGroup2"));
-    	u.setUserPwd(Tools.getReqPram(request, "userPwd2"));
-    	u.setStatus(Tools.getReqPram(request, "status2"));
-    	u.setNote(Tools.getReqPram(request, "note2"));
+    	u.setUserGroup(Tools.getReqPram(request, "userGroup"));
+    	u.setUserPwd(Tools.getReqPram(request, "userPwd"));
+    	u.setStatus(Tools.getReqPram(request, "status"));
+    	u.setNote(Tools.getReqPram(request, "note"));
     	
     	if ("1".equals(editType)) {
 
@@ -65,9 +69,25 @@ public class UserController {
         } else if ("2".equals(editType)) {
 
         	userService.updateUser(u);
+        	return "{success:true,msg:'4'}";//"{'msg':'4'}";
         }
     	
-    	return "{'success':true}";
+    	return "{success:true,msg:'0'}";
+    }
+    
+    @RequestMapping("/changepwd")
+    @ResponseBody
+    public String changePWD(HttpServletRequest request) {
+    	User user=(User)request.getSession().getAttribute("User");
+    	user = userService.getUser(user);
+    	if(user.getUserPwd().equals(request.getParameter("oldpwd"))){
+    		user.setUserPwd(Tools.getReqPram(request, "newpwd"));
+    		userService.updateUser(user);
+    		request.getSession().setAttribute("User",user);
+    		return "{success:true,msg:'0'}";
+    	}else{
+    		return "{success:false,msg:'1'}";
+    	}
     }
     
     @RequestMapping("/delete")
@@ -83,7 +103,11 @@ public class UserController {
     @ResponseBody
     public List<User> getUserListByJson(HttpServletRequest request) {
     	Map<String, String> parmMap=new HashMap<String,String>();
-    	
+    	Tools.addParam(request,parmMap,"userID");
+    	Tools.addParam(request,parmMap,"userName");
+    	Tools.addParam(request,parmMap,"userGroup");
+    	Tools.addParam(request,parmMap,"status");
+    	Tools.addParam(request,parmMap,"note");
         List<User> list = userService.getUserList2(parmMap);
         return list;
     }

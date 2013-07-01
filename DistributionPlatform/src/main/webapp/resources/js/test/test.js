@@ -79,6 +79,7 @@ Ext.onReady(function(){
         proxy:{
             type:'ajax',
             url:'json/list.action',
+            actionMethods: {read:'post'},
             reader: {
                 type: 'json'
             }

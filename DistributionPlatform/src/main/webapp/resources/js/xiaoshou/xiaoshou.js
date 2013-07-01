@@ -82,7 +82,7 @@ Ext.onReady(function() {
             		Ext.Msg.alert('提示','请选择要复制的销售单，再点击【复制销售单】按钮');
                 	return;
             	}else if(grid.getSelectionModel().selected.items.length>1){
-            		Ext.Msg.alert('提示','请选择一条要复制的销售单，本系统咱不支持多条复制');
+            		Ext.Msg.alert('提示','请选择一条要复制的销售单，本系统暂不支持多条复制');
                 	return;
             	}
                 var obj = grid.getSelectionModel().selected.items[0];
@@ -97,7 +97,7 @@ Ext.onReady(function() {
             		Ext.Msg.alert('提示','请选择要编辑的销售单，再点击【编辑】按钮');
                 	return;
             	}else if(grid.getSelectionModel().selected.items.length>1){
-            		Ext.Msg.alert('提示','请选择一条要编辑的销售单，本系统咱不支持多条编辑');
+            		Ext.Msg.alert('提示','请选择一条要编辑的销售单，本系统暂不支持多条编辑');
                 	return;
             	}
                 var obj = grid.getSelectionModel().selected.items[0];
@@ -384,6 +384,8 @@ Ext.onReady(function() {
         title : '新建销售单',
         height : 430,
         closeAction : 'hide',
+        resizable:false,
+        modal:true,
         closable : false,
 
         items : [editForm]
@@ -409,6 +411,8 @@ Ext.onReady(function() {
             title : '复制销售单',
             height : 440,
             closeAction : 'hide',
+            resizable:false,
+            modal:true,
             closable : false,
             items : [editForm]
 

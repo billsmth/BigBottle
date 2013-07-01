@@ -386,6 +386,8 @@ Ext.onReady(function() {
             title : '修改进货单',
             height : 440,
             closeAction : 'hide',
+            resizable:false,
+            modal:true,
             closable : false,
             items : [editForm]
 
@@ -402,6 +404,8 @@ Ext.onReady(function() {
             title : '复制进货单',
             height : 440,
             closeAction : 'hide',
+            resizable:false,
+            modal:true,
             closable : false,
             items : [editForm]
 
@@ -417,6 +421,8 @@ Ext.onReady(function() {
             title : '新建进货单',
             height : 440,
             closeAction : 'hide',
+            resizable:false,
+            modal:true,
             closable : false,
             items : [editForm]
         });
