@@ -1,5 +1,6 @@
 package com.hk.distribution.controller;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -92,10 +93,10 @@ public class UserController {
     
     @RequestMapping("/delete")
     @ResponseBody
-    public String deleteTest(String address) {
+    public String deleteTest(String userids) {
         
-        String[] rets = address.split(",");
-        
+        String[] rets = userids.split(",");
+        userService.deleteUserByID(Arrays.asList(rets));
         return "{'success':true}";
     }
 

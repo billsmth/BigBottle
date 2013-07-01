@@ -123,6 +123,44 @@ Ext.onReady(function(){
                 showEdit(obj);
             }
         }, '-', {
+            id:'delete',
+            text:'删除',
+            iconCls:'icon-del2',
+            handler:function(){
+            	if(grid.getSelectionModel().selected.items.length<1){
+            		Ext.Msg.alert('提示','请选择要删除的用户记录(支持多选)，再点击【删除】按钮');
+                	return;
+            	}
+            	Ext.Msg.confirm("请确认", "确认要删除这个/些用户吗?", function(id){
+            		if (id == "yes") {
+            			var models = grid.getSelectionModel().selected.items;
+                        var ids = '';
+                        Ext.iterate(models, function(key, value) {
+                            var tmp = key.data.userID;
+                            if(ids.length !=0) {
+                                ids = ids + ',' + tmp;
+                            } else {
+                                ids = ids + tmp;
+                            }
+                        }, this);
+                        Ext.Ajax.request({
+                            url : '../user/delete.action',
+                            params : {
+                                userids : ids
+                            },
+
+                            success : function(response, option) {
+                                Ext.Msg.alert('提示','用户删除成功');
+                                grid.store.load();
+                            },
+                            failure : function() {
+                                Ext.Msg.alert('提示','用户删除失败');
+                            }
+                        });
+            		}
+            	});
+            }
+        }, '-', {
             id:'changepwd',
             text: '变更密码',
             iconCls:'icon-changepwd',
