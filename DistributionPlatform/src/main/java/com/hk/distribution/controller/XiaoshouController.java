@@ -1,7 +1,11 @@
 package com.hk.distribution.controller;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -117,9 +121,36 @@ public class XiaoshouController {
 
     @RequestMapping("/json/list")
     @ResponseBody
-    public List<Xiaoshou> getXiaoshouListByJson() {
+    public List<Xiaoshou> getXiaoshouListByJson(HttpServletRequest request) {
+    	Map<String, String> parmMap=new HashMap<String,String>();
+    	
+    	Tools.addParam(request, parmMap, "xiaoshou_id");
+    	Tools.addParam(request, parmMap, "kucun_id");
+    	Tools.addParam(request, parmMap, "kuanhao_id");
+    	Tools.addParam(request, parmMap, "yanse");
+    	Tools.addParam(request, parmMap, "chima");
+    	Tools.addParam(request, parmMap, "maijia_id");
+    	Tools.addParam(request, parmMap, "maijiaxingming");
+    	Tools.addParam(request, parmMap, "zhuangtai");
+    	Tools.addParam(request, parmMap, "beizhu");
+    	Tools.addParam(request, parmMap, "delflg");
 
-        List<Xiaoshou> list = xiaoshouService.getXiaoshouList();
+    	String startdate=Tools.getReqPram(request, "startdate");
+    	String enddate=Tools.getReqPram(request, "enddate");
+    	if(!Tools.isBlank(startdate)){
+    		startdate=startdate.replaceAll("-", Tools.COM_BLANK)+Tools.WEIHAO_0000;
+    		parmMap.put("startdate", startdate);
+    	}else{
+    		parmMap.put("startdate", Tools.COM_NULL);
+    	}
+    	if(!Tools.isBlank(enddate)){
+    		enddate=enddate.replaceAll("-", Tools.COM_BLANK)+Tools.WEIHAO_9999;
+    		parmMap.put("enddate", enddate);
+    	}else{
+    		parmMap.put("enddate", Tools.COM_NULL);
+    	}
+    	
+        List<Xiaoshou> list = xiaoshouService.getXiaoshouList(parmMap);
         return list;
     }
     

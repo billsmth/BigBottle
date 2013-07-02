@@ -20,8 +20,8 @@ public class XiaoshouServiceImpl implements XiaoshouService {
     private XiaoshouDao xiaoshouDao;
 
     @Override
-    public List<Xiaoshou> getXiaoshouList() {
-        return xiaoshouDao.getXiaoshouList();
+    public List<Xiaoshou> getXiaoshouList(Map<String,String> map){
+        return xiaoshouDao.getXiaoshouList(map);
     }
     
     @Override

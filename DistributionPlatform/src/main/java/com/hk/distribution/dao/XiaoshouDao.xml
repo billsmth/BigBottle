@@ -34,8 +34,46 @@
         <result property="lirun" column="lirun"/>
     </resultMap>
     
-    <select id="getXiaoshouList" resultMap="xiaoshouResult">
-        select xiaoshou_id, kucun_id, kuanhao_id, yanse, chima, shuliang, shoujia, shijishoukuan, maijia_id, maijiaxingming, zhuangtai, delflg, beizhu from xiaoshou_table where delflg='0'
+    <select id="getXiaoshouList" resultMap="xiaoshouResult" parameterType="java.util.Map">
+        select xiaoshou_id, kucun_id, kuanhao_id, yanse, chima, shuliang, shoujia, shijishoukuan, maijia_id, maijiaxingming, zhuangtai, delflg, beizhu from xiaoshou_table 
+        <trim prefix="where" prefixOverrides="and|or">
+        	<if test="xiaoshou_id != null">
+        		xiaoshou_id like '${xiaoshou_id}%' 
+        	</if>
+        	<if test="kucun_id != null">
+        		and kucun_id like '${kucun_id}%' 
+        	</if>
+        	<if test="kuanhao_id != null">
+        		and kuanhao_id =#{kuanhao_id} 
+        	</if>
+        	<if test="yanse != null">
+        		and yanse like '%${yanse}%' 
+        	</if>
+        	<if test="chima != null">
+        		and chima like '%${chima}%'  
+        	</if>
+        	<if test="maijia_id != null">
+        		and maijia_id =#{maijia_id} 
+        	</if>
+        	<if test="maijiaxingming != null">
+        		and maijiaxingming like '%${maijiaxingming}%' 
+        	</if>
+        	<if test="zhuangtai != null">
+        		and zhuangtai =#{zhuangtai} 
+        	</if>
+        	<if test="beizhu != null">
+        		and beizhu like '%${beizhu}%' 
+        	</if>
+        	<if test="startdate != null">
+	          	and xiaoshou_id>#{startdate} 
+	        </if>
+	        <if test="enddate != null">
+	          	and xiaoshou_id<![CDATA[<]]>#{enddate} 
+	        </if>
+        	<if test="delflg != null">
+	          	and delflg=#{delflg} 
+	        </if>
+        </trim>
     </select>
     
     <!--select id="getSaleMgtList" resultMap="xiaoshouResult" parameterType="java.util.Map">

@@ -217,7 +217,6 @@ Ext.onReady(function(){
             return '停用';
         }
     }
-	
 	var editForm = new Ext.form.FormPanel({
         id:'editForm',
         name:'editForm',
@@ -326,7 +325,6 @@ Ext.onReady(function(){
             }
         }]
     });
-	
 	var pwdForm = new Ext.form.FormPanel({
         id:'pwdForm',
         name:'pwdForm',

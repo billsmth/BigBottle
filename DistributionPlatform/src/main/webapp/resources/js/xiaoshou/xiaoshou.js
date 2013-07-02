@@ -6,6 +6,150 @@ Ext.onReady(function() {
 
     Ext.tip.QuickTipManager.init();
 
+    var searchForm=new Ext.form.FormPanel({
+        id:'searchForm',
+        name:'searchForm',
+        collapsible:true,
+        width:150,
+        title:"查询条件",
+		region:"north",
+        labelAlign:'right',
+        labelWidth : 35,
+        bodyStyle:"padding:10px 7px 0px 7px",
+        autoScroll:false,
+        layout: 'anchor',
+        defaults: {
+            anchor: '100%'
+        },
+        items:[{
+	        xtype:'textfield',
+	        fieldLabel:'销售单编号',
+	        id:'xiaoshou_id2',
+	        name:'xiaoshou_id',
+	        emptyText:"支持模糊查询,前端一致",
+	        allowBlank: true
+	    }, {
+	        xtype:'textfield',
+	        fieldLabel:'库存编号',
+	        id:'kucun_id2',
+	        name:'kucun_id',
+	        emptyText:"支持模糊查询,前后任意一致",
+	        allowBlank: true
+	    }, {
+	        xtype:'textfield',
+	        fieldLabel:'档口款号',
+	        id:'kuanhao_id2',
+	        name:'kuanhao_id',
+	        emptyText:"精确查询",
+	        allowBlank: true
+	    }, {
+	        xtype:'textfield',
+	        fieldLabel:'颜色',
+	        id:'yanse2',
+	        name:'yanse',
+	        emptyText:"支持模糊查询,前后任意一致",
+	        allowBlank: true
+	    }, {
+	        xtype:'textfield',
+	        fieldLabel:'尺码',
+	        id:'chima2',
+	        name:'chima',
+	        emptyText:"支持模糊查询,前后任意一致",
+	        allowBlank: true
+	    }, {
+	        xtype:'textfield',
+	        fieldLabel:'买家编号',
+	        id:'maijia_id2',
+	        emptyText:"精确查询",
+	        name:'maijia_id',
+	        allowBlank: true
+	    }, {
+	        xtype:'textfield',
+	        fieldLabel:'买家姓名',
+	        id:'maijiaxingming2',
+	        name:'maijiaxingming',
+	        emptyText:"支持模糊查询,前后任意一致",
+	        allowBlank: true
+	    }, new Ext.form.RadioGroup({
+            fieldLabel: '状态',
+            id:'zhuangtai2',
+            name:'zhuangtai',
+            width: 100,
+            items: [{
+                name: 'zhuangtai',
+                inputValue: '',
+                boxLabel: '任     意',
+                checked: true
+            }, {
+                name: 'zhuangtai',
+                inputValue: '0',
+                boxLabel: '未入库'
+            }, {
+                name: 'zhuangtai',
+                inputValue: '1',
+                boxLabel: '已入库'
+            }]
+        }), {
+	        xtype:'textfield',
+	        fieldLabel:'备注',
+	        id:'beizhu2',
+	        name:'beizhu',
+	        emptyText:"支持模糊查询,前后任意一致",
+	        allowBlank: true
+	    }, {
+	        xtype:'datefield',
+	        fieldLabel:'统计日期(始)',
+	        id:'startdate',
+	        name:'startdate',
+	        emptyText:"结果包含当前日期",
+	        format:'Y-m-d',
+	        maxValue: new Date(),
+	        allowBlank: true
+	    }, {
+	        xtype:'datefield',
+	        fieldLabel:'统计日期(终)',
+	        id:'enddate',
+	        name:'enddate',
+	        emptyText:"结果包含当前日期",
+	        format:'Y-m-d',
+	        maxValue: new Date(),
+	        allowBlank: true
+	    },new Ext.form.RadioGroup({
+            fieldLabel: '是否删除',
+            id:'delflg2',
+            name:'delflg',
+            width: 100,
+            items: [{
+                name: 'delflg',
+                inputValue: '',
+                boxLabel: '任    意',
+                checked: true
+            }, {
+                name: 'delflg',
+                inputValue: '0',
+                boxLabel: '未删除'
+            }, {
+                name: 'delflg',
+                inputValue: '1',
+                boxLabel: '已删除'
+            }]
+        })],
+	    buttons:[{
+            text: '重置条件',
+            iconCls : 'icon-reset',
+            handler: function() {
+            	searchForm.getForm().reset();
+            }
+        }, {
+            text: '查     询',
+            iconCls : 'icon-search',
+            handler: function() {
+            	var form = searchForm.getForm();
+            	grid.store.load({params:form.getValues()});
+            }
+        }]
+	});
+    
     /*************站点列表代码(开始)**************************/
     /*
      * Xiaoshou Model 全局
@@ -24,6 +168,7 @@ Ext.onReady(function() {
         proxy:{
             type:'ajax',
             url:'json/list.action',
+            actionMethods: {read:'post'},
             reader: {
                 type: 'json'
             }
@@ -37,6 +182,7 @@ Ext.onReady(function() {
         id:'xiaoshouGrid',
         store: xiaoshouStore,
         columnLines:true,
+        region : 'center',
         selModel: Ext.create('Ext.selection.CheckboxModel'),
         columns:[{
             header:'销售单编号',dataIndex:'xiaoshou_id', width:120
@@ -222,8 +368,8 @@ Ext.onReady(function() {
      * Tab页面的布局
      */
     Ext.create('Ext.Viewport', {
-        layout : 'fit',
-        items:[grid],
+        layout : 'border',
+        items:[searchForm, grid],
         renderTo : Ext.getBody()
     });
     

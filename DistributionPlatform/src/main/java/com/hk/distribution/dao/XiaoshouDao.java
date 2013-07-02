@@ -8,7 +8,7 @@ import com.hk.distribution.model.Xiaoshou;
 
 public interface XiaoshouDao {
 
-	public List<Xiaoshou> getXiaoshouList();
+	public List<Xiaoshou> getXiaoshouList(Map<String,String> map);
 	
 	public List<SaleMgt> getSaleMgtList(Map<String,String> map);
 	
