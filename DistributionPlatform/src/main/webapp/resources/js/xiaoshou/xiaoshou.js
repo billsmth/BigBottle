@@ -12,8 +12,6 @@ Ext.onReady(function() {
         collapsible:true,
         title:"查询条件",
 		region:"north",
-        labelAlign:'right',
-        labelWidth : 35,
         bodyStyle:"padding:10px 7px 0px 7px",
         autoScroll:true,
         layout: {
@@ -22,7 +20,7 @@ Ext.onReady(function() {
         },
         items:[{
         	xtype : 'panel',
-        	width :  470,
+        	width :  "50%",
         	height : 170,
         	border : false,
         	labelWidth : 35,
@@ -80,7 +78,7 @@ Ext.onReady(function() {
 			}]
         },{
         	xtype : 'panel',
-        	width : 450,
+        	width : "50%",
         	height : 170,
         	labelWidth : 35,
         	border : false,
