@@ -16,41 +16,55 @@ Ext.onReady(function(){
         labelWidth : 35,
         bodyStyle:"padding:10px 7px 0px 7px",
         autoScroll:true,
-        layout: 'anchor',
+        layout: {
+        	type : 'hbox',
+        	align : 'stretch'
+        },
         defaults: {
             anchor: '100%'
         },
         items:[{
-	        xtype:'textfield',
-	        fieldLabel:'客户编号',
-	        id:'kehu_id',
-	        name:'kehu_id',
-	        allowBlank: true
-	    }, {
-	        xtype:'textfield',
-	        fieldLabel:'客户姓名',
-	        id:'kehuname',
-	        name:'kehuname',
-	        allowBlank: true
-	    }, {
-	    	xtype:'combo',
-	    	name:'kehusex',
-	        fieldLabel:'性别',
-	        hiddenName:'kehusex',
-	        valueField:'id',
-	        displayField:'name',
-	        triggerAtion:"all",
-	        emptyText:'请选择',
-	        mode:"local",
-	        value:1,
-	        store:new Ext.data.ArrayStore({fields:["id","name"],data:[[1,"女"],[2,"男"]]})
-	    }, {
-	        xtype:'textfield',
-	        fieldLabel:'别称',
-	        id:'biecheng',
-	        name:'biecheng',
-	        allowBlank: true
-	    }],
+        	xtype : 'panel',
+        	width : '45%',
+        	height : 90,
+            items:[{
+    	        xtype:'textfield',
+    	        fieldLabel:'客户编号',
+    	        id:'kehu_id',
+    	        name:'kehu_id',
+    	        allowBlank: true
+    	    }, {
+    	        xtype:'textfield',
+    	        fieldLabel:'客户姓名',
+    	        id:'kehuname',
+    	        name:'kehuname',
+    	        allowBlank: true
+    	    }]
+        }, {
+        	xtype : 'panel',
+        	width : '45%',
+        	height : 90,
+        	border : false,
+            items:[{
+    	    	xtype:'combo',
+    	    	name:'kehusex',
+    	        fieldLabel:'性别',
+    	        hiddenName:'kehusex',
+    	        valueField:'id',
+    	        displayField:'name',
+    	        triggerAtion:"all",
+    	        emptyText:'请选择',
+    	        mode:"local",
+    	        value:1,
+    	        store:new Ext.data.ArrayStore({fields:["id","name"],data:[[1,"女"],[2,"男"]]})
+    	    }, {
+    	        xtype:'textfield',
+    	        fieldLabel:'别称',
+    	        id:'biecheng',
+    	        name:'biecheng',
+    	        allowBlank: true
+            }]
+        }],
 	    buttons:[{
             text: '查询',
             iconCls : 'icon-submit',
