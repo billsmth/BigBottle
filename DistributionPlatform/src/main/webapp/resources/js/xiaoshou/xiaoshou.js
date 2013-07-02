@@ -103,7 +103,7 @@ Ext.onReady(function() {
 				    emptyText:"支持模糊查询,前后任意一致",
 				    allowBlank: true
 				}, new Ext.form.RadioGroup({
-				    fieldLabel: '状态',
+				    fieldLabel: '入库状态',
 				    id:'zhuangtai2',
 				    name:'zhuangtai',
 				    width: 450,
@@ -142,7 +142,7 @@ Ext.onReady(function() {
 				    maxValue: new Date(),
 				    allowBlank: true
 				},new Ext.form.RadioGroup({
-				    fieldLabel: '是否删除',
+				    fieldLabel: '删除状态',
 				    id:'delflg2',
 				    name:'delflg',
 				    width: 450,
@@ -234,9 +234,9 @@ Ext.onReady(function() {
         }, {
         	header:'买家姓名',dataIndex:'maijiaxingming', width:80
         }, {
-        	header:'状态',dataIndex:'zhuangtai', width:50, renderer:showTypeChange
+        	header:'入库状态',dataIndex:'zhuangtai', width:50, renderer:showTypeChange
         }, {
-        	header:'是否删除',dataIndex:'delflg', width:60, renderer:showDelStatus
+        	header:'删除状态',dataIndex:'delflg', width:60, renderer:showDelStatus
         }, {
         	header:'备注',dataIndex:'beizhu', flex:1
         }],
