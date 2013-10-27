@@ -1,0 +1,425 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.isoftstone.dao.MeetingMapper" >
+  <resultMap id="BaseResultMap" type="com.isoftstone.model.meeting.Meeting" >
+    <id column="idmeeting" property="idmeeting" jdbcType="VARCHAR" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="begin_time" property="beginTime" jdbcType="TIMESTAMP" />
+    <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="compere" property="compere" jdbcType="VARCHAR" />
+    <result column="contact" property="contact" jdbcType="VARCHAR" />
+    <result column="contact_tel" property="contactTel" jdbcType="VARCHAR" />
+    <result column="contact_email" property="contactEmail" jdbcType="VARCHAR" />
+    <result column="agend" property="agend" jdbcType="VARCHAR" />
+    <result column="meeting_request" property="meetingRequest" jdbcType="VARCHAR" />
+    <result column="main_content_url" property="mainContentUrl" jdbcType="VARCHAR" />
+    <result column="status" jdbcType="CHAR" property="status" />
+    <result column="create_user" property="createUser" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="modify_user" property="modifyUser" jdbcType="VARCHAR" />
+    <result column="modify_date" property="modifyDate" jdbcType="TIMESTAMP" />
+    <result column="soft_del" property="softDel" jdbcType="CHAR" />
+    <result column="begin_time_str" property="beginTimeStr" jdbcType="VARCHAR" />
+    <result column="end_time_str" property="endTimeStr" jdbcType="VARCHAR" />
+    <collection column="idmeeting" property="mainPeopleArr" javaType="ArrayList" ofType="PeopleLinkMap" select="getMainPeople" />
+    <collection column="idmeeting" property="maybePeopleArr" javaType="ArrayList" ofType="PeopleLinkMap" select="getMaybePeople" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.isoftstone.model.meeting.Meeting" extends="BaseResultMap" >
+    <result column="main_content" property="mainContent" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  
+  <resultMap id="SummaryMap" type="com.isoftstone.model.meeting.MeetingSummary" >
+    <id column="idms" property="idms" jdbcType="VARCHAR" />
+    <result column="id_meeting" property="idMeeting" jdbcType="VARCHAR" />
+    <result column="summary_url" property="summaryUrl" jdbcType="VARCHAR" />
+    <result column="id_people" property="idPeople" jdbcType="VARCHAR" />
+    <result column="create_user" property="createUser" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="modify_user" property="modifyUser" jdbcType="VARCHAR" />
+    <result column="modify_date" property="modifyDate" jdbcType="TIMESTAMP" />
+    <result column="soft_del" property="softDel" jdbcType="CHAR" />
+  </resultMap>
+  <resultMap id="SummaryMapWithBLOBs" type="com.isoftstone.model.meeting.MeetingSummary" extends="SummaryMap" >
+    <result column="summary" property="summary" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <resultMap id="PeopleLinkMap" type="com.isoftstone.model.meeting.MeetingPeopleLink" >
+    <id column="idmpl" property="idmpl" jdbcType="VARCHAR" />
+    <result column="id_meeting" property="idMeeting" jdbcType="VARCHAR" />
+    <result column="id_people" property="idPeople" jdbcType="VARCHAR" />
+    <result column="or_main" property="orMain" jdbcType="CHAR" />
+    <result column="name" property="name" jdbcType="CHAR" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    idmeeting, title, begin_time, end_time, address, compere, contact, contact_tel, contact_email, 
+    agend, meeting_request, main_content_url, status, create_user, create_date, modify_user, 
+    modify_date, soft_del
+  </sql>
+  <sql id="Blob_Column_List" >
+    main_content
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_meeting
+    where idmeeting = #{idmeeting,jdbcType=VARCHAR}
+  </select>
+  
+  <insert id="insert" parameterType="com.isoftstone.model.meeting.Meeting" >
+    insert into t_meeting (idmeeting, title, begin_time, 
+      end_time, address, compere, 
+      contact, contact_tel, contact_email, 
+      agend, meeting_request, main_content_url, 
+      status, create_user, create_date, modify_user, 
+      modify_date, soft_del, main_content
+      )
+    values (#{idmeeting,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{beginTime,jdbcType=TIMESTAMP}, 
+      #{endTime,jdbcType=TIMESTAMP}, #{address,jdbcType=VARCHAR}, #{compere,jdbcType=VARCHAR}, 
+      #{contact,jdbcType=VARCHAR}, #{contactTel,jdbcType=VARCHAR}, #{contactEmail,jdbcType=VARCHAR}, 
+      #{agend,jdbcType=VARCHAR}, #{meetingRequest,jdbcType=VARCHAR}, #{mainContentUrl,jdbcType=VARCHAR}, 
+      #{status,jdbcType=CHAR}, #{createUser,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, 
+      #{modifyUser,jdbcType=VARCHAR}, #{modifyDate,jdbcType=TIMESTAMP}, #{softDel,jdbcType=CHAR},
+      #{mainContent,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.isoftstone.model.meeting.Meeting" >
+    insert into t_meeting
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="idmeeting != null" >
+        idmeeting,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="beginTime != null" >
+        begin_time,
+      </if>
+      <if test="endTime != null" >
+        end_time,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="compere != null" >
+        compere,
+      </if>
+      <if test="contact != null" >
+        contact,
+      </if>
+      <if test="contactTel != null" >
+        contact_tel,
+      </if>
+      <if test="contactEmail != null" >
+        contact_email,
+      </if>
+      <if test="agend != null" >
+        agend,
+      </if>
+      <if test="meetingRequest != null" >
+        meeting_request,
+      </if>
+      <if test="mainContentUrl != null" >
+        main_content_url,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="createUser != null" >
+        create_user,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="modifyUser != null" >
+        modify_user,
+      </if>
+      <if test="modifyDate != null" >
+        modify_date,
+      </if>
+      <if test="softDel != null" >
+        soft_del,
+      </if>
+      <if test="mainContent != null" >
+        main_content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="idmeeting != null" >
+        #{idmeeting,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="beginTime != null" >
+        #{beginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null" >
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="compere != null" >
+        #{compere,jdbcType=VARCHAR},
+      </if>
+      <if test="contact != null" >
+        #{contact,jdbcType=VARCHAR},
+      </if>
+      <if test="contactTel != null" >
+        #{contactTel,jdbcType=VARCHAR},
+      </if>
+      <if test="contactEmail != null" >
+        #{contactEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="agend != null" >
+        #{agend,jdbcType=VARCHAR},
+      </if>
+      <if test="meetingRequest != null" >
+        #{meetingRequest,jdbcType=VARCHAR},
+      </if>
+      <if test="mainContentUrl != null" >
+        #{mainContentUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=CHAR},
+      </if>
+      <if test="createUser != null" >
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyUser != null" >
+        #{modifyUser,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyDate != null" >
+        #{modifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="softDel != null" >
+        #{softDel,jdbcType=CHAR},
+      </if>
+      <if test="mainContent != null" >
+        #{mainContent,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.isoftstone.model.meeting.Meeting" >
+    update t_meeting
+    set title = #{title,jdbcType=VARCHAR},
+      begin_time = #{beginTime,jdbcType=TIMESTAMP},
+      end_time = #{endTime,jdbcType=TIMESTAMP},
+      address = #{address,jdbcType=VARCHAR},
+      compere = #{compere,jdbcType=VARCHAR},
+      contact = #{contact,jdbcType=VARCHAR},
+      contact_tel = #{contactTel,jdbcType=VARCHAR},
+      contact_email = #{contactEmail,jdbcType=VARCHAR},
+      agend = #{agend,jdbcType=VARCHAR},
+      meeting_request = #{meetingRequest,jdbcType=VARCHAR},
+      main_content_url = #{mainContentUrl,jdbcType=VARCHAR},
+      status = #{status,jdbcType=CHAR},
+      create_user = #{createUser,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      modify_user = #{modifyUser,jdbcType=VARCHAR},
+      modify_date = #{modifyDate,jdbcType=TIMESTAMP},
+      soft_del = #{softDel,jdbcType=CHAR},
+      main_content = #{mainContent,jdbcType=LONGVARCHAR}
+    where idmeeting = #{idmeeting,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.isoftstone.model.meeting.Meeting" >
+    update t_meeting
+    set title = #{title,jdbcType=VARCHAR},
+      begin_time = #{beginTime,jdbcType=TIMESTAMP},
+      end_time = #{endTime,jdbcType=TIMESTAMP},
+      address = #{address,jdbcType=VARCHAR},
+      compere = #{compere,jdbcType=VARCHAR},
+      contact = #{contact,jdbcType=VARCHAR},
+      contact_tel = #{contactTel,jdbcType=VARCHAR},
+      contact_email = #{contactEmail,jdbcType=VARCHAR},
+      agend = #{agend,jdbcType=VARCHAR},
+      meeting_request = #{meetingRequest,jdbcType=VARCHAR},
+      main_content_url = #{mainContentUrl,jdbcType=VARCHAR},
+      status = #{status,jdbcType=CHAR},
+      create_user = #{createUser,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      modify_user = #{modifyUser,jdbcType=VARCHAR},
+      modify_date = #{modifyDate,jdbcType=TIMESTAMP},
+      soft_del = #{softDel,jdbcType=CHAR}
+    where idmeeting = #{idmeeting,jdbcType=VARCHAR}
+  </update>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <select id="selectAll" resultMap="ResultMapWithBLOBs" parameterType="hashmap" >
+	    select *,begin_time as begin_time_str,end_time as end_time_str
+	    from t_meeting
+   		where soft_del=1
+    	<if test="idmeeting != null">
+	        and idmeeting = #{idmeeting}
+	    </if>
+	    <if test="title != null">
+	        and title like #{title}
+	    </if>
+	    <if test="address != null">
+	        and address like #{address}
+	    </if>
+	    <if test="contact != null">
+	        and contact like #{contact}
+	    </if>
+	    <if test="contactTel != null">
+	        and contact_tel like #{contactTel}
+	    </if>
+	    <if test="beginTimeStr != null">
+	        <![CDATA[and begin_time > #{beginTimeStr}]]>
+	    </if>
+	    <if test="endTimeStr != null">
+	        <![CDATA[and end_time < #{endTimeStr}]]>
+	    </if>
+	order by create_date desc
+  </select>
+  
+  <update id="deleteByPrimaryKey" parameterType="com.isoftstone.model.meeting.Meeting" >
+    update t_meeting
+    set 
+    modify_user = #{modifyUser,jdbcType=VARCHAR},
+    modify_date = #{modifyDate,jdbcType=TIMESTAMP},
+    soft_del = 0
+    where idmeeting = #{idmeeting,jdbcType=VARCHAR}
+  </update>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.isoftstone.model.meeting.Meeting" >
+    update t_meeting
+    <set >
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="beginTime != null" >
+        begin_time = #{beginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null" >
+        end_time = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="compere != null" >
+        compere = #{compere,jdbcType=VARCHAR},
+      </if>
+      <if test="contact != null" >
+        contact = #{contact,jdbcType=VARCHAR},
+      </if>
+      <if test="contactTel != null" >
+        contact_tel = #{contactTel,jdbcType=VARCHAR},
+      </if>
+      <if test="contactEmail != null" >
+        contact_email = #{contactEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="agend != null" >
+        agend = #{agend,jdbcType=VARCHAR},
+      </if>
+      <if test="meetingRequest != null" >
+        meeting_request = #{meetingRequest,jdbcType=VARCHAR},
+      </if>
+      <if test="mainContentUrl != null" >
+        main_content_url = #{mainContentUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=CHAR},
+      </if>
+      <if test="createUser != null" >
+        create_user = #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyUser != null" >
+        modify_user = #{modifyUser,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyDate != null" >
+        modify_date = #{modifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="softDel != null" >
+        soft_del = #{softDel,jdbcType=CHAR},
+      </if>
+      <if test="mainContent != null" >
+        main_content = #{mainContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where idmeeting = #{idmeeting,jdbcType=VARCHAR}
+  </update>
+  
+  <update id="updateMainContent" parameterType="com.isoftstone.model.meeting.Meeting" >
+    update t_meeting
+    <set >
+      <if test="modifyUser != null" >
+        modify_user = #{modifyUser,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyDate != null" >
+        modify_date = #{modifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="mainContent != null" >
+        main_content = #{mainContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where idmeeting = #{idmeeting,jdbcType=VARCHAR}
+  </update>
+  
+  
+  
+  <select id="selectSummary" resultMap="SummaryMapWithBLOBs" parameterType="hashmap" >
+	    select *
+	    from t_meeting_summary
+   		where soft_del=1 and id_meeting=#{idMeeting,jdbcType=VARCHAR} and id_people=#{idPeople, jdbcType=VARCHAR}
+  </select>
+  
+  <insert id="insertSummary" parameterType="com.isoftstone.model.meeting.MeetingSummary" >
+    insert into t_meeting_summary (idms, id_meeting,
+      id_people, create_user, modify_user, modify_date, soft_del) 
+    values (#{idms,jdbcType=VARCHAR}, #{idMeeting,jdbcType=VARCHAR}, #{idPeople,jdbcType=VARCHAR}, 
+   	  #{createUser,jdbcType=VARCHAR}, #{modifyUser,jdbcType=VARCHAR}, #{modifyDate,jdbcType=TIMESTAMP}, 
+   	  #{softDel,jdbcType=CHAR})
+  </insert>
+  
+  <update id="updateSummary" parameterType="com.isoftstone.model.meeting.MeetingSummary" >
+    update t_meeting_summary
+    <set >
+      <if test="modifyUser != null" >
+        modify_user = #{modifyUser,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyDate != null" >
+        modify_date = #{modifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="summary != null" >
+        summary = #{summary,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id_meeting = #{idMeeting,jdbcType=VARCHAR} and id_people = #{idPeople,jdbcType=VARCHAR}
+  </update>
+   <select id="getMainPeople" parameterType="String" resultMap="PeopleLinkMap">
+ 	 select mpl.idmpl,mpl.id_people,p.name from t_meeting_people_link mpl,t_people p 
+ 	 where mpl.id_people=p.idpeople and mpl.id_meeting = #{idmeeting} and or_main = 1
+   </select>
+   <select id="getMaybePeople" parameterType="String" resultMap="PeopleLinkMap">
+ 	 select mpl.idmpl,mpl.id_people,p.name from t_meeting_people_link mpl,t_people p 
+ 	 where mpl.id_people=p.idpeople and mpl.id_meeting = #{idmeeting} and or_main = 2
+   </select>
+   
+   <insert id="addrole" parameterType="hashmap" >
+    insert into t_role (id,role_name,role_desc)
+    values (#{idstr,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{ndesc,jdbcType=VARCHAR})
+  </insert>
+</mapper>

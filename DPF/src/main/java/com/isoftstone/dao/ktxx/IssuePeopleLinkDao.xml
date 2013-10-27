@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.isoftstone.dao.ktxx.IssuePeopleLinkDao" >
+	<resultMap id="IssuePeopleLink" type="com.isoftstone.model.ktxx.IssuePeopleLink">
+	 	<result property="id" column="id" />
+	 	<result property="issueId" column="issue_id" />
+	 	<result property="peopleId" column="people_id"/>
+	 	<result property="sortNo" column="sort_no"/>
+	 	<result property="jobTask" column="job_task"/>
+	 	<result property="workload" column="workload"/>
+	</resultMap>
+	
+	<select id="findAllByIssueId" resultMap="IssuePeopleLink" parameterType="String">
+		select id,issue_id,people_id,sort_no,job_task,workload from t_issue_people_link where issue_id = #{issueId}
+	</select>
+	
+	<delete id="deleteByKt" parameterType="String">
+		delete from t_issue_people_link where issue_id = #{issueId}
+	</delete>
+	
+	<delete id="deleteByPeopleId">
+		delete from t_issue_people_link where issue_id = #{issueId} and people_id = #{peopleId}
+	</delete>
+	
+	<insert id="insert" parameterType="com.isoftstone.model.ktxx.IssuePeopleLink">
+		insert into t_issue_people_link (id,issue_id,people_id,sort_no,job_task,workload) 
+				values (#{id},#{issueId},#{peopleId},#{sortNo},#{jobTask},#{workload})
+	</insert>
+</mapper>

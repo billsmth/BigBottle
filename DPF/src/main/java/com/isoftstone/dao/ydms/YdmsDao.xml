@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.isoftstone.dao.ydms.YdmsDao">
+    
+    <resultMap type="com.isoftstone.model.ydms.Ydms" id="ydmsResult">
+        <id property="id" column="id"/>
+        <result property="org_no" column="org_no"/>
+        <result property="project_name" column="project_name"/>
+        <result property="topic_name" column="topic_name"/>
+        <result property="issue_no" column="issue_no"/>
+        <result property="issue_name" column="issue_name"/>
+        <result property="belong_valley" column="belong_valley"/>
+        <result property="request_company" column="request_company"/>
+        <result property="start_year_month" column="start_year_month"/>
+        <result property="end_year_month" column="end_year_month"/>
+        <result property="result" column="result"/>
+        <result property="introduce" column="introduce"/>
+        <result property="secret_level" column="secret_level"/>
+        <result property="issue_category" column="issue_category"/>
+        <result property="necessity_analysis" column="necessity_analysis"/>
+        <result property="objective" column="objective"/>
+        <result property="tech_solution" column="tech_solution"/>
+        <result property="basis_info" column="basis_info"/>
+        <result property="member_info" column="member_info"/>
+        <result property="org_manage" column="org_manage"/>
+        <result property="other_remark" column="other_remark"/>
+        <result property="director" column="director"/>
+        <result property="close_date" column="close_date"/>
+        <result property="budget" column="budget"/>
+        <result property="analysis" column="analysis"/>
+        <result property="request_company_name" column="request_company_name"/>
+        
+        <collection column="id" property="resultList" javaType="ArrayList" ofType="resultMap" select="getResult" />
+        
+        <collection column="id" property="personXZ" javaType="ArrayList" ofType="personMap" select="getXZ" />
+        <collection column="id" property="personJS" javaType="ArrayList" ofType="personMap" select="getJS" />
+        <collection column="id" property="dwOrg" javaType="ArrayList" ofType="dwMap" select="getDW" />
+        <collection column="id" property="task" javaType="ArrayList" ofType="ywzbMap" select="getTask" />
+        <collection column="id" property="project" javaType="ArrayList" ofType="sfgcMap" select="getProject" />
+        <collection column="id" property="basis" javaType="ArrayList" ofType="issuePeopleMap" select="getIssuePeople" />
+        <collection column="id" property="planList" javaType="ArrayList" ofType="planMap" select="getPlan" />
+        <collection column="id" property="yjrwsz" javaType="ArrayList" ofType="szMap" select="getSZ" />
+        <collection column="id" property="outlayFP" javaType="ArrayList" ofType="outlayMap" select="getPZ" />
+      
+        
+    </resultMap>
+    <resultMap type="com.isoftstone.model.ydms.Result" id="resultMap">
+        <id property="id" column="id"/>
+        <result property="result" column="result"/>
+    </resultMap>
+    <select id="getResult" resultMap="resultMap" parameterType="String">
+    	select tr.result
+		from t_issue_result tr
+		where tr.issue_id = #{id}
+    </select>
+    
+    <resultMap type="com.isoftstone.model.ydms.YdmsPeople" id="personMap">
+        <id property="id" column="id"/>
+        <result property="sort_no" column="sort_no"/>
+        <result property="name" column="name"/>
+        <result property="birthday" column="birthday"/>
+        <result property="sex" column="sex"/>
+        <result property="title" column="title"/>
+        <result property="degree" column="degree"/>
+        <result property="specialty" column="specialty"/>
+        <result property="company" column="company"/>
+        <result property="telephone" column="telephone"/>
+    </resultMap>
+   
+    <resultMap type="com.isoftstone.model.ydms.YdmsDw" id="dwMap">
+        <id property="id" column="id"/>
+        <result property="sort_no" column="sort_no"/>
+        <result property="company_name" column="company_name"/>
+        <result property="company_prop" column="company_prop"/>
+        <result property="org_no" column="org_no"/>
+        <result property="address" column="address"/>
+    </resultMap>
+    
+    <resultMap type="com.isoftstone.model.ydms.Ywzb" id="ywzbMap">
+         <id property="id" column="id"/>
+        <result property="year_plan" column="year_plan"/>
+        <result property="task" column="task"/>
+        <result property="kpi" column="kpi"/>
+    </resultMap>
+    
+    <resultMap type="com.isoftstone.model.ydms.Sfgc" id="sfgcMap">
+         <id property="id" column="id"/>
+        <result property="main_project" column="main_project"/>
+        <result property="support_condition" column="support_condition"/>
+        <result property="local_org" column="local_org"/>
+    </resultMap>
+	
+	<resultMap type="com.isoftstone.model.ydms.IssuePeople" id="issuePeopleMap">
+         <id property="id" column="id"/>
+        <result property="sort_no" column="sort_no"/>
+        <result property="job_task" column="job_task"/>
+        <result property="workload" column="workload"/>
+        <result property="name" column="name"/>
+        <result property="sex" column="sex"/>
+        <result property="age" column="age"/>
+        <result property="title" column="title"/>
+        <result property="specialty" column="specialty"/>
+        <result property="company" column="company"/>
+    </resultMap>
+    
+    <resultMap type="com.isoftstone.model.ydms.Plan" id="planMap">
+         <id property="id" column="id"/>
+        <result property="leader_name" column="leader_name"/>
+        <result property="issue_name" column="issue_name"/>
+        <result property="outlay" column="outlay"/>
+        <result property="start_date" column="start_date"/>
+        <result property="end_date" column="end_date"/>
+        <result property="belong_plan" column="belong_plan"/>
+        <result property="sort_no" column="sort_no"/>
+    </resultMap>
+   
+    <resultMap type="com.isoftstone.model.ydms.TaskSZ" id="szMap">
+         <id property="id" column="id"/>
+        <result property="task_name" column="task_name"/>
+        <result property="research_content" column="research_content"/>
+        <result property="check_target" column="check_target"/>
+        <result property="assume_org" column="company_name"/>
+        <result property="join_org" column="company_name"/>
+        <result property="outlay" column="outlay"/>
+        <result property="sort_no" column="sort_no"/>
+    </resultMap>
+    
+    <resultMap type="com.isoftstone.model.ydms.Outlay" id="outlayMap">
+         <id property="id" column="id"/>
+        <result property="task" column="task"/>
+        <result property="check_target" column="check_target"/>
+        <result property="outlay" column="outlay"/>
+        <result property="sort_no" column="sort_no"/>
+        <result property="company" column="company_name"/>
+    </resultMap>
+   
+    <resultMap type="com.isoftstone.model.ydms.Lay" id="layMap">
+         <id property="id" column="id"/>
+        <result property="budget_desc" column="budget_desc"/>
+        <result property="parent_id" column="parent_id"/>
+        <result property="bgt_central" column="bgt_central"/>
+        <result property="bgt_local" column="bgt_local"/>
+        <result property="bgt_enterprise" column="bgt_enterprise"/>
+        <result property="bgt_bank" column="bgt_bank"/>
+        <result property="bgt_other" column="bgt_other"/>
+        <result property="item_level" column="item_level"/>
+        <result property="item_order" column="item_order"/>
+    </resultMap>
+    <!-- 基本信息 -->
+	<select id="queryYdms" resultMap="ydmsResult"  parameterType="String">
+		SELECT ti.id ,ti.director,ti.close_date,ti.secret_level,ti.issue_category,
+		ti.project_name,ti.topic_name,ti.issue_no,ti.issue_name,ti.belong_valley,ti.request_company,ti.start_year_month,ti.end_year_month,
+		ti.introduce,ti.necessity_analysis,ti.objective,ti.tech_solution,ti.basis_info,ti.member_info,ti.org_manage,ti.other_remark,ti.analysis,ti.request_company_name,
+		tl.budget
+		FROM t_issue ti 
+		left join t_issue_budget_link tl on ti.id = tl.issue_id
+		where ti.id = #{id}
+	</select>
+	<!-- 行政责任人 -->
+	<select id="getXZ" resultMap="personMap" parameterType="String">
+		select td.sort_no,tp.name,tp.birthday,tp.company,tp.phone,tp.title
+		from t_issue_director_link td
+		join t_people tp on td.people_id=tp.idpeople
+		where td.issue_id = #{id}
+		order by td.sort_no
+	</select>
+	<!-- 技术负责人 -->
+	<select id="getJS" resultMap="personMap" parameterType="String">
+		select td.sort_no,tp.name,tp.birthday,tp.sex,tp.title,tp.degree,tp.specialty
+		from t_issue_techmember_link td
+		join t_people tp on td.people_id=tp.idpeople
+		where td.issue_id = #{id}
+		order by td.sort_no
+	</select>
+	<!-- 支持单位信息 -->
+	<select id="getDW" resultMap="dwMap" parameterType="String">
+		select tc.sort_no,tg.company_name,tg.company_prop,tg.org_no,tg.address 
+		from t_issue_company_link tc
+		join t_org tg on tc.company_id =tg.idorg
+		where tc.issue_id = #{id}
+		order by tc.sort_no
+	</select>
+	<!-- 年度任务及指标： -->
+	<select id="getTask" resultMap="ywzbMap" parameterType="String">
+		select tk.sort_no,tk.year_plan,tk.task,tk.kpi
+	    from t_issue_task_kpi tk
+		where tk.issue_id = #{id}
+	</select>
+	<!-- 示范工程及配套条件： -->
+	<select id="getProject" resultMap="sfgcMap" parameterType="String">
+		select tp.sort_no,tp.local_org,tp.main_project,tp.support_condition
+        from t_issue_project_condition tp
+		where tp.issue_id = #{id}
+	</select>
+	<!-- 主要人员情况： -->
+    <select id="getIssuePeople" resultMap="issuePeopleMap" parameterType="String">
+		SELECT tl.job_task,tl.sort_no,tl.workload,tp.name,tp.sex,tp.age,tp.title,tp.specialty,tp.company
+		FROM t_issue_people_link tl
+		JOIN t_people tp ON tl.people_id=tp.idpeople
+		where tl.issue_id = #{id}
+		order by tl.sort_no
+	</select>
+	<!-- 目前承担其他计划任务： -->
+	<select id="getPlan" resultMap="planMap" parameterType="String">
+		SELECT tip.leader_name,tip.issue_name,tip.leader_name,tip.belong_plan,tip.start_date,tip.end_date,tip.outlay,tip.sort_no
+		FROM t_issue_plan tip
+		where tip.issue_id = #{id}
+	</select>
+	<!-- 研究任务设置: -->
+	<select id="getSZ" resultMap="szMap" parameterType="String">
+		select tt.sort_no,tt.outlay,to1.company_name,tt.check_target,to2.company_name,tt.research_content,tt.task_name
+		from t_issue_research_task tt
+		join t_org to1 on tt.assume_org_id=to1.idorg
+		join t_org to2 on tt.join_org_id=to2.idorg
+		where tt.issue_id = #{id}
+		order by tt.sort_no
+	</select>
+	<!-- 研究经费按单位分配: -->
+	<select id="getPZ" resultMap="outlayMap" parameterType="String">
+		select t.check_target,t.outlay,t.sort_no,t.task,tg.company_name
+		from t_issue_research_outlay t
+		join t_org tg on t.org_id=tg.idorg
+		where t.issue_id = #{id}
+		order by t.sort_no
+	</select>
+	
+	
+</mapper>

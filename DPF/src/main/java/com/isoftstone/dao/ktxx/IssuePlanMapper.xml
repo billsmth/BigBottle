@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.isoftstone.dao.ktxx.IssuePlanMapper" >
+  <resultMap id="BaseResultMap" type="com.isoftstone.model.ktxx.IssuePlan" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="issue_id" property="issueId" jdbcType="VARCHAR" />
+    <result column="leader_name" property="leaderName" jdbcType="VARCHAR" />
+    <result column="issue_name" property="issueName" jdbcType="VARCHAR" />
+    <result column="outlay" property="outlay" jdbcType="DECIMAL" />
+    <result column="start_date" property="startDate" jdbcType="DATE" />
+    <result column="end_date" property="endDate" jdbcType="DATE" />
+    <result column="belong_plan" property="belongPlan" jdbcType="VARCHAR" />
+    <result column="sort_no" property="sortNo" jdbcType="INTEGER" />
+    <result column="start_date_str" property="startDateStr" jdbcType="VARCHAR" />
+    <result column="end_date_str" property="endDateStr" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, issue_id, leader_name, issue_name, outlay, start_date, end_date, belong_plan, 
+    sort_no
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_issue_plan
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_issue_plan
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByKT" parameterType="String">
+  	delete from t_issue_plan where issue_id = #{issueId}
+  </delete>
+  <insert id="insert" parameterType="com.isoftstone.model.ktxx.IssuePlan" >
+    insert into t_issue_plan (id, issue_id, leader_name, 
+      issue_name, outlay, start_date, 
+      end_date, belong_plan, sort_no
+      )
+    values (#{id,jdbcType=VARCHAR}, #{issueId,jdbcType=VARCHAR}, #{leaderName,jdbcType=VARCHAR}, 
+      #{issueName,jdbcType=VARCHAR}, #{outlay,jdbcType=DECIMAL}, #{startDate,jdbcType=DATE}, 
+      #{endDate,jdbcType=DATE}, #{belongPlan,jdbcType=VARCHAR}, #{sortNo,jdbcType=INTEGER}
+      )
+  </insert>
+  
+  <update id="updateByPrimaryKey" parameterType="com.isoftstone.model.ktxx.IssuePlan" >
+    update t_issue_plan
+    set issue_id = #{issueId,jdbcType=VARCHAR},
+      leader_name = #{leaderName,jdbcType=VARCHAR},
+      issue_name = #{issueName,jdbcType=VARCHAR},
+      outlay = #{outlay,jdbcType=DECIMAL},
+      start_date = #{startDate,jdbcType=DATE},
+      end_date = #{endDate,jdbcType=DATE},
+      belong_plan = #{belongPlan,jdbcType=VARCHAR},
+      sort_no = #{sortNo,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  
+  
+  
+  
+  
+  <select id="findByIssueId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+	    select <include refid="Base_Column_List" />,start_date as start_date_str,end_date as end_date_str
+	    from t_issue_plan
+	    where issue_id = #{issueId,jdbcType=VARCHAR}
+	    order by sort_no asc
+  </select>
+  
+  <insert id="insertSelective" parameterType="com.isoftstone.model.ktxx.IssuePlan" >
+    insert into t_issue_plan
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="issueId != null" >
+        issue_id,
+      </if>
+      <if test="leaderName != null" >
+        leader_name,
+      </if>
+      <if test="issueName != null" >
+        issue_name,
+      </if>
+      <if test="outlay != null" >
+        outlay,
+      </if>
+      <if test="startDate != null" >
+        start_date,
+      </if>
+      <if test="endDate != null" >
+        end_date,
+      </if>
+      <if test="belongPlan != null" >
+        belong_plan,
+      </if>
+      <if test="sortNo != null" >
+        sort_no,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="issueId != null" >
+        #{issueId,jdbcType=VARCHAR},
+      </if>
+      <if test="leaderName != null" >
+        #{leaderName,jdbcType=VARCHAR},
+      </if>
+      <if test="issueName != null" >
+        #{issueName,jdbcType=VARCHAR},
+      </if>
+      <if test="outlay != null" >
+        #{outlay,jdbcType=DECIMAL},
+      </if>
+      <if test="startDate != null" >
+        #{startDate,jdbcType=DATE},
+      </if>
+      <if test="endDate != null" >
+        #{endDate,jdbcType=DATE},
+      </if>
+      <if test="belongPlan != null" >
+        #{belongPlan,jdbcType=VARCHAR},
+      </if>
+      <if test="sortNo != null" >
+        #{sortNo,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  
+    <update id="updateByPrimaryKeySelective" parameterType="com.isoftstone.model.ktxx.IssuePlan" >
+    update t_issue_plan
+    <set >
+      <if test="issueId != null" >
+        issue_id = #{issueId,jdbcType=VARCHAR},
+      </if>
+      <if test="leaderName != null" >
+        leader_name = #{leaderName,jdbcType=VARCHAR},
+      </if>
+      <if test="issueName != null" >
+        issue_name = #{issueName,jdbcType=VARCHAR},
+      </if>
+      <if test="outlay != null" >
+        outlay = #{outlay,jdbcType=DECIMAL},
+      </if>
+      <if test="startDate != null" >
+        start_date = #{startDate,jdbcType=DATE},
+      </if>
+      <if test="endDate != null" >
+        end_date = #{endDate,jdbcType=DATE},
+      </if>
+      <if test="belongPlan != null" >
+        belong_plan = #{belongPlan,jdbcType=VARCHAR},
+      </if>
+      <if test="sortNo != null" >
+        sort_no = #{sortNo,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

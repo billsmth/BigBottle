@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.isoftstone.dao.ktxx.KtsqDao" >
+    <resultMap id="Ktsq" type="com.isoftstone.model.ktxx.Ktsq">
+        <result property="id" column="id" />
+        <result property="projectName" column="project_name" />
+        <result property="topicName" column="topic_name" />
+        <result property="issueNo" column="issue_no" />
+        <result property="issueName" column="issue_name" />
+        <result property="issueCategory" column="issue_category" />
+        <result property="belongValley" column="belong_valley" />
+        <result property="requestCompany" column="request_company" />
+        <result property="requestCompanyNo" column="request_company_no" />
+        <result property="requestCompanyName" column="request_company_name" />
+        <result property="startYearMonth" column="start_year_month" />
+        <result property="endYearMonth" column="end_year_month" />
+        <result property="fillDate" column="fill_date" />
+        <result property="secretLevel" column="secret_level" />
+        <result property="director" column="director" />
+        <result property="directorNo" column="director_no" />
+        <result property="directorName" column="director_name" />
+        <result property="status" column="status" />
+        <result property="lastStatus" column="last_status" />
+    </resultMap>
+
+    <select id="listAll" resultMap="Ktsq" parameterType="hashmap">
+        select 
+            i.id, project_name, topic_name, issue_no, issue_name, issue_category,
+            belong_valley, request_company, request_company_no, request_company_name,
+            start_year_month, end_year_month, fill_date, secret_level, director,
+            director_no, director_name, i.status
+        from
+            t_issue i
+            <if test="queryType == 'zj'">
+                inner join t_issue_specialist_link s on i.id = s.issue_id and s.specialist_id = #{peopleId} and i.status = '5'
+            </if>
+        where 1=1
+            <if test="queryType == 'dw'">
+                and i.request_company = #{orgId}
+            </if>
+            <if test="id != null">
+                and i.id = #{id}
+            </if>
+            <if test="projectName != null">
+                and project_name like #{projectName}
+            </if>
+            <if test="topicName != null">
+                and topic_name like #{topicName}
+            </if>
+            <if test="issueName != null">
+                and issue_name like #{issueName}
+            </if>
+            <if test="issueNo != null">
+                and issue_no like #{issueNo}
+            </if>
+            <if test="directorName != null">
+                and director_name like #{directorName}
+            </if>
+            <if test="status != null">
+                and i.status = #{status}
+            </if>
+            <if test="roleId != null">
+	            <if test="status == null">
+	                and i.status not in (0)
+	            </if>
+            </if>
+        order by i.create_time desc
+    </select>
+    
+    <delete id="delete" parameterType="String">
+        delete from t_issue where id = #{id}
+    </delete>
+    
+    <update id="update" parameterType="com.isoftstone.model.ktxx.Ktsq">
+        update t_issue 
+           set project_name = #{projectName},
+               topic_name = #{topicName},
+               issue_no = #{issueNo},
+               issue_name = #{issueName},
+               issue_category = #{issueCategory},
+               belong_valley = #{belongValley},
+               request_company = #{requestCompany},
+               request_company_no = #{requestCompanyNo},
+               request_company_name = #{requestCompanyName},
+               start_year_month = #{startYearMonth},
+               end_year_month = #{endYearMonth},
+               fill_date = #{fillDate},
+               secret_level = #{secretLevel},
+               status = #{status},
+               modify_time = now(),
+               modify_by = #{modifyBy},
+               modify_by_name = #{modifyByName}
+         where id = #{id}
+    </update>
+    
+    <insert id="insert" parameterType="com.isoftstone.model.ktxx.Ktsq">
+        insert into t_issue (id,
+            project_name, topic_name, issue_no, issue_name,
+            belong_valley, request_company, request_company_no, request_company_name,
+            start_year_month, end_year_month, fill_date, secret_level, status, last_status,
+            create_time, create_by, create_by_name, create_org,
+            modify_time, modify_by, modify_by_name, issue_category)
+        values (#{id},
+            #{projectName},#{topicName},#{issueNo},#{issueName},
+            #{belongValley},#{requestCompany},#{requestCompanyNo},
+            #{requestCompanyName},#{startYearMonth},#{endYearMonth},
+            #{fillDate},#{secretLevel},#{status},#{lastStatus},
+            now(), #{createBy},#{createByName},#{createOrg},
+            now(), #{modifyBy},#{modifyByName},#{issueCategory}
+        )
+    </insert>
+</mapper>

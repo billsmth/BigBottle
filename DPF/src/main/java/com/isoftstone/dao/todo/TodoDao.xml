@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.isoftstone.dao.todo.TodoDao" >
+    <resultMap id="Todo" type="TodoAlias">
+        <result property="id" column="id" />
+        <result property="projectName" column="project_name" />
+        <result property="topicName" column="topic_name" />
+        <result property="issueNo" column="issue_no" />
+        <result property="issueName" column="issue_name" />
+        <result property="belongValley" column="belong_valley" />
+        <result property="requestCompany" column="request_company" />
+        <result property="requestCompanyNo" column="request_company_no" />
+        <result property="requestCompanyName" column="request_company_name" />
+        <result property="startYearMonth" column="start_year_month" />
+        <result property="endYearMonth" column="end_year_month" />
+        <result property="fillDate" column="fill_date" />
+        <result property="secretLevel" column="secret_level" />
+        <result property="director" column="director" />
+        <result property="directorNo" column="director_no" />
+        <result property="directorName" column="director_name" />
+        <result property="status" column="status" />
+        <result property="category" column="category" />
+    </resultMap>
+
+    <select id="findAll" resultMap="Todo" parameterType="hashmap">
+        select 
+            id, project_name, topic_name, issue_no, issue_name,
+            belong_valley, request_company, request_company_no, request_company_name,
+            start_year_month, end_year_month, fill_date, secret_level, director,
+            director_no, director_name, status, 1 as category
+        from
+            t_issue
+        where status = '0'
+          and create_org = #{orgId}
+
+        union
+
+        select 
+            id, project_name, topic_name, issue_no, issue_name,
+            belong_valley, request_company, request_company_no, request_company_name,
+            start_year_month, end_year_month, fill_date, secret_level, director,
+            director_no, director_name, status, 2 as category
+        from
+            t_issue
+        where status  in ('1', '3') and request_company = #{orgId}
+        
+        union
+        
+        select 
+            i.id, project_name, topic_name, issue_no, issue_name,
+            belong_valley, request_company, request_company_no, request_company_name,
+            start_year_month, end_year_month, fill_date, secret_level, director,
+            director_no, director_name, i.status, 3 as category
+        from
+            t_issue i
+        inner join t_issue_specialist_link s on i.id = s.issue_id 
+        where i.status  = '5' and s.specialist_id = #{peopleId}
+        
+        union
+        
+        select 
+            id, project_name, topic_name, issue_no, issue_name,
+            belong_valley, request_company, request_company_no, request_company_name,
+            start_year_month, end_year_month, fill_date, secret_level, director,
+            director_no, director_name, status, 4 as category
+        from
+            t_issue
+        where status  in ('2', '4', '5', '6', '7', '8')
+          and create_org = #{orgId}
+    </select>
+</mapper>

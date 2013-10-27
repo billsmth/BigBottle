@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.isoftstone.dao.opinion.IssueOpinionDao" >
+    <resultMap id="IssueOpinion" type="com.isoftstone.model.opinion.IssueOpinion">
+	    <id property="id" column="id" />
+	    <result property="issueId" column="issue_id" />											
+		<result property="issueStatus" column="issue_status" />		
+		<result property="peopleId" column="people_id" />	
+		<result property="name" column="name" />
+		<result property="issueXsJbxx" column="issue_xs_jbxx" />
+		<result property="issueXsCydwRy" column="issue_xs_cydw_ry" />	
+		<result property="issueXsJfsc" column="issue_xs_jfsc" />
+		<result property="issueXsRwnrKhzb" column="issue_xs_rwnr_khzb" />	
+		<result property="issueXsQt" column="issue_xs_qt" />
+		<result property="issueWpYjmb" column="issue_wp_yjmb" />
+		<result property="issueWpYjnrRwfj" column="issue_wp_yjnr_rwfj" />	
+		<result property="issueWpYqcgKhzb" column="issue_wp_yqcg_khzb" />
+		<result property="issueWpHzdwRwfg" column="issue_wp_hzdw_rwfg" />
+		<result property="issueWpLast" column="issue_wp_last" />
+		<result property="issueWpYjhz" column="issue_wp_yjhz" />
+		<result property="issueHyscYj" column="issue_hysc_yj" />
+		<result property="issueFsXgws" column="issue_fs_xgws" />
+		<result property="issueFsFsyj" column="issue_fs_fsyj" />
+		<result property="createTime" column="create_time" />
+    </resultMap>
+
+    <select id="listAll" resultMap="IssueOpinion" parameterType="String">
+        select 
+        	id, 
+        	issue_id, 
+        	issue_status, 
+        	people_id, 
+        	name, 
+        	issue_xs_jbxx, 
+        	issue_xs_cydw_ry, 
+        	issue_xs_jfsc, 
+        	issue_xs_rwnr_khzb, 
+        	issue_xs_qt, 
+        	issue_wp_yjmb, 
+        	issue_wp_yjnr_rwfj, 
+        	issue_wp_yqcg_khzb, 
+        	issue_wp_hzdw_rwfg, 
+        	issue_wp_last, 
+        	issue_wp_yjhz, 
+        	issue_hysc_yj, 
+        	issue_fs_xgws, 
+        	issue_fs_fsyj, 
+        	create_time	
+		from t_issue_opinion 
+        where issue_id = #{issueId} and create_time is not null 
+        order by create_time desc
+    </select>
+    
+    <select id="findZJOpinion" resultMap="IssueOpinion" parameterType="com.isoftstone.model.opinion.IssueOpinion">
+        select 
+        	id, 
+        	issue_id, 
+        	issue_status, 
+        	people_id, 
+        	name, 
+        	issue_xs_jbxx, 
+        	issue_xs_cydw_ry, 
+        	issue_xs_jfsc, 
+        	issue_xs_rwnr_khzb, 
+        	issue_xs_qt, 
+        	issue_wp_yjmb, 
+        	issue_wp_yjnr_rwfj, 
+        	issue_wp_yqcg_khzb, 
+        	issue_wp_hzdw_rwfg, 
+        	issue_wp_last, 
+        	issue_wp_yjhz, 
+        	issue_hysc_yj, 
+        	issue_fs_xgws, 
+        	issue_fs_fsyj, 
+        	create_time	
+		from t_issue_opinion 
+        where issue_id = #{issueId} and people_id = #{peopleId} and create_time is not null 
+        order by create_time desc
+    </select>
+
+	<select id="selectTempIssueOpinion" resultMap="IssueOpinion" parameterType="com.isoftstone.model.opinion.IssueOpinion">
+        select 
+        	id,
+        	issue_id, 
+			issue_status,
+			people_id,
+			name,
+			issue_xs_jbxx,
+			issue_xs_cydw_ry,
+			issue_xs_jfsc,
+			issue_xs_rwnr_khzb,
+			issue_xs_qt,
+			issue_wp_yjmb,
+			issue_wp_yjnr_rwfj,
+			issue_wp_yqcg_khzb,
+			issue_wp_hzdw_rwfg,
+			issue_wp_last,
+			issue_wp_yjhz,
+			issue_hysc_yj,
+			issue_fs_xgws,
+			issue_fs_fsyj,
+			create_time	
+		from t_issue_opinion 
+        where people_id = #{peopleId} and issue_id = #{issueId} and issue_status = #{issueStatus} and create_time is null;
+    </select>  
+	<select id="selectHistoryIssueOpinion" resultMap="IssueOpinion" parameterType="String">
+        select id, issue_id, issue_specialist_id, opinion, create_time from t_issue_specialist_opinion
+        where issue_specialist_id = #{issueSpecialistId} and create_time is not null;
+    </select>  
+    <delete id="delete" parameterType="String">
+        delete from t_issue_opinion where id = #{id}
+    </delete>
+    
+    <update id="update" parameterType="com.isoftstone.model.opinion.IssueOpinion">
+        update t_issue_opinion 
+           	set issue_id=#{issueId}, 
+           	issue_status=#{issueStatus},
+			people_id=#{peopleId},
+			name=#{name},
+			issue_xs_jbxx=#{issueXsJbxx},
+			issue_xs_cydw_ry=#{issueXsCydwRy},
+			issue_xs_jfsc=#{issueXsJfsc},
+			issue_xs_rwnr_khzb=#{issueXsRwnrKhzb},
+			issue_xs_qt=#{issueXsQt},
+			issue_wp_yjmb=#{issueWpYjmb},
+			issue_wp_yjnr_rwfj=#{issueWpYjnrRwfj},
+			issue_wp_yqcg_khzb=#{issueWpYqcgKhzb},
+			issue_wp_hzdw_rwfg=#{issueWpHzdwRwfg},
+			issue_wp_last=#{issueWpLast},
+			issue_wp_yjhz=#{issueWpYjhz},
+			issue_hysc_yj=#{issueHyscYj},
+			issue_fs_xgws=#{issueFsXgws},
+			issue_fs_fsyj=#{issueFsFsyj},
+			create_time=#{createTime}	
+         where id = #{id}
+    </update>
+    <insert id="insert" parameterType="com.isoftstone.model.opinion.IssueOpinion">
+        insert into t_issue_opinion (id, issue_id, issue_status, people_id, name, issue_xs_jbxx, issue_xs_cydw_ry, issue_xs_jfsc, issue_xs_rwnr_khzb, issue_xs_qt, issue_wp_yjmb, issue_wp_yjnr_rwfj, issue_wp_yqcg_khzb, issue_wp_hzdw_rwfg, issue_wp_last, issue_wp_yjhz, issue_hysc_yj, issue_fs_xgws, issue_fs_fsyj, create_time) 
+        values (#{id}, #{issueId}, #{issueStatus}, #{peopleId}, #{name}, #{issueXsJbxx}, #{issueXsCydwRy}, #{issueXsJfsc}, #{issueXsRwnrKhzb}, #{issueXsQt}, #{issueWpYjmb}, #{issueWpYjnrRwfj}, #{issueWpYqcgKhzb}, #{issueWpHzdwRwfg}, #{issueWpLast}, #{issueWpYjhz}, #{issueHyscYj}, #{issueFsXgws}, #{issueFsFsyj}, #{createTime})
+    </insert>
+    
+    <sql id="Base_Column_List" >
+		id, issue_id, issue_status, people_id, name, issue_wp_last, create_time,
+	    issue_xs_jbxx, issue_xs_cydw_ry, issue_xs_jfsc, issue_xs_rwnr_khzb, issue_xs_qt, 
+	    issue_wp_yjmb, issue_wp_yjnr_rwfj, issue_wp_yqcg_khzb, issue_wp_hzdw_rwfg, issue_wp_yjhz, 
+	    issue_hysc_yj, issue_fs_xgws, issue_fs_fsyj
+    </sql>
+    
+    <select id="findIssueOpinionForReplayByIssueId" resultMap="IssueOpinion" parameterType="String">
+        SELECT
+		n.*
+		from t_issue_opinion n , t_issue e
+		WHERE n.issue_id = e.id and n.create_time is not null and n.issue_wp_yjmb is not null
+		and n.issue_status = e.last_status and e.`status` = 3 AND e.id = #{issueId}
+		ORDER BY n.create_time DESC limit 1
+    </select>
+    
+  	<select id="selectByPrimaryKey" resultMap="IssueOpinion" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_issue_opinion
+    where id = #{id,jdbcType=VARCHAR}
+  	</select>
+    
+    <select id="findIssueOpinionByIssueId" resultMap="IssueOpinion" parameterType="String">
+        SELECT n.* from t_issue_opinion n LEFT JOIN t_issue e ON n.issue_id = e.id 
+		WHERE n.create_time is not null and n.issue_status = e.last_status and e.`status` = 3
+		AND e.id = #{issueId}
+ 		ORDER BY n.create_time DESC limit 1
+    </select>
+    
+    <select id="findByIssueId" resultMap="IssueOpinion" parameterType="String">
+    	select 
+    	<include refid="Base_Column_List" />
+		from t_issue_opinion as i
+        where i.issue_id = #{issueId} and i.create_time is not null 
+        order by create_time desc
+    </select>
+    
+    <select id="selectNewestIssueOpinion" resultMap="IssueOpinion" parameterType="com.isoftstone.model.opinion.IssueOpinion">
+        select 
+        	id,
+        	issue_id, 
+			issue_status,
+			people_id,
+			name,
+			issue_xs_jbxx,
+			issue_xs_cydw_ry,
+			issue_xs_jfsc,
+			issue_xs_rwnr_khzb,
+			issue_xs_qt,
+			issue_wp_yjmb,
+			issue_wp_yjnr_rwfj,
+			issue_wp_yqcg_khzb,
+			issue_wp_hzdw_rwfg,
+			issue_wp_last,
+			issue_wp_yjhz,
+			issue_hysc_yj,
+			issue_fs_xgws,
+			issue_fs_fsyj,
+			create_time	
+		from t_issue_opinion 
+        where people_id = #{peopleId} and issue_id = #{issueId} order by create_time desc limit 1;
+    </select>  
+</mapper>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.isoftstone.dao.ktxx.KtxxResultDao" >
+    <resultMap id="KtsqResult" type="com.isoftstone.model.ktxx.KtxxResult">
+        <result property="id" column="id" />
+        <result property="issueId" column="issue_id" />
+        <result property="result" column="result" />
+    </resultMap>
+
+    <select id="listAll" resultMap="KtsqResult" parameterType="hashmap">
+        select 
+            id, issue_id, result
+        from
+            t_issue_result 
+        where 1=1
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="issueId != null">
+                and issue_id = #{issueId}
+            </if>
+            <if test="issueResult != null">
+                and result = #{issueResult}
+            </if>
+    </select>
+    
+    <delete id="delete" parameterType="String">
+        delete from t_issue_result where id = #{id}
+    </delete>
+    <delete id="deleteByKT" parameterType="String">
+        delete from t_issue_result where issue_id = #{issueId}
+    </delete>
+    <update id="update" parameterType="com.isoftstone.model.ktxx.KtxxResult">
+        update t_issue_result 
+           set result = #{result} 
+         		where id = #{id} and issue_id = #{issueId}
+    </update>
+    
+    <insert id="insert" parameterType="com.isoftstone.model.ktxx.KtxxResult">
+        insert into t_issue_result (id,issue_id, result) values (#{id},#{issueId},#{result})
+    </insert>
+</mapper>

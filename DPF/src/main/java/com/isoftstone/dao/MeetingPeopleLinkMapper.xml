@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.isoftstone.dao.MeetingPeopleLinkMapper" >
+  <resultMap id="BaseResultMap" type="com.isoftstone.model.meeting.MeetingPeopleLink" >
+    <id column="idmpl" property="idmpl" jdbcType="VARCHAR" />
+    <result column="id_meeting" property="idMeeting" jdbcType="VARCHAR" />
+    <result column="id_people" property="idPeople" jdbcType="VARCHAR" />
+    <result column="or_main" property="orMain" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    idmpl, id_meeting, id_people, or_main
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_meeting_people_link
+    where idmpl = #{idmpl,jdbcType=VARCHAR}
+  </select>
+  <insert id="insertSelective" parameterType="com.isoftstone.model.meeting.MeetingPeopleLink" >
+    insert into t_meeting_people_link
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="idmpl != null" >
+        idmpl,
+      </if>
+      <if test="idMeeting != null" >
+        id_meeting,
+      </if>
+      <if test="idPeople != null" >
+        id_people,
+      </if>
+      <if test="orMain != null" >
+        or_main,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="idmpl != null" >
+        #{idmpl,jdbcType=VARCHAR},
+      </if>
+      <if test="idMeeting != null" >
+        #{idMeeting,jdbcType=VARCHAR},
+      </if>
+      <if test="idPeople != null" >
+        #{idPeople,jdbcType=VARCHAR},
+      </if>
+      <if test="orMain != null" >
+        #{orMain,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.isoftstone.model.meeting.MeetingPeopleLink" >
+    update t_meeting_people_link
+    <set >
+      <if test="idMeeting != null" >
+        id_meeting = #{idMeeting,jdbcType=VARCHAR},
+      </if>
+      <if test="idPeople != null" >
+        id_people = #{idPeople,jdbcType=VARCHAR},
+      </if>
+      <if test="orMain != null" >
+        or_main = #{orMain,jdbcType=CHAR},
+      </if>
+    </set>
+    where idmpl = #{idmpl,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.isoftstone.model.meeting.MeetingPeopleLink" >
+    update t_meeting_people_link
+    set id_meeting = #{idMeeting,jdbcType=VARCHAR},
+      id_people = #{idPeople,jdbcType=VARCHAR},
+      or_main = #{orMain,jdbcType=CHAR}
+    where idmpl = #{idmpl,jdbcType=VARCHAR}
+  </update>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_meeting_people_link
+    where idmpl = #{idmpl,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.isoftstone.model.meeting.MeetingPeopleLink" >
+    insert into t_meeting_people_link (idmpl, id_meeting, id_people, 
+      or_main)
+    values (#{idmpl,jdbcType=VARCHAR}, #{idMeeting,jdbcType=VARCHAR}, #{idPeople,jdbcType=VARCHAR}, 
+      #{orMain,jdbcType=CHAR})
+  </insert>
+</mapper>

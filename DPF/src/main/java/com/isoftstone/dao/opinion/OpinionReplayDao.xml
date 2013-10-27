@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.isoftstone.dao.opinion.OpinionReplayDao" >
+    <resultMap id="OpinionReplay" type="com.isoftstone.model.opinion.OpinionReplay">
+	    <result property="id" column="id" />
+	    <result property="opinionId" column="opinion_id" />	
+	    <result property="issueId" column="issue_id" />										
+		<result property="issueStatus" column="issue_status" />		
+		<result property="peopleId" column="people_id" />	
+		<result property="name" column="name" />
+		<result property="issueXsJbxx" column="issue_xs_jbxx" />
+		<result property="issueXsCydwRy" column="issue_xs_cydw_ry" />	
+		<result property="issueXsJfsc" column="issue_xs_jfsc" />
+		<result property="issueXsRwnrKhzb" column="issue_xs_rwnr_khzb" />	
+		<result property="issueXsQt" column="issue_xs_qt" />
+		<result property="issueWpYjhz" column="issue_wp_yjhz" />
+		<result property="issueHyscYj" column="issue_hysc_yj" />
+		<result property="issueFsXgws" column="issue_fs_xgws" />
+		<result property="issueFsFsyj" column="issue_fs_fsyj" />
+		<result property="createTime" column="create_time" />
+    </resultMap>
+
+    <select id="listAll" resultMap="OpinionReplay" parameterType="String">
+        select 
+        	id, 
+        	opinion_id, 
+        	issue_id, 
+        	issue_status, 
+        	people_id, 
+        	name, 
+        	issue_xs_jbxx, 
+        	issue_xs_cydw_ry, 
+        	issue_xs_jfsc, 
+        	issue_xs_rwnr_khzb, 
+        	issue_xs_qt, 
+        	issue_wp_yjhz, 
+        	issue_hysc_yj, 
+        	issue_fs_xgws, 
+        	issue_fs_fsyj, 
+        	create_time	
+		from t_issue_replay 
+        where issue_id = #{issueId} and create_time is not null 
+        order by create_time desc
+    </select>
+    
+	<select id="selectTempOpinionReplay" resultMap="OpinionReplay" parameterType="com.isoftstone.model.opinion.OpinionReplay">
+        select 
+        	id,
+        	issue_id, 
+			issue_status,
+			people_id,
+			name,
+			issue_xs_jbxx,
+			issue_xs_cydw_ry,
+			issue_xs_jfsc,
+			issue_xs_rwnr_khzb,
+			issue_xs_qt,
+			issue_wp_yjmb,
+			issue_wp_yjnr_rwfj,
+			issue_wp_yqcg_khzb,
+			issue_wp_hzdw_rwfg,
+			issue_wp_last,
+			issue_wp_yjhz,
+			issue_hysc_yj,
+			issue_fs_xgws,
+			issue_fs_fsyj,
+			create_time	
+		from t_issue_replay 
+        where people_id = #{peopleId} and issue_id = #{issueId} and issue_status = #{issueStatus} and create_time is null;
+    </select>  
+    <delete id="delete" parameterType="String">
+        delete from t_issue_replay where id = #{id}
+    </delete>
+    
+    <update id="update" parameterType="com.isoftstone.model.opinion.OpinionReplay">
+        update t_issue_replay 
+           	set issue_id=#{issueId},
+           	opinion_id=#{opinionId}, 
+           	issue_status=#{issueStatus},
+			people_id=#{peopleId},
+			name=#{name},
+			issue_xs_jbxx=#{issueXsJbxx},
+			issue_xs_cydw_ry=#{issueXsCydwRy},
+			issue_xs_jfsc=#{issueXsJfsc},
+			issue_xs_rwnr_khzb=#{issueXsRwnrKhzb},
+			issue_xs_qt=#{issueXsQt},
+			issue_wp_yjhz=#{issueWpYjhz},
+			issue_hysc_yj=#{issueHyscYj},
+			issue_fs_xgws=#{issueFsXgws},
+			issue_fs_fsyj=#{issueFsFsyj},
+			create_time=#{createTime}	
+         where id = #{id}
+    </update>
+    <insert id="insert" parameterType="com.isoftstone.model.opinion.OpinionReplay">
+        insert into t_issue_replay (id, opinion_id, issue_id, issue_status, people_id, name, issue_xs_jbxx, issue_xs_cydw_ry, issue_xs_jfsc, issue_xs_rwnr_khzb, issue_xs_qt, issue_wp_yjhz, issue_hysc_yj, issue_fs_xgws, issue_fs_fsyj, create_time) 
+        values (#{id}, #{opinionId}, #{issueId}, #{issueStatus}, #{peopleId}, #{name}, #{issueXsJbxx}, #{issueXsCydwRy}, #{issueXsJfsc}, #{issueXsRwnrKhzb}, #{issueXsQt}, #{issueWpYjhz}, #{issueHyscYj}, #{issueFsXgws}, #{issueFsFsyj}, #{createTime})
+    </insert>
+    
+    
+    <insert id="insertSelective" parameterType="com.isoftstone.model.opinion.OpinionReplay" >
+    insert into t_issue_replay
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="opinionId != null" >
+        opinion_id,
+      </if>
+      <if test="issueId != null" >
+        issue_id,
+      </if>
+      <if test="peopleId != null" >
+        people_id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="issueStatus != null" >
+        issue_status,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="issueXsJbxx != null" >
+        issue_xs_jbxx,
+      </if>
+      <if test="issueXsCydwRy != null" >
+        issue_xs_cydw_ry,
+      </if>
+      <if test="issueXsJfsc != null" >
+        issue_xs_jfsc,
+      </if>
+      <if test="issueXsRwnrKhzb != null" >
+        issue_xs_rwnr_khzb,
+      </if>
+      <if test="issueXsQt != null" >
+        issue_xs_qt,
+      </if>
+      <if test="issueWpYjhz != null" >
+        issue_wp_yjhz,
+      </if>
+      <if test="issueHyscYj != null" >
+        issue_hysc_yj,
+      </if>
+      <if test="issueFsXgws != null" >
+        issue_fs_xgws,
+      </if>
+      <if test="issueFsFsyj != null" >
+        issue_fs_fsyj,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="opinionId != null" >
+        #{opinionId,jdbcType=VARCHAR},
+      </if>
+      <if test="issueId != null" >
+        #{issueId,jdbcType=VARCHAR},
+      </if>
+      <if test="peopleId != null" >
+        #{peopleId,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="issueStatus != null" >
+        #{issueStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime},
+      </if>
+      <if test="issueXsJbxx != null" >
+        #{issueXsJbxx},
+      </if>
+      <if test="issueXsCydwRy != null" >
+        #{issueXsCydwRy},
+      </if>
+      <if test="issueXsJfsc != null" >
+        #{issueXsJfsc},
+      </if>
+      <if test="issueXsRwnrKhzb != null" >
+        #{issueXsRwnrKhzb},
+      </if>
+      <if test="issueXsQt != null" >
+        #{issueXsQt},
+      </if>
+      <if test="issueWpYjhz != null" >
+        #{issueWpYjhz},
+      </if>
+      <if test="issueHyscYj != null" >
+        #{issueHyscYj},
+      </if>
+      <if test="issueFsXgws != null" >
+        #{issueFsXgws},
+      </if>
+      <if test="issueFsFsyj != null" >
+        #{issueFsFsyj},
+      </if>
+    </trim>
+  </insert>
+  
+  <sql id="Base_Column_List" >
+    id, opinion_id, issue_id, people_id, name, issue_status, create_time,issue_xs_jbxx, issue_xs_cydw_ry, issue_xs_jfsc, issue_xs_rwnr_khzb, issue_xs_qt, 
+    issue_wp_yjhz, issue_hysc_yj, issue_fs_xgws, issue_fs_fsyj
+  </sql>
+  
+  
+  <select id="findOpinionReplay" resultMap="OpinionReplay" parameterType="com.isoftstone.model.opinion.OpinionReplay">
+      select 
+	  <include refid="Base_Column_List" />
+		from t_issue_replay 
+    	where 1=1
+      <if test="opinionId != null" >
+        and opinion_id=#{opinionId,jdbcType=VARCHAR}
+      </if>
+      <if test="issueId != null" >
+        and issue_id =#{issueId,jdbcType=VARCHAR}
+      </if>
+      <if test="peopleId != null" >
+        and people_id = #{peopleId,jdbcType=VARCHAR}
+      </if>
+      <if test="issueStatus != null" >
+        and issue_status = #{issueStatus,jdbcType=VARCHAR}
+      </if>
+      ORDER BY create_time DESC limit 1
+    </select>  
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.isoftstone.model.opinion.OpinionReplay" >
+    update t_issue_replay
+    <set >
+      <if test="opinionId != null" >
+        opinion_id = #{opinionId,jdbcType=VARCHAR},
+      </if>
+      <if test="issueId != null" >
+        issue_id = #{issueId,jdbcType=VARCHAR},
+      </if>
+      <if test="peopleId != null" >
+        people_id = #{peopleId,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="issueStatus != null" >
+        issue_status = #{issueStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime},
+      </if>
+      <if test="issueXsJbxx != null" >
+        issue_xs_jbxx = #{issueXsJbxx},
+      </if>
+      <if test="issueXsCydwRy != null" >
+        issue_xs_cydw_ry = #{issueXsCydwRy},
+      </if>
+      <if test="issueXsJfsc != null" >
+        issue_xs_jfsc = #{issueXsJfsc},
+      </if>
+      <if test="issueXsRwnrKhzb != null" >
+        issue_xs_rwnr_khzb = #{issueXsRwnrKhzb},
+      </if>
+      <if test="issueXsQt != null" >
+        issue_xs_qt = #{issueXsQt},
+      </if>
+      <if test="issueWpYjhz != null" >
+        issue_wp_yjhz = #{issueWpYjhz},
+      </if>
+      <if test="issueHyscYj != null" >
+        issue_hysc_yj = #{issueHyscYj},
+      </if>
+      <if test="issueFsXgws != null" >
+        issue_fs_xgws = #{issueFsXgws},
+      </if>
+      <if test="issueFsFsyj != null" >
+        issue_fs_fsyj = #{issueFsFsyj},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+</mapper>

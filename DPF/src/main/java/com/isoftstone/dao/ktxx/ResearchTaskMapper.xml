@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.isoftstone.dao.ktxx.ResearchTaskMapper" >
+  <resultMap id="BaseResultMap" type="com.isoftstone.model.ktxx.ResearchTask" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="issue_id" property="issueId" jdbcType="VARCHAR" />
+    <result column="task_name" property="taskName" jdbcType="VARCHAR" />
+    <result column="research_content" property="researchContent" jdbcType="VARCHAR" />
+    <result column="check_target" property="checkTarget" jdbcType="VARCHAR" />
+    <result column="assume_org_id" property="assumeOrgId" jdbcType="VARCHAR" />
+    <result column="join_org_id" property="joinOrgId" jdbcType="VARCHAR" />
+    <result column="outlay" property="outlay" jdbcType="DECIMAL" />
+    <result column="sort_no" property="sortNo" jdbcType="INTEGER" />
+    <result column="assume_org_name" property="assumeOrgName" jdbcType="VARCHAR" />
+    <result column="join_org_name" property="joinOrgName" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <insert id="insert" parameterType="com.isoftstone.model.ktxx.ResearchTask" >
+    insert into t_issue_research_task (id, issue_id, task_name, 
+      research_content, check_target, assume_org_id, 
+      join_org_id, outlay, sort_no
+      )
+    values (#{id,jdbcType=VARCHAR}, #{issueId,jdbcType=VARCHAR}, #{taskName,jdbcType=VARCHAR}, 
+      #{researchContent,jdbcType=VARCHAR}, #{checkTarget,jdbcType=VARCHAR}, #{assumeOrgId,jdbcType=VARCHAR}, 
+      #{joinOrgId,jdbcType=VARCHAR}, #{outlay,jdbcType=DECIMAL}, #{sortNo,jdbcType=INTEGER}
+      )
+  </insert>
+
+  <delete id="deleteByKT" parameterType="String">
+  	delete from t_issue_research_task where issue_id = #{issueId}
+  </delete>
+  
+  
+  
+  
+  
+  
+  
+  <select id="selectAll" resultMap="BaseResultMap" parameterType="hashmap" >
+	    select *,
+	    (select o1.company_name from t_org o1 where rt.assume_org_id=o1.idorg) as assume_org_name,
+	    (select o2.company_name from t_org o2 where rt.join_org_id=o2.idorg) as join_org_name
+	    from t_issue_research_task rt
+	    <if test="issueId != null">
+	        where issue_id = #{issueId}
+	    </if>
+	    order by sort_no asc
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_issue_research_task
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insertSelective" parameterType="com.isoftstone.model.ktxx.ResearchTask" >
+    insert into t_issue_research_task
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="issueId != null" >
+        issue_id,
+      </if>
+      <if test="taskName != null" >
+        task_name,
+      </if>
+      <if test="researchContent != null" >
+        research_content,
+      </if>
+      <if test="checkTarget != null" >
+        check_target,
+      </if>
+      <if test="assumeOrgId != null" >
+        assume_org_id,
+      </if>
+      <if test="joinOrgId != null" >
+        join_org_id,
+      </if>
+      <if test="outlay != null" >
+        outlay,
+      </if>
+      <if test="sortNo != null" >
+        sort_no,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="issueId != null" >
+        #{issueId,jdbcType=VARCHAR},
+      </if>
+      <if test="taskName != null" >
+        #{taskName,jdbcType=VARCHAR},
+      </if>
+      <if test="researchContent != null" >
+        #{researchContent,jdbcType=VARCHAR},
+      </if>
+      <if test="checkTarget != null" >
+        #{checkTarget,jdbcType=VARCHAR},
+      </if>
+      <if test="assumeOrgId != null" >
+        #{assumeOrgId,jdbcType=VARCHAR},
+      </if>
+      <if test="joinOrgId != null" >
+        #{joinOrgId,jdbcType=VARCHAR},
+      </if>
+      <if test="outlay != null" >
+        #{outlay,jdbcType=DECIMAL},
+      </if>
+      <if test="sortNo != null" >
+        #{sortNo,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  
+   <update id="updateByPrimaryKeySelective" parameterType="com.isoftstone.model.ktxx.ResearchTask" >
+    update t_issue_research_task
+    <set >
+      <if test="issueId != null" >
+        issue_id = #{issueId,jdbcType=VARCHAR},
+      </if>
+      <if test="taskName != null" >
+        task_name = #{taskName,jdbcType=VARCHAR},
+      </if>
+      <if test="researchContent != null" >
+        research_content = #{researchContent,jdbcType=VARCHAR},
+      </if>
+      <if test="checkTarget != null" >
+        check_target = #{checkTarget,jdbcType=VARCHAR},
+      </if>
+      <if test="assumeOrgId != null" >
+        assume_org_id = #{assumeOrgId,jdbcType=VARCHAR},
+      </if>
+      <if test="joinOrgId != null" >
+        join_org_id = #{joinOrgId,jdbcType=VARCHAR},
+      </if>
+      <if test="outlay != null" >
+        outlay = #{outlay,jdbcType=DECIMAL},
+      </if>
+      <if test="sortNo != null" >
+        sort_no = #{sortNo,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+</mapper>

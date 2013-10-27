@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.isoftstone.dao.ktxx.KtxxBudgetDao" >
+    <resultMap id="t_issue_budget" type="com.isoftstone.model.ktxx.BudgetItem">
+        <result property="id" column="id" />
+		<result property="issueID" column="issue_id" />
+		<result property="budgetID" column="budget_id" />
+		<result property="budgetName" column="budget_desc" />
+		<result property="investmentCenGov" column="bgt_central" />
+		<result property="investmentLocGov" column="bgt_local" />
+		<result property="investmentEnterprise" column="bgt_enterprise" />
+		<result property="investmentBank" column="bgt_bank" />
+		<result property="investmentOther" column="bgt_other" />
+		<result property="investmentSum" column="bgt_sum" />
+		<result property="parentID" column="parent_id" />
+    </resultMap>
+
+    <select id="listAll" resultMap="t_issue_budget" parameterType="hashmap">
+        select * from t_issue_budget
+    </select>
+    
+    <select id="selectBudgetByKT" resultMap="t_issue_budget" parameterType="String">
+        select * from t_issue_budget where issue_id = #{issueID} order by item_level, item_order
+    </select>
+    
+    	
+    <delete id="delete" parameterType="String">
+        delete from t_issue_budget where id = #{id}
+    </delete>
+    
+	<insert id="insert" parameterType="com.isoftstone.model.ktxx.BudgetItem">
+        insert into t_issue_budget (id,issue_id,budget_id,budget_desc,
+        bgt_central,bgt_local,bgt_enterprise,bgt_bank,bgt_other,bgt_sum,parent_id)
+        values (#{id},
+            #{issueID},#{budgetID},#{budgetName},#{investmentCenGov},
+            #{investmentLocGov},#{investmentEnterprise},#{investmentBank},
+            #{investmentOther},#{investmentSum},#{parentID})
+	</insert>
+</mapper>

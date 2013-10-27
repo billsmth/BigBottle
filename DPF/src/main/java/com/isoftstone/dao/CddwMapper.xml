@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.isoftstone.dao.CddwMapper" >
+  
+  <resultMap id="BaseResultMap" type="com.isoftstone.model.cddw.Cddw" >
+    <id column="idorg" property="idorg" jdbcType="VARCHAR" />
+    <result column="company_name" property="companyName" jdbcType="VARCHAR" />
+    <result column="org_no" property="orgNo" jdbcType="VARCHAR" />
+    <result column="belong_area_province" property="belongAreaProvince" jdbcType="INTEGER" />
+    <result column="belong_area_city" property="belongAreaCity" jdbcType="INTEGER" />
+    <result column="belong_area_district" property="belongAreaDistrict" jdbcType="INTEGER" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="company_prop" property="companyProp" jdbcType="VARCHAR" />
+    <result column="bank_name" property="bankName" jdbcType="VARCHAR" />
+    <result column="bank_account" property="bankAccount" jdbcType="VARCHAR" />
+    <result column="legal_msg" property="legalMsg" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="create_user" property="createUser" jdbcType="INTEGER" />
+    <result column="modify_date" property="modifyDate" jdbcType="TIMESTAMP" />
+    <result column="modify_user" property="modifyUser" jdbcType="INTEGER" />
+    <result column="soft_del" property="softDel" jdbcType="CHAR" />
+    <result column="soft_no" property="softNo" jdbcType="INTEGER" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    idorg, company_name, org_no, belong_area_province, belong_area_city, belong_area_district, 
+    address, company_prop, bank_name, bank_account, legal_msg, create_date, create_user, 
+    modify_date, modify_user, soft_del
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_org
+    where idorg = #{idorg,jdbcType=VARCHAR}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_org
+    where idorg = #{idorg,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.isoftstone.model.cddw.Cddw" >
+    insert into t_org (idorg, company_name, org_no, 
+      belong_area_province, belong_area_city, belong_area_district, 
+      address, company_prop, bank_name, 
+      bank_account, legal_msg, create_date, 
+      create_user, modify_date, modify_user, 
+      soft_del)
+    values (#{idorg,jdbcType=VARCHAR}, #{companyName,jdbcType=VARCHAR}, #{orgNo,jdbcType=VARCHAR}, 
+      #{belongAreaProvince,jdbcType=INTEGER}, #{belongAreaCity,jdbcType=INTEGER}, #{belongAreaDistrict,jdbcType=INTEGER}, 
+      #{address,jdbcType=VARCHAR}, #{companyProp,jdbcType=VARCHAR}, #{bankName,jdbcType=VARCHAR}, 
+      #{bankAccount,jdbcType=VARCHAR}, #{legalMsg,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, 
+      #{createUser,jdbcType=INTEGER}, #{modifyDate,jdbcType=TIMESTAMP}, #{modifyUser,jdbcType=INTEGER}, 
+      #{softDel,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.isoftstone.model.cddw.Cddw" >
+    insert into t_org
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="idorg != null" >
+        idorg,
+      </if>
+      <if test="companyName != null" >
+        company_name,
+      </if>
+      <if test="orgNo != null" >
+        org_no,
+      </if>
+      <if test="belongAreaProvince != null" >
+        belong_area_province,
+      </if>
+      <if test="belongAreaCity != null" >
+        belong_area_city,
+      </if>
+      <if test="belongAreaDistrict != null" >
+        belong_area_district,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="companyProp != null" >
+        company_prop,
+      </if>
+      <if test="bankName != null" >
+        bank_name,
+      </if>
+      <if test="bankAccount != null" >
+        bank_account,
+      </if>
+      <if test="legalMsg != null" >
+        legal_msg,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="createUser != null" >
+        create_user,
+      </if>
+      <if test="modifyDate != null" >
+        modify_date,
+      </if>
+      <if test="modifyUser != null" >
+        modify_user,
+      </if>
+      <if test="softDel != null" >
+        soft_del,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="idorg != null" >
+        #{idorg,jdbcType=VARCHAR},
+      </if>
+      <if test="companyName != null" >
+        #{companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="orgNo != null" >
+        #{orgNo,jdbcType=VARCHAR},
+      </if>
+      <if test="belongAreaProvince != null" >
+        #{belongAreaProvince,jdbcType=INTEGER},
+      </if>
+      <if test="belongAreaCity != null" >
+        #{belongAreaCity,jdbcType=INTEGER},
+      </if>
+      <if test="belongAreaDistrict != null" >
+        #{belongAreaDistrict,jdbcType=INTEGER},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="companyProp != null" >
+        #{companyProp,jdbcType=VARCHAR},
+      </if>
+      <if test="bankName != null" >
+        #{bankName,jdbcType=VARCHAR},
+      </if>
+      <if test="bankAccount != null" >
+        #{bankAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="legalMsg != null" >
+        #{legalMsg,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUser != null" >
+        #{createUser,jdbcType=INTEGER},
+      </if>
+      <if test="modifyDate != null" >
+        #{modifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyUser != null" >
+        #{modifyUser,jdbcType=INTEGER},
+      </if>
+      <if test="softDel != null" >
+        #{softDel,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.isoftstone.model.cddw.Cddw" >
+    update t_org
+    <set >
+      <if test="companyName != null" >
+        company_name = #{companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="orgNo != null" >
+        org_no = #{orgNo,jdbcType=VARCHAR},
+      </if>
+      <if test="belongAreaProvince != null" >
+        belong_area_province = #{belongAreaProvince,jdbcType=INTEGER},
+      </if>
+      <if test="belongAreaCity != null" >
+        belong_area_city = #{belongAreaCity,jdbcType=INTEGER},
+      </if>
+      <if test="belongAreaDistrict != null" >
+        belong_area_district = #{belongAreaDistrict,jdbcType=INTEGER},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="companyProp != null" >
+        company_prop = #{companyProp,jdbcType=VARCHAR},
+      </if>
+      <if test="bankName != null" >
+        bank_name = #{bankName,jdbcType=VARCHAR},
+      </if>
+      <if test="bankAccount != null" >
+        bank_account = #{bankAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="legalMsg != null" >
+        legal_msg = #{legalMsg,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUser != null" >
+        create_user = #{createUser,jdbcType=INTEGER},
+      </if>
+      <if test="modifyDate != null" >
+        modify_date = #{modifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyUser != null" >
+        modify_user = #{modifyUser,jdbcType=INTEGER},
+      </if>
+      <if test="softDel != null" >
+        soft_del = #{softDel,jdbcType=CHAR},
+      </if>
+    </set>
+    where idorg = #{idorg,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.isoftstone.model.cddw.Cddw" >
+    update t_org
+    set company_name = #{companyName,jdbcType=VARCHAR},
+      org_no = #{orgNo,jdbcType=VARCHAR},
+      belong_area_province = #{belongAreaProvince,jdbcType=INTEGER},
+      belong_area_city = #{belongAreaCity,jdbcType=INTEGER},
+      belong_area_district = #{belongAreaDistrict,jdbcType=INTEGER},
+      address = #{address,jdbcType=VARCHAR},
+      company_prop = #{companyProp,jdbcType=VARCHAR},
+      bank_name = #{bankName,jdbcType=VARCHAR},
+      bank_account = #{bankAccount,jdbcType=VARCHAR},
+      legal_msg = #{legalMsg,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      create_user = #{createUser,jdbcType=INTEGER},
+      modify_date = #{modifyDate,jdbcType=TIMESTAMP},
+      modify_user = #{modifyUser,jdbcType=INTEGER},
+      soft_del = #{softDel,jdbcType=CHAR}
+    where idorg = #{idorg,jdbcType=VARCHAR}
+  </update>
+  
+  
+  <select id="findAllCddw" resultMap="BaseResultMap" parameterType="com.isoftstone.model.cddw.Cddw">
+    select 
+    <include refid="Base_Column_List" />
+    from t_org
+    where soft_del=1
+    
+  	<if test="companyName != null" >
+    	and company_name like CONCAT('%','${companyName}','%')  
+  	</if>
+  	<if test="orgNo != null" >
+    	and org_no like CONCAT('%','${orgNo}','%')  
+  	</if>
+  	<if test="companyProp != null" >
+    	and company_prop like CONCAT('%','${companyProp}','%')  
+  	</if>
+  	<if test="legalMsg != null" >
+    	and legal_msg like CONCAT('%','${legalMsg}','%')  
+  	</if>
+  </select>
+  
+  
+  <select id="findCddwForCompanyLinkById" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select 
+    <include refid="Base_Column_List" />,issue_id
+    from t_org,t_issue_company_link
+    where idorg=company_id
+    and issue_id = #{issueId,jdbcType=VARCHAR}
+  </select>
+ 
+  
+  
+</mapper>

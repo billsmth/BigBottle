@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.isoftstone.dao.jxc.XiaoshouDao">
+
+    <resultMap type="com.isoftstone.model.jxc.Xiaoshou" id="xiaoshouResult">
+        <id property="xiaoshou_id" column="xiaoshou_id"/>
+        <result property="kucun_id" column="kucun_id"/>
+        <result property="kuanhao_id" column="kuanhao_id"/>
+        <result property="yanse" column="yanse"/>
+        <result property="chima" column="chima"/>
+        <result property="shuliang" column="shuliang"/>
+        <result property="shoujia" column="shoujia"/>
+        <result property="shijishoukuan" column="shijishoukuan"/>
+        <result property="maijia_id" column="maijia_id"/>
+        <result property="maijiaxingming" column="maijiaxingming"/>
+        <result property="zhuangtai" column="zhuangtai"/>
+        <result property="delflg" column="delflg"/>
+        <result property="beizhu" column="beizhu"/>        
+    </resultMap>
+    
+    <resultMap type="com.isoftstone.model.jxc.SaleMgt" id="salemgtResult">
+        <id property="kucun_id" column="kucun_id"/>
+        <result property="kucun_shuliang" column="kucun_shuliang"/>
+        <result property="kuanhao_id" column="kuanhao_id"/>
+        <result property="yanse" column="yanse"/>
+        <result property="chima" column="chima"/>
+        <result property="xiaoshou_shuliang" column="xiaoshou_shuliang"/>
+        <result property="jinjia" column="jinjia"/>
+        <result property="chengbenjia" column="chengbenjia"/>
+        <result property="shoujia" column="shoujia"/>
+        <result property="zongchengben" column="zongchengben"/>
+        <result property="zongjia" column="zongjia"/>
+        <result property="shijishoukuan" column="shijishoukuan"/>
+        <result property="lirun" column="lirun"/>
+    </resultMap>
+    
+    <select id="getXiaoshouList" resultMap="xiaoshouResult" parameterType="java.util.Map">
+        select xiaoshou_id, kucun_id, kuanhao_id, yanse, chima, shuliang, shoujia, shijishoukuan, maijia_id, maijiaxingming, zhuangtai, delflg, beizhu from xiaoshou_table 
+        <trim prefix="where" prefixOverrides="and|or">
+        	<if test="xiaoshou_id != null">
+        		xiaoshou_id like '${xiaoshou_id}%' 
+        	</if>
+        	<if test="kucun_id != null">
+        		and kucun_id like '${kucun_id}%' 
+        	</if>
+        	<if test="kuanhao_id != null">
+        		and kuanhao_id =#{kuanhao_id} 
+        	</if>
+        	<if test="yanse != null">
+        		and yanse like '%${yanse}%' 
+        	</if>
+        	<if test="chima != null">
+        		and chima like '%${chima}%'  
+        	</if>
+        	<if test="maijia_id != null">
+        		and maijia_id =#{maijia_id} 
+        	</if>
+        	<if test="maijiaxingming != null">
+        		and maijiaxingming like '%${maijiaxingming}%' 
+        	</if>
+        	<if test="zhuangtai != null">
+        		and zhuangtai =#{zhuangtai} 
+        	</if>
+        	<if test="beizhu != null">
+        		and beizhu like '%${beizhu}%' 
+        	</if>
+        	<if test="startdate != null">
+	          	and xiaoshou_id>#{startdate} 
+	        </if>
+	        <if test="enddate != null">
+	          	and xiaoshou_id<![CDATA[<]]>#{enddate} 
+	        </if>
+        	<if test="delflg != null">
+	          	and delflg=#{delflg} 
+	        </if>
+        </trim>
+    </select>
+    
+    <!--select id="getSaleMgtList" resultMap="xiaoshouResult" parameterType="java.util.Map">
+        select kuanhao_id,yanse,chima,sum(shuliang) shuliang,shoujia,sum(shijishoukuan) shijishoukuan  
+        from xiaoshou_table 
+        where xiaoshou_id>201306000000  
+        group by kuanhao_id,yanse,chima
+    </select-->
+    <select id="getSaleMgtList" resultMap="salemgtResult" parameterType="java.util.Map">
+    select x.kucun_id,k.shuliang kucun_shuliang,x.kuanhao_id,x.yanse,x.chima,sum(x.shuliang) xiaoshou_shuliang,k.jinjia,k.chengbenjia,x.shoujia, 
+		sum(x.shuliang*k.chengbenjia) zongchengben,sum(x.shuliang*x.shoujia) zongjia,sum(x.shijishoukuan) shijishoukuan,  sum(shijishoukuan-x.shuliang*k.chengbenjia) lirun
+        from xiaoshou_table x,kucun_table k 
+        where x.kucun_id=k.kucun_id and x.zhuangtai=1 and x.delflg=0  
+        <if test="kehu_id != null">
+          and x.maijia_id like '%${kehu_id}%' 
+        </if>
+        <if test="kehuname != null">
+          and x.maijiaxingming like '%${kehuname}%' 
+        </if>
+        <if test="kucun_id != null">
+          and x.kucun_id like '%${kucun_id}%' 
+        </if>
+        <if test="kuanhao_id != null">
+          and x.kuanhao_id like '%${kuanhao_id}%' 
+        </if>
+        <if test="yanse != null">
+          and x.yanse like '%${yanse}%' 
+        </if>
+        <if test="chima != null">
+          and x.chima like '%${chima}%' 
+        </if>
+        <if test="startdate != null">
+          and x.xiaoshou_id>#{startdate} 
+        </if>
+        <if test="enddate != null">
+          and x.xiaoshou_id<![CDATA[<]]>#{enddate} 
+        </if>
+        group by x.kuanhao_id,x.yanse,x.chima
+    </select>
+    <select id="getMaxID" resultMap="xiaoshouResult">
+    	select max(xiaoshou_id) xiaoshou_id from xiaoshou_table
+    </select>
+    <select id="getXiaoshou" resultMap="xiaoshouResult" parameterType="com.isoftstone.model.jxc.Xiaoshou">
+        select xiaoshou_id, kucun_id, kuanhao_id, yanse, chima, shuliang, shoujia, shijishoukuan, maijia_id, maijiaxingming, zhuangtai, delflg, beizhu from xiaoshou_table where xiaoshou_id = #{xiaoshou_id}
+    </select>
+    
+    <insert id="saveXiaoshou" parameterType="com.isoftstone.model.jxc.Xiaoshou">
+        insert into xiaoshou_table values (#{xiaoshou_id}, #{kucun_id}, #{kuanhao_id}, #{yanse}, #{chima}, #{shuliang}, #{shoujia}, #{shijishoukuan}, #{maijia_id}, #{maijiaxingming}, #{zhuangtai}, #{delflg}, #{beizhu})
+    </insert>
+    
+    <update id="updateXiaoshouruku" parameterType="com.isoftstone.model.jxc.Xiaoshou">
+        update xiaoshou_table set zhuangtai = '1' where xiaoshou_id = #{xiaoshou_id}
+    </update>
+    
+    <update id="updateXiaoshou" parameterType="com.isoftstone.model.jxc.Xiaoshou">
+        update xiaoshou_table set kuanhao_id = #{kuanhao_id}
+        , yanse = #{yanse}
+        , chima = #{chima}
+        , shuliang = #{shuliang}
+        , shoujia = #{shoujia}
+        , shijishoukuan = #{shijishoukuan}
+        , maijia_id = #{maijia_id}
+        , maijiaxingming = #{maijiaxingming}
+        , beizhu = #{beizhu}
+        where xiaoshou_id = #{xiaoshou_id}
+    </update>
+    
+    <delete id="deleteXiaoshouByID" parameterType="list">
+        update xiaoshou_table set delflg ='1'  
+        where xiaoshou_id in 
+        <foreach item="xiaoshou_id"  collection="list" open="(" separator="," close=")">
+            #{xiaoshou_id}
+        </foreach>
+    </delete>
+</mapper>

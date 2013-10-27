@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.isoftstone.dao.opinion.IssueSpecialistLinkDao" >
+    <resultMap id="IssueSpecialistLink" type="com.isoftstone.model.opinion.IssueSpecialistLink">
+        <result property="id" column="id" />
+        <result property="issueId" column="issue_id" />
+        <result property="specialistId" column="specialist_id" />
+        <result property="status" column="status" />
+    </resultMap>
+
+	<insert id="insert" parameterType="com.isoftstone.model.opinion.IssueSpecialistLink">
+        insert into t_issue_specialist_link (id,issue_id,specialist_id, status)
+        values (#{id},#{issueId},#{specialistId},#{status})
+    </insert>
+    
+    <update id="update" parameterType="com.isoftstone.model.opinion.IssueSpecialistLink">
+        update t_issue_specialist_link 
+           set status = #{status}
+         where issue_id = #{issueId} and specialist_id = #{specialistId}
+    </update>
+    
+    <delete id="delete" parameterType="String">
+        delete from t_issue_specialist_link where id = #{id}
+    </delete>
+    
+    <select id="listAll" resultMap="IssueSpecialistLink" parameterType="String">
+        select id, issue_id, specialist_id, status from t_issue_specialist_link where issue_id = #{issueId}
+    </select>
+    <select id="getNoUpdate" resultMap="IssueSpecialistLink" parameterType="String">
+        select id, issue_id, specialist_id, status from t_issue_specialist_link where issue_id = #{issueId} and status='0'
+    </select>
+</mapper>

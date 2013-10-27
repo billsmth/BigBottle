@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.isoftstone.dao.CityMapper" >
+  <resultMap id="BaseResultMap" type="com.isoftstone.model.city.City" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="ename" property="ename" jdbcType="VARCHAR" />
+    <result column="up" property="up" jdbcType="INTEGER" />
+    <result column="zip" property="zip" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    id, name, ename, up, zip
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_city
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <select id="findCity" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_city
+    where up = #{id,jdbcType=INTEGER}
+  </select>
+  
+  
+  <select id="findAll" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_city
+  </select>
+</mapper>

@@ -1,0 +1,99 @@
+[{
+    "id" : "010000",
+    "text" : "形式审查中",
+    "cls" : "forum-ct",
+    "leaf": false,
+    "checked": false,
+    "children":[{
+        "id":"010100",
+        "text":"指定专家",
+        "cls" : "forum-ct",
+        "checked": false,
+        "leaf":true,
+        "qtitle":""
+    },{
+        "id":"010200",
+        "text":"意见管理 - 水办",
+        "cls" : "forum-ct",
+        "checked": false,
+        "leaf":true,
+        "qtitle":""
+    }]
+}, {
+    "id" : "020000",
+    "text" : "网络评审中",
+    "cls" : "forum-ct",
+    "leaf": false,
+    "checked": false,
+    "children":[{
+        "id":"020100",
+        "text":"指定专家",
+        "cls" : "forum-ct",
+        "checked": false,
+        "leaf":true,
+        "qtitle":""
+    },{
+        "id":"020200",
+        "text":"意见管理 - 专家",
+        "cls" : "forum-ct",
+        "checked": false,
+        "leaf":true,
+        "qtitle":""
+    },{
+        "id":"020300",
+        "text":"意见管理 - 水办",
+        "cls" : "forum-ct",
+        "checked": false,
+        "leaf":true,
+        "qtitle":""
+    },{
+        "id":"020400",
+        "text":"启动会议评审",
+        "cls" : "forum-ct",
+        "checked": false,
+        "leaf":true,
+        "qtitle":""
+    }]
+}, {
+    "id" : "030000",
+    "text" : "会议评审中",
+    "cls" : "forum-ct",
+    "leaf": false,
+    "checked": false,
+    "children":[{
+        "id":"030100",
+        "text":"意见管理 - 水办",
+        "cls" : "forum-ct",
+        "checked": false,
+        "leaf":true,
+        "qtitle":""
+    },{
+        "id":"030200",
+        "text":"启动复审",
+        "cls" : "forum-ct",
+        "checked": false,
+        "leaf":true,
+        "qtitle":""
+    }]
+}, {
+    "id" : "040000",
+    "text" : "会议评审中",
+    "cls" : "forum-ct",
+    "leaf": false,
+    "checked": false,
+    "children":[{
+        "id":"040100",
+        "text":"意见管理 - 水办",
+        "cls" : "forum-ct",
+        "checked": false,
+        "leaf":true,
+        "qtitle":""
+    },{
+        "id":"040300",
+        "text":"审核通过",
+        "cls" : "forum-ct",
+        "checked": false,
+        "leaf":true,
+        "qtitle":""
+    }]
+}]

@@ -1,0 +1,5 @@
+/*---------Login style--------*/
+#LoginBody{ background:url(../img/login/login_bg.jpg) no-repeat center 20px #f1f1f1;}
+#login{ width:650px; margin:0 auto; padding-top:180px;}
+.loginput{ height:14px; width:160px;}
+.loginButton{ background:url(../img/login/LoginButton.png) no-repeat; width:94px; height:28px; color:#fff; font-weight:bold; border:none;}

@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.isoftstone.dao.MeetingSummaryMapper" >
+  <resultMap id="BaseResultMap" type="com.isoftstone.model.meeting.MeetingSummary" >
+    <id column="idms" property="idms" jdbcType="VARCHAR" />
+    <result column="id_meeting" property="idMeeting" jdbcType="VARCHAR" />
+    <result column="summary_url" property="summaryUrl" jdbcType="VARCHAR" />
+    <result column="id_people" property="idPeople" jdbcType="VARCHAR" />
+    <result column="create_user" property="createUser" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="modify_user" property="modifyUser" jdbcType="VARCHAR" />
+    <result column="modify_date" property="modifyDate" jdbcType="TIMESTAMP" />
+    <result column="soft_del" property="softDel" jdbcType="CHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.isoftstone.model.meeting.MeetingSummary" extends="BaseResultMap" >
+    <result column="summary" property="summary" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    idms, id_meeting, summary_url, id_people, create_user, create_date, modify_user, 
+    modify_date, soft_del
+  </sql>
+  <sql id="Blob_Column_List" >
+    summary
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_meeting_summary
+    where idms = #{idms,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_meeting_summary
+    where idms = #{idms,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.isoftstone.model.meeting.MeetingSummary" >
+    insert into t_meeting_summary (idms, id_meeting, summary_url, 
+      id_people, create_user, create_date, 
+      modify_user, modify_date, soft_del, 
+      summary)
+    values (#{idms,jdbcType=VARCHAR}, #{idMeeting,jdbcType=VARCHAR}, #{summaryUrl,jdbcType=VARCHAR}, 
+      #{idPeople,jdbcType=VARCHAR}, #{createUser,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, 
+      #{modifyUser,jdbcType=VARCHAR}, #{modifyDate,jdbcType=TIMESTAMP}, #{softDel,jdbcType=CHAR}, 
+      #{summary,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.isoftstone.model.meeting.MeetingSummary" >
+    insert into t_meeting_summary
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="idms != null" >
+        idms,
+      </if>
+      <if test="idMeeting != null" >
+        id_meeting,
+      </if>
+      <if test="summaryUrl != null" >
+        summary_url,
+      </if>
+      <if test="idPeople != null" >
+        id_people,
+      </if>
+      <if test="createUser != null" >
+        create_user,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="modifyUser != null" >
+        modify_user,
+      </if>
+      <if test="modifyDate != null" >
+        modify_date,
+      </if>
+      <if test="softDel != null" >
+        soft_del,
+      </if>
+      <if test="summary != null" >
+        summary,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="idms != null" >
+        #{idms,jdbcType=VARCHAR},
+      </if>
+      <if test="idMeeting != null" >
+        #{idMeeting,jdbcType=VARCHAR},
+      </if>
+      <if test="summaryUrl != null" >
+        #{summaryUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="idPeople != null" >
+        #{idPeople,jdbcType=VARCHAR},
+      </if>
+      <if test="createUser != null" >
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyUser != null" >
+        #{modifyUser,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyDate != null" >
+        #{modifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="softDel != null" >
+        #{softDel,jdbcType=CHAR},
+      </if>
+      <if test="summary != null" >
+        #{summary,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.isoftstone.model.meeting.MeetingSummary" >
+    update t_meeting_summary
+    <set >
+      <if test="idMeeting != null" >
+        id_meeting = #{idMeeting,jdbcType=VARCHAR},
+      </if>
+      <if test="summaryUrl != null" >
+        summary_url = #{summaryUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="idPeople != null" >
+        id_people = #{idPeople,jdbcType=VARCHAR},
+      </if>
+      <if test="createUser != null" >
+        create_user = #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyUser != null" >
+        modify_user = #{modifyUser,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyDate != null" >
+        modify_date = #{modifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="softDel != null" >
+        soft_del = #{softDel,jdbcType=CHAR},
+      </if>
+      <if test="summary != null" >
+        summary = #{summary,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where idms = #{idms,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.isoftstone.model.meeting.MeetingSummary" >
+    update t_meeting_summary
+    set id_meeting = #{idMeeting,jdbcType=VARCHAR},
+      summary_url = #{summaryUrl,jdbcType=VARCHAR},
+      id_people = #{idPeople,jdbcType=VARCHAR},
+      create_user = #{createUser,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      modify_user = #{modifyUser,jdbcType=VARCHAR},
+      modify_date = #{modifyDate,jdbcType=TIMESTAMP},
+      soft_del = #{softDel,jdbcType=CHAR},
+      summary = #{summary,jdbcType=LONGVARCHAR}
+    where idms = #{idms,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.isoftstone.model.meeting.MeetingSummary" >
+    update t_meeting_summary
+    set id_meeting = #{idMeeting,jdbcType=VARCHAR},
+      summary_url = #{summaryUrl,jdbcType=VARCHAR},
+      id_people = #{idPeople,jdbcType=VARCHAR},
+      create_user = #{createUser,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      modify_user = #{modifyUser,jdbcType=VARCHAR},
+      modify_date = #{modifyDate,jdbcType=TIMESTAMP},
+      soft_del = #{softDel,jdbcType=CHAR}
+    where idms = #{idms,jdbcType=VARCHAR}
+  </update>
+</mapper>

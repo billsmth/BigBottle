@@ -1,0 +1,421 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.isoftstone.dao.PeopleMapper" >
+
+  <resultMap id="BaseResultMap" type="com.isoftstone.model.people.People" >
+    <id column="idpeople" property="idpeople" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="sex" property="sex" jdbcType="VARCHAR" />
+    <result column="birthday" property="birthday" jdbcType="TIMESTAMP" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="telephone" property="telephone" jdbcType="VARCHAR" />
+    <result column="area_type" property="areaType" jdbcType="VARCHAR" />
+    <result column="id_type" property="idType" jdbcType="CHAR" />
+    <result column="id_number" property="idNumber" jdbcType="VARCHAR" />
+    <result column="company" property="company" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="postcode" property="postcode" jdbcType="VARCHAR" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="education" property="education" jdbcType="VARCHAR" />
+    <result column="age" property="age" jdbcType="INTEGER" />
+    <result column="degree" property="degree" jdbcType="VARCHAR" />
+    <result column="tutor" property="tutor" jdbcType="VARCHAR" />
+    <result column="school" property="school" jdbcType="VARCHAR" />
+    <result column="rc_type" property="rcType" jdbcType="CHAR" />
+    <result column="photo" property="photo" jdbcType="VARCHAR" />
+    <result column="resume" property="resume" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="create_user" property="createUser" jdbcType="INTEGER" />
+    <result column="modify_date" property="modifyDate" jdbcType="TIMESTAMP" />
+    <result column="modify_user" property="modifyUser" jdbcType="INTEGER" />
+    <result column="soft_del" property="softDel" jdbcType="CHAR" />
+    <result column="specialty" property="specialty" jdbcType="LONGVARCHAR" />
+    <result column="specialty_intro" property="specialtyIntro" jdbcType="LONGVARCHAR" />
+    <result column="birthday_Str" property="birthdayStr" jdbcType="VARCHAR" />
+    <result column="duty" property="duty" jdbcType="VARCHAR" />
+    <result column="fax" property="fax" jdbcType="VARCHAR" />
+    <result column="duty_task" property="dutyTask" jdbcType="VARCHAR" />
+    <result column="task_time" property="taskTime" jdbcType="VARCHAR" />
+    
+    <result column="sort_no" property="sortNo" jdbcType="VARCHAR"/>
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    idpeople, name, sex, birthday, email, phone, telephone, area_type, id_type, id_number, 
+    company, address, postcode, title, education,  DATE_FORMAT(FROM_DAYS(TO_DAYS(NOW())-TO_DAYS(birthday)),'%Y') +0 AS age, degree, tutor, school, rc_type, 
+    photo, resume, create_date, create_user, modify_date, modify_user, soft_del,specialty,specialty_intro, duty, 
+    fax, duty_task, task_time
+  </sql>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_people
+    where idpeople = #{idpeople,jdbcType=VARCHAR}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_people
+    where idpeople = #{idpeople,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insertSelective" parameterType="com.isoftstone.model.people.People" >
+    insert into t_people
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="idpeople != null" >
+        idpeople,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="sex != null" >
+        sex,
+      </if>
+      <if test="birthday != null" >
+        birthday,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="telephone != null" >
+        telephone,
+      </if>
+      <if test="areaType != null" >
+        area_type,
+      </if>
+      <if test="idType != null" >
+        id_type,
+      </if>
+      <if test="idNumber != null" >
+        id_number,
+      </if>
+      <if test="company != null" >
+        company,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="postcode != null" >
+        postcode,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="education != null" >
+        education,
+      </if>
+      <if test="age != null" >
+        age,
+      </if>
+      <if test="degree != null" >
+        degree,
+      </if>
+      <if test="tutor != null" >
+        tutor,
+      </if>
+      <if test="school != null" >
+        school,
+      </if>
+      <if test="rcType != null" >
+        rc_type,
+      </if>
+      <if test="photo != null" >
+        photo,
+      </if>
+      <if test="resume != null" >
+        resume,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="createUser != null" >
+        create_user,
+      </if>
+      <if test="modifyDate != null" >
+        modify_date,
+      </if>
+      <if test="modifyUser != null" >
+        modify_user,
+      </if>
+      <if test="softDel != null" >
+        soft_del,
+      </if>
+      <if test="specialty != null" >
+        specialty,
+      </if>
+      <if test="specialtyIntro != null" >
+        specialty_intro,
+      </if>
+      <if test="duty != null" >
+        duty,
+      </if>
+      <if test="fax != null" >
+        fax,
+      </if>
+      <if test="dutyTask != null" >
+        duty_task,
+      </if>
+      <if test="taskTime != null" >
+        task_time,
+      </if>	
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="idpeople != null" >
+        #{idpeople,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null" >
+        #{birthday,jdbcType=TIMESTAMP},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="telephone != null" >
+        #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="areaType != null" >
+        #{areaType,jdbcType=VARCHAR},
+      </if>
+      <if test="idType != null" >
+        #{idType,jdbcType=CHAR},
+      </if>
+      <if test="idNumber != null" >
+        #{idNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="company != null" >
+        #{company,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="postcode != null" >
+        #{postcode,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="education != null" >
+        #{education,jdbcType=VARCHAR},
+      </if>
+      <if test="age != null" >
+        #{age,jdbcType=INTEGER},
+      </if>
+      <if test="degree != null" >
+        #{degree,jdbcType=VARCHAR},
+      </if>
+      <if test="tutor != null" >
+        #{tutor,jdbcType=VARCHAR},
+      </if>
+      <if test="school != null" >
+        #{school,jdbcType=VARCHAR},
+      </if>
+      <if test="rcType != null" >
+        #{rcType,jdbcType=CHAR},
+      </if>
+      <if test="photo != null" >
+        #{photo,jdbcType=VARCHAR},
+      </if>
+      <if test="resume != null" >
+        #{resume,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUser != null" >
+        #{createUser,jdbcType=INTEGER},
+      </if>
+      <if test="modifyDate != null" >
+        #{modifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyUser != null" >
+        #{modifyUser,jdbcType=INTEGER},
+      </if>
+      <if test="softDel != null" >
+        #{softDel,jdbcType=CHAR},
+      </if>
+      <if test="specialty != null" >
+        #{specialty,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="specialtyIntro != null" >
+        #{specialtyIntro,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="duty != null" >
+        #{duty,jdbcType=VARCHAR},
+      </if>
+      <if test="fax != null" >
+        #{fax,jdbcType=VARCHAR},
+      </if>
+      <if test="dutyTask != null" >
+        #{dutyTask,jdbcType=VARCHAR},
+      </if>
+      <if test="taskTime != null" >
+        #{taskTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.isoftstone.model.people.People" >
+    update t_people
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        sex = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null" >
+        birthday = #{birthday,jdbcType=TIMESTAMP},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="telephone != null" >
+        telephone = #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="areaType != null" >
+        area_type = #{areaType,jdbcType=VARCHAR},
+      </if>
+      <if test="idType != null" >
+        id_type = #{idType,jdbcType=CHAR},
+      </if>
+      <if test="idNumber != null" >
+        id_number = #{idNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="company != null" >
+        company = #{company,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="postcode != null" >
+        postcode = #{postcode,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="education != null" >
+        education = #{education,jdbcType=VARCHAR},
+      </if>
+      <if test="age != null" >
+        age = #{age,jdbcType=INTEGER},
+      </if>
+      <if test="degree != null" >
+        degree = #{degree,jdbcType=VARCHAR},
+      </if>
+      <if test="tutor != null" >
+        tutor = #{tutor,jdbcType=VARCHAR},
+      </if>
+      <if test="school != null" >
+        school = #{school,jdbcType=VARCHAR},
+      </if>
+      <if test="rcType != null" >
+        rc_type = #{rcType,jdbcType=CHAR},
+      </if>
+      <if test="photo != null" >
+        photo = #{photo,jdbcType=VARCHAR},
+      </if>
+      <if test="resume != null" >
+        resume = #{resume,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUser != null" >
+        create_user = #{createUser,jdbcType=INTEGER},
+      </if>
+      <if test="modifyDate != null" >
+        modify_date = #{modifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyUser != null" >
+        modify_user = #{modifyUser,jdbcType=INTEGER},
+      </if>
+      <if test="softDel != null" >
+        soft_del = #{softDel,jdbcType=CHAR},
+      </if>
+      <if test="specialty != null" >
+        specialty = #{specialty,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="specialtyIntro != null" >
+        specialty_intro = #{specialtyIntro,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="duty != null" >
+        duty = #{duty,jdbcType=VARCHAR},
+      </if>
+      <if test="fax != null" >
+        fax = #{fax,jdbcType=VARCHAR},
+      </if>
+      <if test="dutyTask != null" >
+        duty_task = #{dutyTask,jdbcType=VARCHAR},
+      </if>
+      <if test="taskTime != null" >
+        task_time = #{taskTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where idpeople = #{idpeople,jdbcType=VARCHAR}
+  </update>
+ 
+  <select id="getAllPeople" resultMap="BaseResultMap" parameterType="com.isoftstone.model.people.People">
+    select 
+    <include refid="Base_Column_List" />,birthday as birthday_Str
+    from t_people where soft_del=1
+  	<if test="name != null" >
+    	and name like CONCAT('%','${name}','%')  
+  	</if>
+  	<if test="rcType != null" >
+    	and rc_type like CONCAT('%','${rcType}','%')  
+  	</if>
+  </select>
+  
+    <select id="getMixedPeople" resultMap="BaseResultMap" parameterType="com.isoftstone.model.people.People">
+    select 
+    <include refid="Base_Column_List" />,birthday as birthday_Str
+    from t_people where soft_del=1
+  	<if test="rcType != null" >
+    	and ( rc_type like CONCAT('%','${rcType}','%') 
+  	</if>
+  	<if test="specialtyIntro != null" >
+    	or idpeople in (${specialtyIntro})  
+  	</if>
+  	<if test="rcType != null" >
+    	)  
+  	</if>
+  </select>
+  
+   <select id="findPeopleForDirectorById" resultMap="BaseResultMap" parameterType="java.lang.String" >
+   	 	SELECT <include refid="Base_Column_List" />,sort_no
+		from t_people,t_issue_director_link 
+		where idpeople=people_id 
+		and issue_id=#{issueId,jdbcType=VARCHAR}
+  	</select>
+  	
+  	
+  	<select id="findPeopleForTechmemberById" resultMap="BaseResultMap" parameterType="java.lang.String" >
+   	 	SELECT <include refid="Base_Column_List" />,sort_no
+		from t_people,t_issue_techmember_link 
+		where idpeople=people_id 
+		and issue_id=#{issueId,jdbcType=VARCHAR}
+  	</select>
+  	
+  	<select id="findPeopleForPeopleLinkById" resultMap="BaseResultMap" parameterType="java.lang.String" >
+   	 	SELECT <include refid="Base_Column_List" />,sort_no
+		from t_people,t_issue_people_link 
+		where idpeople=people_id 
+		and issue_id=#{issueId,jdbcType=VARCHAR}
+  	</select>
+ 
+</mapper>

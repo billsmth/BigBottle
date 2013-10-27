@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.isoftstone.dao.ktxx.KtxxDao" >
+    <resultMap id="Ktxx" type="com.isoftstone.model.ktxx.Ktxx">
+        <result property="id" column="id" />
+		<result property="project_name" column="project_name" />
+		<result property="topic_name" column="topic_name" />
+		<result property="issue_no" column="issue_no" />
+		<result property="issue_name" column="issue_name" />
+		<result property="belong_valley" column="belong_valley" />
+		<result property="request_company" column="request_company" />
+		<result property="request_company_no" column="request_company_no" />
+		<result property="request_company_name" column="request_company_name" />
+		<result property="start_year_month" column="start_year_month" />
+		<result property="end_year_month" column="end_year_month" />
+		<result property="fill_date" column="fill_date" />
+		<result property="secret_level" column="secret_level" />
+		<result property="director" column="director" />
+		<result property="director_no" column="director_no" />
+		<result property="director_name" column="director_name" />
+		<result property="close_date" column="close_date" />
+		<result property="issue_category" column="issue_category" />
+		<result property="tech_member" column="tech_member" />
+		<result property="tech_member_no" column="tech_member_no" />
+		<result property="tech_member_name" column="tech_member_name" />
+		<result property="lead_company" column="lead_company" />
+		<result property="lead_company_no" column="lead_company_no" />
+		<result property="lead_company_name" column="lead_company_name" />
+		<result property="introduce" column="introduce" />
+		<result property="analysis" column="analysis" />
+		<result property="objective" column="objective" />
+		<result property="tech_solution" column="tech_solution" />
+		<result property="basis_info" column="basis_info" />
+		<result property="member_info" column="member_info" />
+		<result property="other_remark" column="other_remark" />
+		<result property="org_manage" column="org_manage" />
+		<result property="status" column="status" />
+		<result property="last_status" column="last_status" />
+		<result property="create_time" column="create_time" />
+		<result property="create_by" column="create_by" />
+		<result property="create_by_name" column="create_by_name" />
+		<result property="modify_time" column="modify_time" />
+		<result property="modify_by" column="modify_by" />
+		<result property="modify_by_name" column="modify_by_name" />
+		<result property="necessity_analysis" column="necessity_analysis"/>
+    </resultMap>
+
+    <select id="listAll" resultMap="Ktxx" parameterType="hashmap">
+        
+    </select>
+    
+    <delete id="delete" parameterType="String">
+        delete from t_issue where id = #{id}
+    </delete>
+    
+    <update id="update" parameterType="com.isoftstone.model.ktxx.Ktxx">
+        update t_issue 
+           set project_name = #{project_name},
+               topic_name = #{topic_name},
+               issue_no = #{issue_no},
+               issue_name = #{issue_name},
+               belong_valley = #{belong_valley},
+               request_company = #{request_company},
+               request_company_no = #{request_company_no},
+               request_company_name = #{request_company_name},
+               start_year_month = #{start_year_month},
+               end_year_month = #{end_year_month},
+               secret_level = #{secret_level},
+               director = #{director},
+               director_no = #{director_no},
+               director_name = #{director_name},
+               last_status = #{last_status},
+               status = #{status},
+               introduce = #{introduce},
+               analysis = #{analysis},
+               objective = #{objective},
+               tech_solution = #{tech_solution},
+               basis_info = #{basis_info},
+               member_info = #{member_info},
+               other_remark = #{other_remark},
+               org_manage = #{org_manage},
+               necessity_analysis = #{necessity_analysis}
+         where id = #{id}
+    </update>
+    <update id="scapprove" parameterType="com.isoftstone.model.ktxx.Ktxx">
+    	update t_issue 
+           set status = #{status},
+           last_status = #{last_status}
+         where id = #{id}
+    </update>
+    <select id="getKtxx" resultMap="Ktxx" parameterType="String">
+        select id, project_name, topic_name, issue_no, issue_name,
+            belong_valley, request_company, request_company_no, request_company_name,introduce,issue_category,
+            analysis,objective,tech_solution,basis_info,org_manage,necessity_analysis,member_info,
+            start_year_month, end_year_month, secret_level, director, director_no, director_name, status,last_status 
+            from t_issue where id=#{id} 
+    </select>
+    <insert id="insert" parameterType="com.isoftstone.model.ktxx.Ktxx">
+        insert into t_issue (id,
+            project_name, topic_name, issue_no, issue_name,
+            belong_valley, request_company, request_company_no, request_company_name,necessity_analysis,org_manage,
+            member_info,analysis,tech_solution,basis_info,objective,
+            start_year_month, end_year_month, secret_level, director, director_no, director_name, status,last_status)
+        values (#{id},
+            #{projectName},#{topicName},#{issueNo},#{issueName},
+            #{belongValley},#{requestCompany},#{requestCompanyNo},
+            #{requestCompanyName},
+            #{necessity_analysis},#{org_manage},#{member_info},#{analysis},#{tech_solution},#{basis_info},#{objective},
+            #{startYearMonth},#{endYearMonth},
+            #{secretLevel},#{director},#{directorNo},#{directorName},#{status},#{last_status} 
+        )
+    </insert>
+</mapper>

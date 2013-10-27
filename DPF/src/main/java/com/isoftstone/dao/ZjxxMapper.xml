@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.isoftstone.dao.ZjxxMapper" >
+  <resultMap id="BaseResultMap" type="com.isoftstone.model.zjxx.Zjxx" >
+    <id column="idzjxx" property="idzjxx" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="sex" property="sex" jdbcType="VARCHAR" />
+    <result column="nation" property="nation" jdbcType="VARCHAR" />
+    <result column="birthday" property="birthday" jdbcType="TIMESTAMP" />
+    <result column="age" property="age" jdbcType="INTEGER" />
+    <result column="titles" property="titles" jdbcType="VARCHAR" />
+    <result column="education" property="education" jdbcType="VARCHAR" />
+    <result column="degree" property="degree" jdbcType="VARCHAR" />
+    <result column="tutor" property="tutor" jdbcType="VARCHAR" />
+    <result column="school" property="school" jdbcType="VARCHAR" />
+    <result column="company" property="company" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="officePhone" property="officephone" jdbcType="VARCHAR" />
+    <result column="cellphone" property="cellphone" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="postcode" property="postcode" jdbcType="VARCHAR" />
+    <result column="specialty" property="specialty" jdbcType="VARCHAR" />
+    <result column="researchArea" property="researcharea" jdbcType="VARCHAR" />
+    <result column="pic" property="pic" jdbcType="VARCHAR" />
+    <result column="jobResume" property="jobresume" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    idzjxx, name, sex, nation, birthday, age, titles, education, degree, tutor, school, 
+    company, email, officePhone, cellphone, address, postcode, specialty, researchArea, 
+    pic, jobResume, type
+  </sql>
+  
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from zjxx
+    where idzjxx = #{idzjxx,jdbcType=INTEGER}
+  </select>
+  
+  <select id="getAllZjxx" resultMap="BaseResultMap">
+   	select 
+    	<include refid="Base_Column_List" />
+    from zjxx
+  </select>
+  
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from zjxx
+    where idzjxx = #{idzjxx,jdbcType=INTEGER}
+  </delete>
+  
+  <delete id="deleteAttribute" parameterType="list">
+  	delete from zjxx where name in
+   		<foreach item="names"  collection="list" open="(" separator="," close=")">
+            #{names}
+        </foreach>
+  </delete>
+  
+  
+  <insert id="insert" parameterType="com.isoftstone.model.zjxx.Zjxx" >
+    insert into zjxx (idzjxx, name, sex, 
+      nation, birthday, age, 
+      titles, education, degree, 
+      tutor, school, company, 
+      email, officePhone, cellphone, 
+      address, postcode, specialty, 
+      researchArea, pic, jobResume, 
+      type)
+    values (#{idzjxx,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, 
+      #{nation,jdbcType=VARCHAR}, #{birthday,jdbcType=TIMESTAMP}, #{age,jdbcType=INTEGER}, 
+      #{titles,jdbcType=VARCHAR}, #{education,jdbcType=VARCHAR}, #{degree,jdbcType=VARCHAR}, 
+      #{tutor,jdbcType=VARCHAR}, #{school,jdbcType=VARCHAR}, #{company,jdbcType=VARCHAR}, 
+      #{email,jdbcType=VARCHAR}, #{officephone,jdbcType=VARCHAR}, #{cellphone,jdbcType=VARCHAR}, 
+      #{address,jdbcType=VARCHAR}, #{postcode,jdbcType=VARCHAR}, #{specialty,jdbcType=VARCHAR}, 
+      #{researcharea,jdbcType=VARCHAR}, #{pic,jdbcType=VARCHAR}, #{jobresume,jdbcType=VARCHAR}, 
+      #{type,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.isoftstone.model.zjxx.Zjxx" >
+    insert into zjxx
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="idzjxx != null" >
+        idzjxx,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="sex != null" >
+        sex,
+      </if>
+      <if test="nation != null" >
+        nation,
+      </if>
+      <if test="birthday != null" >
+        birthday,
+      </if>
+      <if test="age != null" >
+        age,
+      </if>
+      <if test="titles != null" >
+        titles,
+      </if>
+      <if test="education != null" >
+        education,
+      </if>
+      <if test="degree != null" >
+        degree,
+      </if>
+      <if test="tutor != null" >
+        tutor,
+      </if>
+      <if test="school != null" >
+        school,
+      </if>
+      <if test="company != null" >
+        company,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="officephone != null" >
+        officePhone,
+      </if>
+      <if test="cellphone != null" >
+        cellphone,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="postcode != null" >
+        postcode,
+      </if>
+      <if test="specialty != null" >
+        specialty,
+      </if>
+      <if test="researcharea != null" >
+        researchArea,
+      </if>
+      <if test="pic != null" >
+        pic,
+      </if>
+      <if test="jobresume != null" >
+        jobResume,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="idzjxx != null" >
+        #{idzjxx,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="nation != null" >
+        #{nation,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null" >
+        #{birthday,jdbcType=TIMESTAMP},
+      </if>
+      <if test="age != null" >
+        #{age,jdbcType=INTEGER},
+      </if>
+      <if test="titles != null" >
+        #{titles,jdbcType=VARCHAR},
+      </if>
+      <if test="education != null" >
+        #{education,jdbcType=VARCHAR},
+      </if>
+      <if test="degree != null" >
+        #{degree,jdbcType=VARCHAR},
+      </if>
+      <if test="tutor != null" >
+        #{tutor,jdbcType=VARCHAR},
+      </if>
+      <if test="school != null" >
+        #{school,jdbcType=VARCHAR},
+      </if>
+      <if test="company != null" >
+        #{company,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="officephone != null" >
+        #{officephone,jdbcType=VARCHAR},
+      </if>
+      <if test="cellphone != null" >
+        #{cellphone,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="postcode != null" >
+        #{postcode,jdbcType=VARCHAR},
+      </if>
+      <if test="specialty != null" >
+        #{specialty,jdbcType=VARCHAR},
+      </if>
+      <if test="researcharea != null" >
+        #{researcharea,jdbcType=VARCHAR},
+      </if>
+      <if test="pic != null" >
+        #{pic,jdbcType=VARCHAR},
+      </if>
+      <if test="jobresume != null" >
+        #{jobresume,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.isoftstone.model.zjxx.Zjxx" >
+    update zjxx
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        sex = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="nation != null" >
+        nation = #{nation,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null" >
+        birthday = #{birthday,jdbcType=TIMESTAMP},
+      </if>
+      <if test="age != null" >
+        age = #{age,jdbcType=INTEGER},
+      </if>
+      <if test="titles != null" >
+        titles = #{titles,jdbcType=VARCHAR},
+      </if>
+      <if test="education != null" >
+        education = #{education,jdbcType=VARCHAR},
+      </if>
+      <if test="degree != null" >
+        degree = #{degree,jdbcType=VARCHAR},
+      </if>
+      <if test="tutor != null" >
+        tutor = #{tutor,jdbcType=VARCHAR},
+      </if>
+      <if test="school != null" >
+        school = #{school,jdbcType=VARCHAR},
+      </if>
+      <if test="company != null" >
+        company = #{company,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="officephone != null" >
+        officePhone = #{officephone,jdbcType=VARCHAR},
+      </if>
+      <if test="cellphone != null" >
+        cellphone = #{cellphone,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="postcode != null" >
+        postcode = #{postcode,jdbcType=VARCHAR},
+      </if>
+      <if test="specialty != null" >
+        specialty = #{specialty,jdbcType=VARCHAR},
+      </if>
+      <if test="researcharea != null" >
+        researchArea = #{researcharea,jdbcType=VARCHAR},
+      </if>
+      <if test="pic != null" >
+        pic = #{pic,jdbcType=VARCHAR},
+      </if>
+      <if test="jobresume != null" >
+        jobResume = #{jobresume,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where idzjxx = #{idzjxx,jdbcType=INTEGER}
+  </update>
+  
+  
+  <update id="updateByPrimaryKey" parameterType="com.isoftstone.model.zjxx.Zjxx" >
+    update zjxx
+    set name = #{name,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=VARCHAR},
+      nation = #{nation,jdbcType=VARCHAR},
+      birthday = #{birthday,jdbcType=TIMESTAMP},
+      age = #{age,jdbcType=INTEGER},
+      titles = #{titles,jdbcType=VARCHAR},
+      education = #{education,jdbcType=VARCHAR},
+      degree = #{degree,jdbcType=VARCHAR},
+      tutor = #{tutor,jdbcType=VARCHAR},
+      school = #{school,jdbcType=VARCHAR},
+      company = #{company,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      officePhone = #{officephone,jdbcType=VARCHAR},
+      cellphone = #{cellphone,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      postcode = #{postcode,jdbcType=VARCHAR},
+      specialty = #{specialty,jdbcType=VARCHAR},
+      researchArea = #{researcharea,jdbcType=VARCHAR},
+      pic = #{pic,jdbcType=VARCHAR},
+      jobResume = #{jobresume,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR}
+    where idzjxx = #{idzjxx,jdbcType=INTEGER}
+  </update>
+  
+  
+  
+</mapper>

@@ -1,0 +1,8 @@
+[
+{"idrcgl":1, "rcName":"张三", "rcType":"科研人才", "rcSex":"男", "rcEmail":"zhangsan@163.com", "rcMobile":"13533003333", "rcAreaType":"内地"},
+{"idrcgl":2, "rcName":"王五", "rcType":"法人代表", "rcSex":"男", "rcEmail":"wangwu@163.com", "rcMobile":"13700099999", "rcAreaType":"港澳台"},
+{"idrcgl":3, "rcName":"小七", "rcType":"财务", "rcSex":"女", "rcEmail":"xiaoqi@163.com", "rcMobile":"13011112222", "rcAreaType":"其他"}
+
+//{"idcddw":2, "companyName":"公司名称2", "belongAreaProvince":"辽宁省", "belongAreaCity":"大连市", "belongAreaDistrict":"甘井子区", "address":"柳树街148号", "zipcode":"100085", "orgNo":"5704", "companyProp":"高校", "bankName":"招商银行", "bankAccount":"6225880129289345", "legalMsg":"王三"}
+
+]

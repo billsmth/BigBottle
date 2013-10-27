@@ -1,0 +1,92 @@
+.icon-search {
+    background-image:url(../img/search.png) !important;
+}
+.icon-add {
+    background-image:url(../img/add.png) !important;
+}
+.icon-edit {
+    background-image:url(../img/edit.png) !important;
+}
+.icon-del {
+    background-image:url(../img/delete.png) !important;
+}
+.icon-cancel {
+    background-image:url(../img/cancel.png) !important;
+}
+.icon-temp-save {
+    background-image:url(../img/temp_save.png) !important;
+}
+.icon-submit {
+    background-image:url(../img/submit.png) !important;
+}
+.icon-checkin {
+    background-image:url(../img/checkin.png) !important;
+}
+.icon-view {
+    background-image:url(../img/eye.png) !important;
+}
+.icon-report-add {
+    background-image:url(../img/report_add.png) !important;
+}
+.icon-user-add {
+    background-image:url(../img/user_add.png) !important;
+}
+.icon-comments {
+    background-image:url(../img/comments.png) !important;
+}
+.icon-comment-add {
+    background-image:url(../img/comment_add.png) !important;
+}
+.icon-comment-zjwp {
+    background-image:url(../img/tag_blue.png) !important;
+}
+.icon-comment-hyps {
+    background-image:url(../img/tag_purple.png) !important;
+}
+.icon-comment-fs {
+    background-image:url(../img/tag_yellow.png) !important;
+}
+.icon-modify-history {
+    background-image:url(../img/folder_wrench.png) !important;
+}
+.icon-flag-green {
+    background-image:url(../img/flag_green.png) !important;
+}
+.icon-flag-yellow {
+    background-image:url(../img/flag_yellow.png) !important;
+}
+.icon-flag-pink {
+    background-image:url(../img/flag_pink.png) !important;
+}
+.icon-link {
+    background-image:url(../img/link.png) !important;
+}
+.icon-cog {
+    background-image:url(../img/cog.png) !important;
+}
+.icon-menu-node {
+    background-image:url(../img/menu_node.png) !important;
+}
+.icon-html-go {
+    background-image:url(../img/html_go.png) !important;
+}
+.icon-copy {
+	background-image:url(../img/page_copy.png) !important;
+}
+.icon-save {
+	background-image:url(../img/table_save.png) !important;
+}
+.icon-refresh {
+    background-image:url(../img/refresh.png) !important;
+}
+.icon-go {
+    background-image:url(../img/go.png) !important;
+}
+.parent-row .x-grid-cell { 
+    background-color: #ecf; 
+    font-weight: bold; 
+}
+.x-grid-row .custom-column { 
+    background-color: #ecf; 
+    font-weight: bold; 
+}

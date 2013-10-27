@@ -1,0 +1,155 @@
+[{
+    "id" : "1",
+    "text" : "进销存",
+    "cls" : "forum-ct",
+    "leaf": false,
+    "children":[{
+    				"id":"101",
+    				"text":"进货管理",
+    				"cls" : "forum-ct",
+    				"leaf":true,
+    				"qtitle":"jinhuoView"
+    			},
+    			{
+    				"id":"102",
+    				"text":"库存管理",
+    				"cls" : "forum-ct",
+    				"leaf":true,
+    				"qtitle":"kcglView"
+    			},
+    			{
+    				"id":"103",
+    				"text":"销售管理",
+    				"cls" : "forum-ct",
+    				"leaf":true,
+    				"qtitle":"xiaoshouView"
+    			}]
+    },
+    {
+    "id" : "2",
+    "text" : "产品管理",
+    "cls" : "forum-ct",
+    "leaf": false,
+    "children":[{
+    				"id":"201",
+    				"text":"产品维护",
+    				"cls" : "forum-ct",
+    				"leaf":true,
+    				"qtitle" : "chanpinView"
+    			}]
+    },
+    {
+    "id" : "3",
+    "text" : "合同审批",
+    "cls" : "forum-ct",
+    "leaf": false,
+    "children":[{
+    				"id":"4",
+    				"text":"课题授权",
+    				"cls" : "forum-ct",
+    				"leaf":true,
+    				"qtitle" : "ktsqview"
+    			},
+    			{
+    				"id":"5",
+    				"text":"材料申报",
+    				"cls" : "forum-ct",
+    				"leaf":true,
+    				"qtitle" : "ktsbView"
+    			},
+    			{
+    				"id":"61",
+    				"text":"合同审核",
+    				"cls" : "forum-ct",
+    				"leaf":true,
+    				"qtitle" : "ktspView"
+    			},
+    			{
+    				"id":"62",
+    				"text":"合同审核-专家",
+    				"cls" : "forum-ct",
+    				"leaf":true,
+    				"qtitle" : "ktspZJView"
+    			}]
+    },
+    {
+    "id" : "7",
+    "text" : "过程监控",
+    "cls" : "forum-ct",
+    "leaf": false,
+	"children":[{
+    				"id":"8",
+    				"text":"季报分析",
+    				"cls" : "forum-ct",
+    				"leaf":true,
+    				"qtitle" : ""
+    			}]
+    },
+    {
+    "id" : "9",
+    "text" : "验收管理",
+    "cls" : "forum-ct",
+    "leaf": false,
+    "children":[{
+    				"id":"10",
+    				"text":"建设中...",
+    				"cls" : "forum-ct",
+    				"leaf":true,
+    				"qtitle" : ""
+    			}]
+    },
+    {
+    "id" : "11",
+    "text" : "信息维护",
+    "cls" : "forum-ct",
+    "leaf": false,
+    "children":[{
+    				"id":"12",
+    				"text":"单位",
+    				"cls" : "forum-ct",
+    				"leaf":true,
+    				"qtitle" : "cddwlist"
+    			},
+    			{
+    				"id":"13",
+    				"text":"人员",
+    				"cls" : "forum-ct",
+    				"leaf":true,
+    				"qtitle" : "peopleView"
+    			},
+    			{
+    				"id":"14",
+    				"text":"会议管理",
+    				"cls" : "forum-ct",
+    				"leaf":true,
+    				"qtitle" : "meetinglist"
+    			}]
+    },
+    {
+    "id" : "18",
+    "text" : "系统管理",
+    "cls" : "forum-ct",
+    "leaf": false,
+   	"children":[{
+    				"id":"19",
+    				"text":"用户管理",
+    				"cls" : "forum-ct",
+    				"leaf":true,
+    				"qtitle" : "acluserlist"
+    			},
+    			{
+    				"id":"20",
+    				"text":"权限管理",
+    				"cls" : "forum-ct",
+    				"leaf":true,
+    				"qtitle" : "aclrolelist"
+    			},
+    			{
+    				"id":"21",
+    				"text":"日志管理",
+    				"cls" : "forum-ct",
+    				"leaf":true,
+    				"qtitle" : ""
+    			}]
+    }
+]

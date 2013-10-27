@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.isoftstone.dao.ktxx.KtsbIssueLinkPublicDao" >
+	<!-- 课题与行政责任人 Link -->
+	<resultMap type="com.isoftstone.model.ktsb.KtxxDirectorLink" id="ktxxDirectorLink">
+		<result property="id" column="id"/>
+		<result property="issueId" column="issue_id"/>
+		<result property="peopleId" column="people_id"/>
+		<result property="sortNo" column="sort_no"/>
+	</resultMap>
+	
+	<!-- 课题与 技术责任人 Link -->
+	<resultMap type="com.isoftstone.model.ktsb.KtxxTechmemberLink" id="ktxxTechmemberLink">
+		<result property="id" column="id"/>
+		<result property="issueId" column="issue_id"/>
+		<result property="peopleId" column="people_id"/>
+		<result property="sortNo" column="sort_no"/>
+	</resultMap>
+	
+	<!-- 课题与支持单位 Link -->
+	<resultMap type="com.isoftstone.model.ktsb.KtxxCompanyLink" id="ktxxCompanyLink">
+		<result property="id" column="id"/>
+		<result property="issueId" column="issue_id"/>
+		<result property="companyId" column="company_id"/>
+		<result property="sortNo" column="sort_no"/>
+	</resultMap>
+	
+	<!-- 课题与年度任务与指标 Link (使用KtxxTaskTargetDao.xml配置) -->
+	
+	<!-- 课题与示范工程及配套条件 Link-->
+	<resultMap type="com.isoftstone.model.ktxx.KtxxSfgc" id="ktxxSfgc">
+		<result property="id" column="id"/>
+		<result property="issueId" column="issue_id"/>
+		<result property="mainProject" column="main_project"/>
+		<result property="supportCondition" column="support_condition"/>
+		<result property="sortNo" column="sort_no"/>
+		<result property="localOrg" column="local_org"/>
+	</resultMap>
+	
+	<!-- 课题与行政责任人 Link -->
+	<insert id="insertKtxxDirectorLink" parameterType="com.isoftstone.model.ktsb.KtxxDirectorLink">
+		insert into t_issue_director_link (id,issue_id,people_id,sort_no)
+			values(#{id},#{issueId},#{peopleId},#{sortNo})
+	</insert>
+	<delete id="deleteKtxxDirectorLinkByKT" parameterType="String">
+		 delete from t_issue_director_link where issue_id = #{issueId}
+	</delete>
+	<select id="searchDirectorLinkByKT" resultMap="ktxxDirectorLink" parameterType="String">
+		select * from t_issue_director_link where issue_id = #{issueId}
+	</select>
+	
+	<!-- 课题与 技术责任人 Link -->
+	<insert id="insertKtxxTechmemberLink" parameterType="com.isoftstone.model.ktsb.KtxxTechmemberLink">
+		insert into t_issue_techmember_link (id,issue_id,people_id,sort_no)
+			values(#{id},#{issueId},#{peopleId},#{sortNo})
+	</insert>
+	<delete id="deleteKtxxTechmemberLinkByKT" parameterType="String">
+		 delete from t_issue_techmember_link where issue_id = #{issueId}
+	</delete>
+	<select id="searchTechmemberLinkByKT" parameterType="String" resultMap="ktxxTechmemberLink">
+		select * from t_issue_techmember_link where issue_id = #{issueId}
+	</select>
+	
+	<!-- 课题与 支持单位 Link -->
+	<insert id="insertKtxxCompanyLink" parameterType="com.isoftstone.model.ktsb.KtxxCompanyLink">
+		insert into t_issue_company_link (id,issue_id,company_id,sort_no) 
+			values(#{id},#{issueId},#{companyId},#{sortNo})
+	</insert>
+	<delete id="deleteKtxxCompanyLinkByKT" parameterType="String">
+		delete from t_issue_company_link where issue_id = #{issueId}
+	</delete>
+	<select id="searchCompanyLinkByKT" parameterType="String" resultMap="ktxxCompanyLink">
+		select * from t_issue_company_link where issue_id = #{issueId}
+	</select>
+	<!-- 课题与示范工程及配套条件 Link -->
+	<insert id="insertKtxxSfgc" parameterType="com.isoftstone.model.ktxx.KtxxSfgc">
+		insert into t_issue_project_condition (id,issue_id,main_project,support_condition,local_org,sort_no) 
+			values(#{id},#{issueId},#{mainProject},#{supportCondition},#{localOrg},#{sortNo})
+	</insert>
+	<delete id="deleteKtxxSfgcByKT" parameterType="String">
+		delete from t_issue_project_condition where issue_id = #{issueId}
+	</delete>
+	
+	<!-- 课题与经费预算 Link -->
+	<insert id="insertKtxxBudget" parameterType="com.isoftstone.model.ktsb.KtxxBudgetLink">
+		insert into t_issue_budget_link (id,issue_id,budget)
+				values(#{id},#{issueId},#{budget})
+	</insert>
+	<delete id="deleteKtxxBudgetByKT" parameterType="String">
+		delete from t_issue_budget_link where issue_id = #{issueId}
+	</delete>
+	<select id="selectKtxxBudgetByKt" parameterType="String" resultType="String">
+		select budget from t_issue_budget_link where issue_id = #{issueId}
+	</select>
+</mapper>

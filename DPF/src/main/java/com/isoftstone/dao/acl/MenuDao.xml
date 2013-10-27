@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.isoftstone.dao.acl.MenuDao" >
+    <resultMap id="Menu" type="ACLMenu">
+        <result property="id" column="id" />
+        <result property="menuName" column="menu_name" />
+        <result property="menuUrl" column="menu_url" />
+        <result property="parentNo" column="parent_no" />
+        <result property="menuSort" column="menu_sort" />
+    </resultMap>
+
+    <select id="findMenu" resultMap="Menu">
+        select 
+            *
+        from
+            t_menu
+        order by id, menu_sort
+    </select>
+
+    <select id="findMenuByRoleId" parameterType="String" resultMap="Menu">
+        select 
+            m.*
+        from
+            t_menu m
+        inner join t_role_menu_link l on m.id = l.menu_id and l.role_id = #{roleId}
+        order by m.id, m.menu_sort
+    </select>
+
+    <select id="findMenuIdByRoleId" parameterType="String" resultType="String">
+        select 
+            menu_id
+        from
+            t_role_menu_link
+        where role_id = #{roleId}
+    </select>
+    
+    <delete id="deleteMenuByRoleId" parameterType="String">
+        delete from t_role_menu_link where role_id = #{roleId}
+    </delete>
+    
+    <insert id="insertMenuByRoleId" parameterType="hashmap">
+        insert into t_role_menu_link (id, role_id, menu_id)
+        values (#{id}, #{roleId}, #{menuId})
+    </insert>
+</mapper>
