@@ -14,10 +14,10 @@ Ext.define('App.store.product.productStore', {
     proxy: {
         type : 'ajax',
         api : {
-            create:'meeting/add.action',
-            read:'meeting/listall.action',
-            update:'meeting/update.action',
-            destroy:'meeting/del.action'
+            create:'product/add.action',
+            read:'product/json/list.action',
+            update:'product/update.action',
+            destroy:'product/del.action'
         },
         actionMethods: {  
             read: 'POST'  

@@ -35,7 +35,7 @@
     				"text":"产品维护",
     				"cls" : "forum-ct",
     				"leaf":true,
-    				"qtitle" : "chanpinView"
+    				"qtitle" : "productView"
     			}]
     },
     {

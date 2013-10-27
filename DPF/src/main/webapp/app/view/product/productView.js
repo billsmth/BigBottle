@@ -22,77 +22,142 @@ Ext.define('App.view.product.productView', {
 	            tbar:[{
 	                xtype: 'tbseparator'
 	            },{
-	                id:'meeting_search_id',
+	                id:'product_search_id',
 	                text: '查询',
 	                iconCls:'icon-search',
-	                action:'meeting_list_search_act'
+	                action:'product_list_search_act'
 	            },{
 	                xtype: 'tbseparator'
 	            },{
-	                id:'meeting_add_id',
+	                id:'product_add_id',
 	                text: '添加',
 	                iconCls:'icon-add',
-	                action:'meeting_list_add_act'
+	                action:'product_list_add_act'
 	            },{
 	                xtype: 'tbseparator'
 	            },{
-	                id:'meeting_edit_id',
+	                id:'product_edit_id',
 	                text: '编辑',
 	                iconCls:'icon-edit',
-	                action:'meeting_list_edit_act'
+	                action:'product_list_edit_act'
 	            },{
 	                xtype: 'tbseparator'
 	            },{
-	                id:'meeting_del_id',
+	                id:'product_del_id',
 	                text: '删除',
 	                iconCls:'icon-del',
-	                action:'meeting_list_del_act'
+	                action:'product_list_del_act'
 	            },{
 	                xtype: 'tbseparator'
 	            }
 	            ,{
-	                id:'meeting_upfile_id',
+	                id:'product_upfile_id',
 	                text: '测试上传功能',
 	                iconCls:'icon-edit',
-	                action:'meeting_list_upfile_act'
+	                action:'product_list_upfile_act'
 	            }
 	            ]
         	,
             columns: [
             {
                 xtype: 'gridcolumn',
-                dataIndex: 'title',
-                text: '主题',
+                dataIndex: 'product_id',
+                text: '产品ID',
                 flex:1
             }, {
                 xtype: 'gridcolumn',
-                dataIndex: 'address',
-                text: '地点',
+                dataIndex: 'product_name',
+                text: '产品名称',
                 flex:1
             }, {
                 xtype: 'gridcolumn',
-                dataIndex: 'beginTimeStr',
-                text: '开始时间',
+                dataIndex: 'path',
+                text: '图片路径',
                 flex:1
             }, {
                 xtype: 'gridcolumn',
-                dataIndex: 'endTimeStr',
-                text: '结束时间',
+                dataIndex: 'image_name',
+                text: '图片',
                 flex:1
             }, {
                 xtype: 'gridcolumn',
-                dataIndex: 'contact',
-                text: '联系人',
+                dataIndex: 'template_id',
+                text: '模板编号',
                 flex:1
             }, {
                 xtype: 'gridcolumn',
-                dataIndex: 'contactTel',
-                text: '联系电话',
+                dataIndex: 'desp',
+                text: '描述',
                 flex:1
             }, {
                 xtype: 'gridcolumn',
-                dataIndex: 'contactEmail',
-                text: '联系邮箱',
+                dataIndex: 'status',
+                text: '状态',
+                flex:1
+            }, {
+                xtype: 'gridcolumn',
+                dataIndex: 'creater_id',
+                text: '创建者编号',
+                flex:1
+            }, {
+                xtype: 'gridcolumn',
+                dataIndex: 'type',
+                text: '种类',
+                flex:1
+            }, {
+                xtype: 'gridcolumn',
+                dataIndex: 'new_flg',
+                text: '是否新品',
+                flex:1
+            }, {
+                xtype: 'gridcolumn',
+                dataIndex: 'note',
+                text: '备注',
+                flex:1
+            }, {
+                xtype: 'gridcolumn',
+                dataIndex: 'col1',
+                text: '信息1',
+                flex:1
+            }, {
+                xtype: 'gridcolumn',
+                dataIndex: 'col2',
+                text: '信息2',
+                flex:1
+            }, {
+                xtype: 'gridcolumn',
+                dataIndex: 'col3',
+                text: '信息3',
+                flex:1
+            }, {
+                xtype: 'gridcolumn',
+                dataIndex: 'col4',
+                text: '信息4',
+                flex:1
+            }, {
+                xtype: 'gridcolumn',
+                dataIndex: 'col5',
+                text: '信息5',
+                flex:1
+            }, {
+                xtype: 'gridcolumn',
+                dataIndex: 'col6',
+                text: '信息6',
+                flex:1
+            }, {
+                xtype: 'gridcolumn',
+                dataIndex: 'col7',
+                text: '信息7',
+                flex:1
+            }, {
+                xtype: 'gridcolumn',
+                dataIndex: 'col8',
+                text: '信息8',
+                flex:1
+            }, {
+                xtype: 'gridcolumn',
+                dataIndex: 'kucun_ids',
+                text: '对应库存',
                 flex:1
             }]
         	 ,
@@ -105,7 +170,7 @@ Ext.define('App.view.product.productView', {
 				id : 'meetingTab',
 				items : [ {
 					xtype : 'panel',
-					title : '会议详情',
+					title : '产品详情',
 					layout: 'fit',
 					items : [ {
                     	xtype: 'form',
@@ -223,7 +288,7 @@ Ext.define('App.view.product.productView', {
 					} ]
 				},  {
 					xtype : 'panel',
-					title : '会议纪要',
+					title : '产品页面',
 					layout : {
 						type : 'fit'
 					},
@@ -240,12 +305,12 @@ Ext.define('App.view.product.productView', {
 							xtype : 'button',
 							text : '保存',
 							iconCls : 'icon-submit',
-							action : 'meeting_maincontent_save_act'
+							action : 'product_maincontent_save_act'
 						} ]
 					} ]
 				}, {
 					xtype : 'panel',
-					title : '会议总结',
+					title : '产品',
 					layout : {
 						type : 'fit'
 					},
@@ -262,7 +327,7 @@ Ext.define('App.view.product.productView', {
 							xtype : 'button',
 							text : '保存',
 							iconCls : 'icon-submit',
-							action : 'meeting_summary_save_act'
+							action : 'product_summary_save_act'
 						} ]
 					} ]
 				} ]
@@ -272,7 +337,7 @@ Ext.define('App.view.product.productView', {
 
         Ext.each(this.tbar2, function(item, index) {
             this.tbar.push(item);
-        }, this)
+        }, this);
         me.callParent(arguments);
     }
 

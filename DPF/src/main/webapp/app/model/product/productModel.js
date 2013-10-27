@@ -7,103 +7,84 @@ Ext.define('App.model.product.productModel', {
 
     fields: [
         {
-            name: 'idmeeting',
+            name: 'product_id',
             type: 'string'
         },
         {
-            name: 'title',
+            name: 'product_name',
             type: 'string'
         },
         {
-            name: 'beginTime',
+            name: 'path',
             type: 'string'
         },
         {
-            name: 'endTime',
+            name: 'image_name',
             type: 'string'
         },
         {
-            name: 'address',
+            name: 'template_id',
             type: 'string'
         },
         {
-            name: 'compere',
-            type: 'string'
-        },
-        {
-            name: 'contact',
-            type: 'string'
-        },
-        {
-            name: 'contactTel',
-            type: 'string'
-        },
-        {
-            name: 'contactEmail',
-            type: 'string'
-        },
-        {
-            name: 'agend',
-            type: 'string'
-        },
-        {
-            name: 'meetingRequest',
-            type: 'string'
-        },
-        {
-            name: 'mainContent',
-            type: 'string'
-        },
-        {
-            name: 'mainContentUrl',
+            name: 'desp',
             type: 'string'
         },
         {
             name: 'status',
-            type: 'int'
+            type: 'string'
         },
         {
-            name: 'createUser',
-            type: 'int'
+            name: 'creater_id',
+            type: 'string'
         },
         {
-            name: 'createDate',
-            type: 'date'
+            name: 'type',
+            type: 'string'
         },
         {
-            name: 'modifyUser',
-            type: 'int'
+            name: 'new_flg',
+            type: 'string'
         },
         {
-            name: 'modifyDate',
-            type: 'date'
+            name: 'note',
+            type: 'string'
         },
         {
-            name: 'beginTimeStr',
-            type: 'String',
-            convert: strFmt
+            name: 'col1',
+            type: 'string'
         },
         {
-            name: 'endTimeStr',
-            type: 'String',
-            convert: strFmt
+            name: 'col2',
+            type: 'string'
         },
         {
-            name: 'mainPeople',
-            type: 'String'
+            name: 'col3',
+            type: 'string'
         },
         {
-            name: 'maybePeople',
-            type: 'String'
+            name: 'col4',
+            type: 'string'
         },
         {
-            name: 'mainPeopleArr'
+            name: 'col5',
+            type: 'string'
         },
         {
-            name: 'maybePeopleArr'
+            name: 'col6',
+            type: 'string'
         },
         {
-            name: 'filetest'
+            name: 'col7',
+            type: 'string'
+        },
+        {
+            name: 'col8',
+            type: 'string'
+        },
+        {
+            name: 'kucun_ids',
+            type: 'string'
         }
     ]
 });

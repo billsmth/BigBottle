@@ -22,7 +22,8 @@ Ext.application({
         'acl.roleCtrl',
         'jhgl.jinhuoCtrl',
         'kcgl.kucunCtrl',
-        'xsgl.xiaoshouCtrl'
+        'xsgl.xiaoshouCtrl',
+        'product.productCtrl'
     ],
     models: [
         'main.menuModel',
@@ -41,14 +42,16 @@ Ext.application({
         'ktsb.ktsbIssuePlanModel',
         'jhgl.jhglListModel',
         'kcgl.kcglListModel',
-        'xsgl.xsglListModel'
+        'xsgl.xsglListModel',
+        'product.productModel'
     ],
     stores: [
              'ktsb.ktsbOtherKtStore',
              'ktsb.ktsbResearchTaskStore',
              'jhgl.jhglStore',
              'kcgl.kcglStore',
-             'xsgl.xsglStore'
+             'xsgl.xsglStore',
+             'product.productStore'
     ],
     views: [
         'main.mainView',
@@ -63,7 +66,8 @@ Ext.application({
         'jhgl.jinhuoView',
         'jhgl.addJinhuoWin',
         'kcgl.kcglView',
-        'xsgl.xiaoshouView'
+        'xsgl.xiaoshouView',
+        'product.productView'
     ],
     autoCreateViewport: true,
     name: 'App'
