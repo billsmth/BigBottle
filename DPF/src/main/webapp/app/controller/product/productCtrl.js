@@ -168,19 +168,17 @@ Ext.define('App.controller.product.productCtrl', {
      * 执行添加
      */
     execProductAdd : function () {
-		if(!this.dateOrPass('addBeginTimeStr', 'addEndTimeStr', 'addBeginTimeStr2', 'addEndTimeStr2')){
-			Ext.MessageBox.alert("提示","请重新选择会议时间");
-			return;
-		}
+    	var values =this.productaddwin.down('form').getForm().getValues();
+    	values.editType='1';
 		Ext.Ajax.request({
-		     url: 'product/add.action',
-		     params: this.productaddwin.down('form').getForm().getValues(),
+		     url: 'product/saveproduct.action',
+		     params: values,
 		     success: function (response){
 		     	var text=response.responseText;
 		     	this.productaddwin.hide();
 		     	if (this.productquery !=null || this.productquery !=undefined) {
 		            Ext.destroy(this.productquery );
-		        this.productquery=null;
+		            this.productquery=null;
 		        }
 		
 		     	this.commonCallback();

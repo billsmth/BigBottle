@@ -1,43 +1,45 @@
-<?xml version="1.0" encoding="UTF-8" ?>  
+<?xml version = "1.0" encoding = "UTF-8" ?>  
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.isoftstone.dao.jxc.ProductDao">
+<mapper namespace = "com.isoftstone.dao.jxc.ProductDao">
 
-    <resultMap type="com.isoftstone.model.jxc.Product" id="productResult">
-        <id property="product_id" column="product_id"/>
-		<result property="product_name" column="product_name"/>
-		<result property="path" column="path"/>
-		<result property="image_name" column="image_name"/>
-		<result property="template_id" column="template_id"/>
-		<result property="desp" column="desp"/>
-		<result property="status" column="status"/>
-		<result property="creater_id" column="creater_id"/>
-		<result property="type" column="type"/>
-		<result property="new_flg" column="new_flg"/>
-		<result property="note" column="note"/>
-		<result property="col1" column="col1"/>
-		<result property="col2" column="col2"/>
-		<result property="col3" column="col3"/>
-		<result property="col4" column="col4"/>
-		<result property="col5" column="col5"/>
-		<result property="col6" column="col6"/>
-		<result property="col7" column="col7"/>
-		<result property="col8" column="col8"/>
-		<result property="kucun_ids" column="kucun_ids"/>
+    <resultMap type = "com.isoftstone.model.jxc.Product" id = "productResult">
+        <id property = "product_id" column = "product_id"/>
+		<result property = "product_name" column = "product_name"/>
+		<result property = "path" column = "path"/>
+		<result property = "image_name" column = "image_name"/>
+		<result property = "template_id" column = "template_id"/>
+		<result property = "desp" column = "desp"/>
+		<result property = "status" column = "status"/>
+		<result property = "creater_id" column = "creater_id"/>
+		<result property = "type" column = "type"/>
+		<result property = "new_flg" column = "new_flg"/>
+		<result property = "note" column = "note"/>
+		<result property = "col1" column = "col1"/>
+		<result property = "col2" column = "col2"/>
+		<result property = "col3" column = "col3"/>
+		<result property = "col4" column = "col4"/>
+		<result property = "col5" column = "col5"/>
+		<result property = "col6" column = "col6"/>
+		<result property = "col7" column = "col7"/>
+		<result property = "col8" column = "col8"/>
+		<result property = "kucun_ids" column = "kucun_ids"/>
     </resultMap>
     
-    <select id="getProductList" resultMap="productResult">
-        select product_id,product_name,path,image_name,template_id,desp,status,creater_id,type,new_flg,note,col1,col2,col3,col4,col5,col6,col7,col8,kucun_ids 
+    <select id = "getProductList" resultMap = "productResult">
+        select product_id, product_name, path, image_name, template_id, desp, status, 
+        		creater_id, type, new_flg, note, col1, col2, col3, col4, col5, col6, col7, col8, kucun_ids 
         	from t_product
     </select>
-    <select id="getMaxID" resultMap="productResult">
+    <select id = "getMaxID" resultMap = "productResult">
     	select max(product_id) product_id from t_product
     </select>
-    <select id="getProduct" resultMap="productResult" parameterType="com.isoftstone.model.jxc.Product">
-        select product_id,product_name,path,image_name,template_id,desp,status,creater_id,type,new_flg,note,col1,col2,col3,col4,col5,col6,col7,col8,kucun_ids 
-        	from t_product where product_id=#{product_id}
+    <select id = "getProduct" resultMap = "productResult" parameterType = "com.isoftstone.model.jxc.Product">
+        select product_id, product_name, path, image_name, template_id, desp, status, creater_id, type, 
+        		new_flg, note, col1, col2, col3, col4, col5, col6, col7, col8, kucun_ids 
+        	from t_product where product_id = #{product_id}
     </select>
     
-    <insert id="saveProduct" parameterType="com.isoftstone.model.jxc.Product">
+    <insert id = "saveProduct" parameterType = "com.isoftstone.model.jxc.Product">
         insert into t_product (
         		product_id, 
 	        	product_name, 
@@ -83,28 +85,28 @@
 	        )
     </insert>
     
-    <update id="updateProduct" parameterType="com.isoftstone.model.jxc.Product">
+    <update id = "updateProduct" parameterType = "com.isoftstone.model.jxc.Product">
         update t_product set 
-	        product_id = #{product_id},
-			product_name = #{product_name},
-			path = #{path},
-			image_name = #{image_name},
-			template_id = #{template_id},
-			desp = #{desp},
-			status = #{status},
-			creater_id = #{creater_id},
-			type = #{type},
-			new_flg = #{new_flg},
-			note = #{note},
-			col1 = #{col1},
-			col2 = #{col2},
-			col3 = #{col3},
-			col4 = #{col4},
-			col5 = #{col5},
-			col6 = #{col6},
-			col7 = #{col7},
-			col8 = #{col8},
-			kucun_ids = #{kucun_ids},
+	        product_id = #{product_id}, 
+			product_name = #{product_name}, 
+			path = #{path}, 
+			image_name = #{image_name}, 
+			template_id = #{template_id}, 
+			desp = #{desp}, 
+			status = #{status}, 
+			creater_id = #{creater_id}, 
+			type = #{type}, 
+			new_flg = #{new_flg}, 
+			note = #{note}, 
+			col1 = #{col1}, 
+			col2 = #{col2}, 
+			col3 = #{col3}, 
+			col4 = #{col4}, 
+			col5 = #{col5}, 
+			col6 = #{col6}, 
+			col7 = #{col7}, 
+			col8 = #{col8}, 
+			kucun_ids = #{kucun_ids}, 
         where kucun_id = #{kucun_id}
     </update>
     
