@@ -9,7 +9,7 @@ Ext.define('App.store.product.productStore', {
         'App.model.product.productModel'
     ],
 
-    //autoLoad: true,
+    autoLoad: true,
     model: 'App.model.product.productModel',
     proxy: {
         type : 'ajax',

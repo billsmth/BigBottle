@@ -3,7 +3,7 @@ Ext.define('App.controller.product.productCtrl', {
     
     stores: ['product.productStore'],
     models: ['product.productModel'],
-    views: ['product.productView'],
+    views: ['product.productView', 'product.productaddwin'],
     
     init: function() {
         this.control({
@@ -21,13 +21,13 @@ Ext.define('App.controller.product.productCtrl', {
 	            click: this.delMeeting
 	        },
 	        'productView  button[action=product_list_add_act]' : {
-	            click: this.showAddWin
+	            click: this.showProductAddWin
 	        },
-	        'maddwin  button[action=product_add_exec_act]' : {
-                click: this.execAdd
+	        'productaddwin  button[action=product_add_exec_act]' : {
+                click: this.execProductAdd
             },
-            'maddwin  button[action=product_add_cancel_act]' : {
-                click: this.cancelAdd
+            'productaddwin  button[action=product_add_cancel_act]' : {
+                click: this.cancelProductAdd
             },
             'productView  button[action=product_list_edit_act]' : {
             	click: this.showEditWin
@@ -38,25 +38,25 @@ Ext.define('App.controller.product.productCtrl', {
             'meditwin  button[action=product_edit_cancel_act]' : {
                 click: this.cancelEdit
             },
-            'productView button[action=product_list_edit_maincontent_act]' : {
+            'productView  button[action=product_list_edit_maincontent_act]' : {
             	click: this.editContent
             },
-            'productView button[action=product_maincontent_save_act]' : {
+            'productView  button[action=product_maincontent_save_act]' : {
             	click: this.updContent
             },
-            'productView button[action=product_list_edit_summary_act]' : {
+            'productView  button[action=product_list_edit_summary_act]' : {
             	click: this.editSummary
             },
-            'productView button[action=product_summary_save_act]' : {
+            'productView  button[action=product_summary_save_act]' : {
             	click: this.updSummary
             },
             'productView' : {
             	itemclick: this.rowClick
             },
-            'productView button[action=product_test_act]' : {
+            'productView  button[action=product_test_act]' : {
             	click: this.test
             },
-            'productView button[action=product_list_upfile_act]' : {
+            'productView  button[action=product_list_upfile_act]' : {
             	click: this.showUpfileWin
             },
             'mupfilewin  button[action=product_upfile_cancel_act]' : {
@@ -85,8 +85,8 @@ Ext.define('App.controller.product.productCtrl', {
      * 显示查询窗口
      */
     showQuery : function () {
-        if (this.productquery == null || this.productquery == undefined) {
-            this.productquery = Ext.create('App.view.product.productquerywin');
+        if (this.productquery==null || this.productquery==undefined) {
+            this.productquery=Ext.create('App.view.product.productquerywin');
         }
         
         this.productquery.show();
@@ -117,14 +117,14 @@ Ext.define('App.controller.product.productCtrl', {
      */
     delMeeting : function () {
     	
-    	var grid = Ext.ComponentQuery.query('productView')[0];
-        var rowRecord = grid.getSelectionModel().selected.items[0];
-        if(rowRecord == undefined) {
+    	var grid=Ext.ComponentQuery.query('productView')[0];
+        var rowRecord=grid.getSelectionModel().selected.items[0];
+        if(rowRecord==undefined) {
             Ext.MessageBox.alert("提示", "请选择一行，再进行删除。");
             return;
         }
     	
-    	var a = Ext.ComponentQuery.query('productView')[0].getSelectionModel().getSelection()[0].get('idmeeting');
+    	var a=Ext.ComponentQuery.query('productView')[0].getSelectionModel().getSelection()[0].get('idmeeting');
     	
 //    	Ext.MessageBox.confirm('提示','确认删除此条会议信息吗？',function(btn){	//增加confirm success识别不了function
 //    		if(btn=='no'){													//放confirm后边又被同步执行
@@ -140,11 +140,11 @@ Ext.define('App.controller.product.productCtrl', {
     },
     
     /**
-     * 显示添加窗口
+     * 显示添加产品窗口
      */
-    showAddWin:function (){
-    	this.showAdd();
-    	var editForm  = Ext.ComponentQuery.query('maddwin form')[0];
+    showProductAddWin:function (){
+    	this.showAddProduct();
+    	var editForm=Ext.ComponentQuery.query('productaddwin form')[0];
         editForm.getForm().reset();
         this.setEditPanelStatus(false);
         if(editForm.collapsed) {
@@ -152,73 +152,63 @@ Ext.define('App.controller.product.productCtrl', {
         }
     },
     
-    showAdd : function () {
-        if (this.madd == null || this.madd == undefined) {
-            this.madd = Ext.create('App.view.product.maddwin');
+    showAddProduct : function () {
+        if (this.productaddwin==null || this.productaddwin==undefined) {
+            this.productaddwin=Ext.create('App.view.product.productaddwin');
         }
-        this.madd.show();
+        this.productaddwin.show();
     },
     
     setEditPanelStatus : function (disabled) {
-    	var editForm  = Ext.ComponentQuery.query('maddwin form')[0];
+    	var editForm=Ext.ComponentQuery.query('productaddwin form')[0];
         editForm.setDisabled(disabled);
     },
     
     /**
      * 执行添加
      */
-    execAdd : function () {
-    	if(!this.dateOrPass('addBeginTimeStr', 'addEndTimeStr', 'addBeginTimeStr2', 'addEndTimeStr2')){
-    		Ext.MessageBox.alert("提示","请重新选择会议时间");
-    		return;
-    	}
-//    	 var grid = Ext.ComponentQuery.query('productView gridpanel')[0];
-         // 取消选择的原因是当保存后，selectModel的备份数据已经与store的记录不同步
-         // 此处也可以再次产生选择事件，或人为同步selectmodel与store的记录
-//         grid.getSelectionModel().deselectAll();
-
-     	//var editForm  = Ext.ComponentQuery.query('addPeopleWin form[region=south]')[0];
-         Ext.Ajax.request({
-             url: 'product/add.action',
-             //params : editForm.getForm().getValues(),
-             params: this.madd.down('form').getForm().getValues(),
-             success: function (response){
-             	var text = response.responseText;
-             	//Ext.Msg.alert('text','text---'+text);
-             	//Ext.MessageBox.alert("text", "操作成功"+text);
-             	this.madd.hide();
-             	if (this.productquery != null || this.productquery != undefined) {
-                    Ext.destroy(this.productquery );
-                this.productquery = null;
-                }
-
-             	this.commonCallback();
-             },
-             scope: this
-         });
-    	
+    execProductAdd : function () {
+		if(!this.dateOrPass('addBeginTimeStr', 'addEndTimeStr', 'addBeginTimeStr2', 'addEndTimeStr2')){
+			Ext.MessageBox.alert("提示","请重新选择会议时间");
+			return;
+		}
+		Ext.Ajax.request({
+		     url: 'product/add.action',
+		     params: this.productaddwin.down('form').getForm().getValues(),
+		     success: function (response){
+		     	var text=response.responseText;
+		     	this.productaddwin.hide();
+		     	if (this.productquery !=null || this.productquery !=undefined) {
+		            Ext.destroy(this.productquery );
+		        this.productquery=null;
+		        }
+		
+		     	this.commonCallback();
+		     },
+		     scope: this
+		});
     },
     
     /**
-     * 关闭添加t窗口
+     * 关闭添加产品窗口
      */
-    cancelAdd : function () {
-        this.madd.hide();
+    cancelProductAdd : function () {
+        this.productaddwin.hide();
     },
     
     /**
      * 显示修改页面
      */
     showEditWin: function() {
-        var grid = Ext.ComponentQuery.query('productView')[0];
-        var rowRecord = grid.getSelectionModel().selected.items[0];
-        if(rowRecord == undefined) {
+        var grid=Ext.ComponentQuery.query('productView')[0];
+        var rowRecord=grid.getSelectionModel().selected.items[0];
+        if(rowRecord==undefined) {
             Ext.MessageBox.alert("提示", "请选择一行，再进行编辑。");
             return;
         }
         this.showEdit();
         
-        var editForm  = Ext.ComponentQuery.query('meditwin form')[0];
+        var editForm=Ext.ComponentQuery.query('meditwin form')[0];
         editForm.getForm().loadRecord(rowRecord);
         
         Ext.getCmp('editBeginTimeStr').setValue(rowRecord.data.beginTimeStr.split(" ")[0]);
@@ -245,13 +235,13 @@ Ext.define('App.controller.product.productCtrl', {
     },
     
     setEditPanelStatus2 : function (disabled) {
-    	var editForm  = Ext.ComponentQuery.query('meditwin form')[0];
+    	var editForm=Ext.ComponentQuery.query('meditwin form')[0];
         editForm.setDisabled(disabled);
     },
     
     showEdit : function () {
-        if (this.medit == null || this.medit == undefined) {
-            this.medit = Ext.create('App.view.product.meditwin');
+        if (this.medit==null || this.medit==undefined) {
+            this.medit=Ext.create('App.view.product.meditwin');
         }
         this.medit.show();
     },
@@ -265,18 +255,18 @@ Ext.define('App.controller.product.productCtrl', {
     		return;
     	}
     	
-//    	 var grid = Ext.ComponentQuery.query('productView gridpanel')[0];
+//    	 var grid=Ext.ComponentQuery.query('productView gridpanel')[0];
          // 取消选择的原因是当保存后，selectModel的备份数据已经与store的记录不同步
          // 此处也可以再次产生选择事件，或人为同步selectmodel与store的记录
 //         grid.getSelectionModel().deselectAll();
 
-     	//var editForm  = Ext.ComponentQuery.query('addPeopleWin form[region=south]')[0];
+     	//var editForm=Ext.ComponentQuery.query('addPeopleWin form[region=south]')[0];
          Ext.Ajax.request({
              url: 'product/update.action',
              //params : editForm.getForm().getValues(),
              params: this.medit.down('form').getForm().getValues(),
              success: function (response){
-             	var text = response.responseText;
+             	var text=response.responseText;
              	//Ext.Msg.alert('text','text---'+text);
              	//Ext.MessageBox.alert("text", "操作成功"+text);
              	this.medit.hide();
@@ -297,11 +287,11 @@ Ext.define('App.controller.product.productCtrl', {
     },
     
     storeQueryWithCondition : function () {
-        var store = Ext.ComponentQuery.query('productView')[0].getStore();
-        if (this.productquery == null || this.productquery == undefined) {
-            this.productquery = Ext.create('App.view.product.productquerywin');
+        var store=Ext.ComponentQuery.query('productView')[0].getStore();
+        if (this.productquery==null || this.productquery==undefined) {
+            this.productquery=Ext.create('App.view.product.productquerywin');
         }
-//        this.conditionHolder = Ext.ComponentQuery.query("productView form[region=north]")[0].getValues();
+//        this.conditionHolder=Ext.ComponentQuery.query("productView form[region=north]")[0].getValues();
         store.load({
             params: this.productquery.down('form').getForm().getValues()
         });
@@ -309,14 +299,14 @@ Ext.define('App.controller.product.productCtrl', {
     
     editContent : function () {
         Ext.getCmp('meetingTab').setActiveTab(1);
-        this.currentId = Ext.ComponentQuery.query('productView')[0].getSelectionModel().getSelection()[0].get('idmeeting');
+        this.currentId=Ext.ComponentQuery.query('productView')[0].getSelectionModel().getSelection()[0].get('idmeeting');
         Ext.Ajax.request({
             url: 'product/listall.action?idmeeting=' + this.currentId,
             success: function (response){
-            	var text = response.responseText;
+            	var text=response.responseText;
 //            	Ext.MessageBox.alert("text", "操作成功"+text);
 //            	Ext.getCmp('meetingMainContent').setValue(text);
-            	var jsonObj = Ext.JSON.decode(text);
+            	var jsonObj=Ext.JSON.decode(text);
             	Ext.getCmp('meetingMainContent').setValue(jsonObj[0].mainContent);
             },
             scope: this
@@ -324,14 +314,14 @@ Ext.define('App.controller.product.productCtrl', {
     },
     
     updContent : function () {
-    	var grid = Ext.ComponentQuery.query('productView')[0];
-        var rowRecord = grid.getSelectionModel().selected.items[0];
-        if(rowRecord == undefined) {
+    	var grid=Ext.ComponentQuery.query('productView')[0];
+        var rowRecord=grid.getSelectionModel().selected.items[0];
+        if(rowRecord==undefined) {
             Ext.MessageBox.alert("提示", "请选择一行，再进行编辑纪要。");
             return;
         }
-    	var str = Ext.getCmp('meetingMainContent').getValue();
-    	var idmeeting = this.currentId;
+    	var str=Ext.getCmp('meetingMainContent').getValue();
+    	var idmeeting=this.currentId;
     	Ext.Ajax.request({
             url: 'product/updMainContent.action',
             params: {
@@ -347,14 +337,14 @@ Ext.define('App.controller.product.productCtrl', {
     
     editSummary : function () {
         Ext.getCmp('meetingTab').setActiveTab(2);
-        this.currentId = Ext.ComponentQuery.query('productView')[0].getSelectionModel().getSelection()[0].get('idmeeting');
+        this.currentId=Ext.ComponentQuery.query('productView')[0].getSelectionModel().getSelection()[0].get('idmeeting');
         Ext.Ajax.request({
             url: 'product/findSummary.action?idMeeting=' + this.currentId,
             success: function (response){
-            	var text = response.responseText;
+            	var text=response.responseText;
 //            	Ext.MessageBox.alert("text", "操作成功"+text);
 //            	Ext.getCmp('meetingMainContent').setValue(text);
-            	var jsonObj = Ext.JSON.decode(text);
+            	var jsonObj=Ext.JSON.decode(text);
             	Ext.getCmp('meetingSummary').setValue(jsonObj.summary);
             },
             scope: this
@@ -362,14 +352,14 @@ Ext.define('App.controller.product.productCtrl', {
     },
     
 	updSummary : function () {
-		var grid = Ext.ComponentQuery.query('productView')[0];
-        var rowRecord = grid.getSelectionModel().selected.items[0];
-        if(rowRecord == undefined) {
+		var grid=Ext.ComponentQuery.query('productView')[0];
+        var rowRecord=grid.getSelectionModel().selected.items[0];
+        if(rowRecord==undefined) {
             Ext.MessageBox.alert("提示", "请选择一行，再进行编辑总结。");
             return;
         }
-		var str = Ext.getCmp('meetingSummary').getValue();
-    	var idmeeting = this.currentId;
+		var str=Ext.getCmp('meetingSummary').getValue();
+    	var idmeeting=this.currentId;
     	Ext.Ajax.request({
             url: 'product/updSummary.action',
             params: {
@@ -385,38 +375,38 @@ Ext.define('App.controller.product.productCtrl', {
     
     rowClick : function(){
     	Ext.getCmp('meetingTab').setActiveTab(0);
-    	var grid = Ext.ComponentQuery.query('productView')[0];
-        var rowRecord = grid.getSelectionModel().selected.items[0];
+    	var grid=Ext.ComponentQuery.query('productView')[0];
+        var rowRecord=grid.getSelectionModel().selected.items[0];
         var temp;
-        temp = Ext.ComponentQuery.query('productView displayfield')[0];
+        temp=Ext.ComponentQuery.query('productView displayfield')[0];
         temp.setValue(rowRecord.data.title);
-        temp = Ext.ComponentQuery.query('productView displayfield')[1];
+        temp=Ext.ComponentQuery.query('productView displayfield')[1];
         temp.setValue(rowRecord.data.compere);
-        temp = Ext.ComponentQuery.query('productView displayfield')[2];
+        temp=Ext.ComponentQuery.query('productView displayfield')[2];
         temp.setValue(rowRecord.data.beginTimeStr + " 至 " + rowRecord.data.endTimeStr);
-        temp = Ext.ComponentQuery.query('productView displayfield')[3];
+        temp=Ext.ComponentQuery.query('productView displayfield')[3];
         temp.setValue(rowRecord.data.contact);
-        temp = Ext.ComponentQuery.query('productView displayfield')[4];
+        temp=Ext.ComponentQuery.query('productView displayfield')[4];
         temp.setValue(rowRecord.data.address);
-        temp = Ext.ComponentQuery.query('productView displayfield')[5];
+        temp=Ext.ComponentQuery.query('productView displayfield')[5];
         temp.setValue("Tel: " + rowRecord.data.contactTel + " / Email: " + rowRecord.data.contactEmail);
         var mainStr="";
         for(var i=0;i<rowRecord.data.mainPeopleArr.length;i++){
         	mainStr+=rowRecord.data.mainPeopleArr[i].name;
         	if(i!=rowRecord.data.mainPeopleArr.length-1)mainStr+=",";
         }
-        temp = Ext.ComponentQuery.query('productView displayfield')[6];
+        temp=Ext.ComponentQuery.query('productView displayfield')[6];
         temp.setValue(mainStr);
         var maybeStr="";
         for(var i=0;i<rowRecord.data.maybePeopleArr.length;i++){
         	maybeStr+=rowRecord.data.maybePeopleArr[i].name;
         	if(i!=rowRecord.data.maybePeopleArr.length-1)maybeStr+=",";
         }
-        temp = Ext.ComponentQuery.query('productView displayfield')[7];
+        temp=Ext.ComponentQuery.query('productView displayfield')[7];
         temp.setValue(maybeStr);
-        temp = Ext.ComponentQuery.query('productView displayfield')[8];
+        temp=Ext.ComponentQuery.query('productView displayfield')[8];
         temp.setValue(rowRecord.data.agend);
-        temp = Ext.ComponentQuery.query('productView displayfield')[9];
+        temp=Ext.ComponentQuery.query('productView displayfield')[9];
         temp.setValue(rowRecord.data.meetingRequest);
         
         //纪要：
@@ -425,12 +415,12 @@ Ext.define('App.controller.product.productCtrl', {
         
         //总结
         Ext.getCmp('meetingTab').setActiveTab(2);
-        this.currentId = Ext.ComponentQuery.query('productView')[0].getSelectionModel().getSelection()[0].get('idmeeting');
+        this.currentId=Ext.ComponentQuery.query('productView')[0].getSelectionModel().getSelection()[0].get('idmeeting');
         Ext.Ajax.request({
             url: 'product/findSummary.action?idMeeting=' + this.currentId,
             success: function (response){
-            	var text = response.responseText;
-            	var jsonObj = Ext.JSON.decode(text);
+            	var text=response.responseText;
+            	var jsonObj=Ext.JSON.decode(text);
             	Ext.getCmp('meetingSummary').setValue(jsonObj.summary);
             },
             scope: this
@@ -443,10 +433,10 @@ Ext.define('App.controller.product.productCtrl', {
     	var ets=Ext.getCmp(endDateId).getValue();
     	var bts2=Ext.getCmp(beginTimeId).getValue();
     	var ets2=Ext.getCmp(endTimeId).getValue();
-    	var b1 = Ext.Date.format(new Date(bts),'Y-m-d'); 
-    	var b2 = Ext.Date.format(new Date(bts2),'H:i'); 
-    	var e1 = Ext.Date.format(new Date(ets),'Y-m-d'); 
-    	var e2 = Ext.Date.format(new Date(ets2),'H:i'); 
+    	var b1=Ext.Date.format(new Date(bts),'Y-m-d'); 
+    	var b2=Ext.Date.format(new Date(bts2),'H:i'); 
+    	var e1=Ext.Date.format(new Date(ets),'Y-m-d'); 
+    	var e2=Ext.Date.format(new Date(ets2),'H:i'); 
     	var begin=new Date(b1.split("-")[0],b1.split("-")[1],b1.split("-")[2],b2.split(":")[0],b2.split(":")[1],0);
     	var end=new Date(e1.split("-")[0],e1.split("-")[1],e1.split("-")[2],e2.split(":")[0],e2.split(":")[1],0);
     	if(begin>=end){
@@ -462,8 +452,8 @@ Ext.define('App.controller.product.productCtrl', {
      * 显示添加上传窗口
      */
     showUpfileWin:function (){
-    	 if (this.mupfile == null || this.mupfile == undefined) {
-             this.mupfile = Ext.create('App.view.product.mupfilewin');
+    	 if (this.mupfile==null || this.mupfile==undefined) {
+             this.mupfile=Ext.create('App.view.product.mupfilewin');
          }
          this.mupfile.show();
     },
@@ -480,7 +470,7 @@ Ext.define('App.controller.product.productCtrl', {
      * 执行上传
      */
     execUpfile : function () {
-    	var form = Ext.getCmp('mupfileform');
+    	var form=Ext.getCmp('mupfileform');
     	form.submit({
             url : 'product/upfile.action',
             method : 'POST',
@@ -501,9 +491,9 @@ Ext.define('App.controller.product.productCtrl', {
     	Ext.Ajax.request({
             url: 'product/downfile.action',
             success: function (response){
-//            	var text = response.responseText;
-//            	var jsonObj = Ext.JSON.decode(text);
-//            	window.location.href = jsonObj.path;//这样就可以弹出下载对话框了  
+//            	var text=response.responseText;
+//            	var jsonObj=Ext.JSON.decode(text);
+//            	window.location.href=jsonObj.path;//这样就可以弹出下载对话框了  
             },
             scope: this
         });

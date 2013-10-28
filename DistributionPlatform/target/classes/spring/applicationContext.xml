@@ -8,16 +8,19 @@
 
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
         destroy-method="close">
-        <property name="driverClassName" value="org.sqlite.JDBC"></property>
-        <property name="url" value="jdbc:sqlite::resource:hk.db"></property>
+        <!--property name="driverClassName" value="org.sqlite.JDBC"></property>
+        <property name="url" value="jdbc:sqlite::resource:hk.db"></property-->
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
+        <property name="url" value="jdbc:mysql://localhost:3306/llsm?userUnicode=true&amp;characterEncoding=utf-8"></property>
+        <property name="username" value="llsmuser"></property>  
+    	<property name="password" value="1234"></property> 
         <property name="maxActive" value="100"></property>
         <property name="maxIdle" value="30"></property>
         <property name="maxWait" value="500"></property>
         <property name="defaultAutoCommit" value="false"></property>
     </bean>
 
-    <bean id="transactionManager"
-        class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="dataSource" />
     </bean>
 

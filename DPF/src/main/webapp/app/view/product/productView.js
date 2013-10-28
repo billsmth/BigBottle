@@ -20,42 +20,41 @@ Ext.define('App.view.product.productView', {
         });
         Ext.applyIf(me, {
 	            tbar:[{
-	                xtype: 'tbseparator'
-	            },{
-	                id:'product_search_id',
-	                text: '查询',
-	                iconCls:'icon-search',
-	                action:'product_list_search_act'
-	            },{
-	                xtype: 'tbseparator'
-	            },{
-	                id:'product_add_id',
-	                text: '添加',
-	                iconCls:'icon-add',
-	                action:'product_list_add_act'
-	            },{
-	                xtype: 'tbseparator'
-	            },{
-	                id:'product_edit_id',
-	                text: '编辑',
-	                iconCls:'icon-edit',
-	                action:'product_list_edit_act'
-	            },{
-	                xtype: 'tbseparator'
-	            },{
-	                id:'product_del_id',
-	                text: '删除',
-	                iconCls:'icon-del',
-	                action:'product_list_del_act'
-	            },{
-	                xtype: 'tbseparator'
-	            }
-	            ,{
-	                id:'product_upfile_id',
-	                text: '测试上传功能',
-	                iconCls:'icon-edit',
-	                action:'product_list_upfile_act'
-	            }
+		                xtype: 'tbseparator'
+		            },{
+		                id:'product_search_id',
+		                text: '查询',
+		                iconCls:'icon-search',
+		                action:'product_list_search_act'
+		            },{
+		                xtype: 'tbseparator'
+		            },{
+		                id:'product_add_id',
+		                text: '添加',
+		                iconCls:'icon-add',
+		                action:'product_list_add_act'
+		            },{
+		                xtype: 'tbseparator'
+		            },{
+		                id:'product_edit_id',
+		                text: '编辑',
+		                iconCls:'icon-edit',
+		                action:'product_list_edit_act'
+		            },{
+		                xtype: 'tbseparator'
+		            },{
+		                id:'product_del_id',
+		                text: '删除',
+		                iconCls:'icon-del',
+		                action:'product_list_del_act'
+		            },{
+		                xtype: 'tbseparator'
+		            },{
+		                id:'product_upfile_id',
+		                text: '测试上传功能',
+		                iconCls:'icon-edit',
+		                action:'product_list_upfile_act'
+		            }
 	            ]
         	,
             columns: [
@@ -167,7 +166,7 @@ Ext.define('App.view.product.productView', {
 				dock : 'bottom',
 				height : 320,
 				activeTab : 0,
-				id : 'meetingTab',
+				id : 'productTab',
 				items : [ {
 					xtype : 'panel',
 					title : '产品详情',
@@ -294,7 +293,7 @@ Ext.define('App.view.product.productView', {
 					},
 					items : [ {
 						xtype : 'htmleditor',
-						id : 'meetingMainContent',
+						id : 'productMainContent',
 						height : 150,
 					} ],
 					dockedItems : [ {
@@ -316,7 +315,7 @@ Ext.define('App.view.product.productView', {
 					},
 					items : [ {
 						xtype : 'htmleditor',
-						id : 'meetingSummary',
+						id : 'productSummary',
 						height : 150,
 					} ],
 					dockedItems : [ {

@@ -67,7 +67,8 @@ Ext.application({
         'jhgl.addJinhuoWin',
         'kcgl.kcglView',
         'xsgl.xiaoshouView',
-        'product.productView'
+        'product.productView',
+        'product.productaddwin'
     ],
     autoCreateViewport: true,
     name: 'App'

@@ -44,7 +44,8 @@ Ext.define('App.model.product.productModel', {
         },
         {
             name: 'new_flg',
-            type: 'string'
+            type: 'string',
+            convert: newFlgConv
         },
         {
             name: 'note',
@@ -89,18 +90,12 @@ Ext.define('App.model.product.productModel', {
     ]
 });
 
-function statusConv(v,record){
-	if(v==1){
-		return "未开始";
+function newFlgConv(v,record){
+	if(v==0){
+		return "新产品";
+	}else if(v==1){
+		return "普通产品";
 	}else if(v==2){
-		return "已邀请";
-	}else if(v==3){
-		return "进行中";
-	}else{
-		return "已结束";
+		return "推荐";
 	}
-}
-
-function strFmt(v,record){
-	return v.substring(0,16);
 }
