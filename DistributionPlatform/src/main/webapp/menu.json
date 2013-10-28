@@ -51,5 +51,11 @@
     "cls" : "forum-ct",
     "leaf": true,
     "qtitle" : "test/testmgt.action"
+    }, {
+    "id" : "8",
+    "text" : "xml测试",
+    "cls" : "forum-ct",
+    "leaf": true,
+    "qtitle" : "test/testxml.action"
     }
 ]

@@ -1,9 +1,13 @@
 package com.hk.distribution.controller;
 
+import java.io.File;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
+import org.dom4j.Document;
+import org.dom4j.io.SAXReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,6 +33,22 @@ public class TestController {
         mav.setViewName("test/test");
         return mav;
     }
+    
+    @RequestMapping("/testxml")
+    public void testXml(HttpServletRequest request,HttpServletResponse response) {
+
+        ModelAndView mav = new ModelAndView();
+        SAXReader reader =new SAXReader();
+        try{
+        	Document   document = reader.read(new File("c://pom.xml")); 
+        	Tools.outPrint(document,response);
+        }catch(Exception e){
+        	e.printStackTrace();
+        }
+//        mav.setViewName("test/test");
+//        return mav;
+    }
+    
     
     @RequestMapping("/savetest")
     @ResponseBody

@@ -1,11 +1,17 @@
 package com.hk.distribution.common.tools;
 
-import java.io.UnsupportedEncodingException;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.dom4j.Document;
+import org.dom4j.io.OutputFormat;
+import org.dom4j.io.XMLWriter;
 
 public class Tools {
 	public static String WEIHAO_0001="0001";
@@ -60,5 +66,20 @@ public class Tools {
 	
 	public static SimpleDateFormat getDateFormat(){
 		return FORMATTER3;
+	}
+	
+	public static void outPrint(Document doc, HttpServletResponse response) throws IOException {
+		response.setCharacterEncoding("UTF-8");
+		response.setContentType("text/xml; charset=utf-8");
+		PrintWriter out = response.getWriter();
+		OutputFormat format = OutputFormat.createCompactFormat();
+		//去掉xml头
+		//format.setSuppressDeclaration(true);
+		//format.isPadText();
+		format.setEncoding("utf-8");
+		XMLWriter writer = new XMLWriter(out, format);
+		writer.write(doc);
+		writer.flush();
+		writer.close();
 	}
 }
