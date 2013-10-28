@@ -74,7 +74,7 @@ public class ProductController {
         	
             productService.saveProduct(product);
         } else if ("2".equals(editType)) {
-        	product.setProduct_id(Long.parseLong(product_id));
+        	//product.setProduct_id(Long.parseLong(product_id));
             productService.updateProduct(product);
         }
 
