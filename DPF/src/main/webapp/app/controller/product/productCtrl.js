@@ -18,7 +18,7 @@ Ext.define('App.controller.product.productCtrl', {
                 click: this.cancelQuery
             },
             'productView  button[action=product_list_del_act]' : {
-	            click: this.delMeeting
+	            click: this.delProducts
 	        },
 	        'productView  button[action=product_list_add_act]' : {
 	            click: this.showProductAddWin
@@ -115,28 +115,39 @@ Ext.define('App.controller.product.productCtrl', {
     /**
      * 软删除
      */
-    delMeeting : function () {
-    	
-    	var grid=Ext.ComponentQuery.query('productView')[0];
+    delProducts : function (obj, event) {
+    	var grid = obj.up('productView');
         var rowRecord=grid.getSelectionModel().selected.items[0];
         if(rowRecord==undefined) {
             Ext.MessageBox.alert("提示", "请选择一行，再进行删除。");
             return;
         }
     	
-    	var a=Ext.ComponentQuery.query('productView')[0].getSelectionModel().getSelection()[0].get('idmeeting');
-    	
-//    	Ext.MessageBox.confirm('提示','确认删除此条会议信息吗？',function(btn){	//增加confirm success识别不了function
-//    		if(btn=='no'){													//放confirm后边又被同步执行
-//    			return;
-//    		}else{
+    	Ext.MessageBox.confirm('提示','确认删除此条产品信息吗？',function(btn){
+    		if(btn=='no'){
+    			return;
+    		}else{
+    			var models = grid.getSelectionModel().selected.items;
+    			var ids = '';
+                Ext.iterate(models, function(key, value) {
+                    var tmp = key.data.product_id;
+                    if(ids.length !=0) {
+                        ids = ids + ',' + tmp;
+                    } else {
+                        ids = ids + tmp;
+                    }
+                }, this);
+    			
     			Ext.Ajax.request({
-    	    	    url: 'product/del.action?idmeeting='+a,
+    	    	    url: 'product/delete.action',
+                    params : {
+                    	productIds : ids
+                    },
     	    	    success: this.commonCallback,
     	    	    scope: this
     	    	});
-//    		}
-//    	})
+    		}
+    	},this);
     },
     
     /**
@@ -372,58 +383,48 @@ Ext.define('App.controller.product.productCtrl', {
     },
     
     rowClick : function(){
-    	Ext.getCmp('meetingTab').setActiveTab(0);
+    	Ext.getCmp('productTab').setActiveTab(0);
     	var grid=Ext.ComponentQuery.query('productView')[0];
         var rowRecord=grid.getSelectionModel().selected.items[0];
         var temp;
         temp=Ext.ComponentQuery.query('productView displayfield')[0];
-        temp.setValue(rowRecord.data.title);
+        temp.setValue(rowRecord.data.product_id);
         temp=Ext.ComponentQuery.query('productView displayfield')[1];
-        temp.setValue(rowRecord.data.compere);
+        temp.setValue(rowRecord.data.product_name);
         temp=Ext.ComponentQuery.query('productView displayfield')[2];
-        temp.setValue(rowRecord.data.beginTimeStr + " 至 " + rowRecord.data.endTimeStr);
+        temp.setValue(rowRecord.data.path);
         temp=Ext.ComponentQuery.query('productView displayfield')[3];
-        temp.setValue(rowRecord.data.contact);
+        temp.setValue(rowRecord.data.template_id);
         temp=Ext.ComponentQuery.query('productView displayfield')[4];
-        temp.setValue(rowRecord.data.address);
+        temp.setValue(rowRecord.data.new_flg);
         temp=Ext.ComponentQuery.query('productView displayfield')[5];
-        temp.setValue("Tel: " + rowRecord.data.contactTel + " / Email: " + rowRecord.data.contactEmail);
-        var mainStr="";
-        for(var i=0;i<rowRecord.data.mainPeopleArr.length;i++){
-        	mainStr+=rowRecord.data.mainPeopleArr[i].name;
-        	if(i!=rowRecord.data.mainPeopleArr.length-1)mainStr+=",";
-        }
+        temp.setValue(rowRecord.data.status);
         temp=Ext.ComponentQuery.query('productView displayfield')[6];
-        temp.setValue(mainStr);
-        var maybeStr="";
-        for(var i=0;i<rowRecord.data.maybePeopleArr.length;i++){
-        	maybeStr+=rowRecord.data.maybePeopleArr[i].name;
-        	if(i!=rowRecord.data.maybePeopleArr.length-1)maybeStr+=",";
-        }
+        temp.setValue(rowRecord.data.creater_id);
         temp=Ext.ComponentQuery.query('productView displayfield')[7];
-        temp.setValue(maybeStr);
+        temp.setValue(rowRecord.data.type);
         temp=Ext.ComponentQuery.query('productView displayfield')[8];
-        temp.setValue(rowRecord.data.agend);
+        temp.setValue(rowRecord.data.desp);
         temp=Ext.ComponentQuery.query('productView displayfield')[9];
-        temp.setValue(rowRecord.data.meetingRequest);
+        temp.setValue(rowRecord.data.note);
         
-        //纪要：
-        Ext.getCmp('meetingTab').setActiveTab(1);
-        Ext.getCmp('meetingMainContent').setValue(rowRecord.data.mainContent);
-        
-        //总结
-        Ext.getCmp('meetingTab').setActiveTab(2);
-        this.currentId=Ext.ComponentQuery.query('productView')[0].getSelectionModel().getSelection()[0].get('idmeeting');
-        Ext.Ajax.request({
-            url: 'product/findSummary.action?idMeeting=' + this.currentId,
-            success: function (response){
-            	var text=response.responseText;
-            	var jsonObj=Ext.JSON.decode(text);
-            	Ext.getCmp('meetingSummary').setValue(jsonObj.summary);
-            },
-            scope: this
-        });
-        Ext.getCmp('meetingTab').setActiveTab(0);
+//        //纪要：
+//        Ext.getCmp('productTab').setActiveTab(1);
+//        Ext.getCmp('meetingMainContent').setValue(rowRecord.data.mainContent);
+//        
+//        //总结
+//        Ext.getCmp('productTab').setActiveTab(2);
+//        this.currentId=Ext.ComponentQuery.query('productView')[0].getSelectionModel().getSelection()[0].get('idmeeting');
+//        Ext.Ajax.request({
+//            url: 'product/findSummary.action?idMeeting=' + this.currentId,
+//            success: function (response){
+//            	var text=response.responseText;
+//            	var jsonObj=Ext.JSON.decode(text);
+//            	Ext.getCmp('meetingSummary').setValue(jsonObj.summary);
+//            },
+//            scope: this
+//        });
+//        Ext.getCmp('productTab').setActiveTab(0);
     },
     
     dateOrPass:function(beginDateId,endDateId,beginTimeId,endTimeId){

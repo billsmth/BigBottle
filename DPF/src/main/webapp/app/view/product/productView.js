@@ -164,7 +164,7 @@ Ext.define('App.view.product.productView', {
             dockedItems : [ {
 				xtype : 'tabpanel',
 				dock : 'bottom',
-				height : 320,
+				height : 520,
 				activeTab : 0,
 				id : 'productTab',
 				items : [ {
@@ -186,13 +186,13 @@ Ext.define('App.view.product.productView', {
 		                    	},
 		                    	items:[{
 		                                xtype: 'displayfield',
-		                                fieldLabel: '会议主题',
+		                                fieldLabel: '产品编号',
 		                                labelWidth: 80,
 		                                labelAlign: 'right',
 		                                width:400
 			                    	   },{
 		                                xtype: 'displayfield',
-		                                fieldLabel: '主持人',
+		                                fieldLabel: '产品名称',
 		                                labelWidth: 80,
 		                                labelAlign: 'right',
 		                                margin: '0 0 0 30'
@@ -207,13 +207,13 @@ Ext.define('App.view.product.productView', {
 		                    	},
 		                    	items:[{
 		                                xtype: 'displayfield',
-		                                fieldLabel: '会议日期',
+		                                fieldLabel: '产品路径',
 		                                labelWidth: 80,
 		                                labelAlign: 'right',
 		                                width:400
 		            	               },{
 	            	            	    xtype: 'displayfield',
-		                                fieldLabel: '联系人',
+		                                fieldLabel: '模板编号',
 		                                labelWidth: 80,
 		                                labelAlign: 'right',
 		                                margin: '0 0 0 30'
@@ -228,13 +228,13 @@ Ext.define('App.view.product.productView', {
 		                    	},
 		                    	items:[{
 		                                xtype: 'displayfield',
-		                                fieldLabel: '会议地点',
+		                                fieldLabel: '新品标志',
 		                                labelWidth: 80,
 		                                labelAlign: 'right',
 		                                width:400
 		            	               },{
 		                                xtype: 'displayfield',
-		                                fieldLabel: '联系方式',
+		                                fieldLabel: '状态',
 		                                labelWidth: 80,
 		                                labelAlign: 'right',
 		                                margin: '0 0 0 30'
@@ -249,39 +249,31 @@ Ext.define('App.view.product.productView', {
 		                    	},
 		                    	items:[{
 		                                xtype: 'displayfield',
-		                                fieldLabel: '必须参会人员',
-		                                labelWidth: 80,
-		                                labelAlign: 'right'
-		            	               }]
-			                },
-			                {
-			                	xtype:'container',
-			                	margin:'5 20 5 0',
-		                    	layout:{
-		                    		align:'stretch',
-		                    		type:'hbox'
-		                    	},
-		                    	items:[{
-		                                xtype: 'displayfield',
-		                                fieldLabel: '可选参会人员',
+		                                fieldLabel: '创建人',
 		                                labelWidth: 80,
 		                                labelAlign: 'right',
+		                                width:400
+		            	               },{
+		                                xtype: 'displayfield',
+		                                fieldLabel: '种类',
+		                                labelWidth: 80,
+		                                labelAlign: 'right',
+		                                margin: '0 0 0 30'
 		            	              }]
-			                }
-            	            ,
-            	            {
+			                },{
                                 xtype: 'displayfield',
-                                fieldLabel: '简介',
+                                fieldLabel: '产品描述',
                                 labelWidth: 80,
                                 labelAlign: 'right',
                                 margin:'5 20 5 0',
                                 anchor:'100%'
-			                }
-            	            ,{
+			                },{
                                 xtype: 'displayfield',
-                                fieldLabel: '要求',
+                                fieldLabel: '备注信息',
                                 labelWidth: 80,
                                 labelAlign: 'right',
+                                margin:'5 20 5 0',
+                                anchor:'100%'
             	            }
                         ]
 					} ]

@@ -110,4 +110,11 @@
         where kucun_id = #{kucun_id}
     </update>
     
+    <delete id="deleteProductsByID" parameterType="list">
+        update t_product set status ='9'  
+        where product_id in 
+        <foreach item="product_id"  collection="list" open="(" separator="," close=")">
+            #{product_id}
+        </foreach>
+    </delete>
 </mapper>

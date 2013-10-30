@@ -15,4 +15,6 @@ public interface ProductDao {
 	public void saveProduct(Product product);
 
 	public void updateProduct(Product product);
+	
+	public void deleteProductsByID(List<String> product_id);
 }

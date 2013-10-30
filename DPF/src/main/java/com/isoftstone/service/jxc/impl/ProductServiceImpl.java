@@ -45,4 +45,9 @@ public class ProductServiceImpl implements ProductService {
     public void setProductDao(ProductDao productDao) {
         this.productDao = productDao;
     }
+    
+    @Override
+    public void deleteProductsByID(List<String> product_id){
+    	this.productDao.deleteProductsByID(product_id);
+    }
 }

@@ -11,4 +11,5 @@ public interface ProductService {
     public void saveProduct(Product product);
     public Product getMaxID();
     public void updateProduct(Product product);
+    public void deleteProductsByID(List<String> product_id);
 }
