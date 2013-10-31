@@ -1,7 +1,7 @@
 <resources>
 
-    <string name="app_name">WTGH</string>
+    <string name="app_name">WGGH</string>
     <string name="menu_settings">Settings</string>
-    <string name="title_activity_main">微淘供货</string>
+    <string name="title_activity_main">微购供货</string>
 
 </resources>

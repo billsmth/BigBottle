@@ -10,10 +10,8 @@ public class MainActivity extends DroidGap {
     public void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
         // Set by <content src="index.html" /> in config.xml
-    	super.setIntegerProperty("splashscreen", R.drawable.bg_loading);
+    	super.setIntegerProperty("splashscreen", R.drawable.loading41);
         super.loadUrl(Config.getStartUrl(),5000);
 //        super.loadUrl("file:///android_asset/www/login.html");
     }
-
-    
 }
