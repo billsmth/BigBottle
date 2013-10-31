@@ -63,6 +63,11 @@ public class ProductController {
         product.setNote(request.getParameter("note"));
         product.setKucun_ids(request.getParameter("kucun_ids"));
         
+        User user = (User) request.getSession().getAttribute("user");
+        
+        product.setUpdater_id(user.getPeopleId());
+        product.setUpdater_name(user.getPeopleName());
+        
         if ("1".equals(editType)) {
         	Product productID = productService.getMaxID();
         	
@@ -80,8 +85,9 @@ public class ProductController {
             	product.setProduct_id(productID.getProduct_id()+1);
             }
             
-            User user = (User) request.getSession().getAttribute("user");
-            product.setCreater_id(user.getId());
+            product.setCreater_id(user.getPeopleId());
+            product.setCreater_name(user.getPeopleName());
+            
             product.setStatus("0");
             product.setNew_flg("0");
         	
@@ -118,9 +124,9 @@ public class ProductController {
 
     @RequestMapping("/json/list")
     @ResponseBody
-    public List<Product> getProductListByJson() {
+    public List<Product> getProductListByJson(Product product) {
 
-        List<Product> list = productService.getProductList();
+        List<Product> list = productService.selectWithCondition(product);
         return list;
     }
 }

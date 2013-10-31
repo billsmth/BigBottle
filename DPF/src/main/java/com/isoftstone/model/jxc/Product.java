@@ -10,6 +10,9 @@ public class Product {
     private String desp;
     private String status;
     private String creater_id;
+    private String creater_name;
+    private String updater_id;
+    private String updater_name;
     private String type;
     private String new_flg;
     private String note;
@@ -142,5 +145,23 @@ public class Product {
 	}
 	public void setKucun_ids(String kucun_ids) {
 		this.kucun_ids = kucun_ids;
+	}
+	public String getCreater_name() {
+		return creater_name;
+	}
+	public void setCreater_name(String creater_name) {
+		this.creater_name = creater_name;
+	}
+	public String getUpdater_id() {
+		return updater_id;
+	}
+	public void setUpdater_id(String updater_id) {
+		this.updater_id = updater_id;
+	}
+	public String getUpdater_name() {
+		return updater_name;
+	}
+	public void setUpdater_name(String updater_name) {
+		this.updater_name = updater_name;
 	}
 }

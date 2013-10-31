@@ -39,6 +39,18 @@ Ext.define('App.model.product.productModel', {
 	            type: 'string'
 	        },
 	        {
+	            name: 'creater_name',
+	            type: 'string'
+	        },
+	        {
+	            name: 'updater_id',
+	            type: 'string'
+	        },
+	        {
+	            name: 'updater_name',
+	            type: 'string'
+	        },
+	        {
 	            name: 'type',
 	            type: 'string'
 	        },

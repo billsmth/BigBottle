@@ -388,9 +388,9 @@ Ext.define('App.controller.product.productCtrl', {
         var rowRecord=grid.getSelectionModel().selected.items[0];
         var temp;
         temp=Ext.ComponentQuery.query('productView displayfield')[0];
-        temp.setValue(rowRecord.data.product_id);
+        temp.setValue(rowRecord.data.product_name+" [ ID: "+rowRecord.data.product_id+" ]");
         temp=Ext.ComponentQuery.query('productView displayfield')[1];
-        temp.setValue(rowRecord.data.product_name);
+        temp.setValue(rowRecord.data.type);
         temp=Ext.ComponentQuery.query('productView displayfield')[2];
         temp.setValue(rowRecord.data.path);
         temp=Ext.ComponentQuery.query('productView displayfield')[3];
@@ -400,9 +400,9 @@ Ext.define('App.controller.product.productCtrl', {
         temp=Ext.ComponentQuery.query('productView displayfield')[5];
         temp.setValue(rowRecord.data.status);
         temp=Ext.ComponentQuery.query('productView displayfield')[6];
-        temp.setValue(rowRecord.data.creater_id);
+        temp.setValue(rowRecord.data.creater_name+" [ ID: "+rowRecord.data.creater_id+" ]");
         temp=Ext.ComponentQuery.query('productView displayfield')[7];
-        temp.setValue(rowRecord.data.type);
+        temp.setValue(rowRecord.data.updater_name+" [ ID: "+rowRecord.data.updater_id+" ]");
         temp=Ext.ComponentQuery.query('productView displayfield')[8];
         temp.setValue(rowRecord.data.desp);
         temp=Ext.ComponentQuery.query('productView displayfield')[9];

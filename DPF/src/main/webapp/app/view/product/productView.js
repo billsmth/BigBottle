@@ -85,18 +85,18 @@ Ext.define('App.view.product.productView', {
                 flex:1
             }, {
                 xtype: 'gridcolumn',
-                dataIndex: 'desp',
-                text: '描述',
-                flex:1
-            }, {
-                xtype: 'gridcolumn',
                 dataIndex: 'status',
                 text: '状态',
                 flex:1
             }, {
                 xtype: 'gridcolumn',
-                dataIndex: 'creater_id',
-                text: '创建者编号',
+                dataIndex: 'creater_name',
+                text: '创建者姓名',
+                flex:1
+            }, {
+                xtype: 'gridcolumn',
+                dataIndex: 'updater_name',
+                text: '更新者姓名',
                 flex:1
             }, {
                 xtype: 'gridcolumn',
@@ -107,11 +107,6 @@ Ext.define('App.view.product.productView', {
                 xtype: 'gridcolumn',
                 dataIndex: 'new_flg',
                 text: '是否新品',
-                flex:1
-            }, {
-                xtype: 'gridcolumn',
-                dataIndex: 'note',
-                text: '备注',
                 flex:1
             }, {
                 xtype: 'gridcolumn',
@@ -186,13 +181,13 @@ Ext.define('App.view.product.productView', {
 		                    	},
 		                    	items:[{
 		                                xtype: 'displayfield',
-		                                fieldLabel: '产品编号',
+		                                fieldLabel: '产品',
 		                                labelWidth: 80,
 		                                labelAlign: 'right',
 		                                width:400
 			                    	   },{
 		                                xtype: 'displayfield',
-		                                fieldLabel: '产品名称',
+		                                fieldLabel: '种类',
 		                                labelWidth: 80,
 		                                labelAlign: 'right',
 		                                margin: '0 0 0 30'
@@ -239,8 +234,7 @@ Ext.define('App.view.product.productView', {
 		                                labelAlign: 'right',
 		                                margin: '0 0 0 30'
 		            	              }]
-			                },
-			                {
+			                }, {
 			                	xtype:'container',
 			                	margin:'5 20 5 0',
 		                    	layout:{
@@ -255,7 +249,7 @@ Ext.define('App.view.product.productView', {
 		                                width:400
 		            	               },{
 		                                xtype: 'displayfield',
-		                                fieldLabel: '种类',
+		                                fieldLabel: '更新者',
 		                                labelWidth: 80,
 		                                labelAlign: 'right',
 		                                margin: '0 0 0 30'

@@ -11,6 +11,9 @@
 		<result property = "desp" column = "desp"/>
 		<result property = "status" column = "status"/>
 		<result property = "creater_id" column = "creater_id"/>
+		<result property = "creater_name" column = "creater_name"/>
+		<result property = "updater_id" column = "updater_id"/>
+		<result property = "updater_name" column = "updater_name"/>
 		<result property = "type" column = "type"/>
 		<result property = "new_flg" column = "new_flg"/>
 		<result property = "note" column = "note"/>
@@ -27,17 +30,44 @@
     
     <select id = "getProductList" resultMap = "productResult">
         select product_id, product_name, path, image_name, template_id, desp, status, 
-        		creater_id, type, new_flg, note, col1, col2, col3, col4, col5, col6, col7, col8, kucun_ids 
+        		creater_id, creater_name, updater_id, updater_name, type, new_flg, note, col1, col2, col3, col4, col5, col6, col7, col8, kucun_ids 
         	from t_product
     </select>
     <select id = "getMaxID" resultMap = "productResult">
     	select max(product_id) product_id from t_product
     </select>
     <select id = "getProduct" resultMap = "productResult" parameterType = "com.isoftstone.model.jxc.Product">
-        select product_id, product_name, path, image_name, template_id, desp, status, creater_id, type, 
+        select product_id, product_name, path, image_name, template_id, desp, status, creater_id, creater_name, updater_id, updater_name, type, 
         		new_flg, note, col1, col2, col3, col4, col5, col6, col7, col8, kucun_ids 
         	from t_product where product_id = #{product_id}
     </select>
+    
+    <select id="selectWithCondition" resultMap="productResult" parameterType="com.isoftstone.model.jxc.Product">
+	    select product_id, product_name, path, image_name, template_id, desp, status, creater_id, creater_name, updater_id, updater_name, type, 
+        		new_flg, note, col1, col2, col3, col4, col5, col6, col7, col8, kucun_ids 
+	    from t_product 
+   		<trim prefix="where" prefixOverrides="and|or">
+	    	<if test="product_id != ''">
+		        product_id like '${product_id}%' 
+		    </if>
+		    <if test="product_name != ''">
+		        and product_name like '%${product_name}%' 
+		    </if>
+		    <if test="status != ''">
+		        and status = #{status} 
+		    </if>
+		    <if test="creater_name != ''">
+		        and creater_name like '%${creater_name}%' 
+		    </if>
+		    <if test="updater_name != ''">
+		        and updater_name like '%${updater_name}%' 
+		    </if>
+		    <if test="type != ''">
+		        and type = #{type} 
+		    </if>
+	    </trim>
+	order by product_id desc
+  </select>
     
     <insert id = "saveProduct" parameterType = "com.isoftstone.model.jxc.Product">
         insert into t_product (
@@ -48,7 +78,10 @@
 	        	template_id, 
 	        	desp, 
 	        	status, 
-	        	creater_id, 
+	        	creater_id,
+	        	creater_name, 
+	        	updater_id, 
+	        	updater_name, 
 	        	type, 
 	        	new_flg, 
 	        	note, 
@@ -70,6 +103,9 @@
 	        	#{desp}, 
 	        	#{status}, 
 	        	#{creater_id}, 
+	        	#{creater_name}, 
+	        	#{updater_id}, 
+	        	#{updater_name}, 
 	        	#{type}, 
 	        	#{new_flg}, 
 	        	#{note}, 
@@ -95,6 +131,9 @@
 			desp = #{desp}, 
 			status = #{status}, 
 			creater_id = #{creater_id}, 
+			creater_name = #{creater_name}, 
+			updater_id = #{updater_id}, 
+			updater_name = #{updater_name}, 
 			type = #{type}, 
 			new_flg = #{new_flg}, 
 			note = #{note}, 
