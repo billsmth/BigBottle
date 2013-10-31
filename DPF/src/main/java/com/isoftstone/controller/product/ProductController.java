@@ -1,5 +1,10 @@
 package com.isoftstone.controller.product;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Arrays;
 import java.util.List;
 
@@ -14,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.isoftstone.common.Tools;
 import com.isoftstone.model.acl.User;
 import com.isoftstone.model.jxc.Product;
+import com.isoftstone.model.meeting.Meeting;
 import com.isoftstone.service.jxc.ProductService;
 
 @Controller
@@ -129,4 +135,74 @@ public class ProductController {
         List<Product> list = productService.selectWithCondition(product);
         return list;
     }
+    
+    @RequestMapping("/upfile")
+    @ResponseBody
+    public String upfile(HttpServletRequest request, Product product, String target_product_id) {
+    	
+    	System.out.println("upfile for :"+target_product_id);
+    	String imageNames="";
+    	if(product.getFiletest1().getSize()>0){                    
+    		try {     
+    			imageNames+=SaveFileFromInputStream(product.getFiletest1().getInputStream(), target_product_id, product.getFiletest1().getOriginalFilename(), request)+",";     
+    		} catch (IOException e) {     
+    			System.out.println(e.getMessage());     
+    			return null;     
+    		}     
+    	}
+    	if(product.getFiletest2().getSize()>0){                    
+    		try {     
+    			imageNames+=SaveFileFromInputStream(product.getFiletest2().getInputStream(), target_product_id, product.getFiletest2().getOriginalFilename(), request)+",";     
+    		} catch (IOException e) {     
+    			System.out.println(e.getMessage());     
+    			return null;     
+    		}     
+    	}
+    	if(product.getFiletest3().getSize()>0){                    
+    		try {     
+    			imageNames+=SaveFileFromInputStream(product.getFiletest3().getInputStream(), target_product_id, product.getFiletest3().getOriginalFilename(), request)+",";     
+    		} catch (IOException e) {     
+    			System.out.println(e.getMessage());     
+    			return null;     
+    		}     
+    	}
+    	product.setProduct_id(Long.parseLong(target_product_id));
+    	Product targetProduct=productService.getProduct(product);
+    	if(targetProduct.getImage_name()!=null){
+    		targetProduct.setImage_name(targetProduct.getImage_name() + imageNames);
+    	}else{
+    		targetProduct.setImage_name(imageNames);
+    	}
+    	
+    	User user = (User) request.getSession().getAttribute("user");
+        
+    	targetProduct.setUpdater_id(user.getPeopleId());
+    	targetProduct.setUpdater_name(user.getPeopleName());
+    	
+    	productService.updateProduct(targetProduct);
+    	
+    	return "{'success':true}";
+	}
+    
+    public String SaveFileFromInputStream(InputStream stream, String fileDir, String filename, HttpServletRequest request) throws IOException {
+		String savePath = request.getSession().getServletContext().getRealPath("/Productlist/");
+		
+		String productFileDir = savePath + "/" + fileDir + "/";
+		File file = new File(productFileDir);
+		if (!file.exists()) {
+			file.mkdir();
+		}
+		String fileName = java.util.UUID.randomUUID().toString();
+        filename=fileName+filename.substring(filename.lastIndexOf("."));
+        File toFile = new File(file, filename);
+        OutputStream os = new FileOutputStream(toFile);
+        byte[] buffer = new byte[1024];
+        int length = 0;
+        while ((length = stream.read(buffer)) > 0) {
+            os.write(buffer, 0, length);
+        }
+        stream.close();
+        os.close();
+        return filename;
+	}
 }

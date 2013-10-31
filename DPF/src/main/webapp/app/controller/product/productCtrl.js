@@ -3,7 +3,7 @@ Ext.define('App.controller.product.productCtrl', {
     
     stores: ['product.productStore'],
     models: ['product.productModel'],
-    views: ['product.productView', 'product.productaddwin'],
+    views: ['product.productView', 'product.productaddwin', 'product.productUpfileWin'],
     
     init: function() {
         this.control({
@@ -59,10 +59,10 @@ Ext.define('App.controller.product.productCtrl', {
             'productView  button[action=product_list_upfile_act]' : {
             	click: this.showUpfileWin
             },
-            'mupfilewin  button[action=product_upfile_cancel_act]' : {
+            'productUpfileWin  button[action=product_upfile_cancel_act]' : {
                 click: this.cancelUpfile
             },
-            'mupfilewin  button[action=product_upfile_exec_act]' : {
+            'productUpfileWin  button[action=product_upfile_exec_act]' : {
                 click: this.execUpfile
             },
             'productView  button[action=product_list_downfile_act]' : {
@@ -451,35 +451,49 @@ Ext.define('App.controller.product.productCtrl', {
      * 显示添加上传窗口
      */
     showUpfileWin:function (){
-    	 if (this.mupfile==null || this.mupfile==undefined) {
-             this.mupfile=Ext.create('App.view.product.mupfilewin');
-         }
-         this.mupfile.show();
+    	var grid=Ext.ComponentQuery.query('productView')[0];
+        var rowRecord=grid.getSelectionModel().selected.items[0];
+        if(rowRecord==undefined) {
+            Ext.MessageBox.alert("提示", "请选择一行，再进行编辑。");
+            return;
+        }
+        
+		if (this.productUpfile==null || this.productUpfile==undefined) {
+		    this.productUpfile=Ext.create('App.view.product.productUpfileWin');
+		}
+		Ext.getCmp('target_product_id').setValue(rowRecord.data.product_id);
+		this.productUpfile.show();
+		
     },
     
     /**
      * 关闭上传窗口
      */
     cancelUpfile : function () {
-        Ext.destroy(this.mupfile);
-        this.mupfile=null;
+        Ext.destroy(this.productUpfile);
+        this.productUpfile=null;
     },
     
     /**
      * 执行上传
      */
     execUpfile : function () {
-    	var form=Ext.getCmp('mupfileform');
+    	var form=Ext.getCmp('productUpfileForm');
     	form.submit({
             url : 'product/upfile.action',
             method : 'POST',
             waitMsg : '正在上传您的文件，请耐心等候...',
             success : function(form, action) {
-                Ext.Msg.alert('提示信息', "文件保存成功");
+            	this.productUpfile.hide();
+            	this.commonCallback;
+            	Ext.Msg.alert('提示信息', "图片文件保存成功");
             },
             failure : function() {
-                Ext.Msg.alert("提示信息", "对不起，文件保存失败");
-            }
+            	this.productUpfile.hide();
+            	this.commonCallback;
+            	Ext.Msg.alert("提示信息", "对不起，文件保存失败");
+            },
+            scope:this
         });
     },
     

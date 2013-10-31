@@ -123,7 +123,6 @@
     
     <update id = "updateProduct" parameterType = "com.isoftstone.model.jxc.Product">
         update t_product set 
-	        product_id = #{product_id}, 
 			product_name = #{product_name}, 
 			path = #{path}, 
 			image_name = #{image_name}, 
@@ -145,8 +144,8 @@
 			col6 = #{col6}, 
 			col7 = #{col7}, 
 			col8 = #{col8}, 
-			kucun_ids = #{kucun_ids}, 
-        where kucun_id = #{kucun_id}
+			kucun_ids = #{kucun_ids} 
+        where product_id = #{product_id}
     </update>
     
     <delete id="deleteProductsByID" parameterType="list">

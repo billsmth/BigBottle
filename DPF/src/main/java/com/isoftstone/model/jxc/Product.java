@@ -1,5 +1,7 @@
 package com.isoftstone.model.jxc;
 
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
+
 public class Product {
 
     private Long product_id;
@@ -25,6 +27,9 @@ public class Product {
     private String col7;
     private String col8;
     private String kucun_ids;
+    private CommonsMultipartFile filetest1;
+    private CommonsMultipartFile filetest2;
+    private CommonsMultipartFile filetest3;
     
 	public Long getProduct_id() {
 		return product_id;
@@ -163,5 +168,23 @@ public class Product {
 	}
 	public void setUpdater_name(String updater_name) {
 		this.updater_name = updater_name;
+	}
+	public CommonsMultipartFile getFiletest1() {
+		return filetest1;
+	}
+	public void setFiletest1(CommonsMultipartFile filetest1) {
+		this.filetest1 = filetest1;
+	}
+	public CommonsMultipartFile getFiletest2() {
+		return filetest2;
+	}
+	public void setFiletest2(CommonsMultipartFile filetest2) {
+		this.filetest2 = filetest2;
+	}
+	public CommonsMultipartFile getFiletest3() {
+		return filetest3;
+	}
+	public void setFiletest3(CommonsMultipartFile filetest3) {
+		this.filetest3 = filetest3;
 	}
 }
