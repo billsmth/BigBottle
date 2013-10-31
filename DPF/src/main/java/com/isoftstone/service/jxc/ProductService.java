@@ -12,4 +12,5 @@ public interface ProductService {
     public Product getMaxID();
     public void updateProduct(Product product);
     public void deleteProductsByID(List<String> product_id);
+    public List<Product> selectWithCondition(Product product);
 }

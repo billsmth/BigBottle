@@ -32,34 +32,31 @@ Ext.define('App.view.product.productquerywin', {
                     name:'product_id',
                     emptyText:"支持模糊查询,前端一致",
                     labelAlign: 'right'
-                },
-                {
+                }, {
                     xtype: 'textfield',
                     anchor: '100%',
                     fieldLabel: '产品名称',
                     name:'product_name',
                     emptyText:"支持模糊查询,任意一致",
                     labelAlign: 'right'
-                }
-                ,
-                {
+                }, {
                     xtype: 'textfield',
                     anchor: '100%',
                     fieldLabel: '状态',
                     name:'status',
                     labelAlign: 'right'
-                },{
-	                xtype: 'textfield',
-                    anchor: '100%',
-	                fieldLabel: '创建者编号',
-	                name:'creater_id',
-	                emptyText:"支持模糊查询,前端一致",
-	                labelAlign: 'right'
-	            },{
+                }, {
 	                xtype: 'textfield',
                     anchor: '100%',
 	                fieldLabel: '创建者姓名',
 	                name:'creater_name',
+	                emptyText:"支持模糊查询,任意一致",
+	                labelAlign: 'right'
+	            }, {
+	                xtype: 'textfield',
+                    anchor: '100%',
+	                fieldLabel: '更新者姓名',
+	                name:'updater_name',
 	                emptyText:"支持模糊查询,任意一致",
 	                labelAlign: 'right'
 	            }, {
