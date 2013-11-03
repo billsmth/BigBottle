@@ -8,7 +8,7 @@ Ext.define('App.view.product.productaddwin', {
         type: 'fit'
     },
     
-    title: '添加商品',
+    title: '添加/编辑商品',
     closable:false,
     
     initComponent: function() {
@@ -24,6 +24,14 @@ Ext.define('App.view.product.productaddwin', {
 	                msgTarget: 'qtip'
 	            },
                 items: [{
+	                	xtype: 'textfield',
+		                flex: 1,
+		                id:'editType',
+		                name: 'editType',
+		                labelWidth: 90,
+		                value:1,
+		                hidden:true
+		            },{
 		                xtype: 'textfield',
  		                flex: 1,
  		                fieldLabel: '产品编号',
@@ -72,6 +80,14 @@ Ext.define('App.view.product.productaddwin', {
  		                flex: 1,
  		                fieldLabel: '新品标志',
  		                name:'new_flg',
+ 		                labelAlign: 'right',
+ 		                labelWidth: 90,
+ 		                hidden:true
+ 		            },{
+ 		                xtype: 'textfield',
+ 		                flex: 1,
+ 		                fieldLabel: '状态',
+ 		                name:'status',
  		                labelAlign: 'right',
  		                labelWidth: 90,
  		                hidden:true

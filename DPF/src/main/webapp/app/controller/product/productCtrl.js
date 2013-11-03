@@ -68,6 +68,9 @@ Ext.define('App.controller.product.productCtrl', {
             'productView  button[action=product_list_downfile_act]' : {
                 click: this.execDownfile
             },
+            'productView  button[action=product_view_pic_act]' : {
+                click: this.viewPic
+            },
         });
     },
     
@@ -79,6 +82,22 @@ Ext.define('App.controller.product.productCtrl', {
             },
             scope: this
         });
+    },
+    viewPic : function (obj, event) {
+    	var grid = obj.up('productView');
+        var rowRecord=grid.getSelectionModel().selected.items[0];
+        if(rowRecord==undefined) {
+            Ext.MessageBox.alert("提示", "请选择一行，再进行删除。");
+            return;
+        }else{
+        	var url = "product/getProductPic.action?productId="+rowRecord.data.product_id;
+        	var flag = window.showModalDialog(url,window,"help:0;scroll:yes;status:no;dialogWidth:1000px;dialogHeight:500px");
+        	if (flag)
+        	{
+        		refresh();
+        	}
+        }
+    	
     },
     
     /**
@@ -167,6 +186,7 @@ Ext.define('App.controller.product.productCtrl', {
         if (this.productaddwin==null || this.productaddwin==undefined) {
             this.productaddwin=Ext.create('App.view.product.productaddwin');
         }
+        Ext.getCmp('editType').setValue('1');
         this.productaddwin.show();
     },
     
@@ -180,7 +200,6 @@ Ext.define('App.controller.product.productCtrl', {
      */
     execProductAdd : function () {
     	var values =this.productaddwin.down('form').getForm().getValues();
-    	values.editType='1';
 		Ext.Ajax.request({
 		     url: 'product/saveproduct.action',
 		     params: values,
@@ -215,79 +234,12 @@ Ext.define('App.controller.product.productCtrl', {
             Ext.MessageBox.alert("提示", "请选择一行，再进行编辑。");
             return;
         }
-        this.showEdit();
+        this.showAddProduct();
         
-        var editForm=Ext.ComponentQuery.query('meditwin form')[0];
+        var editForm=Ext.ComponentQuery.query('productaddwin form')[0];
         editForm.getForm().loadRecord(rowRecord);
         
-        Ext.getCmp('editBeginTimeStr').setValue(rowRecord.data.beginTimeStr.split(" ")[0]);
-        Ext.getCmp('editBeginTimeStr2').setValue(rowRecord.data.beginTimeStr.split(" ")[1]);
-        Ext.getCmp('editEndTimeStr').setValue(rowRecord.data.endTimeStr.split(" ")[0]);
-        Ext.getCmp('editEndTimeStr2').setValue(rowRecord.data.endTimeStr.split(" ")[1]);
-        var mainStr="";
-        for(var i=0;i<rowRecord.data.mainPeopleArr.length;i++){
-        	mainStr+=rowRecord.data.mainPeopleArr[i].idPeople;
-        	if(i!=rowRecord.data.mainPeopleArr.length-1)mainStr+=",";
-        }
-        Ext.getCmp('meeting_combobox_mainpeople').setValue(mainStr.split(","));
-        var maybeStr="";
-        for(var i=0;i<rowRecord.data.maybePeopleArr.length;i++){
-        	maybeStr+=rowRecord.data.maybePeopleArr[i].idPeople;
-        	if(i!=rowRecord.data.maybePeopleArr.length-1)maybeStr+=",";
-        }
-        Ext.getCmp('meeting_combobox_maybepeople').setValue(maybeStr.split(","));
-        
-        this.setEditPanelStatus2(false);
-        if(editForm.collapsed) {
-            editForm.expand();
-        }
-    },
-    
-    setEditPanelStatus2 : function (disabled) {
-    	var editForm=Ext.ComponentQuery.query('meditwin form')[0];
-        editForm.setDisabled(disabled);
-    },
-    
-    showEdit : function () {
-        if (this.medit==null || this.medit==undefined) {
-            this.medit=Ext.create('App.view.product.meditwin');
-        }
-        this.medit.show();
-    },
-    
-    /**
-     * 执行修改
-     */
-    execEdit : function () {
-    	if(!this.dateOrPass('editBeginTimeStr', 'editEndTimeStr', 'editBeginTimeStr2', 'editEndTimeStr2')){
-    		Ext.MessageBox.alert("提示","请重新选择会议时间");
-    		return;
-    	}
-    	
-//    	 var grid=Ext.ComponentQuery.query('productView gridpanel')[0];
-         // 取消选择的原因是当保存后，selectModel的备份数据已经与store的记录不同步
-         // 此处也可以再次产生选择事件，或人为同步selectmodel与store的记录
-//         grid.getSelectionModel().deselectAll();
-
-     	//var editForm=Ext.ComponentQuery.query('addPeopleWin form[region=south]')[0];
-         Ext.Ajax.request({
-             url: 'product/update.action',
-             //params : editForm.getForm().getValues(),
-             params: this.medit.down('form').getForm().getValues(),
-             success: function (response){
-             	var text=response.responseText;
-             	//Ext.Msg.alert('text','text---'+text);
-             	//Ext.MessageBox.alert("text", "操作成功"+text);
-             	this.medit.hide();
-             	this.commonCallback();
-             },
-             scope: this
-         });
-    	
-    },
-    
-    cancelEdit : function () {
-        this.medit.hide();
+        Ext.getCmp('editType').setValue(2);
     },
     
     commonCallback : function (ctrl) {
@@ -306,82 +258,6 @@ Ext.define('App.controller.product.productCtrl', {
         });
     },
     
-    editContent : function () {
-        Ext.getCmp('meetingTab').setActiveTab(1);
-        this.currentId=Ext.ComponentQuery.query('productView')[0].getSelectionModel().getSelection()[0].get('idmeeting');
-        Ext.Ajax.request({
-            url: 'product/listall.action?idmeeting=' + this.currentId,
-            success: function (response){
-            	var text=response.responseText;
-//            	Ext.MessageBox.alert("text", "操作成功"+text);
-//            	Ext.getCmp('meetingMainContent').setValue(text);
-            	var jsonObj=Ext.JSON.decode(text);
-            	Ext.getCmp('meetingMainContent').setValue(jsonObj[0].mainContent);
-            },
-            scope: this
-        });
-    },
-    
-    updContent : function () {
-    	var grid=Ext.ComponentQuery.query('productView')[0];
-        var rowRecord=grid.getSelectionModel().selected.items[0];
-        if(rowRecord==undefined) {
-            Ext.MessageBox.alert("提示", "请选择一行，再进行编辑纪要。");
-            return;
-        }
-    	var str=Ext.getCmp('meetingMainContent').getValue();
-    	var idmeeting=this.currentId;
-    	Ext.Ajax.request({
-            url: 'product/updMainContent.action',
-            params: {
-            	idmeeting:idmeeting,
-            	mainContent:str
-            },
-            success: function (response){
-            	Ext.MessageBox.alert("提示", "操作成功");
-            },
-            scope: this
-        });
-    },
-    
-    editSummary : function () {
-        Ext.getCmp('meetingTab').setActiveTab(2);
-        this.currentId=Ext.ComponentQuery.query('productView')[0].getSelectionModel().getSelection()[0].get('idmeeting');
-        Ext.Ajax.request({
-            url: 'product/findSummary.action?idMeeting=' + this.currentId,
-            success: function (response){
-            	var text=response.responseText;
-//            	Ext.MessageBox.alert("text", "操作成功"+text);
-//            	Ext.getCmp('meetingMainContent').setValue(text);
-            	var jsonObj=Ext.JSON.decode(text);
-            	Ext.getCmp('meetingSummary').setValue(jsonObj.summary);
-            },
-            scope: this
-        });
-    },
-    
-	updSummary : function () {
-		var grid=Ext.ComponentQuery.query('productView')[0];
-        var rowRecord=grid.getSelectionModel().selected.items[0];
-        if(rowRecord==undefined) {
-            Ext.MessageBox.alert("提示", "请选择一行，再进行编辑总结。");
-            return;
-        }
-		var str=Ext.getCmp('meetingSummary').getValue();
-    	var idmeeting=this.currentId;
-    	Ext.Ajax.request({
-            url: 'product/updSummary.action',
-            params: {
-            	idMeeting:idmeeting,
-            	summary:str
-            },
-            success: function (response){
-            	Ext.MessageBox.alert("提示", "操作成功");
-            },
-            scope: this
-        });
-    },
-    
     rowClick : function(){
     	Ext.getCmp('productTab').setActiveTab(0);
     	var grid=Ext.ComponentQuery.query('productView')[0];
@@ -396,9 +272,29 @@ Ext.define('App.controller.product.productCtrl', {
         temp=Ext.ComponentQuery.query('productView displayfield')[3];
         temp.setValue(rowRecord.data.template_id);
         temp=Ext.ComponentQuery.query('productView displayfield')[4];
-        temp.setValue(rowRecord.data.new_flg);
+        var newFlg=rowRecord.data.new_flg;
+        if(newFlg==0){
+        	newFlg= "新产品";
+    	}else if(newFlg==1){
+    		newFlg= "普通产品";
+    	}else if(newFlg==2){
+    		newFlg= "推荐";
+    	}
+        temp.setValue(newFlg);
         temp=Ext.ComponentQuery.query('productView displayfield')[5];
-        temp.setValue(rowRecord.data.status);
+        var statusFlg=rowRecord.data.status;
+        if(statusFlg==0){
+        	statusFlg= "暂存";
+    	}else if(statusFlg==1){
+    		statusFlg= "已提交";
+    	}else if(statusFlg==2){
+    		statusFlg= "已审批";
+    	}else if(statusFlg==3){
+    		statusFlg= "修改中";
+    	}else if(statusFlg==9){
+    		statusFlg= "已删除";
+    	}
+        temp.setValue(statusFlg);
         temp=Ext.ComponentQuery.query('productView displayfield')[6];
         temp.setValue(rowRecord.data.creater_name+" [ ID: "+rowRecord.data.creater_id+" ]");
         temp=Ext.ComponentQuery.query('productView displayfield')[7];
@@ -426,26 +322,6 @@ Ext.define('App.controller.product.productCtrl', {
 //        });
 //        Ext.getCmp('productTab').setActiveTab(0);
     },
-    
-    dateOrPass:function(beginDateId,endDateId,beginTimeId,endTimeId){
-    	var bts=Ext.getCmp(beginDateId).getValue();
-    	var ets=Ext.getCmp(endDateId).getValue();
-    	var bts2=Ext.getCmp(beginTimeId).getValue();
-    	var ets2=Ext.getCmp(endTimeId).getValue();
-    	var b1=Ext.Date.format(new Date(bts),'Y-m-d'); 
-    	var b2=Ext.Date.format(new Date(bts2),'H:i'); 
-    	var e1=Ext.Date.format(new Date(ets),'Y-m-d'); 
-    	var e2=Ext.Date.format(new Date(ets2),'H:i'); 
-    	var begin=new Date(b1.split("-")[0],b1.split("-")[1],b1.split("-")[2],b2.split(":")[0],b2.split(":")[1],0);
-    	var end=new Date(e1.split("-")[0],e1.split("-")[1],e1.split("-")[2],e2.split(":")[0],e2.split(":")[1],0);
-    	if(begin>=end){
-    		return false;
-    	}
-    	if(begin<end){
-    		return true;
-    	}
-    },
-    
     
     /**
      * 显示添加上传窗口

@@ -9,6 +9,9 @@ import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import net.sf.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,10 +19,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.alibaba.fastjson.JSONArray;
 import com.isoftstone.common.Tools;
 import com.isoftstone.model.acl.User;
 import com.isoftstone.model.jxc.Product;
 import com.isoftstone.model.meeting.Meeting;
+import com.isoftstone.model.opinion.IssueOpinion;
 import com.isoftstone.service.jxc.ProductService;
 
 @Controller
@@ -134,6 +139,32 @@ public class ProductController {
 
         List<Product> list = productService.selectWithCondition(product);
         return list;
+    }
+    
+    @RequestMapping("/getProductPic")
+    @ResponseBody
+    public ModelAndView getProductPic(HttpServletRequest request, HttpServletResponse response,String productId){
+    	Product p=new Product();
+    	p.setProduct_id(Long.parseLong(productId));
+    	p=productService.getProduct(p);
+    	
+    	request.setAttribute("PRODUCT_PICS",p);
+    	return new ModelAndView("productPic"); 
+    }
+
+    @RequestMapping(value="/getNewProducts",produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public String getNewProductsByJson() {
+    	Product product=new Product();
+    	product.setStatus("1");
+    	product.setNew_flg("0");
+        List<Product> list = productService.selectWithCondition(product);
+        JSONArray jsonArray=new JSONArray();
+        jsonArray.add(list);
+//        JSONObject json=new JSONObject();
+//		json.accumulate("opinionReplay", opinionReplay);
+//		return json.toString();
+        return jsonArray.toJSONString();
     }
     
     @RequestMapping("/upfile")

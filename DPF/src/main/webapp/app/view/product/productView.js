@@ -54,6 +54,13 @@ Ext.define('App.view.product.productView', {
 		                text: '测试上传功能',
 		                iconCls:'icon-edit',
 		                action:'product_list_upfile_act'
+		            },{
+		                xtype: 'tbseparator'
+		            },{
+		                id:'product_view_id',
+		                text: '查看图片',
+		                iconCls:'icon-view',
+		                action:'product_view_pic_act'
 		            }
 	            ]
         	,
@@ -87,7 +94,22 @@ Ext.define('App.view.product.productView', {
                 xtype: 'gridcolumn',
                 dataIndex: 'status',
                 text: '状态',
-                flex:1
+                flex:1,
+                renderer : function(val) {
+                    var retVal = '';
+                    if (val == 0) {
+                        retVal = '暂存';
+                    } else if (val == 1) {
+                        retVal = '已提交';
+                    } else if (val == 2) {
+                        retVal = '已审批';
+                    } else if (val == 3) {
+                        retVal = '修改中';
+                    } else if (val == 4) {
+                        retVal = '已删除';
+                    }
+                    return retVal;
+                }
             }, {
                 xtype: 'gridcolumn',
                 dataIndex: 'creater_name',
@@ -107,7 +129,18 @@ Ext.define('App.view.product.productView', {
                 xtype: 'gridcolumn',
                 dataIndex: 'new_flg',
                 text: '是否新品',
-                flex:1
+                flex:1,
+                renderer : function(val) {
+                    var retVal = '';
+                    if (val == 0) {
+                        retVal = '新产品';
+                    } else if (val == 1) {
+                        retVal = '普通产品';
+                    } else if (val == 2) {
+                        retVal = '推荐';
+                    }
+                    return retVal;
+                }
             }, {
                 xtype: 'gridcolumn',
                 dataIndex: 'col1',
