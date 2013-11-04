@@ -158,7 +158,7 @@ Ext.define('App.controller.product.productCtrl', {
                 }, this);
     			
     			Ext.Ajax.request({
-    	    	    url: 'product/delete.action',
+    	    	    url: 'product/delProduct.action',
                     params : {
                     	productIds : ids
                     },

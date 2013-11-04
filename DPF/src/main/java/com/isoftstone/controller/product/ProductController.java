@@ -124,7 +124,7 @@ public class ProductController {
         return "{'success':true}";
     }
     
-    @RequestMapping("/delete")
+    @RequestMapping("/delProduct")
     @ResponseBody
     public String deleteProduct(String productIds) {
         
