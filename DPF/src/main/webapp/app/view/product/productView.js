@@ -51,14 +51,14 @@ Ext.define('App.view.product.productView', {
 		                xtype: 'tbseparator'
 		            },{
 		                id:'product_upfile_id',
-		                text: '测试上传功能',
+		                text: '上传图片',
 		                iconCls:'icon-edit',
 		                action:'product_list_upfile_act'
 		            },{
 		                xtype: 'tbseparator'
 		            },{
 		                id:'product_view_id',
-		                text: '查看图片',
+		                text: '查看/编辑图片',
 		                iconCls:'icon-view',
 		                action:'product_view_pic_act'
 		            }

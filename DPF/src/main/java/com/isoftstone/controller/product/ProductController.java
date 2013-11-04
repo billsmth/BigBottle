@@ -167,6 +167,35 @@ public class ProductController {
         return jsonArray.toJSONString();
     }
     
+    @RequestMapping("/delPic")
+    @ResponseBody
+    public String delPic(HttpServletRequest request, Product product, String picId) {
+    	System.out.println("Product>>delPic>>start");
+    	product=productService.getProduct(product);
+    	String imgs=product.getImage_name();
+    	System.out.println("imgs:"+imgs);
+    	System.out.println("target imgs:"+picId);
+    	imgs=imgs.replace(picId+",", "");
+    	product.setImage_name(imgs);
+    	productService.updateProduct(product);
+    	
+    	String savePath = request.getSession().getServletContext().getRealPath("/Productlist/");
+		
+		String productFileDir = savePath + "/" + product.getProduct_id() + "/";
+		File file = new File(productFileDir);
+		if (file.exists()) {
+			productFileDir = savePath + "/" + product.getProduct_id() + "/"+picId;
+			file = new File(productFileDir);
+			if (file.exists()) {
+				file.delete();
+			}
+		}
+    	
+    	System.out.println("result:"+imgs);
+    	System.out.println("Product>>delPic>>end");
+    	return "{'success':true}";
+    }
+    
     @RequestMapping("/upfile")
     @ResponseBody
     public String upfile(HttpServletRequest request, Product product, String target_product_id) {
