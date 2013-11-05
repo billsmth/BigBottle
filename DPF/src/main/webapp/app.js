@@ -68,7 +68,8 @@ Ext.application({
         'kcgl.kcglView',
         'xsgl.xiaoshouView',
         'product.productView',
-        'product.productaddwin'
+        'product.productaddwin',
+        'product.productSaleTypeWin'
     ],
     autoCreateViewport: true,
     name: 'App'

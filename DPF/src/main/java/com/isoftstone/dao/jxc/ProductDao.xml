@@ -65,6 +65,9 @@
 		    <if test="type != null and type != ''">
 		        and type = #{type} 
 		    </if>
+		    <if test="new_flg != null and new_flg != ''">
+		        and new_flg = #{new_flg} 
+		    </if>
 	    </trim>
 	order by product_id desc
   </select>

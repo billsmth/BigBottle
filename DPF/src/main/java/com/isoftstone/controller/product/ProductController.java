@@ -141,6 +141,24 @@ public class ProductController {
         return list;
     }
     
+    @RequestMapping("/changeSaleType")
+    @ResponseBody
+    public String changeSaleType(HttpServletRequest request, HttpServletResponse response,String product_id1, String saleType){
+    	
+    	Product p=new Product();
+    	p.setProduct_id(Long.parseLong(product_id1));
+    	p=productService.getProduct(p);
+    	p.setNew_flg(saleType);
+    	User user = (User) request.getSession().getAttribute("user");
+        
+    	p.setUpdater_id(user.getPeopleId());
+    	p.setUpdater_name(user.getPeopleName());
+    	
+        
+        productService.updateProduct(p);
+        return "{'success':true}";
+    }
+    
     @RequestMapping("/getProductPic")
     @ResponseBody
     public ModelAndView getProductPic(HttpServletRequest request, HttpServletResponse response,String productId){

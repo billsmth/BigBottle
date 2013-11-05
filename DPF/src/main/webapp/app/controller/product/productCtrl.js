@@ -1,9 +1,9 @@
 Ext.define('App.controller.product.productCtrl', {
     extend: 'Ext.app.Controller',
     
-    stores: ['product.productStore'],
+    stores: ['product.productStore','com.SaleStore'],
     models: ['product.productModel'],
-    views: ['product.productView', 'product.productaddwin', 'product.productUpfileWin'],
+    views: ['product.productView', 'product.productaddwin', 'product.productUpfileWin','product.productSaleTypeWin'],
     
     init: function() {
         this.control({
@@ -71,6 +71,15 @@ Ext.define('App.controller.product.productCtrl', {
             'productView  button[action=product_view_pic_act]' : {
                 click: this.viewPic
             },
+            'productView  button[action=product_sale_type_act]' : {
+                click: this.showChangeSaleTypeWin
+            },
+            'productSaleTypeWin  button[action=product_change_sale_type_act]' : {
+                click: this.execChangeSaleType
+            },
+            'productSaleTypeWin  button[action=product_change_sale_type_cancel_act]' : {
+                click: this.cancelChangeSaleType
+            }
         });
     },
     
@@ -87,7 +96,7 @@ Ext.define('App.controller.product.productCtrl', {
     	var grid = obj.up('productView');
         var rowRecord=grid.getSelectionModel().selected.items[0];
         if(rowRecord==undefined) {
-            Ext.MessageBox.alert("提示", "请选择一行，再进行删除。");
+            Ext.MessageBox.alert("提示", "请选择一行，再进行操作。");
             return;
         }else{
         	var url = "product/getProductPic.action?productId="+rowRecord.data.product_id;
@@ -98,6 +107,50 @@ Ext.define('App.controller.product.productCtrl', {
         	}
         }
     	
+    },
+    
+    showChangeSaleTypeWin : function () {
+        var grid=Ext.ComponentQuery.query('productView')[0];
+        var rowRecord=grid.getSelectionModel().selected.items[0];
+        if(rowRecord==undefined) {
+            Ext.MessageBox.alert("提示", "请选择一行，再进行操作。");
+            return;
+        }
+    	if (this.changeSaleTypeWin==null || this.changeSaleTypeWin==undefined) {
+            this.changeSaleTypeWin=Ext.create('App.view.product.productSaleTypeWin');
+        }
+        
+    	Ext.getCmp('product_id1').setValue(rowRecord.data.product_id);
+    	Ext.getCmp('product_id_lab').setValue(rowRecord.data.product_id);
+    	Ext.getCmp('product_name1').setValue(rowRecord.data.product_name);
+    	Ext.getCmp('saleType').setValue(rowRecord.data.new_flg);
+    	
+        this.changeSaleTypeWin.show();
+    },
+    
+    execChangeSaleType : function () {
+        var grid=Ext.ComponentQuery.query('productView')[0];
+        var rowRecord=grid.getSelectionModel().selected.items[0];
+        if(rowRecord==undefined) {
+            Ext.MessageBox.alert("提示", "请选择一行，再进行操作。");
+            return;
+        }else{
+        	var values =this.changeSaleTypeWin.down('form').getForm().getValues();
+        	Ext.Ajax.request({
+	    	    url: 'product/changeSaleType.action',
+                params : values,
+	    	    success: this.commonCallback,
+	    	    scope: this
+	    	});
+        }
+    },
+    changeSaleTypeOK : function () {
+    	this.commonCallback;
+    	this.cancelChangeSaleType;
+    },
+    
+    cancelChangeSaleType : function () {
+    	this.changeSaleTypeWin.hide();
     },
     
     /**
@@ -274,11 +327,17 @@ Ext.define('App.controller.product.productCtrl', {
         temp=Ext.ComponentQuery.query('productView displayfield')[4];
         var newFlg=rowRecord.data.new_flg;
         if(newFlg==0){
-        	newFlg= "新产品";
+        	newFlg= "普通产品";
     	}else if(newFlg==1){
-    		newFlg= "普通产品";
+    		newFlg= "新产品";
     	}else if(newFlg==2){
-    		newFlg= "推荐";
+    		newFlg= "推荐品";
+    	}else if(newFlg==3){
+    		newFlg= "打折品";
+    	}else if(newFlg==4){
+    		newFlg= "畅销品";
+    	}else if(newFlg==5){
+    		newFlg= "定做商品";
     	}
         temp.setValue(newFlg);
         temp=Ext.ComponentQuery.query('productView displayfield')[5];

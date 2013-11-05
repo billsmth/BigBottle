@@ -43,6 +43,13 @@ Ext.define('App.view.product.productView', {
 		            },{
 		                xtype: 'tbseparator'
 		            },{
+		                id:'product_sale_type_id',
+		                text: '销售分类',
+		                iconCls:'icon-comment-zjwp',
+		                action:'product_sale_type_act'
+		            },{
+		                xtype: 'tbseparator'
+		            },{
 		                id:'product_del_id',
 		                text: '删除',
 		                iconCls:'icon-del',
@@ -128,16 +135,22 @@ Ext.define('App.view.product.productView', {
             }, {
                 xtype: 'gridcolumn',
                 dataIndex: 'new_flg',
-                text: '是否新品',
+                text: '销售分类',
                 flex:1,
                 renderer : function(val) {
                     var retVal = '';
                     if (val == 0) {
-                        retVal = '新产品';
-                    } else if (val == 1) {
                         retVal = '普通产品';
+                    } else if (val == 1) {
+                        retVal = '新产品';
                     } else if (val == 2) {
-                        retVal = '推荐';
+                        retVal = '推荐品';
+                    } else if (val == 3) {
+                        retVal = '打折品';
+                    } else if (val == 4) {
+                        retVal = '畅销品';
+                    } else if (val == 5) {
+                        retVal = '定做商品';
                     }
                     return retVal;
                 }

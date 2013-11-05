@@ -65,7 +65,17 @@ Ext.define('App.view.product.productquerywin', {
 	                fieldLabel: '种类',
 	                name:'type',
 	                labelAlign: 'right'
-	            }
+	            }, {
+                    fieldLabel: '销售分类',
+                    name: 'new_flg',
+                    xtype: 'combobox',
+                    store:'com.SaleStore',
+	                queryMode: 'local',
+	                displayField: 'value',
+	                valueField: 'key',
+	                triggerAction: 'all',
+                    allowBlank: true
+                }
             ]
             }],
             buttons:[{
