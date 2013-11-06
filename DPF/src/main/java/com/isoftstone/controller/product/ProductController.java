@@ -191,12 +191,32 @@ public class ProductController {
     	return new ModelAndView("productPic"); 
     }
 
-    @RequestMapping(value="/getNewProducts",produces = {"application/json;charset=UTF-8"})
+    /**
+     * 取得产品
+     * 
+     * @param type
+     * '0':'普通产品'
+     * '1':'新产品'
+     * '2':'推荐品'
+     * '3':'打折品'
+     * '4':'畅销品'
+     * '5':'定做商品'
+     * 
+     * @return
+     */
+    @RequestMapping(value="/getProducts",produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public String getNewProductsByJson() {
+    public String getProductsByType(String type) {
     	Product product=new Product();
-    	product.setStatus("1");
-    	product.setNew_flg("0");
+    	//shangjia status
+    	product.setStatus("3");
+    	// 0:'普通产品'
+    	// 1:'新产品'
+    	// 2:'推荐品'
+    	// 3:'打折品'
+    	// 4:'畅销品'
+    	// 5:'定做商品'
+    	product.setNew_flg(type);
         List<Product> list = productService.selectWithCondition(product);
         JSONArray jsonArray=new JSONArray();
         jsonArray.add(list);

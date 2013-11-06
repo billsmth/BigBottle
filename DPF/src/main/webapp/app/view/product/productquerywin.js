@@ -40,12 +40,6 @@ Ext.define('App.view.product.productquerywin', {
                     emptyText:"支持模糊查询,任意一致",
                     labelAlign: 'right'
                 }, {
-                    xtype: 'textfield',
-                    anchor: '100%',
-                    fieldLabel: '状态',
-                    name:'status',
-                    labelAlign: 'right'
-                }, {
 	                xtype: 'textfield',
                     anchor: '100%',
 	                fieldLabel: '创建者姓名',
@@ -62,13 +56,26 @@ Ext.define('App.view.product.productquerywin', {
 	            }, {
 	                xtype: 'textfield',
                     anchor: '100%',
-	                fieldLabel: '种类',
+	                fieldLabel: '产品种类',
 	                name:'type',
 	                labelAlign: 'right'
 	            }, {
+                    fieldLabel: '产品状态',
+                    name: 'status',
+                    id:'status',
+                    anchor: '100%',
+                    xtype: 'combobox',
+                    store:'com.ProductStatusStore',
+	                queryMode: 'local',
+	                displayField: 'value',
+	                valueField: 'key',
+	                triggerAction: 'all',
+                    allowBlank: true
+                }, {
                     fieldLabel: '销售分类',
                     name: 'new_flg',
                     xtype: 'combobox',
+                    anchor: '100%',
                     store:'com.SaleStore',
 	                queryMode: 'local',
 	                displayField: 'value',

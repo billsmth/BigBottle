@@ -129,13 +129,11 @@ Ext.define('App.view.product.productView', {
             }, {
                 xtype: 'gridcolumn',
                 dataIndex: 'creater_name',
-                text: '创建者姓名',
-                flex:1
+                text: '创建者'
             }, {
                 xtype: 'gridcolumn',
                 dataIndex: 'updater_name',
-                text: '更新者姓名',
-                flex:1
+                text: '更新者'
             }, {
                 xtype: 'gridcolumn',
                 dataIndex: 'type',
