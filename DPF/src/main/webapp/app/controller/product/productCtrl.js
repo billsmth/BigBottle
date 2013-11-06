@@ -1,9 +1,9 @@
 Ext.define('App.controller.product.productCtrl', {
     extend: 'Ext.app.Controller',
     
-    stores: ['product.productStore','com.SaleStore'],
+    stores: ['product.productStore','com.SaleStore','com.ProductStatusStore'],
     models: ['product.productModel'],
-    views: ['product.productView', 'product.productaddwin', 'product.productUpfileWin','product.productSaleTypeWin'],
+    views: ['product.productView', 'product.productaddwin', 'product.productUpfileWin','product.productSaleTypeWin','product.productSaleStatusWin'],
     
     init: function() {
         this.control({
@@ -79,7 +79,16 @@ Ext.define('App.controller.product.productCtrl', {
             },
             'productSaleTypeWin  button[action=product_change_sale_type_cancel_act]' : {
                 click: this.cancelChangeSaleType
-            }
+            },
+            'productView  button[action=product_sale_status_act]' : {
+                click: this.showChangeSaleStatusWin
+            },
+            'productSaleStatusWin  button[action=product_change_sale_status_act]' : {
+                click: this.execChangeSaleStatus
+            },
+            'productSaleStatusWin  button[action=product_change_sale_status_cancel_act]' : {
+                click: this.cancelChangeSaleStatus
+            },
         });
     },
     
@@ -97,6 +106,10 @@ Ext.define('App.controller.product.productCtrl', {
         var rowRecord=grid.getSelectionModel().selected.items[0];
         if(rowRecord==undefined) {
             Ext.MessageBox.alert("提示", "请选择一行，再进行操作。");
+            return;
+        }
+        if(rowRecord.data.image_name==""){
+        	Ext.MessageBox.alert("提示", "此产品尚无图片。");
             return;
         }else{
         	var url = "product/getProductPic.action?productId="+rowRecord.data.product_id;
@@ -151,6 +164,61 @@ Ext.define('App.controller.product.productCtrl', {
     
     cancelChangeSaleType : function () {
     	this.changeSaleTypeWin.hide();
+    },
+    
+    showChangeSaleStatusWin : function () {
+    	var grid=Ext.ComponentQuery.query('productView')[0];
+        var rowRecord=grid.getSelectionModel().selected.items[0];
+        if(rowRecord==undefined) {
+            Ext.MessageBox.alert("提示", "请选择一行，再进行操作。");
+            return;
+        }
+    	if (this.changeSaleStatusWin==null || this.changeSaleStatusWin==undefined) {
+            this.changeSaleStatusWin=Ext.create('App.view.product.productSaleStatusWin');
+        }
+        
+    	Ext.getCmp('product_id2').setValue(rowRecord.data.product_id);
+    	Ext.getCmp('product_id2_lab').setValue(rowRecord.data.product_id);
+    	Ext.getCmp('product_name2').setValue(rowRecord.data.product_name);
+    	Ext.getCmp('saleStatus').setValue(rowRecord.data.status);
+    	
+        this.changeSaleStatusWin.show();
+    },
+    
+    execChangeSaleStatus : function () {
+        var grid=Ext.ComponentQuery.query('productView')[0];
+        var rowRecord=grid.getSelectionModel().selected.items[0];
+        if(rowRecord==undefined) {
+            Ext.MessageBox.alert("提示", "请选择一行，再进行操作。");
+            return;
+        }
+        var values =this.changeSaleStatusWin.down('form').getForm().getValues();
+        if(rowRecord.data.image_name==""&&values.saleStatus=="3"){
+        	Ext.MessageBox.confirm('确认', '此产品没有图片,确定要执行上架操作吗？',
+        	        function (optional){
+        	            if (optional == 'yes') {
+        	            	Ext.Ajax.request({
+        	    	    	    url: 'product/changeSaleStatus.action',
+        	                    params : values,
+        	    	    	    success: this.commonCallback,
+        	    	    	    scope: this
+        	    	    	});
+        	            	
+        	            }
+        	        }, this);
+            return;
+        }else{
+        	Ext.Ajax.request({
+	    	    url: 'product/changeSaleStatus.action',
+                params : values,
+	    	    success: this.commonCallback,
+	    	    scope: this
+	    	});
+        }
+    },
+    
+    cancelChangeSaleStatus : function () {
+    	this.changeSaleStatusWin.hide();
     },
     
     /**
@@ -345,11 +413,13 @@ Ext.define('App.controller.product.productCtrl', {
         if(statusFlg==0){
         	statusFlg= "暂存";
     	}else if(statusFlg==1){
-    		statusFlg= "已提交";
-    	}else if(statusFlg==2){
-    		statusFlg= "已审批";
-    	}else if(statusFlg==3){
     		statusFlg= "修改中";
+    	}else if(statusFlg==2){
+    		statusFlg= "已提交";
+    	}else if(statusFlg==3){
+    		statusFlg= "上架";
+    	}else if(statusFlg==4){
+    		statusFlg= "下架";
     	}else if(statusFlg==9){
     		statusFlg= "已删除";
     	}
@@ -359,27 +429,18 @@ Ext.define('App.controller.product.productCtrl', {
         temp=Ext.ComponentQuery.query('productView displayfield')[7];
         temp.setValue(rowRecord.data.updater_name+" [ ID: "+rowRecord.data.updater_id+" ]");
         temp=Ext.ComponentQuery.query('productView displayfield')[8];
-        temp.setValue(rowRecord.data.desp);
+        var address=rowRecord.data.col1;
+        if(address!=null && address!=""){
+        	address= "<a href='"+address+"' target='_blank'>"+address+"</a>";
+    	}else{
+    		address="";
+    	}
+        temp.setValue(address);
         temp=Ext.ComponentQuery.query('productView displayfield')[9];
+        temp.setValue(rowRecord.data.desp);
+        temp=Ext.ComponentQuery.query('productView displayfield')[10];
         temp.setValue(rowRecord.data.note);
         
-//        //纪要：
-//        Ext.getCmp('productTab').setActiveTab(1);
-//        Ext.getCmp('meetingMainContent').setValue(rowRecord.data.mainContent);
-//        
-//        //总结
-//        Ext.getCmp('productTab').setActiveTab(2);
-//        this.currentId=Ext.ComponentQuery.query('productView')[0].getSelectionModel().getSelection()[0].get('idmeeting');
-//        Ext.Ajax.request({
-//            url: 'product/findSummary.action?idMeeting=' + this.currentId,
-//            success: function (response){
-//            	var text=response.responseText;
-//            	var jsonObj=Ext.JSON.decode(text);
-//            	Ext.getCmp('meetingSummary').setValue(jsonObj.summary);
-//            },
-//            scope: this
-//        });
-//        Ext.getCmp('productTab').setActiveTab(0);
     },
     
     /**

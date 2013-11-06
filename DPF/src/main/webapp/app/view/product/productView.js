@@ -50,10 +50,10 @@ Ext.define('App.view.product.productView', {
 		            },{
 		                xtype: 'tbseparator'
 		            },{
-		                id:'product_del_id',
-		                text: '删除',
-		                iconCls:'icon-del',
-		                action:'product_list_del_act'
+		                id:'product_sale_status_id',
+		                text: '销售状态',
+		                iconCls:'icon-flag-pink',
+		                action:'product_sale_status_act'
 		            },{
 		                xtype: 'tbseparator'
 		            },{
@@ -68,6 +68,13 @@ Ext.define('App.view.product.productView', {
 		                text: '查看/编辑图片',
 		                iconCls:'icon-view',
 		                action:'product_view_pic_act'
+		            },{
+		                xtype: 'tbseparator'
+		            },{
+		                id:'product_del_id',
+		                text: '删除',
+		                iconCls:'icon-del',
+		                action:'product_list_del_act'
 		            }
 	            ]
         	,
@@ -100,19 +107,21 @@ Ext.define('App.view.product.productView', {
             }, {
                 xtype: 'gridcolumn',
                 dataIndex: 'status',
-                text: '状态',
+                text: '产品状态',
                 flex:1,
                 renderer : function(val) {
                     var retVal = '';
                     if (val == 0) {
                         retVal = '暂存';
                     } else if (val == 1) {
-                        retVal = '已提交';
-                    } else if (val == 2) {
-                        retVal = '已审批';
-                    } else if (val == 3) {
                         retVal = '修改中';
+                    } else if (val == 2) {
+                        retVal = '已提交';
+                    } else if (val == 3) {
+                        retVal = '上架';
                     } else if (val == 4) {
+                        retVal = '下架';
+                    } else if (val == 9) {
                         retVal = '已删除';
                     }
                     return retVal;
@@ -157,8 +166,15 @@ Ext.define('App.view.product.productView', {
             }, {
                 xtype: 'gridcolumn',
                 dataIndex: 'col1',
-                text: '信息1',
-                flex:1
+                text: '货源链接地址',
+                flex:1,
+                renderer : function(val) {
+                	if(val!=null && val!=""){
+                		return "<a href='"+val+"' target='_blank'>"+val+"</a>";
+                	}else{
+                		return val;
+                	}
+                }
             }, {
                 xtype: 'gridcolumn',
                 dataIndex: 'col2',
@@ -300,6 +316,13 @@ Ext.define('App.view.product.productView', {
 		                                labelAlign: 'right',
 		                                margin: '0 0 0 30'
 		            	              }]
+			                },{
+                                xtype: 'displayfield',
+                                fieldLabel: '货源链接地址',
+                                labelWidth: 80,
+                                labelAlign: 'right',
+                                margin:'5 20 5 0',
+                                anchor:'100%'
 			                },{
                                 xtype: 'displayfield',
                                 fieldLabel: '产品描述',

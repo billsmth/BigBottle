@@ -76,14 +76,16 @@ Ext.define('App.view.product.productaddwin', {
  		                labelAlign: 'right',
  		                labelWidth: 90
  		            },{
- 		                xtype: 'textfield',
- 		                flex: 1,
- 		                fieldLabel: '新品标志',
- 		                name:'new_flg',
- 		                labelAlign: 'right',
- 		                labelWidth: 90,
- 		                hidden:true
- 		            },{
+	                    fieldLabel: '销售分类',
+	                    name: 'new_flg',
+	                    xtype: 'combobox',
+	                    store:'com.SaleStore',
+		                queryMode: 'local',
+		                displayField: 'value',
+		                valueField: 'key',
+		                triggerAction: 'all',
+                        allowBlank: true
+	                },{
  		                xtype: 'textfield',
  		                flex: 1,
  		                fieldLabel: '状态',
@@ -92,14 +94,22 @@ Ext.define('App.view.product.productaddwin', {
  		                labelWidth: 90,
  		                hidden:true
  		            },{
- 		                xtype: 'textfield',
- 		                flex: 1,
- 		                fieldLabel: '信息1',
- 		                name:'col1',
- 		                labelAlign: 'right',
- 		                labelWidth: 90,
- 		                hidden:true
- 		            },{
+	                	xtype:'container',
+	                	margin:'10 5 5 0',
+                    	layout:{
+                    		align:'stretch',
+                    		type:'hbox'
+	                    	},
+	                    	 items:[{
+	      		                xtype: 'textfield',
+	     		                fieldLabel: '链接地址',
+	     		                anchor: '100%',
+	     		                name:'col1',
+	     		                labelAlign: 'right',
+	     		                labelWidth: 90,
+	     		                width:450
+	     		            }]
+	                },{
  		                xtype: 'textfield',
  		                flex: 1,
  		                fieldLabel: '信息2',
@@ -152,6 +162,22 @@ Ext.define('App.view.product.productaddwin', {
  		                flex: 1,
  		                fieldLabel: '信息8',
  		                name:'col8',
+ 		                labelAlign: 'right',
+ 		                labelWidth: 90,
+ 		                hidden:true
+ 		            },{
+ 		                xtype: 'textfield',
+ 		                flex: 1,
+ 		                fieldLabel: '创建者编号',
+ 		                name:'creater_id',
+ 		                labelAlign: 'right',
+ 		                labelWidth: 90,
+ 		                hidden:true
+ 		            },{
+ 		                xtype: 'textfield',
+ 		                flex: 1,
+ 		                fieldLabel: '创建者姓名',
+ 		                name:'creater_name',
  		                labelAlign: 'right',
  		                labelWidth: 90,
  		                hidden:true

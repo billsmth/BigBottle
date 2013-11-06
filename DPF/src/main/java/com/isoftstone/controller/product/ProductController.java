@@ -73,6 +73,8 @@ public class ProductController {
         product.setType(request.getParameter("type"));
         product.setNote(request.getParameter("note"));
         product.setKucun_ids(request.getParameter("kucun_ids"));
+        product.setNew_flg(request.getParameter("new_flg"));
+        product.setCol1(request.getParameter("col1"));
         
         User user = (User) request.getSession().getAttribute("user");
         
@@ -107,6 +109,7 @@ public class ProductController {
         	product.setProduct_id(Long.parseLong(request.getParameter("product_id")));
         	product.setImage_name(request.getParameter("image_name"));
         	product.setCreater_id(request.getParameter("creater_id"));
+        	product.setCreater_name(request.getParameter("creater_name"));
         	product.setStatus(request.getParameter("status"));
         	product.setNew_flg(request.getParameter("new_flg"));
         	product.setCol1(request.getParameter("col1"));
@@ -149,6 +152,24 @@ public class ProductController {
     	p.setProduct_id(Long.parseLong(product_id1));
     	p=productService.getProduct(p);
     	p.setNew_flg(saleType);
+    	User user = (User) request.getSession().getAttribute("user");
+        
+    	p.setUpdater_id(user.getPeopleId());
+    	p.setUpdater_name(user.getPeopleName());
+    	
+        
+        productService.updateProduct(p);
+        return "{'success':true}";
+    }
+    
+    @RequestMapping("/changeSaleStatus")
+    @ResponseBody
+    public String changeSaleStatus(HttpServletRequest request, HttpServletResponse response,String product_id2, String saleStatus){
+    	
+    	Product p=new Product();
+    	p.setProduct_id(Long.parseLong(product_id2));
+    	p=productService.getProduct(p);
+    	p.setStatus(saleStatus);
     	User user = (User) request.getSession().getAttribute("user");
         
     	p.setUpdater_id(user.getPeopleId());
