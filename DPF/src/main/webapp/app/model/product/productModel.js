@@ -31,11 +31,22 @@ Ext.define('App.model.product.productModel', {
 	        },
 	        {
 	            name: 'status',
-	            type: 'string',
-	            convert: statusConv
+	            type: 'string'
 	        },
 	        {
 	            name: 'creater_id',
+	            type: 'string'
+	        },
+	        {
+	            name: 'creater_name',
+	            type: 'string'
+	        },
+	        {
+	            name: 'updater_id',
+	            type: 'string'
+	        },
+	        {
+	            name: 'updater_name',
 	            type: 'string'
 	        },
 	        {
@@ -44,8 +55,7 @@ Ext.define('App.model.product.productModel', {
 	        },
 	        {
 	            name: 'new_flg',
-	            type: 'string',
-	            convert: newFlgConv
+	            type: 'string'
 	        },
 	        {
 	            name: 'note',
@@ -104,7 +114,11 @@ function statusConv(v, record){
 	if(v==0){
 		return "暂存";
 	}else if(v==1){
-		return "提交";
+		return "已提交";
+	}else if(v==2){
+		return "已审批";
+	}else if(v==3){
+		return "修改中";
 	}else if(v==9){
 		return "已删除";
 	}

@@ -17,7 +17,7 @@ Ext.define('App.store.product.productStore', {
             create:'product/add.action',
             read:'product/json/list.action',
             update:'product/update.action',
-            destroy:'product/del.action'
+            destroy:'product/delProduct.action'
         },
         actionMethods: {  
             read: 'POST'  

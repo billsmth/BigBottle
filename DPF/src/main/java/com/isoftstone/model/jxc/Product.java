@@ -1,5 +1,7 @@
 package com.isoftstone.model.jxc;
 
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
+
 public class Product {
 
     private Long product_id;
@@ -10,6 +12,9 @@ public class Product {
     private String desp;
     private String status;
     private String creater_id;
+    private String creater_name;
+    private String updater_id;
+    private String updater_name;
     private String type;
     private String new_flg;
     private String note;
@@ -22,6 +27,9 @@ public class Product {
     private String col7;
     private String col8;
     private String kucun_ids;
+    private CommonsMultipartFile filetest1;
+    private CommonsMultipartFile filetest2;
+    private CommonsMultipartFile filetest3;
     
 	public Long getProduct_id() {
 		return product_id;
@@ -142,5 +150,41 @@ public class Product {
 	}
 	public void setKucun_ids(String kucun_ids) {
 		this.kucun_ids = kucun_ids;
+	}
+	public String getCreater_name() {
+		return creater_name;
+	}
+	public void setCreater_name(String creater_name) {
+		this.creater_name = creater_name;
+	}
+	public String getUpdater_id() {
+		return updater_id;
+	}
+	public void setUpdater_id(String updater_id) {
+		this.updater_id = updater_id;
+	}
+	public String getUpdater_name() {
+		return updater_name;
+	}
+	public void setUpdater_name(String updater_name) {
+		this.updater_name = updater_name;
+	}
+	public CommonsMultipartFile getFiletest1() {
+		return filetest1;
+	}
+	public void setFiletest1(CommonsMultipartFile filetest1) {
+		this.filetest1 = filetest1;
+	}
+	public CommonsMultipartFile getFiletest2() {
+		return filetest2;
+	}
+	public void setFiletest2(CommonsMultipartFile filetest2) {
+		this.filetest2 = filetest2;
+	}
+	public CommonsMultipartFile getFiletest3() {
+		return filetest3;
+	}
+	public void setFiletest3(CommonsMultipartFile filetest3) {
+		this.filetest3 = filetest3;
 	}
 }

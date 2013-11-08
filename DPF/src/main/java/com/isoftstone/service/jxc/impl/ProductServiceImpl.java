@@ -50,4 +50,9 @@ public class ProductServiceImpl implements ProductService {
     public void deleteProductsByID(List<String> product_id){
     	this.productDao.deleteProductsByID(product_id);
     }
+    
+    @Override
+    public List<Product> selectWithCondition(Product product){
+    	return productDao.selectWithCondition(product);
+    }
 }
