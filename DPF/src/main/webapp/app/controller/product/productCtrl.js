@@ -425,10 +425,12 @@ Ext.define('App.controller.product.productCtrl', {
     	}
         temp.setValue(statusFlg);
         temp=Ext.ComponentQuery.query('productView displayfield')[6];
-        temp.setValue(rowRecord.data.creater_name+" [ ID: "+rowRecord.data.creater_id+" ]");
+        temp.setValue(rowRecord.data.col2+ " 元");
         temp=Ext.ComponentQuery.query('productView displayfield')[7];
-        temp.setValue(rowRecord.data.updater_name+" [ ID: "+rowRecord.data.updater_id+" ]");
+        temp.setValue(rowRecord.data.creater_name+" [ ID: "+rowRecord.data.creater_id+" ]");
         temp=Ext.ComponentQuery.query('productView displayfield')[8];
+        temp.setValue(rowRecord.data.updater_name+" [ ID: "+rowRecord.data.updater_id+" ]");
+        temp=Ext.ComponentQuery.query('productView displayfield')[9];
         var address=rowRecord.data.col1;
         if(address!=null && address!=""){
         	address= "<a href='"+address+"' target='_blank'>"+address+"</a>";
@@ -436,9 +438,9 @@ Ext.define('App.controller.product.productCtrl', {
     		address="";
     	}
         temp.setValue(address);
-        temp=Ext.ComponentQuery.query('productView displayfield')[9];
-        temp.setValue(rowRecord.data.desp);
         temp=Ext.ComponentQuery.query('productView displayfield')[10];
+        temp.setValue(rowRecord.data.desp);
+        temp=Ext.ComponentQuery.query('productView displayfield')[11];
         temp.setValue(rowRecord.data.note);
         
     },

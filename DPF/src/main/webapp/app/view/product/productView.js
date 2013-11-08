@@ -176,7 +176,7 @@ Ext.define('App.view.product.productView', {
             }, {
                 xtype: 'gridcolumn',
                 dataIndex: 'col2',
-                text: '信息2',
+                text: '售价（元）',
                 flex:1
             }, {
                 xtype: 'gridcolumn',
@@ -294,6 +294,20 @@ Ext.define('App.view.product.productView', {
 		                                labelAlign: 'right',
 		                                margin: '0 0 0 30'
 		            	              }]
+			                },{
+			                	xtype:'container',
+			                	margin:'5 20 5 0',
+		                    	layout:{
+		                    		align:'stretch',
+		                    		type:'hbox'
+		                    	},
+		                    	items:[{
+		                                xtype: 'displayfield',
+		                                fieldLabel: '售价',
+		                                labelWidth: 80,
+		                                labelAlign: 'right',
+		                                width:400
+		            	               }]
 			                }, {
 			                	xtype:'container',
 			                	margin:'5 20 5 0',

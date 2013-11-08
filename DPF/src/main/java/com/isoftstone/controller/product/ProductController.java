@@ -75,6 +75,7 @@ public class ProductController {
         product.setKucun_ids(request.getParameter("kucun_ids"));
         product.setNew_flg(request.getParameter("new_flg"));
         product.setCol1(request.getParameter("col1"));
+        product.setCol2(request.getParameter("col2"));
         
         User user = (User) request.getSession().getAttribute("user");
         
@@ -190,6 +191,17 @@ public class ProductController {
     	request.setAttribute("PRODUCT_PICS",p);
     	return new ModelAndView("productPic"); 
     }
+    
+    @RequestMapping("/getProductByID")
+    @ResponseBody
+    public ModelAndView getProductByID(HttpServletRequest request, HttpServletResponse response,String productId){
+    	Product p=new Product();
+    	p.setProduct_id(Long.parseLong(productId));
+    	p=productService.getProduct(p);
+    	
+    	request.setAttribute("PRODUCTDETAIL",p);
+    	return new ModelAndView("productDetail"); 
+    }
 
     /**
      * 取得产品
@@ -206,7 +218,7 @@ public class ProductController {
      */
     @RequestMapping(value="/getProducts",produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public String getProductsByType(String type) {
+    public String getProducts(String type) {
     	Product product=new Product();
     	//shangjia status
     	product.setStatus("3");
@@ -224,6 +236,25 @@ public class ProductController {
 //		json.accumulate("opinionReplay", opinionReplay);
 //		return json.toString();
         return jsonArray.toJSONString();
+    }
+    
+    @RequestMapping(value="/getProductsByType")
+    @ResponseBody
+    public ModelAndView getProductsByType(HttpServletRequest request, HttpServletResponse response, String type) {
+    	Product product=new Product();
+    	//shangjia status
+    	product.setStatus("3");
+    	// 0:'普通产品'
+    	// 1:'新产品'
+    	// 2:'推荐品'
+    	// 3:'打折品'
+    	// 4:'畅销品'
+    	// 5:'定做商品'
+    	product.setNew_flg(type);
+        List<Product> list = productService.selectWithCondition(product);
+        
+        request.setAttribute("PRODUCTS",list);
+    	return new ModelAndView("products"); 
     }
     
     @RequestMapping("/delPic")
