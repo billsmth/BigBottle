@@ -13,6 +13,29 @@
 	<script src="../js/jquery.mobile-1.3.2.min.js"></script>
 	<script src="../js/cordova.js"></script>
 	<script src="./js/index.js"></script>
+		<script type="text/javascript">
+	$(document).bind('pagebeforechange',function(e,data){  
+	    if (typeof data.toPage != "string"){  
+	        return;  
+	    }  
+	    var paramUrl = $.mobile.path.parseUrl(data.toPage);  
+	    var params = getUrlParam(paramUrl.search);  
+	    alert(params.id);
+	});
+	function getUrlParam(string) {  
+	    var obj = {};  
+	    if (string.indexOf("?") != -1) {  
+	        var string = string.substr(string.indexOf("?") + 1);  
+	        var strs = string.split("&");  
+	        for(var i = 0; i < strs.length; i ++) {  
+	            var tempArr = strs[i].split("=");  
+	            obj[tempArr[0]] = unescape(tempArr[1]);  
+	        }  
+	    }  
+	    return obj;  
+	}  
+	
+	</script>
 </head>
 <body>
 
@@ -22,7 +45,7 @@
 	</div>
 	<div data-role="content" id="main2Content" >
         <ul data-role="listview" data-inset="true">
-        	<li><a href="productDemo2.html">
+        	<li><a href="productDemo2.html?id=111">
             	<img src="../images/apple.png">
             	<h2>iOS 6.1</h2>
                 <p>Apple released iOS 6.1</p>
