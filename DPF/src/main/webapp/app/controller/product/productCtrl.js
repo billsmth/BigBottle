@@ -192,20 +192,26 @@ Ext.define('App.controller.product.productCtrl', {
             Ext.MessageBox.alert("提示", "请选择一行，再进行操作。");
             return;
         }
+        
         var values =this.changeSaleStatusWin.down('form').getForm().getValues();
+        if(rowRecord.data.col2==""&&values.saleStatus=="3"){
+        	Ext.MessageBox.alert('确认', '此产品还没有设置售价,不能上架销售！');
+            return;
+        }
+        
         if(rowRecord.data.image_name==""&&values.saleStatus=="3"){
         	Ext.MessageBox.confirm('确认', '此产品没有图片,确定要执行上架操作吗？',
-        	        function (optional){
-        	            if (optional == 'yes') {
-        	            	Ext.Ajax.request({
-        	    	    	    url: 'product/changeSaleStatus.action',
-        	                    params : values,
-        	    	    	    success: this.commonCallback,
-        	    	    	    scope: this
-        	    	    	});
-        	            	
-        	            }
-        	        }, this);
+    	        function (optional){
+    	            if (optional == 'yes') {
+    	            	Ext.Ajax.request({
+    	    	    	    url: 'product/changeSaleStatus.action',
+    	                    params : values,
+    	    	    	    success: this.commonCallback,
+    	    	    	    scope: this
+    	    	    	});
+    	            	
+    	            }
+    	        }, this);
             return;
         }else{
         	Ext.Ajax.request({
@@ -417,7 +423,7 @@ Ext.define('App.controller.product.productCtrl', {
     	}else if(statusFlg==2){
     		statusFlg= "已提交";
     	}else if(statusFlg==3){
-    		statusFlg= "上架";
+    		statusFlg= "<span style='background:#009900;color:#6633FF'>上架</span>";
     	}else if(statusFlg==4){
     		statusFlg= "下架";
     	}else if(statusFlg==9){
@@ -425,7 +431,7 @@ Ext.define('App.controller.product.productCtrl', {
     	}
         temp.setValue(statusFlg);
         temp=Ext.ComponentQuery.query('productView displayfield')[6];
-        temp.setValue(rowRecord.data.col2+ " 元");
+        temp.setValue(rowRecord.data.col2==""?"<span style='background:red'>0 元</span>":"<span style='color:green'>"+rowRecord.data.col2+" 元</span>");
         temp=Ext.ComponentQuery.query('productView displayfield')[7];
         temp.setValue(rowRecord.data.creater_name+" [ ID: "+rowRecord.data.creater_id+" ]");
         temp=Ext.ComponentQuery.query('productView displayfield')[8];

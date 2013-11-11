@@ -118,7 +118,7 @@ Ext.define('App.view.product.productView', {
                     } else if (val == 2) {
                         retVal = '已提交';
                     } else if (val == 3) {
-                        retVal = '上架';
+                        retVal = '<span style=\'background:#009900\'>上架</span>';
                     } else if (val == 4) {
                         retVal = '下架';
                     } else if (val == 9) {
@@ -177,7 +177,17 @@ Ext.define('App.view.product.productView', {
                 xtype: 'gridcolumn',
                 dataIndex: 'col2',
                 text: '售价（元）',
-                flex:1
+                flex:1,
+                renderer : function(val, meta, record) {
+                    var retVal = '';
+                    if (val == 0) {
+                    	meta.tdCls ="background-color: blue;";
+                        retVal = '<span style=\'background:red\'>0 元</span>';
+                    } else {
+                        retVal = '<span style=\'color:green\'>'+val+' 元</span>';
+                    }
+                    return retVal;
+                }
             }, {
                 xtype: 'gridcolumn',
                 dataIndex: 'col3',

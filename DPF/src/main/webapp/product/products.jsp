@@ -21,7 +21,6 @@
 	
 	<script src="../js/jquery-1.9.1.min.js"></script>
 	<script src="../js/jquery.mobile-1.3.2.min.js"></script>
-	<script src="../js/cordova.js"></script>
 	<script src="./js/index.js"></script>
 </head>
 <body>
@@ -39,7 +38,7 @@
 				String imgNames = p.getImage_name();
 				String[] pics = imgNames.split(",");
 		%>	
-			<li><a href="<%=hostPath+"/product/getProductByID.action?productId="+p.getProduct_id()%>">
+			<li><a href="./getProductByID.action?productId=<%=p.getProduct_id()%>">
 	            	<img src="<%=picPath+p.getProduct_id() + "/"+pics[0]%>">
 	            	<h2><%=p.getProduct_name()%></h2>
 	                <p><%=p.getCol2()+" 元"%></p>
@@ -56,8 +55,7 @@
 	<div data-role="footer" data-position="fixed">
 		<div data-role="navbar">
 			<ul>
-				<li><a href="main.html" data-icon="grid"  rel="external">主菜单</a></li>
-				<li><a href="#" data-icon="info"  rel="external">资讯</a></li>
+				<li><a href="./main.jsp" data-icon="grid"  rel="external">主菜单</a></li>
 				<li><a href="setting.html" data-icon="gear"  rel="external" >设置</a></li>
 			</ul>
 		</div>		

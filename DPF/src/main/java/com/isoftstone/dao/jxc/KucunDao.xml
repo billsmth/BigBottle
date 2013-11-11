@@ -17,6 +17,21 @@
     <select id="getKucunList" resultMap="kucunResult">
         select kucun_id, kuanhao_id,yanse, chima,shuliang,jinjia,chengbenjia,shoujia,beizhu from kucun_table
     </select>
+    <select id="getKucunFromProduct" resultMap="kucunResult" parameterType="java.util.Map">
+        select kucun_id, kuanhao_id,yanse, chima,shuliang,jinjia,chengbenjia,shoujia,beizhu from kucun_table 
+         	<trim prefix="where" prefixOverrides="and|or">
+	         	<if test="chima != '' and chima != null">
+			       and chima=#{chima} 
+			    </if>
+			    <if test="yanse != '' and yanse != null">
+			       and yanse=#{yanse} 
+			    </if>
+			    and kucun_id in 
+			    <foreach item="kucun_id" index="index" collection="kucunIds" open="(" separator="," close=")">
+		            #{kucun_id} 
+		        </foreach>
+         	</trim>
+    </select>
     <select id="getMaxID" resultMap="kucunResult">
     	select max(kucun_id) kucun_id from kucun_table
     </select>

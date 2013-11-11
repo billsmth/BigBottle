@@ -1,6 +1,7 @@
 package com.isoftstone.dao.jxc;
 
 import java.util.List;
+import java.util.Map;
 
 import com.isoftstone.model.jxc.Kucun;
 
@@ -18,4 +19,6 @@ public interface KucunDao {
 	public void updateKucun(Kucun kucun);
 
 	public void deleteKucunByKuanhao_id(List<String> kuanhao_id);
+	
+	public List<Kucun> getKucunFromProduct(Map<String,Object> map);
 }

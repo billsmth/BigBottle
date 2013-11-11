@@ -5,8 +5,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,13 +22,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.alibaba.fastjson.JSONArray;
 import com.isoftstone.common.Tools;
 import com.isoftstone.model.acl.User;
+import com.isoftstone.model.jxc.Kucun;
 import com.isoftstone.model.jxc.Product;
-import com.isoftstone.model.meeting.Meeting;
-import com.isoftstone.model.opinion.IssueOpinion;
+import com.isoftstone.model.jxc.Xiaoshou;
+import com.isoftstone.service.jxc.KucunService;
 import com.isoftstone.service.jxc.ProductService;
+import com.isoftstone.service.jxc.XiaoshouService;
 
 @Controller
 @RequestMapping("/product")
@@ -33,6 +37,12 @@ public class ProductController {
 
     @Autowired
     private ProductService productService;
+    
+    @Autowired
+    private XiaoshouService xiaoshouService;
+    
+    @Autowired
+    private KucunService kucunService;
     
     @RequestMapping("/productmgt")
     public ModelAndView listProduct() {
@@ -192,6 +202,104 @@ public class ProductController {
     	return new ModelAndView("productPic"); 
     }
     
+    @RequestMapping("/getPostTo")
+    @ResponseBody
+    public ModelAndView getPostTo(HttpServletRequest request, HttpServletResponse response,String xiaoshou_id,String postTo){
+    	
+    	request.setAttribute("ORDER_ID",xiaoshou_id);
+    	
+    	if(postTo.equals("0")){
+    		
+    	}else if(postTo.equals("1")){
+    		return new ModelAndView("postToMe");
+    	}
+    	
+    	return new ModelAndView("postTo"); 
+    }
+    
+    @RequestMapping("/createOrder")
+    @ResponseBody
+    public ModelAndView createOrder(HttpServletRequest request, HttpServletResponse response,String productId){
+    	Product p=new Product();
+    	p.setProduct_id(Long.parseLong(productId));
+    	p=productService.getProduct(p);
+    	request.setAttribute("PRODUCT",p);
+    	String kucunIds=p.getKucun_ids();
+    	String [] kucun_Ids=kucunIds.split(",");
+    	List<String> list=Arrays.asList(kucun_Ids);
+    	Map<String,Object> map=new HashMap<String,Object>();
+    	map.put("kucunIds", list);
+    	List<Kucun> kucunList=kucunService.getKucunFromProduct(map);
+    	List<String> chimaList=new ArrayList<String>();
+    	for(Kucun k:kucunList){
+    		chimaList.add(k.getYanse()+":"+k.getChima());
+    	}
+    	
+    	request.setAttribute("PRODUCT_CHIMA",chimaList);
+    	
+    	return new ModelAndView("createOrder"); 
+    }
+    
+    @RequestMapping("/createOrderBase")
+    @ResponseBody
+    public ModelAndView createOrderBase(HttpServletRequest request, HttpServletResponse response){
+    	Product p=new Product();
+    	p.setProduct_id(Long.parseLong(request.getParameter("product_id")));
+    	p=productService.getProduct(p);
+    	String kucunIds=p.getKucun_ids();
+    	kucunIds=kucunIds.substring(0,kucunIds.length()-1);
+    	String[] kucun_ids=kucunIds.split(",");
+    	List list=Arrays.asList(kucun_ids);
+    	
+    	Map<String,Object> map=new HashMap<String,Object>();
+    	map.put("kucunIds", list);
+    	String chimayanse=request.getParameter("radio-choice-cm");
+    	String[] chima_yanse=chimayanse.split(":");
+    	map.put("yanse", chima_yanse[0]);
+    	map.put("chima", chima_yanse[1]);
+    	
+    	List<Kucun> kucunList=kucunService.getKucunFromProduct(map);
+    	if(kucunList.size()<1){
+    		return null;
+    	}
+    	Kucun kucun=kucunList.get(0);
+    	Xiaoshou xiaoshou = xiaoshouService.getMaxID();
+    	if(xiaoshou==null){
+    		xiaoshou=new Xiaoshou();
+    		xiaoshou.setXiaoshou_id(0l);
+    	}
+    	Long xiaoshouID=xiaoshou.getXiaoshou_id();
+		xiaoshouID=xiaoshouID/10000;
+		Long dateStr = Tools.getDataStr();
+		
+        if(dateStr>xiaoshouID){
+        	xiaoshou.setXiaoshou_id(Long.parseLong(""+dateStr+"0001"));
+        }else{
+        	xiaoshou.setXiaoshou_id(xiaoshou.getXiaoshou_id()+1);
+        }
+        xiaoshou.setZhuangtai("0");
+        xiaoshou.setDelflg("0");
+        xiaoshou.setKucun_id(kucun.getKucun_id());
+        xiaoshou.setKuanhao_id(kucun.getKuanhao_id());
+        xiaoshou.setYanse(chima_yanse[0]);
+        xiaoshou.setChima(chima_yanse[1]);
+        xiaoshou.setShuliang(Integer.valueOf(request.getParameter("shuliang")));
+        xiaoshou.setShoujia(Float.valueOf(request.getParameter("shoujia")));
+        xiaoshou.setShijishoukuan(Float.valueOf(request.getParameter("shoujia")));
+        xiaoshou.setMaijia_id("100");
+        xiaoshou.setMaijiaxingming("匿名");
+        xiaoshou.setBeizhu(request.getParameter("beizhu"));
+        
+        
+        xiaoshouService.saveXiaoshou(xiaoshou);
+        
+        return new ModelAndView("createOrder");
+        //return "{'success':"+xiaoshou.getXiaoshou_id()+"-"+request.getParameter("radio-choice-post")+"}";
+        
+    }
+    
+    
+    
     @RequestMapping("/getProductByID")
     @ResponseBody
     public ModelAndView getProductByID(HttpServletRequest request, HttpServletResponse response,String productId){
@@ -230,12 +338,14 @@ public class ProductController {
     	// 5:'定做商品'
     	product.setNew_flg(type);
         List<Product> list = productService.selectWithCondition(product);
-        JSONArray jsonArray=new JSONArray();
-        jsonArray.add(list);
+//        JSONArray jsonArray=new JSONArray();
+//        jsonArray.add(list);
+        JSONObject json=new JSONObject();
+        json.accumulate("PRODUCTLIST", list);
 //        JSONObject json=new JSONObject();
 //		json.accumulate("opinionReplay", opinionReplay);
 //		return json.toString();
-        return jsonArray.toJSONString();
+        return json.toString();
     }
     
     @RequestMapping(value="/getProductsByType")

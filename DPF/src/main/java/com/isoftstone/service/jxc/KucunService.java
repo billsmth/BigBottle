@@ -1,6 +1,7 @@
 package com.isoftstone.service.jxc;
 
 import java.util.List;
+import java.util.Map;
 
 import com.isoftstone.model.jxc.Kucun;
 
@@ -16,4 +17,6 @@ public interface KucunService {
     public void updateKucun(Kucun kucun);
 
     public void deleteKucunByKuanhao_id(List<String> Kuanhao_id);
+    
+    public List<Kucun> getKucunFromProduct(Map<String,Object> map);
 }

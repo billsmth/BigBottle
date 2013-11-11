@@ -1,0 +1,126 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace = "com.isoftstone.dao.jxc.PostAddressDao">
+
+    <resultMap type = "com.isoftstone.model.jxc.PostAddress" id = "PostAddressResult">
+        <id property = "post_id" column = "post_id"/>
+		<result property = "order_id" column = "order_id"/>
+		<result property = "post_from" column = "post_from"/>
+		<result property = "people_id" column = "people_id"/>
+		<result property = "departure" column = "departure"/>
+		<result property = "province_from" column = "province_from"/>
+		<result property = "city_from" column = "city_from"/>
+		<result property = "district_from" column = "district_from"/>
+		<result property = "company_name_from" column = "company_name_from"/>
+		<result property = "contact_number_from" column = "contact_number_from"/>
+		<result property = "post_to" column = "post_to"/>
+		<result property = "destination" column = "destination"/>
+		<result property = "province" column = "province"/>
+		<result property = "city" column = "city"/>
+		<result property = "district" column = "district"/>
+		<result property = "company_name" column = "company_name"/>
+		<result property = "contact_number" column = "contact_number"/>
+		<result property = "type" column = "type"/>
+		<result property = "col1" column = "col1"/>
+		<result property = "col2" column = "col2"/>
+    </resultMap>
+    
+    <select id = "getPostAddressList" resultMap = "PostAddressResult">
+        select post_id,order_id,post_from,people_id,departure,province_from,city_from,district_from,company_name_from, 
+			contact_number_from,post_to,destination,province,city,district,company_name,contact_number,type,col1,col2 
+        	from post_address
+    </select>
+    <select id = "getMaxID" resultMap = "PostAddressResult">
+    	select max(post_id) post_id from post_address
+    </select>
+    <select id = "getPostAddress" resultMap = "PostAddressResult" parameterType = "com.isoftstone.model.jxc.PostAddress">
+        select post_id,order_id,post_from,people_id,departure,province_from,city_from,district_from,company_name_from, 
+			contact_number_from,post_to,destination,province,city,district,company_name,contact_number,type,col1,col2 
+        	from post_address 
+        	<trim prefix="where" prefixOverrides="and|or">
+		    	<if test="post_id != '' and post_id != null">
+			        and post_id = #{post_id} 
+	        	</if>
+	        	<if test="order_id != '' and order_id != null">
+			        and order_id = #{order_id} 
+	        	</if>
+		    </trim>
+    </select>
+    
+    <insert id = "savePostAddress" parameterType = "com.isoftstone.model.jxc.PostAddress">
+        insert into post_address (
+        		post_id, 
+				order_id, 
+				post_from, 
+				people_id, 
+				departure, 
+				province_from, 
+				city_from, 
+				district_from, 
+				company_name_from, 
+				contact_number_from, 
+				post_to, 
+				destination, 
+				province, 
+				city, 
+				district, 
+				company_name, 
+				contact_number, 
+				type, 
+				col1, 
+				col2
+        	) values (
+	        	#{post_id}, 
+				#{order_id}, 
+				#{post_from}, 
+				#{people_id}, 
+				#{departure}, 
+				#{province_from}, 
+				#{city_from}, 
+				#{district_from}, 
+				#{company_name_from}, 
+				#{contact_number_from}, 
+				#{post_to}, 
+				#{destination}, 
+				#{province}, 
+				#{city}, 
+				#{district}, 
+				#{company_name}, 
+				#{contact_number}, 
+				#{type}, 
+				#{col1}, 
+				#{col2}
+	        )
+    </insert>
+    
+    <update id = "updatePostAddress" parameterType = "com.isoftstone.model.jxc.PostAddress">
+        update post_address set 
+			post_from = #{post_from}, 
+			people_id = #{people_id}, 
+			departure = #{departure}, 
+			province_from = #{province_from}, 
+			city_from = #{city_from}, 
+			district_from = #{district_from}, 
+			company_name_from = #{company_name_from}, 
+			contact_number_from = #{contact_number_from}, 
+			post_to = #{post_to}, 
+			destination = #{destination}, 
+			province = #{province}, 
+			city = #{city}, 
+			district = #{district}, 
+			company_name = #{company_name}, 
+			contact_number = #{contact_number}, 
+			type = #{type}, 
+			col1 = #{col1}, 
+			col2 = #{col2}
+        where post_id = #{post_id}
+    </update>
+    
+    <delete id="deletePostAddressByID" parameterType="list">
+        update t_product set status ='9'  
+        where product_id in 
+        <foreach item="product_id"  collection="list" open="(" separator="," close=")">
+            #{product_id}
+        </foreach>
+    </delete>
+</mapper>

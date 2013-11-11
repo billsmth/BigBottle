@@ -1,6 +1,7 @@
 package com.isoftstone.service.jxc.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -60,5 +61,9 @@ public class KucunServiceImpl implements KucunService {
 
     public void setKucunDao(KucunDao kucunDao) {
         this.kucunDao = kucunDao;
+    }
+    
+    public List<Kucun> getKucunFromProduct(Map<String,Object> map){
+    	return kucunDao.getKucunFromProduct(map);
     }
 }
