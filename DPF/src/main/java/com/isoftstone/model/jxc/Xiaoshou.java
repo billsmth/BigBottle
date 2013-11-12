@@ -15,6 +15,10 @@ public class Xiaoshou {
     private String zhuangtai;
     private String delflg;
     private String beizhu;
+    private String post_type;
+    private String col1;
+    private String col2;
+    private String col3;
     
     public Xiaoshou(){}
     public Xiaoshou(Long xiaoshou_id){
@@ -98,5 +102,29 @@ public class Xiaoshou {
 	}
 	public void setBeizhu(String beizhu) {
 		this.beizhu = beizhu;
+	}
+	public String getPost_type() {
+		return post_type;
+	}
+	public void setPost_type(String post_type) {
+		this.post_type = post_type;
+	}
+	public String getCol1() {
+		return col1;
+	}
+	public void setCol1(String col1) {
+		this.col1 = col1;
+	}
+	public String getCol2() {
+		return col2;
+	}
+	public void setCol2(String col2) {
+		this.col2 = col2;
+	}
+	public String getCol3() {
+		return col3;
+	}
+	public void setCol3(String col3) {
+		this.col3 = col3;
 	}
 }

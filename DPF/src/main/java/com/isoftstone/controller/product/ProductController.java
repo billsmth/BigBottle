@@ -25,9 +25,11 @@ import org.springframework.web.servlet.ModelAndView;
 import com.isoftstone.common.Tools;
 import com.isoftstone.model.acl.User;
 import com.isoftstone.model.jxc.Kucun;
+import com.isoftstone.model.jxc.PostAddress;
 import com.isoftstone.model.jxc.Product;
 import com.isoftstone.model.jxc.Xiaoshou;
 import com.isoftstone.service.jxc.KucunService;
+import com.isoftstone.service.jxc.PostAddressService;
 import com.isoftstone.service.jxc.ProductService;
 import com.isoftstone.service.jxc.XiaoshouService;
 
@@ -40,6 +42,9 @@ public class ProductController {
     
     @Autowired
     private XiaoshouService xiaoshouService;
+    
+    @Autowired
+    private PostAddressService postAddressService;
     
     @Autowired
     private KucunService kucunService;
@@ -240,7 +245,7 @@ public class ProductController {
     	return new ModelAndView("createOrder"); 
     }
     
-    @RequestMapping("/createOrderBase")
+    @RequestMapping(value="/createOrderBase",produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public ModelAndView createOrderBase(HttpServletRequest request, HttpServletResponse response){
     	Product p=new Product();
@@ -289,9 +294,45 @@ public class ProductController {
         xiaoshou.setMaijia_id("100");
         xiaoshou.setMaijiaxingming("匿名");
         xiaoshou.setBeizhu(request.getParameter("beizhu"));
+        xiaoshou.setPost_type(request.getParameter("radio-choice-post"));
         
         
         xiaoshouService.saveXiaoshou(xiaoshou);
+        
+        PostAddress pa = postAddressService.getMaxID();
+    	if(pa==null||pa.getPost_id()==null){
+    		pa=new PostAddress();
+    		pa.setPost_id(0l);
+    	}
+    	Long postID=pa.getPost_id();
+    	postID=postID/10000;
+		
+        if(dateStr>postID){
+        	pa.setPost_id(Long.parseLong(""+dateStr+"0001"));
+        }else{
+        	pa.setPost_id(pa.getPost_id()+1);
+        }
+        
+        pa.setOrder_id(xiaoshou.getXiaoshou_id());
+        pa.setPost_from(request.getParameter("post_from"));
+        //pa.setPeople_id(request.getParameter("people_id"));
+        pa.setDeparture(request.getParameter("departure"));
+        pa.setProvince_from(request.getParameter("province_from"));
+        pa.setCity_from(request.getParameter("city_from"));
+        pa.setDistrict_from(request.getParameter("district_from"));
+        pa.setCompany_name_from(request.getParameter("company_name_from"));
+        pa.setContact_number_from(request.getParameter("contact_number_from"));
+        pa.setPost_to(request.getParameter("post_to"));
+        pa.setDestination(request.getParameter("destination"));
+        pa.setProvince(request.getParameter("province"));
+        pa.setCity(request.getParameter("city"));
+        pa.setDistrict(request.getParameter("district"));
+        pa.setCompany_name(request.getParameter("company_name"));
+        pa.setContact_number(request.getParameter("contact_number"));
+        pa.setType(request.getParameter("type"));
+        
+        postAddressService.savePostAddress(pa);
+        
         
         return new ModelAndView("createOrder");
         //return "{'success':"+xiaoshou.getXiaoshou_id()+"-"+request.getParameter("radio-choice-post")+"}";

@@ -2,8 +2,8 @@ package com.isoftstone.model.jxc;
 
 public class PostAddress {
 
-	private String post_id;
-	private String order_id;
+	private Long post_id;
+	private Long order_id;
 	private String post_from;
 	private String people_id;
 	private String departure;
@@ -23,16 +23,16 @@ public class PostAddress {
 	private String col1;
 	private String col2;
 	
-	public String getPost_id() {
+	public Long getPost_id() {
 		return post_id;
 	}
-	public void setPost_id(String post_id) {
+	public void setPost_id(Long post_id) {
 		this.post_id = post_id;
 	}
-	public String getOrder_id() {
+	public Long getOrder_id() {
 		return order_id;
 	}
-	public void setOrder_id(String order_id) {
+	public void setOrder_id(Long order_id) {
 		this.order_id = order_id;
 	}
 	public String getPost_from() {

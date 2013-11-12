@@ -1,4 +1,5 @@
 <%@page language="java" contentType="text/html; charset=utf-8"%>
+<%@page pageEncoding="utf-8" %>
 <%@page import="com.isoftstone.model.jxc.Product"%>
 <%@page import="java.util.List"%>
 <%
@@ -64,9 +65,9 @@
 	<div data-role="page" id="order">
 		<div data-role="header" data-position="fixed">
 			<h1>订单</h1>
-			<a href="newProductList.html" data-shadow="false" data-iconshadow="false" data-icon="back" data-iconpos="notext" data-rel="back" data-ajax="false">Back</a>
+			<a data-shadow="false" data-iconshadow="false" data-icon="back" data-iconpos="notext" data-rel="back" data-ajax="false">Back</a>
 		</div>
-		<form id='orderBaseForm' action="createOrderBase.action">
+		<form id="orderBaseForm" method="POST" action="createOrderBase.action">
 			<div data-role="content" id="orderContent" >
 				<ul data-role="listview" data-inset="true">
 	        		<li data-role="fieldcontain">
@@ -95,9 +96,9 @@
 				    <li data-role="fieldcontain">
 					    <fieldset data-role="controlgroup" data-type="horizontal">
 					        <legend>送货方式</legend>
-					        <input type="radio" data-theme="a" name="radio-choice-post" id="radio-choice-post0" value="0" checked="checked">
+					        <input type="radio" data-theme="b" name="radio-choice-post" id="radio-choice-post0" value="0" checked="checked">
 					        <label for="radio-choice-post0">上门自取</label>
-					        <input type="radio" data-theme="a" name="radio-choice-post" id="radio-choice-post1" value="1">
+					        <input type="radio" data-theme="b" name="radio-choice-post" id="radio-choice-post1" value="1">
 					        <label for="radio-choice-post1">快递送货</label>
 					    </fieldset>
 					</li>
@@ -119,12 +120,12 @@
 	                </li>
 				    <li data-role="fieldcontain">
 		                <label for="beizhu">留言</label>
-					    <textarea cols="40" rows="8" name="beizhu" id="beizhu"></textarea>
+					    <textarea cols="40" rows="8" name="beizhu" id="beizhu">备注信息</textarea>
 				    </li>
 				    <li data-role="fieldcontain">
 				    	<fieldset class="ui-grid-a">
-			                <div class="ui-block-a"><button type="submit" id="submitBut" data-theme="a">提交</button></div>
-			                <div class="ui-block-b"><button type="submit" data-theme="d">取消</button></div>
+			                <div class="ui-block-a"><button type="submit" id="submitBut" data-theme="b">提交</button></div>
+			                <div class="ui-block-b"><button type="submit" data-theme="a">取消</button></div>
 					     </fieldset>
 				     </li>
 			    </ul>
@@ -133,26 +134,26 @@
 				<label>我的地址</label>
 				<ul data-role="listview" data-inset="true">
 	        		<li data-role="fieldcontain">
-	        			<input type="hidden" id="people_id" name="people_id" value="" data-clear-btn="true" placeholder="寄件人编号" >
-	                	<input type="text" id="post_from" name="post_from" value="" data-clear-btn="true" placeholder="寄件人姓名" >
+	        			<input type="hidden" id="people_id" name="people_id" value="100" data-clear-btn="true" placeholder="寄件人编号" >
+	                	<input type="text" id="post_from" name="post_from" value="猫小懒" data-clear-btn="true" placeholder="寄件人姓名" >
 	                </li>
 	                <li data-role="fieldcontain">
-	                	<input type="text" id="departure" name="departure" value="" data-clear-btn="true" placeholder="始发地" >
+	                	<input type="text" id="departure" name="departure" value="北京" data-clear-btn="true" placeholder="始发地" >
 	                </li>
 	                <li data-role="fieldcontain">
-	                	<input type="text" id="province_from" name="province_from" value="" data-clear-btn="true" placeholder="省份" >
+	                	<input type="text" id="province_from" name="province_from" value="北京" data-clear-btn="true" placeholder="省份" >
 	                </li>
 	                <li data-role="fieldcontain">
-	                	<input type="text" id="city_from" name="city_from" value="" data-clear-btn="true" placeholder="城市" >
+	                	<input type="text" id="city_from" name="city_from" value="北京" data-clear-btn="true" placeholder="城市" >
 	                </li>
 	                <li data-role="fieldcontain">
-	                	<input type="text" id="district_from" name="district_from" value="" data-clear-btn="true" placeholder="区县" >
+	                	<input type="text" id="district_from" name="district_from" value="东城区" data-clear-btn="true" placeholder="区县" >
 	                </li>
 	                <li data-role="fieldcontain">
-	                	<input type="text" id="company_name_from" name="company_name_from" value="" data-clear-btn="true" placeholder="单位名称/详细地址" >
+	                	<input type="text" id="company_name_from" name="company_name_from" value="安德路55号院16号楼 2门 106室" data-clear-btn="true" placeholder="单位名称/详细地址" >
 	                </li>
 	                <li data-role="fieldcontain">
-	                	<input type="text" id="contact_number_from" name="contact_number_from" value="" data-clear-btn="true" placeholder="联系电话" >
+	                	<input type="text" id="contact_number_from" name="contact_number_from" value="13810840866" data-clear-btn="true" placeholder="联系电话" >
 	                </li>
 			    </ul>
 			    <a data-rel="close" data-role="button" data-theme="b" data-icon="delete">关闭</a>
@@ -161,25 +162,25 @@
 				<label>收件人地址</label>
 				<ul data-role="listview" data-inset="true">
 	        		<li data-role="fieldcontain">
-	                	<input type="text" id="post_to" name="post_to" value="" data-clear-btn="true" placeholder="收件人姓名" >
+	                	<input type="text" id="post_to" name="post_to" value="测试收件人" data-clear-btn="true" placeholder="收件人姓名" >
 	                </li>
 	                <li data-role="fieldcontain">
-	                	<input type="text" id="destination" name="destination" value="" data-clear-btn="true" placeholder="目的地" >
+	                	<input type="text" id="destination" name="destination" value="广州" data-clear-btn="true" placeholder="目的地" >
 	                </li>
 	                <li data-role="fieldcontain">
-	                	<input type="text" id="province" name="province" value="" data-clear-btn="true" placeholder="省份" >
+	                	<input type="text" id="province" name="province" value="广东" data-clear-btn="true" placeholder="省份" >
 	                </li>
 	                <li data-role="fieldcontain">
-	                	<input type="text" id="city" name="city" value="" data-clear-btn="true" placeholder="城市" >
+	                	<input type="text" id="city" name="city" value="广州市" data-clear-btn="true" placeholder="城市" >
 	                </li>
 	                <li data-role="fieldcontain">
-	                	<input type="text" id="district" name="district" value="" data-clear-btn="true" placeholder="区县" >
+	                	<input type="text" id="district" name="district" value="十三行" data-clear-btn="true" placeholder="区县" >
 	                </li>
 	                <li data-role="fieldcontain">
-	                	<input type="text" id="company_name" name="company_name" value="" data-clear-btn="true" placeholder="单位名称/详细地址" >
+	                	<input type="text" id="company_name" name="company_name" value="美错之家" data-clear-btn="true" placeholder="单位名称/详细地址" >
 	                </li>
 	                <li data-role="fieldcontain">
-	                	<input type="text" id="contact_number" name="contact_number" value="" data-clear-btn="true" placeholder="联系电话" >
+	                	<input type="text" id="contact_number" name="contact_number" value="134875382736" data-clear-btn="true" placeholder="联系电话" >
 	                </li>
 	            </ul>
 			    <a data-rel="close" data-role="button" data-theme="b" data-icon="delete">关闭</a>

@@ -24,7 +24,7 @@
 	<div data-role="page" id="product">
 	    <div data-role="header" data-position="fixed">
 			<h1>产品展示</h1>
-			<a href="newProductList.html" data-shadow="false" data-iconshadow="false" data-icon="arrow-l" data-iconpos="notext" data-rel="back" data-ajax="false">Back</a>
+			<a data-shadow="false" data-iconshadow="false" data-icon="back" data-iconpos="notext" data-rel="back" data-ajax="false">Back</a>
 		</div>
 		<div data-role="content" id="main2Content">
 		<%
@@ -40,6 +40,7 @@
 				<ul>
 					<li><a href="./main.jsp" data-icon="grid"  rel="external">主菜单</a></li>
 					<li><a href="./createOrder.action?productId=<%=p.getProduct_id()%>" data-icon="info" data-transition="slide">购买</a></li>
+					<li><a href="./setting.jsp" data-icon="gear" rel="external">设置</a></li>
 				</ul>
 			</div>		
 		</div>

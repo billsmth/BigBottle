@@ -15,7 +15,11 @@
         <result property="maijiaxingming" column="maijiaxingming"/>
         <result property="zhuangtai" column="zhuangtai"/>
         <result property="delflg" column="delflg"/>
-        <result property="beizhu" column="beizhu"/>        
+        <result property="beizhu" column="beizhu"/>
+        <result property="post_type" column="post_type"/>
+        <result property="col1" column="col1"/>
+        <result property="col2" column="col2"/>
+        <result property="col3" column="col3"/>        
     </resultMap>
     
     <resultMap type="com.isoftstone.model.jxc.SaleMgt" id="salemgtResult">
@@ -35,7 +39,7 @@
     </resultMap>
     
     <select id="getXiaoshouList" resultMap="xiaoshouResult" parameterType="java.util.Map">
-        select xiaoshou_id, kucun_id, kuanhao_id, yanse, chima, shuliang, shoujia, shijishoukuan, maijia_id, maijiaxingming, zhuangtai, delflg, beizhu from xiaoshou_table 
+        select xiaoshou_id, kucun_id, kuanhao_id, yanse, chima, shuliang, shoujia, shijishoukuan, maijia_id, maijiaxingming, zhuangtai, delflg, beizhu, post_type, col1, col2, col3 from xiaoshou_table 
         <trim prefix="where" prefixOverrides="and|or">
         	<if test="xiaoshou_id != null">
         		xiaoshou_id like '${xiaoshou_id}%' 
@@ -117,11 +121,47 @@
     	select max(xiaoshou_id) xiaoshou_id from xiaoshou_table
     </select>
     <select id="getXiaoshou" resultMap="xiaoshouResult" parameterType="com.isoftstone.model.jxc.Xiaoshou">
-        select xiaoshou_id, kucun_id, kuanhao_id, yanse, chima, shuliang, shoujia, shijishoukuan, maijia_id, maijiaxingming, zhuangtai, delflg, beizhu from xiaoshou_table where xiaoshou_id = #{xiaoshou_id}
+        select xiaoshou_id, kucun_id, kuanhao_id, yanse, chima, shuliang, shoujia, shijishoukuan, maijia_id, maijiaxingming, zhuangtai, delflg, beizhu, post_type, col1, col2, col3 from xiaoshou_table where xiaoshou_id = #{xiaoshou_id}
     </select>
     
     <insert id="saveXiaoshou" parameterType="com.isoftstone.model.jxc.Xiaoshou">
-        insert into xiaoshou_table values (#{xiaoshou_id}, #{kucun_id}, #{kuanhao_id}, #{yanse}, #{chima}, #{shuliang}, #{shoujia}, #{shijishoukuan}, #{maijia_id}, #{maijiaxingming}, #{zhuangtai}, #{delflg}, #{beizhu})
+        insert into xiaoshou_table ( 
+        	xiaoshou_id, 
+        	kucun_id, 
+        	kuanhao_id, 
+        	yanse, 
+        	chima, 
+        	shuliang, 
+        	shoujia, 
+        	shijishoukuan, 
+        	maijia_id, 
+        	maijiaxingming, 
+        	zhuangtai, 
+        	delflg, 
+        	beizhu, 
+        	post_type, 
+        	col1, 
+        	col2, 
+        	col3 
+        	) values (
+        	#{xiaoshou_id}, 
+        	#{kucun_id}, 
+        	#{kuanhao_id}, 
+        	#{yanse}, 
+        	#{chima}, 
+        	#{shuliang}, 
+        	#{shoujia}, 
+        	#{shijishoukuan}, 
+        	#{maijia_id}, 
+        	#{maijiaxingming}, 
+        	#{zhuangtai}, 
+        	#{delflg}, 
+        	#{beizhu}, 
+        	#{post_type}, 
+        	#{col1}, 
+        	#{col2}, 
+        	#{col3}
+        	)
     </insert>
     
     <update id="updateXiaoshouruku" parameterType="com.isoftstone.model.jxc.Xiaoshou">
@@ -142,7 +182,7 @@
     </update>
     
     <delete id="deleteXiaoshouByID" parameterType="list">
-        update xiaoshou_table set delflg ='1'  
+        update xiaoshou_table set delflg ='1' 
         where xiaoshou_id in 
         <foreach item="xiaoshou_id"  collection="list" open="(" separator="," close=")">
             #{xiaoshou_id}
