@@ -49,16 +49,22 @@
 					<a href="#" data-rel="dialog" data-transition="slideup">动作</a>
 				</li>
 				<li>
-					<a href="./login.jsp"  rel="external">
-						<img src="../images/profile.png" />
+					<a href="./login.jsp" data-transition="slideup" rel="external">
+						<img src="../images/login.png" />
 						<h3>登录</h3>
 						<p>前往登录界面</p>
 					</a>
-					<a href="./login.jsp" data-rel="dialog" data-transition="slideup"  rel="external">动作</a>
+				</li>
+				<li>
+					<a href="./addressList.jsp" data-transition="slideup" rel="external">
+						<img src="../images/address.png" />
+						<h3>送货地址</h3>
+						<p>送货地址管理</p>
+					</a>
 				</li>
 				<li>
 					<a href="#"  rel="external" onclick="reset()">
-						<img src="../images/profile.png" />
+						<img src="../images/reset.png" />
 						<h3>重置</h3>
 						<p>重置系统设置</p>
 					</a>

@@ -39,6 +39,7 @@
 	                            //user=item;
 	                        }else{
 	                        	alert("没数据");
+	                        	window.localStorage.removeItem("USER");
 	                        }
 	                    }, errorCB);
              });

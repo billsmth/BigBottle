@@ -18,51 +18,46 @@
 	<meta charset="UTF-8">
     <meta http-equiv="Content-type" name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width">
 	<link rel="stylesheet" href="../css/jquery.mobile-1.3.2.css" />
+	
 	<script src="../js/jquery-1.9.1.min.js"></script>
+	<script src="../js/cordova.js"></script>
 	<script src="../js/jquery.mobile-1.3.2.min.js"></script>
-	<script type="text/javascript">
-		$(document).ready(function(){
-			$("#orderPost").click(function() {
-	            var options = {
-	                   url : "<%=hostPath%>product/createOrderBase.action",
-	                   type : "POST",
-	                   dataType: 'text',
-	                   data: $("#orderBaseForm").serialize(),
-	                   success : function(data){
-	                   	var result=eval("(" + data + ")");
-	                   	var res=result.success.split("-");
-	                       var urlStr="<%=hostPath%>product/getPostTo.action?xiaoshou_id="+res[0]+"&postTo="+res[1];
-	                       location.href =urlStr;
-	                   }  
-	            };
-	            $.ajax(options);
-	            return false;
-        	});
-	        $("#post_self").click(function(){
-	        	$("#post_type").val("0");
-	        	//alert($("#post_type").val());
-	        });
-	        $("#post_people_from").click(function(){
-	        	$("#post_type").val("1");
-	        	//alert($("#post_type").val());
-	        	$("#post_people_from").attr("data-theme","b");
-	        	$("#post_list").listview('refresh');
-	        });
-	        $("#post_people_to").click(function(){
-	        	$("#post_type").val("2");
-	        	//alert($("#post_type").val());
-	        });
-	        
-		 });
-		 $( "#radio-choice-post1" ).bind( "click", function() {
-	        	//$("#post_type").val("1");
-	        	alert($("#radio-choice-post1").val());
-	        });
-	</script>
 	
 </head>
 <body>
 	<div data-role="page" id="order">
+		<script type="text/javascript">
+			$(document).bind("mobileinit",function() {
+				$.support.cors = true;
+				$.mobile.allowCrossDomainPages=true;
+			});
+			document.addEventListener("deviceready", onDeviceReady, false);
+	       	function onDeviceReady() {
+	       		if (db == null) {
+			    	db = window.openDatabase("wg5adb", "1.0", "database", 200000);
+		    	}
+		    	
+		    	db.transaction(function(tx) {
+	            	tx.executeSql('SELECT * FROM USER_TABLE ',
+	                    [], function(tx, results) {
+	                        if (results.rows.length > 0) {
+	                        	alert("results.length:"+results.rows.length);
+	                            var item = results.rows.item(0);
+	                        	alert("dfsdfs"+item.ID+item.NAME+item.PWD);
+	                            $("#maijia_id").val(item.ID);
+	                            $("#maijia_name").val(item.NAME);
+	                            //$("#userpassword").val(item.PWD);
+	                            $("#post_from").val(item.NAME);
+	                            
+	                            window.localStorage.setItem("USER", item);
+	                            //user=item;
+	                        }else{
+	                        	alert("没数据");
+	                        }
+	                    }, errorCB);
+				});
+			}
+		</script>
 		<div data-role="header" data-position="fixed">
 			<h1>订单</h1>
 			<a data-shadow="false" data-iconshadow="false" data-icon="back" data-iconpos="notext" data-rel="back" data-ajax="false">Back</a>
@@ -72,6 +67,8 @@
 				<ul data-role="listview" data-inset="true">
 	        		<li data-role="fieldcontain">
 	        			<input type="hidden" id="product_id" name="product_id" value="<%=p.getProduct_id()%>" data-clear-btn="true" placeholder="产品编号" >
+	        			<input type="hidden" id="maijia_id" name="maijia_id" value="">
+	        			<input type="hidden" id="maijia_name" name="maijia_name" value="">
 	                	<input type="text" id="productname" name="productname" value="<%=p.getProduct_name()%>" data-clear-btn="true" placeholder="产品名称" >
 	        			<input type="hidden" id="shoujia" name="shoujia" value="<%=p.getCol2()%>" placeholder="售价" >
 	                </li>
@@ -93,12 +90,14 @@
 	                	<input type="hidden" id="post_type" name="post_type" value="">
 		                <input type="number" data-clear-btn="true" name="shuliang" pattern="[0-9]*" placeholder="购买数量" id="shuliang" value="1">
 	                </li>
+	           </ul>
+	           <label>送货方式</label>
+	           <ul data-role="listview" data-inset="true">
 				    <li data-role="fieldcontain">
 					    <fieldset data-role="controlgroup" data-type="horizontal">
-					        <legend>送货方式</legend>
-					        <input type="radio" data-theme="b" name="radio-choice-post" id="radio-choice-post0" value="0" checked="checked">
+					        <input type="radio" data-theme="b" name="radio-choice-post" id="radio-choice-post0" value="0">
 					        <label for="radio-choice-post0">上门自取</label>
-					        <input type="radio" data-theme="b" name="radio-choice-post" id="radio-choice-post1" value="1">
+					        <input type="radio" data-theme="b" name="radio-choice-post" id="radio-choice-post1" value="1" checked="checked">
 					        <label for="radio-choice-post1">快递送货</label>
 					    </fieldset>
 					</li>
@@ -141,19 +140,22 @@
 	                	<input type="text" id="departure" name="departure" value="北京" data-clear-btn="true" placeholder="始发地" >
 	                </li>
 	                <li data-role="fieldcontain">
-	                	<input type="text" id="province_from" name="province_from" value="北京" data-clear-btn="true" placeholder="省份" >
+	                	<input type="text" id="province_from" name="province_from" value="北京" data-clear-btn="true" placeholder="寄件省份" >
 	                </li>
 	                <li data-role="fieldcontain">
-	                	<input type="text" id="city_from" name="city_from" value="北京" data-clear-btn="true" placeholder="城市" >
+	                	<input type="text" id="city_from" name="city_from" value="北京" data-clear-btn="true" placeholder="寄件城市" >
 	                </li>
 	                <li data-role="fieldcontain">
-	                	<input type="text" id="district_from" name="district_from" value="东城区" data-clear-btn="true" placeholder="区县" >
+	                	<input type="text" id="district_from" name="district_from" value="东城区" data-clear-btn="true" placeholder="寄件区县" >
 	                </li>
 	                <li data-role="fieldcontain">
 	                	<input type="text" id="company_name_from" name="company_name_from" value="安德路55号院16号楼 2门 106室" data-clear-btn="true" placeholder="单位名称/详细地址" >
 	                </li>
 	                <li data-role="fieldcontain">
 	                	<input type="text" id="contact_number_from" name="contact_number_from" value="13810840866" data-clear-btn="true" placeholder="联系电话" >
+	                </li>
+	                <li data-role="fieldcontain">
+	                	<textarea name="post_from_note" id="post_from_note" placeholder="备注信息" data-clear-btn="true"></textarea>
 	                </li>
 			    </ul>
 			    <a data-rel="close" data-role="button" data-theme="b" data-icon="delete">关闭</a>
@@ -168,13 +170,13 @@
 	                	<input type="text" id="destination" name="destination" value="广州" data-clear-btn="true" placeholder="目的地" >
 	                </li>
 	                <li data-role="fieldcontain">
-	                	<input type="text" id="province" name="province" value="广东" data-clear-btn="true" placeholder="省份" >
+	                	<input type="text" id="province" name="province" value="广东" data-clear-btn="true" placeholder="收件省份" >
 	                </li>
 	                <li data-role="fieldcontain">
-	                	<input type="text" id="city" name="city" value="广州市" data-clear-btn="true" placeholder="城市" >
+	                	<input type="text" id="city" name="city" value="广州市" data-clear-btn="true" placeholder="收件城市" >
 	                </li>
 	                <li data-role="fieldcontain">
-	                	<input type="text" id="district" name="district" value="十三行" data-clear-btn="true" placeholder="区县" >
+	                	<input type="text" id="district" name="district" value="十三行" data-clear-btn="true" placeholder="收件区县" >
 	                </li>
 	                <li data-role="fieldcontain">
 	                	<input type="text" id="company_name" name="company_name" value="美错之家" data-clear-btn="true" placeholder="单位名称/详细地址" >
@@ -190,7 +192,7 @@
 			<div data-role="navbar">
 				<ul>
 					<li><a href="./main.jsp" data-icon="grid"  rel="external">主菜单</a></li>
-					<li><a href="#" id ='orderPost' data-role="button" data-icon="arrow-r" data-transition="fade" rel="external">下一步</a></li>
+					<li><a href="./setting.jsp" data-icon="gear" rel="external">设置</a></li>
 				</ul>
 			</div>
 		</div>		

@@ -291,8 +291,8 @@ public class ProductController {
         xiaoshou.setShuliang(Integer.valueOf(request.getParameter("shuliang")));
         xiaoshou.setShoujia(Float.valueOf(request.getParameter("shoujia")));
         xiaoshou.setShijishoukuan(Float.valueOf(request.getParameter("shoujia")));
-        xiaoshou.setMaijia_id("100");
-        xiaoshou.setMaijiaxingming("匿名");
+        xiaoshou.setMaijia_id(request.getParameter("maijia_id"));
+        xiaoshou.setMaijiaxingming(request.getParameter("maijia_name"));
         xiaoshou.setBeizhu(request.getParameter("beizhu"));
         xiaoshou.setPost_type(request.getParameter("radio-choice-post"));
         

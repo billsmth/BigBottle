@@ -23,7 +23,12 @@ function onConfirm() {
 	}
 	db.transaction(function(tx) {
 		tx.executeSql('DROP TABLE IF EXISTS USER_TABLE');
+		tx.executeSql('DROP TABLE IF EXISTS USER_ADD');
 		tx.executeSql('CREATE TABLE IF NOT EXISTS USER_TABLE (ID TEXT, NAME TEXT, PWD TEXT)');
+		tx.executeSql("CREATE TABLE IF NOT EXISTS USER_ADD (ID INTEGER PRIMARY KEY AUTOINCREMENT, POST_FROM TEXT, DEPARTURE TEXT, PROVINCE_FROM TEXT, "
+				+"CITY_FROM TEXT, DISTRICT_FROM TEXT, COMPANY_NAME_FROM TEXT, CONTACT_NUMBER_FROM TEXT, POST_FROM_NOTE TEXT, DEF TEXT) ");
+		tx.executeSql("INSERT INTO USER_ADD (POST_FROM, DEPARTURE, PROVINCE_FROM, CITY_FROM, DISTRICT_FROM, COMPANY_NAME_FROM, CONTACT_NUMBER_FROM, DEF) "
+				+"VALUES (\"苏苏\", \"北京\", \"北京\", \"北京\", \"东城区\", \"安德路55号院2门106室\", \"13810840866\", \"1\")");
 	}, function(err) {
 		alert("重置系统创建数据库出错: " + err);
 	}, function() {
