@@ -191,8 +191,18 @@ Ext.define('App.view.product.productView', {
             }, {
                 xtype: 'gridcolumn',
                 dataIndex: 'col3',
-                text: '信息3',
-                flex:1
+                text: '运费（元）',
+                flex:1,
+                renderer : function(val, meta, record) {
+                    var retVal = '';
+                    if (val == 0) {
+                    	meta.tdCls ="background-color: blue;";
+                        retVal = '<span style=\'background:red\'>0 元</span>';
+                    } else {
+                        retVal = '<span style=\'color:green\'>'+val+' 元</span>';
+                    }
+                    return retVal;
+                }
             }, {
                 xtype: 'gridcolumn',
                 dataIndex: 'col4',
@@ -313,10 +323,17 @@ Ext.define('App.view.product.productView', {
 		                    	},
 		                    	items:[{
 		                                xtype: 'displayfield',
-		                                fieldLabel: '售价',
+		                                fieldLabel: '售价（元）',
 		                                labelWidth: 80,
 		                                labelAlign: 'right',
 		                                width:400
+		            	               },
+		            	               {
+		                                xtype: 'displayfield',
+		                                fieldLabel: '运费（元）',
+		                                labelWidth: 80,
+		                                labelAlign: 'right',
+		                                margin: '0 0 0 30'
 		            	               }]
 			                }, {
 			                	xtype:'container',

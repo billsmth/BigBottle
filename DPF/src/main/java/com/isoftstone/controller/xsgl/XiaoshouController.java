@@ -57,7 +57,7 @@ public class XiaoshouController {
 
     @RequestMapping("/savexiaoshou")
     @ResponseBody
-    public String saveXiaoshou(String editType,String xiaoshou_id, String kucun_id, String kuanhao_id, String yanse, String chima, String shuliang,String shoujia, String shijishoukuan, String maijia_id, String maijiaxingming, String zhuangtai, String delflg, String beizhu) {
+    public String saveXiaoshou(String editType,String xiaoshou_id, String kucun_id, String col1, String kuanhao_id, String yanse, String chima, String shuliang,String shoujia, String shijishoukuan, String maijia_id, String maijiaxingming, String zhuangtai, String delflg, String beizhu) {
 
     	Kucun kucun=new Kucun(Long.parseLong(kucun_id));
     	kucun=kucunService.getKucun(kucun);
@@ -88,6 +88,7 @@ public class XiaoshouController {
     		xiaoshou.setDelflg(delflg);
     	}
     	xiaoshou.setKucun_id(Long.parseLong(kucun_id));
+    	xiaoshou.setCol1(col1);
         xiaoshou.setKuanhao_id(kuanhao_id);
         xiaoshou.setYanse(yanse);
         xiaoshou.setChima(chima);

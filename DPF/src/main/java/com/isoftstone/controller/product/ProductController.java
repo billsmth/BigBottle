@@ -91,7 +91,11 @@ public class ProductController {
         product.setNew_flg(request.getParameter("new_flg"));
         product.setCol1(request.getParameter("col1"));
         product.setCol2(request.getParameter("col2"));
-        
+        if(Tools.isBlank(request.getParameter("col3"))){
+        	product.setCol3("0");
+        }else{
+        	product.setCol3(request.getParameter("col3"));
+        }
         User user = (User) request.getSession().getAttribute("user");
         
         product.setUpdater_id(user.getPeopleId());
@@ -130,7 +134,11 @@ public class ProductController {
         	product.setNew_flg(request.getParameter("new_flg"));
         	product.setCol1(request.getParameter("col1"));
             product.setCol2(request.getParameter("col2"));
-            product.setCol3(request.getParameter("col3"));
+            if(Tools.isBlank(request.getParameter("col3"))){
+            	product.setCol3("0");
+            }else{
+            	product.setCol3(request.getParameter("col3"));
+            }
             product.setCol4(request.getParameter("col4"));
             product.setCol5(request.getParameter("col5"));
             product.setCol6(request.getParameter("col6"));
@@ -252,7 +260,9 @@ public class ProductController {
     	p.setProduct_id(Long.parseLong(request.getParameter("product_id")));
     	p=productService.getProduct(p);
     	String kucunIds=p.getKucun_ids();
-    	kucunIds=kucunIds.substring(0,kucunIds.length()-1);
+    	if(kucunIds.endsWith(",")){
+    		kucunIds=kucunIds.substring(0,kucunIds.length()-1);
+    	}
     	String[] kucun_ids=kucunIds.split(",");
     	List list=Arrays.asList(kucun_ids);
     	
@@ -288,9 +298,11 @@ public class ProductController {
         xiaoshou.setKuanhao_id(kucun.getKuanhao_id());
         xiaoshou.setYanse(chima_yanse[0]);
         xiaoshou.setChima(chima_yanse[1]);
+        xiaoshou.setCol1(request.getParameter("productname"));
         xiaoshou.setShuliang(Integer.valueOf(request.getParameter("shuliang")));
         xiaoshou.setShoujia(Float.valueOf(request.getParameter("shoujia")));
-        xiaoshou.setShijishoukuan(Float.valueOf(request.getParameter("shoujia")));
+        xiaoshou.setCol2(request.getParameter("yunfei"));
+        xiaoshou.setShijishoukuan((Float.valueOf(request.getParameter("shoujia"))*Integer.valueOf(request.getParameter("shuliang")))+Float.valueOf(request.getParameter("yunfei")));
         xiaoshou.setMaijia_id(request.getParameter("maijia_id"));
         xiaoshou.setMaijiaxingming(request.getParameter("maijia_name"));
         xiaoshou.setBeizhu(request.getParameter("beizhu"));
@@ -298,6 +310,7 @@ public class ProductController {
         
         
         xiaoshouService.saveXiaoshou(xiaoshou);
+        request.setAttribute("SALE_ORDER",xiaoshou);
         
         PostAddress pa = postAddressService.getMaxID();
     	if(pa==null||pa.getPost_id()==null){
@@ -329,13 +342,12 @@ public class ProductController {
         pa.setDistrict(request.getParameter("district"));
         pa.setCompany_name(request.getParameter("company_name"));
         pa.setContact_number(request.getParameter("contact_number"));
-        pa.setType(request.getParameter("type"));
+        pa.setType(request.getParameter("radio-choice-post"));
         
         postAddressService.savePostAddress(pa);
         
-        
-        return new ModelAndView("createOrder");
-        //return "{'success':"+xiaoshou.getXiaoshou_id()+"-"+request.getParameter("radio-choice-post")+"}";
+        request.setAttribute("POST_INFO",pa);
+        return new ModelAndView("soSuccess");
         
     }
     

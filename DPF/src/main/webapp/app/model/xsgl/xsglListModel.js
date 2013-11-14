@@ -9,6 +9,9 @@ Ext.define('App.model.xsgl.xsglListModel', {
             name: 'kucun_id'
         },
         {
+            name: 'col1'
+        },
+        {
             name: 'kuanhao_id'
         },
         {

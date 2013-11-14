@@ -101,6 +101,13 @@ Ext.define('App.view.product.productaddwin', {
  		                labelAlign: 'right',
  		                labelWidth: 90
  		            },{
+ 		                xtype: 'textfield',
+ 		                flex: 1,
+ 		                fieldLabel: '运费（元）',
+ 		                name:'col3',
+ 		                labelAlign: 'right',
+ 		                labelWidth: 90
+ 		            },{
 	                	xtype:'container',
 	                	margin:'10 5 5 0',
                     	layout:{
@@ -117,14 +124,6 @@ Ext.define('App.view.product.productaddwin', {
 	     		                width:450
 	     		            }]
 	                },{
- 		                xtype: 'textfield',
- 		                flex: 1,
- 		                fieldLabel: '信息3',
- 		                name:'col3',
- 		                labelAlign: 'right',
- 		                labelWidth: 90,
- 		                hidden:true
- 		            },{
  		                xtype: 'textfield',
  		                flex: 1,
  		                fieldLabel: '信息4',

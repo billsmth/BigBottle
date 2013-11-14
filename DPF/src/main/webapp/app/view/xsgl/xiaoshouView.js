@@ -52,6 +52,10 @@ Ext.define('App.view.xsgl.xiaoshouView', {
 						dataIndex:'kucun_id', 
 						width:120
 					}, {
+						header:'产品名称',
+						dataIndex:'col1', 
+						width:180
+					}, {
 						header:'款号',
 						dataIndex:'kuanhao_id', 
 						width:80

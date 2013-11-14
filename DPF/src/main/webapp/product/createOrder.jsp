@@ -87,7 +87,12 @@
 					    </fieldset>
 	                </li>
 	                <li data-role="fieldcontain">
-	                	<input type="hidden" id="post_type" name="post_type" value="">
+		                <fieldset data-role="controlgroup" data-type="horizontal">
+		                	<input type="hidden" id="yunfei" name="yunfei" value="<%=p.getCol3()%>">
+					        <label>单价:<%=p.getCol2()%>元</label>&nbsp;&nbsp;&nbsp;<label>运费:<%=p.getCol3()%>元</label>
+					    </fieldset>
+	                </li>
+	                <li data-role="fieldcontain">
 		                <input type="number" data-clear-btn="true" name="shuliang" pattern="[0-9]*" placeholder="购买数量" id="shuliang" value="1">
 	                </li>
 	           </ul>

@@ -23,7 +23,7 @@ Ext.define('App.view.xsgl.addXiaoshouWin', {
                 collapsible: true,
                 id: 'simpleForm',
                 itemId:'editXiaoshouForm',
-                width:250,
+                width:350,
                 bodyPadding: 7,
             	fieldDefaults: {
 	                labelAlign: 'right',
@@ -48,6 +48,12 @@ Ext.define('App.view.xsgl.addXiaoshouWin', {
 	                fieldLabel:'库存编号',
 	                id:'kucun_id',
 	                name:'kucun_id',
+	                allowBlank: false
+	            }, {
+	                xtype:'textfield',
+	                fieldLabel:'产品名称',
+	                id:'col1',
+	                name:'col1',
 	                allowBlank: false
 	            }, {
 	                xtype:'textfield',
