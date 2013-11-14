@@ -34,7 +34,7 @@
 				</div>
 				<div class="ui-block-b">
 					<center>
-						<a href="#" data-icon="info"  rel="external">
+						<a href="./getProductsByType.action?type=2" data-icon="info"  rel="external">
 							<img src="../images/dztj.png" />
 						</a>
 					</center>
@@ -42,7 +42,7 @@
 				</div>
 				<div class="ui-block-c">
 					<center>
-						<a href="productList.html" data-icon="info"  rel="external">
+						<a href="./getProductsByType.action?type=3" data-icon="info"  rel="external">
 							<img src="../images/salesProduct.jpg" />
 						</a>
 					</center>
@@ -52,7 +52,7 @@
 			<div class="ui-grid-b">
 				<div class="ui-block-a">
 					<center>
-						<a href="productListAll.html" data-icon="info"  rel="external">
+						<a href="./getProductsByType.action?type=5" data-icon="info"  rel="external">
 							<img src="../images/orderSale.png" />
 						</a>
 					</center>
@@ -60,7 +60,7 @@
 				</div>
 				<div class="ui-block-b">
 					<center>
-						<a href="productListAll.html" data-icon="info"  rel="external">
+						<a href="#" data-icon="info"  rel="external">
 							<img src="../images/product.jpg" />
 						</a>
 					</center>
@@ -68,7 +68,7 @@
 				</div>
 				<div class="ui-block-c">
 					<center>
-						<a href="#" data-icon="info"  rel="external">
+						<a href="./myOrderList.jsp" data-icon="info"  rel="external">
 							<img src="../images/order.png" />
 						</a>
 					</center>
@@ -78,7 +78,7 @@
 			<div class="ui-grid-b">
 				<div class="ui-block-a">
 					<center>
-						<a href="http://baidu.com" data-icon="info"  rel="external">
+						<a href="#" data-icon="info"  rel="external">
 							<img src="../images/profile.png" />
 						</a>
 					</center>

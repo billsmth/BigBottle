@@ -64,8 +64,7 @@
 					db.transaction(function(tx) {
 				    	var sql = "INSERT INTO USER_ADD (POST_FROM, DEPARTURE, PROVINCE_FROM, CITY_FROM, DISTRICT_FROM, COMPANY_NAME_FROM, CONTACT_NUMBER_FROM, POST_FROM_NOTE, DEF) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		                var params = [ post_from, departure, province_from, city_from, district_from, company_name_from, contact_number_from, post_from_note, "0"];
-		                tx.executeSql(sql, params, function(tx,
-		                        results) {
+		                tx.executeSql(sql, params, function(tx, results) {
 		                    showInfor("新增记录成功！");
 		                }, errorCB);
 		            });

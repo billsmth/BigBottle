@@ -33,6 +33,7 @@
 			});
 			document.addEventListener("deviceready", onDeviceReady, false);
 	       	function onDeviceReady() {
+	       	
 	       		if (db == null) {
 			    	db = window.openDatabase("wg5adb", "1.0", "database", 200000);
 		    	}
@@ -41,18 +42,16 @@
 	            	tx.executeSql('SELECT * FROM USER_TABLE ',
 	                    [], function(tx, results) {
 	                        if (results.rows.length > 0) {
-	                        	alert("results.length:"+results.rows.length);
 	                            var item = results.rows.item(0);
-	                        	alert("dfsdfs"+item.ID+item.NAME+item.PWD);
+	                        	//alert("dfsdfs"+item.ID+item.NAME+item.PWD);
 	                            $("#maijia_id").val(item.ID);
 	                            $("#maijia_name").val(item.NAME);
-	                            //$("#userpassword").val(item.PWD);
-	                            $("#post_from").val(item.NAME);
+	                            $("#post_to").val(item.NAME);
 	                            
 	                            window.localStorage.setItem("USER", item);
-	                            //user=item;
 	                        }else{
-	                        	alert("没数据");
+	                        	showInfor("您还没有登录，购买将以匿名方式购买，请注意填写收货地址。");
+	                        	window.localStorage.removeItem("USER");
 	                        }
 	                    }, errorCB);
 				});
@@ -139,7 +138,7 @@
 				<ul data-role="listview" data-inset="true">
 	        		<li data-role="fieldcontain">
 	        			<input type="hidden" id="people_id" name="people_id" value="100" data-clear-btn="true" placeholder="寄件人编号" >
-	                	<input type="text" id="post_from" name="post_from" value="猫小懒" data-clear-btn="true" placeholder="寄件人姓名" >
+	                	<input type="text" id="post_from" name="post_from" value="苏苏" data-clear-btn="true" placeholder="寄件人姓名" >
 	                </li>
 	                <li data-role="fieldcontain">
 	                	<input type="text" id="departure" name="departure" value="北京" data-clear-btn="true" placeholder="始发地" >

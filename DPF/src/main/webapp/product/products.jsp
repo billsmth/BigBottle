@@ -29,7 +29,7 @@
 <body>
 	<div data-role="page" id="products">
 	    <div data-role="header" data-position="fixed">
-			<h1>新品列表</h1>
+			<h1>商品列表</h1>
 			<a data-shadow="false" data-iconshadow="false" data-icon="back" data-iconpos="notext" data-rel="back" data-ajax="false">Back</a>
 		</div>
 		<div data-role="content" id="main2Content" >

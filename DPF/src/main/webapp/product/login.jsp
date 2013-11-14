@@ -29,16 +29,14 @@
 	            tx.executeSql('SELECT * FROM USER_TABLE ',
 	                    [], function(tx, results) {
 	                        if (results.rows.length > 0) {
-	                        	alert("results.length:"+results.rows.length);
 	                            var item = results.rows.item(0);
-	                        	alert("dfsdfs"+item.ID+item.NAME+item.PWD);
+	                            showInfor("您已登陆 ( 用户:"+item.NAME+" ) ，无需再次登录。");
 	                            $("#userid").val(item.ID);
 	                            $("#username").val(item.NAME);
 	                            $("#userpassword").val(item.PWD);
 	                            window.localStorage.setItem("USER", item);
-	                            //user=item;
 	                        }else{
-	                        	alert("没数据");
+	                        	showInfor("无系统用户请注册或登录系统！");
 	                        	window.localStorage.removeItem("USER");
 	                        }
 	                    }, errorCB);
@@ -66,7 +64,7 @@
 	    }
 	    
 	    function saveUser(tx) {
-	    	alert("1");
+	    	//alert("1");
 	    	var id = $("#userid")[0].value;
 	        var name = $("#username")[0].value;
 	        var upd = $("#userpassword")[0].value;
@@ -75,16 +73,14 @@
 	        if (user != "null" && user != null) {
 	        	showInfor("您已登陆，如需切换用户，请重置系统。");
             } else {
-            	alert("2");
+            	//alert("2");
             	var options = {
 						url : "<%=hostPath%>kehu/saveAppKehu.action",
 						type : "POST",
 						dataType: 'text',
 						data: $("#loginForm").serialize(),
 						success : function(data){
-							alert(data);
 							var result=eval("(" + data + ")");
-							
 							if(result.type=="1"){
 								showInfor("登陆密码错误或者该用户名已存在！请更换密码或用户名");
 								return;
@@ -95,7 +91,7 @@
 							}
 							alert(result.kehu_id);
 							var sql = "INSERT INTO USER_TABLE (ID, NAME, PWD) VALUES (?, ?, ?)";
-							alert("zhi:"+result.kehu_id+" "+name+" "+upd);
+							//alert("zhi:"+result.kehu_id+" "+name+" "+upd);
 							var params = [result.kehu_id, name, upd];
 							db.transaction(function(tx) {
 								tx.executeSql(sql, params, function(tx, results) {

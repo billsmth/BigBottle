@@ -23,7 +23,7 @@
 <body>
 	<div data-role="page" id="product">
 	    <div data-role="header" data-position="fixed">
-			<h1>产品展示</h1>
+			<h1>商品展示</h1>
 			<a data-shadow="false" data-iconshadow="false" data-icon="back" data-iconpos="notext" data-rel="back" data-ajax="false">Back</a>
 		</div>
 		<div data-role="content" id="main2Content">
