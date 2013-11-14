@@ -39,7 +39,7 @@
 			<div data-role="navbar">
 				<ul>
 					<li><a href="./main.jsp" data-icon="grid"  rel="external">主菜单</a></li>
-					<li><a href="./createOrder.action?productId=<%=p.getProduct_id()%>" data-icon="info" data-transition="slide">购买</a></li>
+					<li><a href="./createOrder.action?productId=<%=p.getProduct_id()%>" data-icon="info" data-transition="slide">下单</a></li>
 					<li><a href="./setting.jsp" data-icon="gear" rel="external">设置</a></li>
 				</ul>
 			</div>		
