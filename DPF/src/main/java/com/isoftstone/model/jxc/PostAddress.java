@@ -22,6 +22,8 @@ public class PostAddress {
 	private String type;
 	private String neijian;
 	private String note;
+	private String detail_from;
+	private String detail_to;
 	private String col1;
 	private String col2;
 	
@@ -144,6 +146,18 @@ public class PostAddress {
 	}
 	public void setNote(String note) {
 		this.note = note;
+	}
+	public String getDetail_from() {
+		return detail_from;
+	}
+	public void setDetail_from(String detail_from) {
+		this.detail_from = detail_from;
+	}
+	public String getDetail_to() {
+		return detail_to;
+	}
+	public void setDetail_to(String detail_to) {
+		this.detail_to = detail_to;
 	}
 	public String getCol1() {
 		return col1;

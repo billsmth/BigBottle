@@ -89,7 +89,7 @@
 							}else if(result.type=="3"){
 								showInfor("用户创建并登陆成功！");
 							}
-							alert(result.kehu_id);
+							//alert(result.kehu_id);
 							var sql = "INSERT INTO USER_TABLE (ID, NAME, PWD) VALUES (?, ?, ?)";
 							//alert("zhi:"+result.kehu_id+" "+name+" "+upd);
 							var params = [result.kehu_id, name, upd];

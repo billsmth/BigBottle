@@ -78,6 +78,7 @@
 	          	and delflg=#{delflg} 
 	        </if>
         </trim>
+        order by xiaoshou_id desc
     </select>
     
     <!--select id="getSaleMgtList" resultMap="xiaoshouResult" parameterType="java.util.Map">
@@ -176,7 +177,8 @@
         , shoujia = #{shoujia}
         , shijishoukuan = #{shijishoukuan}
         , maijia_id = #{maijia_id}
-        , maijiaxingming = #{maijiaxingming}
+        , maijiaxingming = #{maijiaxingming} 
+        , zhuangtai = #{zhuangtai} 
         , beizhu = #{beizhu}
         where xiaoshou_id = #{xiaoshou_id}
     </update>

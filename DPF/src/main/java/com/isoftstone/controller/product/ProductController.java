@@ -334,6 +334,7 @@ public class ProductController {
         pa.setCity_from(request.getParameter("city_from"));
         pa.setDistrict_from(request.getParameter("district_from"));
         pa.setCompany_name_from(request.getParameter("company_name_from"));
+        pa.setDetail_from(request.getParameter("detail_from"));
         pa.setContact_number_from(request.getParameter("contact_number_from"));
         pa.setPost_to(request.getParameter("post_to"));
         pa.setDestination(request.getParameter("destination"));
@@ -341,6 +342,7 @@ public class ProductController {
         pa.setCity(request.getParameter("city"));
         pa.setDistrict(request.getParameter("district"));
         pa.setCompany_name(request.getParameter("company_name"));
+        pa.setDetail_to(request.getParameter("detail_to"));
         pa.setContact_number(request.getParameter("contact_number"));
         pa.setNeijian(request.getParameter("neijian"));
         pa.setNote(request.getParameter("post_from_note"));

@@ -58,10 +58,9 @@
 				<tr>
 					<td align="right">汇总</td><td colspan="3"><%=xs.getShijishoukuan()%>元</td>
 				</tr>
-				
-				</table>
-				<br>
-				<table border="1px" width=100%>
+			</table>
+			<br>
+			<table border="1px" width=100%>
 				<tr style="background:#009900">
 					<td colspan="3" align="center"><Strong>付款方法</Strong></td>
 				</tr>
@@ -76,6 +75,18 @@
 				</tr>
 				<tr>
 					<td align="center">建行</td><td align="center">苏哲芳</td><td>6227 0002 1010 0142 452</td>
+				</tr>
+			</table>
+			<br>
+			<table border="1px" width=100%>
+				<tr style="background:#009900">
+					<td colspan="3" align="center"><Strong>服务信息</Strong></td>
+				</tr>
+				<tr>
+					<td align="center">客服微信</td><td colspan="2">18618166418</td>
+				</tr>
+				<tr>
+					<td align="center">服务电话</td><td colspan="2">18618166418 ; 13810840866</td>
 				</tr>
 			</table>
 		

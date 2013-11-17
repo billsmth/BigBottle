@@ -153,7 +153,10 @@
 	                	<input type="text" id="district_from" name="district_from" value="东城区" data-clear-btn="true" placeholder="寄件区县" >
 	                </li>
 	                <li data-role="fieldcontain">
-	                	<input type="text" id="company_name_from" name="company_name_from" value="安德路55号院16号楼 2门 106室" data-clear-btn="true" placeholder="单位名称/详细地址" >
+	                	<input type="text" id="company_name_from" name="company_name_from" value="" data-clear-btn="true" placeholder="单位名称" >
+	                </li>
+	                <li data-role="fieldcontain">
+	                	<input type="text" id="detail_from" name="detail_from" value="安德路55号院16号楼 2门 106室" data-clear-btn="true" placeholder="详细地址" >
 	                </li>
 	                <li data-role="fieldcontain">
 	                	<input type="text" id="contact_number_from" name="contact_number_from" value="13810840866" data-clear-btn="true" placeholder="联系电话" >
@@ -185,7 +188,10 @@
 	                	<input type="text" id="district" name="district" value="十三行" data-clear-btn="true" placeholder="收件区县" >
 	                </li>
 	                <li data-role="fieldcontain">
-	                	<input type="text" id="company_name" name="company_name" value="美错之家" data-clear-btn="true" placeholder="单位名称/详细地址" >
+	                	<input type="text" id="company_name" name="company_name" value="美错之家" data-clear-btn="true" placeholder="单位名称" >
+	                </li>
+	                <li data-role="fieldcontain">
+	                	<input type="text" id="detail_to" name="detail_to" value="汇鑫路53号" data-clear-btn="true" placeholder="详细地址" >
 	                </li>
 	                <li data-role="fieldcontain">
 	                	<input type="text" id="contact_number" name="contact_number" value="134875382736" data-clear-btn="true" placeholder="联系电话" >

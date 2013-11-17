@@ -32,6 +32,11 @@ Ext.define('App.view.xsgl.xiaoshouView', {
                 iconCls:'icon-checkin',
                 action:'xsgl_ruku_act'
             },'-', {
+                id:'xsgl_status_id',
+                text:'销售状态',
+                iconCls:'icon-checkin',
+                action:'xsgl_status_act'
+            },'-', {
                 id:'xsgl_edit_id',
                 text:'编辑',
                 iconCls:'icon-edit',
@@ -204,7 +209,7 @@ Ext.define('App.view.xsgl.xiaoshouView', {
 				                                width:400
 				            	               },{
 				                                xtype: 'displayfield',
-				                                fieldLabel: '买家编号',
+				                                fieldLabel: '发件地区',
 				                                labelWidth: 80,
 				                                labelAlign: 'right',
 				                                margin: '0 0 0 30'
@@ -218,13 +223,13 @@ Ext.define('App.view.xsgl.xiaoshouView', {
 				                    	},
 				                    	items:[{
 				                                xtype: 'displayfield',
-				                                fieldLabel: '发件地区',
+				                                fieldLabel: '详细地址',
 				                                labelWidth: 80,
 				                                labelAlign: 'right',
 				                                width:400
 				            	               },{
 				                                xtype: 'displayfield',
-				                                fieldLabel: '详细地址',
+				                                fieldLabel: '单位名称',
 				                                labelWidth: 80,
 				                                labelAlign: 'right',
 				                                margin: '0 0 0 30'
@@ -315,7 +320,7 @@ Ext.define('App.view.xsgl.xiaoshouView', {
 				                                width:400
 				            	               },{
 				                                xtype: 'displayfield',
-				                                fieldLabel: '标签',
+				                                fieldLabel: '单位名称',
 				                                labelWidth: 80,
 				                                labelAlign: 'right',
 				                                margin: '0 0 0 30'
@@ -324,7 +329,7 @@ Ext.define('App.view.xsgl.xiaoshouView', {
 			                },
 			                {
             	            	xtype: 'fieldset',
-				                title: '收件人信息',
+				                title: '其他信息',
 				                margin:'5 20 5 0',
 				                defaultType: 'textfield',
 				                layout: 'anchor',

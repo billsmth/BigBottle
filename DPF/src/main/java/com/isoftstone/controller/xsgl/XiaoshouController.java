@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import net.sf.json.JSONObject;
 
@@ -169,6 +170,18 @@ public class XiaoshouController {
     	JSONObject json=new JSONObject();
     	json.put("POST_INFO", pa);
     	return json.toString();
+    }
+    
+    @RequestMapping("/changeXiaoshouStatus")
+    @ResponseBody
+    public String changeSaleStatus(HttpServletRequest request, HttpServletResponse response,String xiaoshou_id3, String zhuangtai3){
+    	
+    	Xiaoshou xs=new Xiaoshou();
+    	xs.setXiaoshou_id(Long.parseLong(xiaoshou_id3));
+    	xs=xiaoshouService.getXiaoshou(xs);
+    	xs.setZhuangtai(zhuangtai3);
+    	xiaoshouService.updateXiaoshou(xs);
+        return "{'success':true}";
     }
 
     @RequestMapping("/ruku")
