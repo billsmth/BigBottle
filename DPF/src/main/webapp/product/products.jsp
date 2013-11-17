@@ -44,8 +44,8 @@
 				<li><a href="./getProductByID.action?productId=<%=p.getProduct_id()%>">
 		            	<img src="<%=picPath+p.getProduct_id() + "/"+pics[0]%>">
 		            	<h2><%=p.getProduct_name()%></h2>
-		                <p><%=p.getCol2()+" 元"%></p>
-		                <p class="ui-li-aside">大嘴猴</p>
+		                <p>单价:<%=p.getCol2()+" 元"%></p>
+		                <p class="ui-li-aside">运费:<%=p.getCol3()+" 元"%></p>
 	            	</a>
 	            </li>
 			<%
