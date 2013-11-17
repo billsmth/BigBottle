@@ -328,7 +328,7 @@ public class ProductController {
         
         pa.setOrder_id(xiaoshou.getXiaoshou_id());
         pa.setPost_from(request.getParameter("post_from"));
-        //pa.setPeople_id(request.getParameter("people_id"));
+        pa.setPeople_id(request.getParameter("maijia_id"));
         pa.setDeparture(request.getParameter("departure"));
         pa.setProvince_from(request.getParameter("province_from"));
         pa.setCity_from(request.getParameter("city_from"));
@@ -342,6 +342,9 @@ public class ProductController {
         pa.setDistrict(request.getParameter("district"));
         pa.setCompany_name(request.getParameter("company_name"));
         pa.setContact_number(request.getParameter("contact_number"));
+        pa.setNeijian(request.getParameter("neijian"));
+        pa.setNote(request.getParameter("post_from_note"));
+        
         pa.setType(request.getParameter("radio-choice-post"));
         
         postAddressService.savePostAddress(pa);
@@ -350,8 +353,6 @@ public class ProductController {
         return new ModelAndView("soSuccess");
         
     }
-    
-    
     
     @RequestMapping("/getProductByID")
     @ResponseBody

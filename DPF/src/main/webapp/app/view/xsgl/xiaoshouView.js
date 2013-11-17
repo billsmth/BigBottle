@@ -88,7 +88,7 @@ Ext.define('App.view.xsgl.xiaoshouView', {
 						dataIndex:'maijiaxingming', 
 						width:80
 					}, {
-						header:'入库状态',
+						header:'订单状态',
 						dataIndex:'zhuangtai', 
 						width:70, 
 						renderer:showTypeChange
@@ -102,18 +102,333 @@ Ext.define('App.view.xsgl.xiaoshouView', {
 						dataIndex:'beizhu', 
 						flex:1
 					}
-            ]
+            ],
+            
+            dockedItems : [ {
+				xtype : 'tabpanel',
+				dock : 'bottom',
+				height : 520,
+				activeTab : 0,
+				id : 'xiaoshouTab',
+				items : [{
+					xtype : 'panel',
+					title : '订单详情',
+					layout: 'fit',
+					items : [ {
+                    	xtype: 'form',
+                        bodyPadding: 10,
+                        autoScroll: true,
+                        layout: 'anchor',
+                        items: [{
+			                	xtype:'container',
+			                	margin:'5 20 5 10',
+		                    	layout:{
+		                    		align:'stretch',
+		                    		type:'hbox'
+		                    	},
+		                    	items:[{
+	                                xtype: 'displayfield',
+	                                fieldLabel: '寄单号',
+	                                labelWidth: 80,
+	                                labelAlign: 'right',
+	                                width:400
+	            	               },{
+	                                xtype: 'displayfield',
+	                                fieldLabel: '销售编号',
+	                                labelWidth: 80,
+	                                labelAlign: 'right',
+	                                margin: '0 0 0 30'
+	            	              }]
+			                },{
+			                	xtype:'container',
+			                	margin:'5 20 5 10',
+		                    	layout:{
+		                    		align:'stretch',
+		                    		type:'hbox'
+		                    	},
+		                    	items:[{
+	                                xtype: 'displayfield',
+	                                fieldLabel: '寄件方式',
+	                                labelWidth: 80,
+	                                labelAlign: 'right',
+	                                width:400
+	            	              },{
+	                                xtype: 'displayfield',
+	                                fieldLabel: '买家编号',
+	                                labelWidth: 80,
+	                                labelAlign: 'right',
+	                                margin: '0 0 0 30'
+	            	              }]
+			                },{
+            	            	xtype: 'fieldset',
+				                title: '发件人信息',
+				                margin:'5 20 5 0',
+				                defaultType: 'textfield',
+				                layout: 'anchor',
+				                defaults: {
+				                    anchor: '100%',
+		                    		type:'hbox'
+				                },
+		                    	items:[{
+					                	xtype:'container',
+					                	margin:'5 20 5 0',
+				                    	layout:{
+				                    		align:'stretch',
+				                    		type:'hbox'
+				                    	},
+				                    	items:[{
+				                                xtype: 'displayfield',
+				                                fieldLabel: '发件人',
+				                                labelWidth: 80,
+				                                labelAlign: 'right',
+				                                width:400
+				            	               },{
+				                                xtype: 'displayfield',
+				                                fieldLabel: '始发地',
+				                                labelWidth: 80,
+				                                labelAlign: 'right',
+				                                margin: '0 0 0 30'
+				            	              }]
+					                },{
+					                	xtype:'container',
+					                	margin:'5 20 5 0',
+				                    	layout:{
+				                    		align:'stretch',
+				                    		type:'hbox'
+				                    	},
+				                    	items:[{
+				                                xtype: 'displayfield',
+				                                fieldLabel: '联系方式',
+				                                labelWidth: 80,
+				                                labelAlign: 'right',
+				                                width:400
+				            	               },{
+				                                xtype: 'displayfield',
+				                                fieldLabel: '买家编号',
+				                                labelWidth: 80,
+				                                labelAlign: 'right',
+				                                margin: '0 0 0 30'
+				            	              }]
+					                },{
+					                	xtype:'container',
+					                	margin:'5 20 5 0',
+				                    	layout:{
+				                    		align:'stretch',
+				                    		type:'hbox'
+				                    	},
+				                    	items:[{
+				                                xtype: 'displayfield',
+				                                fieldLabel: '发件地区',
+				                                labelWidth: 80,
+				                                labelAlign: 'right',
+				                                width:400
+				            	               },{
+				                                xtype: 'displayfield',
+				                                fieldLabel: '详细地址',
+				                                labelWidth: 80,
+				                                labelAlign: 'right',
+				                                margin: '0 0 0 30'
+				            	              }]
+					                },{
+					                	xtype:'container',
+					                	margin:'5 20 5 0',
+				                    	layout:{
+				                    		align:'stretch',
+				                    		type:'hbox'
+				                    	},
+				                    	items:[{
+				                                xtype: 'displayfield',
+				                                fieldLabel: '内件名',
+				                                labelWidth: 80,
+				                                labelAlign: 'right',
+				                                width:400
+				            	               },{
+				                                xtype: 'displayfield',
+				                                fieldLabel: '邮寄备注',
+				                                labelWidth: 80,
+				                                labelAlign: 'right',
+				                                margin: '0 0 0 30'
+				            	              }]
+					                }]
+			                },{
+            	            	xtype: 'fieldset',
+				                title: '收件人信息',
+				                margin:'5 20 5 0',
+				                defaultType: 'textfield',
+				                layout: 'anchor',
+				                defaults: {
+				                    anchor: '100%',
+		                    		type:'hbox'
+				                },
+		                    	items:[{
+					                	xtype:'container',
+					                	margin:'5 20 5 0',
+				                    	layout:{
+				                    		align:'stretch',
+				                    		type:'hbox'
+				                    	},
+				                    	items:[{
+				                                xtype: 'displayfield',
+				                                fieldLabel: '收件人',
+				                                labelWidth: 80,
+				                                labelAlign: 'right',
+				                                width:400
+				            	               },{
+				                                xtype: 'displayfield',
+				                                fieldLabel: '目的地',
+				                                labelWidth: 80,
+				                                labelAlign: 'right',
+				                                margin: '0 0 0 30'
+				            	              }]
+					                },{
+					                	xtype:'container',
+					                	margin:'5 20 5 0',
+				                    	layout:{
+				                    		align:'stretch',
+				                    		type:'hbox'
+				                    	},
+				                    	items:[{
+				                                xtype: 'displayfield',
+				                                fieldLabel: '收件人电话',
+				                                labelWidth: 80,
+				                                labelAlign: 'right',
+				                                width:400
+				            	               },{
+				                                xtype: 'displayfield',
+				                                fieldLabel: '收件地址',
+				                                labelWidth: 80,
+				                                labelAlign: 'right',
+				                                margin: '0 0 0 30'
+				            	              }]
+					                },{
+					                	xtype:'container',
+					                	margin:'5 20 5 0',
+				                    	layout:{
+				                    		align:'stretch',
+				                    		type:'hbox'
+				                    	},
+				                    	items:[{
+				                                xtype: 'displayfield',
+				                                fieldLabel: '详细地址',
+				                                labelWidth: 80,
+				                                labelAlign: 'right',
+				                                width:400
+				            	               },{
+				                                xtype: 'displayfield',
+				                                fieldLabel: '标签',
+				                                labelWidth: 80,
+				                                labelAlign: 'right',
+				                                margin: '0 0 0 30'
+				            	              }]
+					                }]
+			                },
+			                {
+            	            	xtype: 'fieldset',
+				                title: '收件人信息',
+				                margin:'5 20 5 0',
+				                defaultType: 'textfield',
+				                layout: 'anchor',
+				                defaults: {
+				                    anchor: '100%',
+		                    		type:'hbox'
+				                },
+		                    	items:[{
+					                	xtype:'container',
+					                	margin:'5 20 5 0',
+				                    	layout:{
+				                    		align:'stretch',
+				                    		type:'hbox'
+				                    	},
+				                    	items:[{
+				                                xtype: 'displayfield',
+				                                fieldLabel: '标签',
+				                                labelWidth: 80,
+				                                labelAlign: 'right',
+				                                width:400
+				            	               },{
+				                                xtype: 'displayfield',
+				                                fieldLabel: '标签',
+				                                labelWidth: 80,
+				                                labelAlign: 'right',
+				                                margin: '0 0 0 30'
+				            	              }]
+					                },{
+					                	xtype:'container',
+					                	margin:'5 20 5 0',
+				                    	layout:{
+				                    		align:'stretch',
+				                    		type:'hbox'
+				                    	},
+				                    	items:[{
+				                                xtype: 'displayfield',
+				                                fieldLabel: '标签',
+				                                labelWidth: 80,
+				                                labelAlign: 'right',
+				                                width:400
+				            	               },{
+				                                xtype: 'displayfield',
+				                                fieldLabel: '标签',
+				                                labelWidth: 80,
+				                                labelAlign: 'right',
+				                                margin: '0 0 0 30'
+				            	              }]
+					                },{
+					                	xtype:'container',
+					                	margin:'5 20 5 0',
+				                    	layout:{
+				                    		align:'stretch',
+				                    		type:'hbox'
+				                    	},
+				                    	items:[{
+				                                xtype: 'displayfield',
+				                                fieldLabel: '标签',
+				                                labelWidth: 80,
+				                                labelAlign: 'right',
+				                                width:400
+				            	               },{
+				                                xtype: 'displayfield',
+				                                fieldLabel: '标签',
+				                                labelWidth: 80,
+				                                labelAlign: 'right',
+				                                margin: '0 0 0 30'
+				            	              }]
+					                }]
+			                }
+                        ]
+					} ]
+				}]
+			} ]
         });
         me.callParent(arguments);
-        function showTypeChange(val, meta) {
-        	if(val == '0') {
-        		meta.tdCls = 'red';
-                return '未入库';
-            } else if(val == '1'){
-            	meta.tdCls = 'green';
-                return '已入库';
+        function showTypeChange(val, meta, record) {
+            var retVal = '';
+            if (val == 0) {
+                retVal = "待付款";
+            }else if (val == '1') {
+                retVal ='<span style=\'color:red;font-weight:bold;\'>已付款</span>';
+            }else if (val == '2') {
+                retVal ="已确定";
+            }else if (val == '3') {
+                retVal ="已发货";
+            }else if (val == '4') {
+                retVal ="已收货";
+            }else if (val == '5') {
+                retVal ='<span style=\'color:green;font-weight:bold;\'>完成</span>';
+            }else if (val == '6') {
+                retVal ="关闭";
             }
+            return retVal;
         }
+        
+        //function showTypeChange(val, meta) {
+        //	if(val == '0') {
+        //		meta.tdCls = 'red';
+        //        return '未入库';
+        //    } else if(val == '1'){
+        //    	meta.tdCls = 'green';
+        //        return '已入库';
+        //    }
+        //}
         function showDelStatus(val) {
             if(val == '0') {
                 return '未删除';

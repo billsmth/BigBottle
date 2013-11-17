@@ -21,13 +21,15 @@
 		<result property = "company_name" column = "company_name"/>
 		<result property = "contact_number" column = "contact_number"/>
 		<result property = "type" column = "type"/>
+		<result property = "neijian" column = "neijian"/>
+		<result property = "note" column = "note"/>
 		<result property = "col1" column = "col1"/>
 		<result property = "col2" column = "col2"/>
     </resultMap>
     
     <select id = "getPostAddressList" resultMap = "PostAddressResult">
         select post_id,order_id,post_from,people_id,departure,province_from,city_from,district_from,company_name_from, 
-			contact_number_from,post_to,destination,province,city,district,company_name,contact_number,type,col1,col2 
+			contact_number_from,post_to,destination,province,city,district,company_name,contact_number,type,neijian,note,col1,col2 
         	from post_address
     </select>
     <select id = "getMaxID" resultMap = "PostAddressResult">
@@ -35,7 +37,7 @@
     </select>
     <select id = "getPostAddress" resultMap = "PostAddressResult" parameterType = "com.isoftstone.model.jxc.PostAddress">
         select post_id,order_id,post_from,people_id,departure,province_from,city_from,district_from,company_name_from, 
-			contact_number_from,post_to,destination,province,city,district,company_name,contact_number,type,col1,col2 
+			contact_number_from,post_to,destination,province,city,district,company_name,contact_number,type,neijian,note,col1,col2 
         	from post_address 
         	<trim prefix="where" prefixOverrides="and|or">
 		    	<if test="post_id != '' and post_id != null">
@@ -67,6 +69,8 @@
 				company_name, 
 				contact_number, 
 				type, 
+				neijian, 
+				note, 
 				col1, 
 				col2
         	) values (
@@ -88,6 +92,8 @@
 				#{company_name}, 
 				#{contact_number}, 
 				#{type}, 
+				#{neijian}, 
+				#{note}, 
 				#{col1}, 
 				#{col2}
 	        )
@@ -111,6 +117,8 @@
 			company_name = #{company_name}, 
 			contact_number = #{contact_number}, 
 			type = #{type}, 
+			neijian = #{neijian}, 
+			note = #{note}, 
 			col1 = #{col1}, 
 			col2 = #{col2}
         where post_id = #{post_id}

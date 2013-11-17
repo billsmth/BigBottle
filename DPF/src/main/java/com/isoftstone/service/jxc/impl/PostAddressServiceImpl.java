@@ -24,7 +24,11 @@ public class PostAddressServiceImpl implements PostAddressService {
     
     @Override
     public PostAddress getPostAddress(PostAddress postAddress) {
-        return postAddressDao.getPostAddress(postAddress).get(0);
+    	List<PostAddress> list=postAddressDao.getPostAddress(postAddress);
+    	if(list.size()>0){
+    		postAddress=list.get(0);
+    	}
+        return postAddress;
     }
     
     @Override

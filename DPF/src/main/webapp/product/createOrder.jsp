@@ -159,7 +159,10 @@
 	                	<input type="text" id="contact_number_from" name="contact_number_from" value="13810840866" data-clear-btn="true" placeholder="联系电话" >
 	                </li>
 	                <li data-role="fieldcontain">
-	                	<textarea name="post_from_note" id="post_from_note" placeholder="备注信息" data-clear-btn="true"></textarea>
+	                	<input type="text" id="neijian" name="neijian" value="" data-clear-btn="true" placeholder="输入内件名" >
+	                </li>
+	                <li data-role="fieldcontain">
+	                	<textarea name="post_from_note" id="post_from_note" placeholder="输入寄件备注信息" data-clear-btn="true"></textarea>
 	                </li>
 			    </ul>
 			</div>

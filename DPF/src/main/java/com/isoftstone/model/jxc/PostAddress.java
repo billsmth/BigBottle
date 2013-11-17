@@ -20,6 +20,8 @@ public class PostAddress {
 	private String company_name;
 	private String contact_number;
 	private String type;
+	private String neijian;
+	private String note;
 	private String col1;
 	private String col2;
 	
@@ -130,6 +132,18 @@ public class PostAddress {
 	}
 	public void setType(String type) {
 		this.type = type;
+	}
+	public String getNeijian() {
+		return neijian;
+	}
+	public void setNeijian(String neijian) {
+		this.neijian = neijian;
+	}
+	public String getNote() {
+		return note;
+	}
+	public void setNote(String note) {
+		this.note = note;
 	}
 	public String getCol1() {
 		return col1;

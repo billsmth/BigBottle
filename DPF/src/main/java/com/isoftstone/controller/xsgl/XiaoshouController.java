@@ -7,6 +7,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import net.sf.json.JSONObject;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,8 +17,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.isoftstone.common.Tools;
 import com.isoftstone.model.jxc.Kucun;
+import com.isoftstone.model.jxc.PostAddress;
 import com.isoftstone.model.jxc.Xiaoshou;
 import com.isoftstone.service.jxc.KucunService;
+import com.isoftstone.service.jxc.PostAddressService;
 import com.isoftstone.service.jxc.XiaoshouService;
 
 @Controller
@@ -27,7 +31,8 @@ public class XiaoshouController {
     private XiaoshouService xiaoshouService;
     @Autowired
     private KucunService kucunService;
-
+    @Autowired
+    private PostAddressService postAddressService;
     @RequestMapping("/xiaoshoumgt")
     public ModelAndView listXiaoshou() {
 
@@ -155,6 +160,16 @@ public class XiaoshouController {
         return list;
     }
     
+    @RequestMapping(value="/getPostInfo",produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public String getPostInfo(String xiaoshouId){
+    	PostAddress pa=new PostAddress();
+    	pa.setOrder_id(Long.parseLong(xiaoshouId));
+    	pa=postAddressService.getPostAddress(pa);
+    	JSONObject json=new JSONObject();
+    	json.put("POST_INFO", pa);
+    	return json.toString();
+    }
 
     @RequestMapping("/ruku")
     @ResponseBody

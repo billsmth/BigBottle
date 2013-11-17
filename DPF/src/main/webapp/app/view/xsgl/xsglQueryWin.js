@@ -106,26 +106,18 @@ Ext.define('App.view.xsgl.xsglQueryWin', {
             				    name:'maijiaxingming',
             				    emptyText:"支持模糊查询,前后任意一致",
             				    allowBlank: true
-            				}, new Ext.form.RadioGroup({
-            				    fieldLabel: '入库状态',
-            				    id:'zhuangtai2',
-            				    name:'zhuangtai',
-            				    width: 450,
-            				    items: [{
-            				        name: 'zhuangtai',
-            				        inputValue: '',
-            				        boxLabel: '任     意',
-            				        checked: true
-            				    }, {
-            				        name: 'zhuangtai',
-            				        inputValue: '0',
-            				        boxLabel: '未入库'
-            				    }, {
-            				        name: 'zhuangtai',
-            				        inputValue: '1',
-            				        boxLabel: '已入库'
-            				    }]
-            				}),{
+            				}, {
+            				    fieldLabel: '订单状态',
+                                name: 'zhuangtai',
+                                xtype: 'combobox',
+                                anchor: '100%',
+                                store:'com.XiaoshouStatusStore',
+            	                queryMode: 'local',
+            	                displayField: 'value',
+            	                valueField: 'key',
+            	                triggerAction: 'all',
+                                allowBlank: true
+            				}, {
             				    xtype:'datefield',
             				    fieldLabel:'统计日期(始)',
             				    width: 400,

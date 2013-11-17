@@ -52,7 +52,7 @@
 												zhuangtai="";
 												postStatus="";
 												if(xiaoshou.zhuangtai=="0"){
-													zhuangtai="代付款";
+													zhuangtai="待付款";
 													postStatus="myOrder.png";
 												}else if(xiaoshou.zhuangtai=="1"){
 													zhuangtai="已付款";
