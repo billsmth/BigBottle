@@ -21,6 +21,7 @@
 	<form id="addressListForm" name="addressListForm" method="POST" action="#">
 		<div data-role="page" id="addressListPage">
 			<script type="text/javascript">
+				alert("开发中，功能不可用。。。");
 				var db;
 				if (db == null) {
 			    	db = window.openDatabase("wg5adb", "1.0", "database", 200000);

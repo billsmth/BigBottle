@@ -25,6 +25,30 @@
 			
 			<ul data-role="listview" data-split-icon="right" data-split-theme="d">
 				<li>
+					<a href="#">
+						<img src="../image/album-bb.jpg" />
+						<h3>设置</h3>
+						<p>设置系统运行参数</p>
+					</a>
+					<a href="#" data-rel="dialog" data-transition="slideup">动作</a>
+				</li>
+				<li>
+					<a href="#">
+						<img src="../image/album-hc.jpg" />
+						<h3>更新</h3>
+						<p>更新系统表单</p>
+					</a>
+					<a href="#" data-rel="dialog" data-transition="slideup">动作</a>
+				</li>
+				<li>
+					<a href="#">
+						<img src="../image/album-p.jpg" />
+						<h3>帮助</h3>
+						<p>查看系统帮助信息</p>
+					</a>
+					<a href="#" data-rel="dialog" data-transition="slideup">动作</a>
+				</li>
+				<li>
 					<a href="./login.jsp" data-transition="slideup" rel="external">
 						<img src="../images/login.png" />
 						<h3>登录</h3>
