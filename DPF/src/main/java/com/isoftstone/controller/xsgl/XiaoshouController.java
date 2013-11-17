@@ -119,7 +119,7 @@ public class XiaoshouController {
         
         return "{'success':true}";
     }
-
+    
     @RequestMapping("/json/list")
     @ResponseBody
     public List<Xiaoshou> getXiaoshouListByJson(HttpServletRequest request) {

@@ -162,7 +162,6 @@
 	                	<textarea name="post_from_note" id="post_from_note" placeholder="备注信息" data-clear-btn="true"></textarea>
 	                </li>
 			    </ul>
-			    <a data-rel="close" data-role="button" data-theme="b" data-icon="delete">关闭</a>
 			</div>
 			<div data-role="panel" id="right-panel" data-display="overlay" data-position="right" data-theme="c">
 				<label>收件人地址</label>
@@ -189,7 +188,6 @@
 	                	<input type="text" id="contact_number" name="contact_number" value="134875382736" data-clear-btn="true" placeholder="联系电话" >
 	                </li>
 	            </ul>
-			    <a data-rel="close" data-role="button" data-theme="b" data-icon="delete">关闭</a>
 			</div>
 		</form>
 		<div data-role="footer" data-position="fixed" >

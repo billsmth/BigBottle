@@ -453,40 +453,47 @@ public class ProductController {
     @ResponseBody
     public String upfile(HttpServletRequest request, Product product, String target_product_id) {
     	
-    	System.out.println("upfile for :"+target_product_id);
-    	String imageNames="";
-    	if(product.getFiletest1().getSize()>0){                    
-    		try {     
-    			imageNames+=SaveFileFromInputStream(product.getFiletest1().getInputStream(), target_product_id, product.getFiletest1().getOriginalFilename(), request)+",";     
-    		} catch (IOException e) {     
-    			System.out.println(e.getMessage());     
-    			return null;     
-    		}     
-    	}
-    	if(product.getFiletest2().getSize()>0){                    
-    		try {     
-    			imageNames+=SaveFileFromInputStream(product.getFiletest2().getInputStream(), target_product_id, product.getFiletest2().getOriginalFilename(), request)+",";     
-    		} catch (IOException e) {     
-    			System.out.println(e.getMessage());     
-    			return null;     
-    		}     
-    	}
-    	if(product.getFiletest3().getSize()>0){                    
-    		try {     
-    			imageNames+=SaveFileFromInputStream(product.getFiletest3().getInputStream(), target_product_id, product.getFiletest3().getOriginalFilename(), request)+",";     
-    		} catch (IOException e) {     
-    			System.out.println(e.getMessage());     
-    			return null;     
-    		}     
-    	}
     	product.setProduct_id(Long.parseLong(target_product_id));
     	Product targetProduct=productService.getProduct(product);
-    	if(targetProduct.getImage_name()!=null){
-    		targetProduct.setImage_name(targetProduct.getImage_name() + imageNames);
+    	String imageNames="";
+    	String lastName;
+    	if(!Tools.isBlank(targetProduct.getImage_name())){
+    		imageNames=targetProduct.getImage_name();
+    		String[] picNames=imageNames.split(",");
+    		lastName=picNames[picNames.length-1].substring(0,picNames[picNames.length-1].lastIndexOf("."));
+    		lastName=String.valueOf(Long.parseLong(lastName)+1);
     	}else{
-    		targetProduct.setImage_name(imageNames);
+    		lastName=targetProduct.getProduct_id()+"001";
+    		//targetProduct.setImage_name(imageNames);
     	}
-    	
+    	System.out.println("upfile for :"+target_product_id);
+    	long fileIndex=Long.parseLong(lastName);
+    	if(product.getFiletest1().getSize()>0){
+    		try {
+    			imageNames+=SaveFileFromInputStream(product.getFiletest1().getInputStream(), target_product_id,fileIndex, product.getFiletest1().getOriginalFilename(), request)+",";     
+    		} catch (IOException e) {
+    			System.out.println(e.getMessage());
+    			return null;     
+    		}     
+    	}
+    	if(product.getFiletest2().getSize()>0){             
+    		try {
+    			imageNames+=SaveFileFromInputStream(product.getFiletest2().getInputStream(), target_product_id,fileIndex+1, product.getFiletest2().getOriginalFilename(), request)+",";     
+    		} catch (IOException e) {
+    			System.out.println(e.getMessage());     
+    			return null;     
+    		}     
+    	}
+    	if(product.getFiletest3().getSize()>0){             
+    		try {
+    			imageNames+=SaveFileFromInputStream(product.getFiletest3().getInputStream(), target_product_id,fileIndex+2, product.getFiletest3().getOriginalFilename(), request)+",";     
+    		} catch (IOException e) {
+    			System.out.println(e.getMessage());     
+    			return null;     
+    		}     
+    	}
+
+    	targetProduct.setImage_name(imageNames);
     	User user = (User) request.getSession().getAttribute("user");
         
     	targetProduct.setUpdater_id(user.getPeopleId());
@@ -497,7 +504,7 @@ public class ProductController {
     	return "{'success':true}";
 	}
     
-    public String SaveFileFromInputStream(InputStream stream, String fileDir, String filename, HttpServletRequest request) throws IOException {
+    public String SaveFileFromInputStream(InputStream stream, String fileDir,long index, String filename, HttpServletRequest request) throws IOException {
 		String savePath = request.getSession().getServletContext().getRealPath("/Productlist/");
 		
 		String productFileDir = savePath + "/" + fileDir + "/";
@@ -505,8 +512,7 @@ public class ProductController {
 		if (!file.exists()) {
 			file.mkdir();
 		}
-		String fileName = java.util.UUID.randomUUID().toString();
-        filename=fileName+filename.substring(filename.lastIndexOf("."));
+        filename=index+filename.substring(filename.lastIndexOf("."));
         File toFile = new File(file, filename);
         OutputStream os = new FileOutputStream(toFile);
         byte[] buffer = new byte[1024];

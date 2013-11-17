@@ -11,7 +11,8 @@
 	<meta charset="UTF-8">
     <meta http-equiv="Content-type" name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width">
 	<link rel="stylesheet" href="../css/jquery.mobile-1.3.2.css" />
-	
+	<link rel="stylesheet" href="../css/jqm-demos.css" />
+	<link rel="stylesheet" href="../css/grid-listview.css">
 	<script src="../js/cordova.js"></script>
 	<script src="../js/jquery-1.9.1.min.js"></script>
 	<script src="../js/jquery.mobile-1.3.2.min.js"></script>
@@ -21,33 +22,80 @@
 	<form id="addressListForm" name="addressListForm" method="POST" action="#">
 		<div data-role="page" id="addressListPage">
 			<script type="text/javascript">
-				var db;
-				if (db == null) {
-			    	db = window.openDatabase("wg5adb", "1.0", "database", 200000);
-		    	}
+				$(document).bind("mobileinit",function() {
+					$.support.cors = true;
+					$.mobile.allowCrossDomainPages=true;
+				});
+				document.addEventListener("deviceready", onDeviceReady, false);
+		       	function onDeviceReady() {
+		       	
+		       		if (db == null) {
+				    	db = window.openDatabase("wg5adb", "1.0", "database", 200000);
+			    	}
 		    	
-		    	
-				function saveUserAddress(){
-					alert("saveUserAddress");
-					var post_from=$("#post_from").val();
-					var departure=$("#departure").val();
-					var province_from=$("#province_from").val();
-					var city_from=$("#city_from").val();
-					var district_from=$("#district_from").val();
-					var company_name_from=$("#company_name_from").val();
-					var contact_number_from=$("#contact_number_from").val();
-					var post_from_note=$("#post_from_note").val();
-					
-					db.transaction(function(tx) {
-				    	var sql = "INSERT INTO USER_ADD (POST_FROM, DEPARTURE, PROVINCE_FROM, CITY_FROM, DISTRICT_FROM, COMPANY_NAME_FROM, CONTACT_NUMBER_FROM, POST_FROM_NOTE, DEF) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-		                var params = [ post_from, departure, province_from, city_from, district_from, company_name_from, contact_number_from, post_from_note, "0"];
-		                tx.executeSql(sql, params, function(tx, results) {
-		                    showInfor("新增记录成功！");
-		                }, errorCB);
-		            });
+			    	db.transaction(function(tx) {
+		            	tx.executeSql('SELECT * FROM USER_TABLE ',
+		                    [], function(tx, results) {
+		                        if (results.rows.length > 0) {
+		                            var item = results.rows.item(0);
+		                        	//alert("dfsdfs"+item.ID+item.NAME+item.PWD);
+									$.ajax({
+										type: 'POST',
+										url: "<%=hostPath%>/xiaoshou/json/list.action?maijia_id="+item.ID,
+										success: function(data,statu){
+											//alert(data.length);
+											var htmlStr="";
+											var zhuangtai;
+											var postStatus;
+											for(var i=0;i<data.length;i++){
+												var xiaoshou=data[i];
+												zhuangtai="";
+												postStatus="";
+												if(xiaoshou.zhuangtai=="0"){
+													zhuangtai="代付款";
+													postStatus="myOrder.png";
+												}else if(xiaoshou.zhuangtai=="1"){
+													zhuangtai="已付款";
+													postStatus="paid.png";
+												}else if(xiaoshou.zhuangtai=="2"){
+													zhuangtai="已确定";
+													postStatus="deal.png";
+												}else if(xiaoshou.zhuangtai=="3"){
+													zhuangtai="已发货";
+													postStatus="underPost.png";
+												}else if(xiaoshou.zhuangtai=="4"){
+													zhuangtai="已收货";
+													postStatus="arrive.png";
+												}else if(xiaoshou.zhuangtai=="5"){
+													zhuangtai="完成";
+													postStatus="complete.png";
+												}else if(xiaoshou.zhuangtai=="6"){
+													zhuangtai="关闭";
+													postStatus="off.png";
+												}
+												htmlStr+="<li>"
+						                    		+"<a href=\'#\' id=\'"+xiaoshou.xiaoshou_id+"\'>"
+						                    		+"<img src=\'../images/"+postStatus+"\'>"+xiaoshou.xiaoshou_id
+						                    		+"<h2>"+xiaoshou.col1+"</h2>"
+									                +"<p>￥"+xiaoshou.shijishoukuan+" 元</p>"
+									                +"<p class=\'ui-li-aside\'>"+zhuangtai+"</p>"
+						                			+"</a></li>";
+											}
+											$("#customes_list").append(htmlStr);
+											$("#customes_list").listview('refresh');
+									  		//alert(data[0].xiaoshou_id);
+										},
+										dataType: "json"
+									});
+		                            
+		                            window.localStorage.setItem("USER", item);
+		                        }else{
+		                        	showInfor("您还没有登录，购买将以匿名方式购买，请注意填写收货地址。");
+		                        	window.localStorage.removeItem("USER");
+		                        }
+		                    }, errorCB);
+					});
 				}
-				
-				
 			</script>
 			<div data-role="header" data-position="fixed">
 				<h1>我的订单</h1>
@@ -55,23 +103,6 @@
 			</div>
 			<div data-role="content" id="customerAddressList" >
 	            <ul data-role="listview" data-inset="true" id="customes_list">
-        			<li data-role="fieldcontain">
-	                    <a href="#" id="post_people0" data-transition="fade" data-theme="" data-icon="edit">
-	                    	<img src="../images/customer.png">阿良河北 保定
-	                    </a>
-	                </li>
-	                <li>
-	                    <a href="#" id="post_people1" data-transition="fade" data-theme="" data-icon="edit">
-	                    	<img src="../images/customer.png">
-	                    	唐老鸭 广东 广州
-	                    </a>
-	                </li>
-	                <li>
-	                    <a href="#" id="post_people2" data-transition="fade" data-theme="" data-icon="edit">
-	                    	<img src="../images/customer.png">
-	                    	豆丁 上海 杨浦
-	                    </a>
-	                </li>
                 </ul>
 			</div>
 			<div data-role="footer" data-position="fixed" >
