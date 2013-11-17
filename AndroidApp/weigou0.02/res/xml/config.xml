@@ -33,9 +33,8 @@
     <access origin="*"/>
 
     <!-- <content src="http://mysite.com/myapp.html" /> for external pages -->
-    <!--content src="page/main1.html" /-->
     <content src="http://192.168.1.2:8080/wg5a/product/main.jsp" />
-<preference name="loglevel" value="DEBUG" />
+	<preference name="loglevel" value="DEBUG" />
     <!--
       <preference name="splashscreen" value="resourceName" />
       <preference name="backgroundColor" value="0xFFF" />
