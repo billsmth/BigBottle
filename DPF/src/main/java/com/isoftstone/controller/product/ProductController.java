@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.isoftstone.common.ImageUtils;
 import com.isoftstone.common.Tools;
 import com.isoftstone.model.acl.User;
 import com.isoftstone.model.jxc.Kucun;
@@ -36,7 +37,7 @@ import com.isoftstone.service.jxc.XiaoshouService;
 @Controller
 @RequestMapping("/product")
 public class ProductController {
-
+	
     @Autowired
     private ProductService productService;
     
@@ -440,7 +441,7 @@ public class ProductController {
 		String productFileDir = savePath + "/" + product.getProduct_id() + "/";
 		File file = new File(productFileDir);
 		if (file.exists()) {
-			productFileDir = savePath + "/" + product.getProduct_id() + "/"+picId;
+			productFileDir = savePath + "/" + product.getProduct_id() + "/" + picId;
 			file = new File(productFileDir);
 			if (file.exists()) {
 				file.delete();
@@ -452,6 +453,25 @@ public class ProductController {
     	return "{'success':true}";
     }
     
+    @RequestMapping("/createIndexPic")
+    @ResponseBody
+    public String createIndexPic(HttpServletRequest request, Product product, String picId) {
+    	System.out.println("Product>>createIndexPic>>start");
+    	
+    	String savePath = request.getSession().getServletContext().getRealPath("/Productlist/");
+		
+		String productFilePic = savePath + "/" + product.getProduct_id() + "/" + picId;
+		String productIndexPic=savePath + "/" + product.getProduct_id() + "/indexPic.jpg";
+		File file = new File(productIndexPic);
+		if (file.exists()) {
+			file.delete();
+		}
+		ImageUtils.scale4(productFilePic,productIndexPic,115,115);
+    	
+    	System.out.println("Product>>createIndexPic>>end");
+    	return "{'success':true}";
+    }
+    
     @RequestMapping("/upfile")
     @ResponseBody
     public String upfile(HttpServletRequest request, Product product, String target_product_id) {
@@ -460,6 +480,7 @@ public class ProductController {
     	Product targetProduct=productService.getProduct(product);
     	String imageNames="";
     	String lastName;
+    	boolean createIndexFlg=false;
     	if(!Tools.isBlank(targetProduct.getImage_name())){
     		imageNames=targetProduct.getImage_name();
     		String[] picNames=imageNames.split(",");
@@ -467,13 +488,21 @@ public class ProductController {
     		lastName=String.valueOf(Long.parseLong(lastName)+1);
     	}else{
     		lastName=targetProduct.getProduct_id()+"001";
+    		createIndexFlg=true;
     		//targetProduct.setImage_name(imageNames);
     	}
     	System.out.println("upfile for :"+target_product_id);
     	long fileIndex=Long.parseLong(lastName);
     	if(product.getFiletest1().getSize()>0){
     		try {
-    			imageNames+=SaveFileFromInputStream(product.getFiletest1().getInputStream(), target_product_id,fileIndex, product.getFiletest1().getOriginalFilename(), request)+",";     
+    			
+    			String productFirstPicName=SaveFileFromInputStream(product.getFiletest1().getInputStream(), target_product_id,fileIndex, product.getFiletest1().getOriginalFilename(), request);     
+    			imageNames += productFirstPicName+",";
+    			String savePath = request.getSession().getServletContext().getRealPath("/Productlist/");
+    			String productIndexPic = savePath + "/" + target_product_id + "/"+Tools.PROUDCT_INDEX_PIC_NAME;
+    			String productFirstPic = savePath + "/" + target_product_id + "/"+productFirstPicName;
+    			
+    			ImageUtils.scale4(productFirstPic,productIndexPic,115,115);
     		} catch (IOException e) {
     			System.out.println(e.getMessage());
     			return null;     

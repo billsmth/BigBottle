@@ -1,5 +1,6 @@
 <%@page language="java" contentType="text/html; charset=utf-8"%>
 <%@page import="com.isoftstone.model.jxc.Product"%>
+<%@page import="com.isoftstone.common.Tools"%>
 <%@page import="java.util.List"%>
 
 <%
@@ -38,11 +39,9 @@
 	        	Product p=null;
 				for(int i=0;i<list.size();i++){
 					p=list.get(i);
-					String imgNames = p.getImage_name();
-					String[] pics = imgNames.split(",");
 			%>	
 				<li><a href="./getProductByID.action?productId=<%=p.getProduct_id()%>">
-		            	<img src="<%=picPath+p.getProduct_id() + "/"+pics[0]%>">
+		            	<img src="<%=picPath+p.getProduct_id() + "/"+Tools.PROUDCT_INDEX_PIC_NAME%>">
 		            	<h2><%=p.getProduct_name()%></h2>
 		                <p>单价:<%=p.getCol2()+" 元"%></p>
 		                <p class="ui-li-aside">运费:<%=p.getCol3()+" 元"%></p>

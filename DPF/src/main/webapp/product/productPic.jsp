@@ -6,10 +6,10 @@
 	Product p = (Product) request.getAttribute("PRODUCT_PICS");
 	String imgNames = p.getImage_name();
 	String[] pics = imgNames.split(",");
-	String picPath = request.getScheme() + "://"
+	String hostPath=request.getScheme() + "://"
 			+ request.getServerName() + ":" + request.getServerPort()
-			+ request.getContextPath() + "/productlist/"
-			+ p.getProduct_id() + "/";
+			+ request.getContextPath()+ "/";
+	String picPath = hostPath+ "productlist/"+ p.getProduct_id() + "/";
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -30,19 +30,36 @@ td {
 var productId=<%=p.getProduct_id()%>;
 function delProductPic(picId){
 	Ext.Msg.confirm("请确认", "确认要删除图片 [ "+ picId +" ] 吗?", function(id){
-    		if (id == "yes") {
-	    		var values={product_id:productId,picId:picId};
-				Ext.Ajax.request({
-			     url: '<%=request.getScheme() + "://"+ request.getServerName() + ":" + request.getServerPort()+ request.getContextPath()%>/product/delPic.action',
-				     params: values,
-				     success: function (response){
-				     	//var text=response.responseText;
-				     	//Ext.MessageBox.alert("提示", "图片[ "+picId+" ] 删除成功!");
-				     	window.location.reload();
-				     },
-				     scope: this
-				});
-    		}
+   		if (id == "yes") {
+    		var values={product_id:productId,picId:picId};
+			Ext.Ajax.request({
+				url: '<%=hostPath%>product/delPic.action',
+				params: values,
+				success: function (response){
+					//var text=response.responseText;
+			     	//Ext.MessageBox.alert("提示", "图片[ "+picId+" ] 删除成功!");
+			     	window.location.reload();
+				},
+				scope: this
+			});
+   		}
+    });
+}
+function createProductIndexPic(picId){
+	Ext.Msg.confirm("请确认", "确认要用图片 [ "+ picId +" ] 作为产品缩微图吗?", function(id){
+   		if (id == "yes") {
+    		var values={product_id:productId,picId:picId};
+			Ext.Ajax.request({
+		     url: '<%=hostPath%>product/createIndexPic.action',
+			     params: values,
+			     success: function (response){
+			     	//var text=response.responseText;
+			     	//Ext.MessageBox.alert("提示", "图片[ "+picId+" ] 删除成功!");
+			     	window.location.reload();
+			     },
+			     scope: this
+			});
+   		}
     });
 }
 </script>
@@ -70,14 +87,31 @@ function delProductPic(picId){
 							} else {
 						%>
 						<tr style="background:#5493a4">
-							<td height="16" align="left" colspan="3">&nbsp;</td>
+							<td height="16" align="left" colspan="3">&nbsp;<strong>索引图片:[indexPic.jpg]</strong></td>
+						</tr>
+						<tr>
+							<td align="center">
+								<table width="100%" border="0" cellspacing="0" cellpadding="0"
+									style="border:1px solid #99bce8;margin-bottom:3px">
+									<tr style="background:#1798c4">
+										<td align="left" style="padding:0px 7px 0px 7px"><img src="<%=picPath%>indexPic.jpg" />
+										</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+						<tr style="background:#5493a4">
+							<td height="16" align="left" colspan="3">&nbsp;<strong>产品图片:</strong></td>
 						</tr>
 						<%
 							}
 							for (int i = 0; i < pics.length; i++) {
 						%>
 						<tr style="background:#7adfa4">
-							<td height="16" align="left" colspan="3">&nbsp;<%=pics[i]%>&nbsp;<input type="button" value="删除" onclick="delProductPic('<%=pics[i]%>')"/></td>
+							<td height="16" align="left" colspan="3">
+							&nbsp;<%=pics[i]%>
+							&nbsp;<input type="button" value="删除" onclick="delProductPic('<%=pics[i]%>')"/>
+							&nbsp;<input type="button" value="设为索引图片" onclick="createProductIndexPic('<%=pics[i]%>')"/></td>
 						</tr>
 						<tr>
 							<td align="center">
