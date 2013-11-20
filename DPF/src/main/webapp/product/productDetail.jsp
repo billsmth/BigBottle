@@ -6,6 +6,9 @@
 	Product p = (Product) request.getAttribute("PRODUCTDETAIL");
 	String imgNames = p.getImage_name();
 	String[] pics = imgNames.split(",");
+	for(int i=0;i<pics.length;i++){
+		pics[i]=pics[i].replace(".", "s.");
+	}
 	String hostPath=request.getScheme() + "://"
 			+ request.getServerName() + ":" + request.getServerPort()
 			+ request.getContextPath()+ "/";

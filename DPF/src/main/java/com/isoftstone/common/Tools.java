@@ -15,7 +15,11 @@ public class Tools {
 	public static SimpleDateFormat FORMATTER1 = new SimpleDateFormat("yyyyMMdd");
 	public static SimpleDateFormat FORMATTER2 = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 	public static SimpleDateFormat FORMATTER3 = new SimpleDateFormat("yyyy-MM-dd");
-	public static String PROUDCT_INDEX_PIC_NAME="indexPic.jpg";
+	
+	public static String PROUDCT_INDEX_PIC_NAME = "indexPic.jpg";
+	public static int PRODUCT_DESP_HEIGHT = 640;
+	public static int PRODUCT_DESP_WIDTH = 480;
+	
 	public static Long getDataStr(){
     	return Long.parseLong(FORMATTER1.format(new Date()));
 	}

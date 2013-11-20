@@ -445,6 +445,11 @@ public class ProductController {
 			file = new File(productFileDir);
 			if (file.exists()) {
 				file.delete();
+				String fSName=productFileDir.replace(".", "s.");
+				File fs = new File(fSName);
+				if (fs.exists()) {
+					fs.delete();
+				}
 			}
 		}
     	
@@ -554,6 +559,22 @@ public class ProductController {
         }
         stream.close();
         os.close();
+        
+        //生成展示用的小尺寸图片
+        createSmaillPic(productFileDir, filename);
+        
         return filename;
 	}
+    
+    /**
+     * 生成展示用的小尺寸图片
+     * @param filePath
+     * @param fileName
+     */
+    private void createSmaillPic(String filePath,String fileName){
+    	String fB=filePath+fileName;
+    	String fS=filePath+ fileName.replace(".", "s.");
+    	
+    	ImageUtils.scale4(fB,fS,Tools.PRODUCT_DESP_HEIGHT,Tools.PRODUCT_DESP_WIDTH);
+    }
 }
