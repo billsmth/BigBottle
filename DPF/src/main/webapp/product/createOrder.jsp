@@ -66,8 +66,8 @@
 				<ul data-role="listview" data-inset="true">
 	        		<li data-role="fieldcontain">
 	        			<input type="hidden" id="product_id" name="product_id" value="<%=p.getProduct_id()%>" data-clear-btn="true" placeholder="产品编号" >
-	        			<input type="hidden" id="maijia_id" name="maijia_id" value="">
-	        			<input type="hidden" id="maijia_name" name="maijia_name" value="">
+	        			<input type="hidden" id="maijia_id" name="maijia_id" value="100">
+	        			<input type="hidden" id="maijia_name" name="maijia_name" value="匿名">
 	                	<input type="text" id="productname" name="productname" value="<%=p.getProduct_name()%>" data-clear-btn="true" placeholder="产品名称" >
 	        			<input type="hidden" id="shoujia" name="shoujia" value="<%=p.getCol2()%>" placeholder="售价" >
 	                </li>

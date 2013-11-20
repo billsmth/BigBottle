@@ -36,6 +36,9 @@ Ext.define('App.controller.xsgl.xiaoshouCtrl', {
             'xiaoshouView button[action=xsgl_add_act]': {
             	click:this.showAddXsglWin
             },
+            'xiaoshouView button[action=xsgl_eidt_act]': {
+            	click:this.showEditXsglWin
+            },
             'xiaoshouView button[action=xsgl_copy_act]': {
             	click:this.xsglCopyEvent
             },
@@ -247,6 +250,28 @@ Ext.define('App.controller.xsgl.xiaoshouCtrl', {
         }else{
         	this.addXiaoshouWin.down('form').getForm().reset();
         }
+    	Ext.getCmp('editType').setValue(1);
+        this.addXiaoshouWin.show();
+    },
+    showEditXsglWin:function() {
+    	var grid=Ext.ComponentQuery.query('xiaoshouView')[0];
+        var rowRecord=grid.getSelectionModel().selected.items[0];
+        if(rowRecord==undefined) {
+            Ext.MessageBox.alert("提示", "请选择一行，再进行编辑。");
+            return;
+        }
+        
+    	if (this.addXiaoshouWin == null || this.addXiaoshouWin == undefined) {
+            this.addXiaoshouWin = Ext.create('App.view.xsgl.addXiaoshouWin');
+        }else{
+        	this.addXiaoshouWin.down('form').getForm().reset();
+        }
+    	
+    	var editForm=Ext.ComponentQuery.query('addXiaoshouWin form')[0];
+        editForm.getForm().loadRecord(rowRecord);
+        
+        Ext.getCmp('editType').setValue(2);
+    	
         this.addXiaoshouWin.show();
     },
     xsglCopyEvent:function(obj, event) {

@@ -32,6 +32,7 @@ Ext.define('App.view.xsgl.addXiaoshouWin', {
 	            },
 	            items: [{
 	                xtype:'textfield',
+	                flex: 1,
 	                id:'editType',
 	                name: 'editType',
 	                value:1,
@@ -125,6 +126,13 @@ Ext.define('App.view.xsgl.addXiaoshouWin', {
 	                id:'beizhu',
 	                name:'beizhu',
 	                allowBlank:true
+	            }, {
+	                xtype:'textfield',
+	                flex: 1,
+	                id:'zhuangtai',
+	                name: 'zhuangtai',
+	                value:1,
+	                hidden:true
 	            }]
             }],
             buttons:[{

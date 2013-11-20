@@ -22,6 +22,11 @@ Ext.define('App.view.xsgl.xiaoshouView', {
                 iconCls:'icon-add',
                 action:'xsgl_add_act'
             },'-', {
+                id:'xsgl_eidt_id',
+                text:'编辑销售单',
+                iconCls:'icon-edit',
+                action:'xsgl_eidt_act'
+            },'-', {
                 id:'xsgl_copy_id',
                 text:'拷贝销售单',
                 iconCls:'icon-copy',
