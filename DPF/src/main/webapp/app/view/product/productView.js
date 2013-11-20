@@ -206,7 +206,7 @@ Ext.define('App.view.product.productView', {
             }, {
                 xtype: 'gridcolumn',
                 dataIndex: 'col4',
-                text: '信息4',
+                text: '颜色尺码表',
                 flex:1
             }, {
                 xtype: 'gridcolumn',

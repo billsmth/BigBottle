@@ -238,15 +238,22 @@ public class ProductController {
     	p.setProduct_id(Long.parseLong(productId));
     	p=productService.getProduct(p);
     	request.setAttribute("PRODUCT",p);
-    	String kucunIds=p.getKucun_ids();
-    	String [] kucun_Ids=kucunIds.split(",");
-    	List<String> list=Arrays.asList(kucun_Ids);
-    	Map<String,Object> map=new HashMap<String,Object>();
-    	map.put("kucunIds", list);
-    	List<Kucun> kucunList=kucunService.getKucunFromProduct(map);
     	List<String> chimaList=new ArrayList<String>();
-    	for(Kucun k:kucunList){
-    		chimaList.add(k.getYanse()+":"+k.getChima());
+    	if(Tools.isBlank(p.getCol4())){
+    		
+    		String kucunIds=p.getKucun_ids();
+    		String [] kucun_Ids=kucunIds.split(",");
+    		List<String> list=Arrays.asList(kucun_Ids);
+    		Map<String,Object> map=new HashMap<String,Object>();
+    		map.put("kucunIds", list);
+    		List<Kucun> kucunList=kucunService.getKucunFromProduct(map);
+    		
+    		for(Kucun k:kucunList){
+    			chimaList.add(k.getYanse()+":"+k.getChima());
+    		}
+    	}else{
+    		String cima=p.getCol4();
+    		chimaList=Arrays.asList(cima.split(";"));
     	}
     	
     	request.setAttribute("PRODUCT_CHIMA",chimaList);
@@ -260,25 +267,32 @@ public class ProductController {
     	Product p=new Product();
     	p.setProduct_id(Long.parseLong(request.getParameter("product_id")));
     	p=productService.getProduct(p);
-    	String kucunIds=p.getKucun_ids();
-    	if(kucunIds.endsWith(",")){
-    		kucunIds=kucunIds.substring(0,kucunIds.length()-1);
-    	}
-    	String[] kucun_ids=kucunIds.split(",");
-    	List list=Arrays.asList(kucun_ids);
+    	Kucun kucun=null;
     	
-    	Map<String,Object> map=new HashMap<String,Object>();
-    	map.put("kucunIds", list);
     	String chimayanse=request.getParameter("radio-choice-cm");
     	String[] chima_yanse=chimayanse.split(":");
-    	map.put("yanse", chima_yanse[0]);
-    	map.put("chima", chima_yanse[1]);
     	
-    	List<Kucun> kucunList=kucunService.getKucunFromProduct(map);
-    	if(kucunList.size()<1){
-    		return null;
+    	if(Tools.isBlank(p.getCol4())){
+    		String kucunIds=p.getKucun_ids();
+        	if(kucunIds.endsWith(",")){
+        		kucunIds=kucunIds.substring(0,kucunIds.length()-1);
+        	}
+        	String[] kucun_ids=kucunIds.split(",");
+        	List list=Arrays.asList(kucun_ids);
+        	
+        	Map<String,Object> map=new HashMap<String,Object>();
+        	map.put("kucunIds", list);
+        	
+        	map.put("yanse", chima_yanse[0]);
+        	map.put("chima", chima_yanse[1]);
+        	
+        	List<Kucun> kucunList=kucunService.getKucunFromProduct(map);
+        	if(kucunList.size()<1){
+        		return null;
+        	}
+        	kucun=kucunList.get(0);
     	}
-    	Kucun kucun=kucunList.get(0);
+    	
     	Xiaoshou xiaoshou = xiaoshouService.getMaxID();
     	if(xiaoshou==null){
     		xiaoshou=new Xiaoshou();
@@ -295,8 +309,11 @@ public class ProductController {
         }
         xiaoshou.setZhuangtai("0");
         xiaoshou.setDelflg("0");
-        xiaoshou.setKucun_id(kucun.getKucun_id());
-        xiaoshou.setKuanhao_id(kucun.getKuanhao_id());
+        xiaoshou.setProduct_id(Long.parseLong(request.getParameter("product_id")));
+        if(kucun==null){
+        	xiaoshou.setKucun_id(kucun.getKucun_id());
+        	xiaoshou.setKuanhao_id(kucun.getKuanhao_id());
+        }
         xiaoshou.setYanse(chima_yanse[0]);
         xiaoshou.setChima(chima_yanse[1]);
         xiaoshou.setCol1(request.getParameter("productname"));

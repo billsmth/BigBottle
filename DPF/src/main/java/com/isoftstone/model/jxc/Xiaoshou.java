@@ -4,6 +4,7 @@ public class Xiaoshou {
 
     private Long xiaoshou_id;
 	private Long kucun_id;
+	private Long product_id;
     private String kuanhao_id;
     private String yanse;
     private String chima;
@@ -36,6 +37,12 @@ public class Xiaoshou {
 	}
 	public void setKucun_id(Long kucun_id) {
 		this.kucun_id = kucun_id;
+	}
+	public Long getProduct_id() {
+		return product_id;
+	}
+	public void setProduct_id(Long product_id) {
+		this.product_id = product_id;
 	}
 	public String getKuanhao_id() {
 		return kuanhao_id;

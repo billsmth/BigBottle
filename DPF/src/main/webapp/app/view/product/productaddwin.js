@@ -126,14 +126,6 @@ Ext.define('App.view.product.productaddwin', {
 	                },{
  		                xtype: 'textfield',
  		                flex: 1,
- 		                fieldLabel: '信息4',
- 		                name:'col4',
- 		                labelAlign: 'right',
- 		                labelWidth: 90,
- 		                hidden:true
- 		            },{
- 		                xtype: 'textfield',
- 		                flex: 1,
  		                fieldLabel: '信息5',
  		                name:'col5',
  		                labelAlign: 'right',
@@ -214,6 +206,15 @@ Ext.define('App.view.product.productaddwin', {
 	     		                width:450
 	     		            }]
 		                },{
+	 		                xtype: 'textareafield',
+	 		                anchor: '100%',
+	 		                fieldLabel: '颜色:尺码',
+	 		                name:'col4',
+	 		                maxLength: 300,
+	 		                labelAlign: 'right',
+	 		                labelWidth: 90,
+     		                width:450
+	 		            },{
 		                	xtype:'container',
 		                	margin:'10 5 5 0',
 	                    	layout:{
