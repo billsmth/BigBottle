@@ -4,6 +4,7 @@
 
     <resultMap type="com.isoftstone.model.jxc.Xiaoshou" id="xiaoshouResult">
         <id property="xiaoshou_id" column="xiaoshou_id"/>
+        <result property="product_id" column="product_id"/>
         <result property="kucun_id" column="kucun_id"/>
         <result property="kuanhao_id" column="kuanhao_id"/>
         <result property="yanse" column="yanse"/>
@@ -39,7 +40,7 @@
     </resultMap>
     
     <select id="getXiaoshouList" resultMap="xiaoshouResult" parameterType="java.util.Map">
-        select xiaoshou_id, kucun_id, kuanhao_id, yanse, chima, shuliang, shoujia, shijishoukuan, maijia_id, maijiaxingming, zhuangtai, delflg, beizhu, post_type, col1, col2, col3 from xiaoshou_table 
+        select xiaoshou_id, product_id, kucun_id, kuanhao_id, yanse, chima, shuliang, shoujia, shijishoukuan, maijia_id, maijiaxingming, zhuangtai, delflg, beizhu, post_type, col1, col2, col3 from xiaoshou_table 
         <trim prefix="where" prefixOverrides="and|or">
         	<if test="xiaoshou_id != null">
         		xiaoshou_id like '${xiaoshou_id}%' 
@@ -122,12 +123,13 @@
     	select max(xiaoshou_id) xiaoshou_id from xiaoshou_table
     </select>
     <select id="getXiaoshou" resultMap="xiaoshouResult" parameterType="com.isoftstone.model.jxc.Xiaoshou">
-        select xiaoshou_id, kucun_id, kuanhao_id, yanse, chima, shuliang, shoujia, shijishoukuan, maijia_id, maijiaxingming, zhuangtai, delflg, beizhu, post_type, col1, col2, col3 from xiaoshou_table where xiaoshou_id = #{xiaoshou_id}
+        select xiaoshou_id, product_id, kucun_id, kuanhao_id, yanse, chima, shuliang, shoujia, shijishoukuan, maijia_id, maijiaxingming, zhuangtai, delflg, beizhu, post_type, col1, col2, col3 from xiaoshou_table where xiaoshou_id = #{xiaoshou_id}
     </select>
     
     <insert id="saveXiaoshou" parameterType="com.isoftstone.model.jxc.Xiaoshou">
         insert into xiaoshou_table ( 
         	xiaoshou_id, 
+        	product_id, 
         	kucun_id, 
         	kuanhao_id, 
         	yanse, 
@@ -146,6 +148,7 @@
         	col3 
         	) values (
         	#{xiaoshou_id}, 
+        	#{product_id}, 
         	#{kucun_id}, 
         	#{kuanhao_id}, 
         	#{yanse}, 

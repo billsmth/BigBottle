@@ -8,8 +8,11 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,6 +23,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.isoftstone.common.ImageUtils;
@@ -310,7 +315,7 @@ public class ProductController {
         xiaoshou.setZhuangtai("0");
         xiaoshou.setDelflg("0");
         xiaoshou.setProduct_id(Long.parseLong(request.getParameter("product_id")));
-        if(kucun==null){
+        if(kucun!=null){
         	xiaoshou.setKucun_id(kucun.getKucun_id());
         	xiaoshou.setKuanhao_id(kucun.getKuanhao_id());
         }
@@ -493,6 +498,24 @@ public class ProductController {
     	System.out.println("Product>>createIndexPic>>end");
     	return "{'success':true}";
     }
+    
+    @RequestMapping("/upfile2")
+    @ResponseBody
+    public String upfile2(HttpServletRequest request, Product product, String target_product_id) {
+    	MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest)request;  
+    	Set<MultipartFile> fileset = new LinkedHashSet<MultipartFile>();  
+    	for (Iterator it = multipartRequest.getFileNames(); it.hasNext();) {  
+    	    String key = (String) it.next();  
+    	    MultipartFile file = multipartRequest.getFile(key);  
+    	    if (file.getOriginalFilename().length() > 0) {  
+    	        fileset.add(file);  
+    	    }  
+    	} 
+    	System.out.print(fileset);
+    	return "{'success':true}";
+    }
+    
+    
     
     @RequestMapping("/upfile")
     @ResponseBody
