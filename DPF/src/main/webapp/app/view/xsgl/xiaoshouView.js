@@ -56,56 +56,68 @@ Ext.define('App.view.xsgl.xiaoshouView', {
 					{
 					    header:'销售单编号',
 					    dataIndex:'xiaoshou_id', 
-					    width:120
+					    width:100
+					}, {
+						header:'产品编号',
+						dataIndex:'product_id', 
+						width:100
 					}, {
 						header:'库存编号',
 						dataIndex:'kucun_id', 
-						width:120
+						width:100
 					}, {
 						header:'产品名称',
 						dataIndex:'col1', 
-						width:180
+						width:200
 					}, {
 						header:'款号',
 						dataIndex:'kuanhao_id', 
-						width:80
+						width:50
 					}, {
 						header:'颜色',
 						dataIndex:'yanse', 
-						width:80
+						width:50
 					}, {
 						header:'尺码',
 						dataIndex:'chima', 
 						width:40
 					}, {
-						header:'数量（件）',
+						header:'数量[件]',
 						dataIndex:'shuliang', 
-						width:80
+						width:70
 					}, {
-						header:'售价（元）',
+						header:'售价[元]',
 						dataIndex:'shoujia', 
-						width:80
+						width:75
 					}, {
-						header:'实际成交金额（元）',
+						header:'实收[元]',
 						dataIndex:'shijishoukuan', 
-						width:110
+						width:85
 					}, {
 						header:'买家编号',
 						dataIndex:'maijia_id', 
-						width:80
+						width:60
 					}, {
 						header:'买家姓名',
 						dataIndex:'maijiaxingming', 
 						width:80
 					}, {
-						header:'订单状态',
+						header:'状态',
 						dataIndex:'zhuangtai', 
-						width:70, 
+						width:55, 
 						renderer:showTypeChange
 					}, {
-						header:'删除状态',
+						header:'快递名称',
+						dataIndex:'express_name', 
+						width:70
+					}, {
+						header:'快递单号',
+						dataIndex:'express_code', 
+						width:100
+					}, {
+						header:'删除',
 						dataIndex:'delflg', 
-						width:60, 
+						width:55, 
 						renderer:showDelStatus
 					}, {
 						header:'备注',
@@ -130,45 +142,76 @@ Ext.define('App.view.xsgl.xiaoshouView', {
                         autoScroll: true,
                         layout: 'anchor',
                         items: [{
-			                	xtype:'container',
-			                	margin:'5 20 5 10',
-		                    	layout:{
-		                    		align:'stretch',
+	        	            	xtype: 'fieldset',
+				                title: '基本信息',
+				                margin:'5 20 5 0',
+				                defaultType: 'textfield',
+				                layout: 'anchor',
+				                defaults: {
+				                    anchor: '100%',
 		                    		type:'hbox'
-		                    	},
+				                },
 		                    	items:[{
-	                                xtype: 'displayfield',
-	                                fieldLabel: '寄单号',
-	                                labelWidth: 80,
-	                                labelAlign: 'right',
-	                                width:400
-	            	               },{
-	                                xtype: 'displayfield',
-	                                fieldLabel: '销售编号',
-	                                labelWidth: 80,
-	                                labelAlign: 'right',
-	                                margin: '0 0 0 30'
-	            	              }]
-			                },{
-			                	xtype:'container',
-			                	margin:'5 20 5 10',
-		                    	layout:{
-		                    		align:'stretch',
-		                    		type:'hbox'
-		                    	},
-		                    	items:[{
-	                                xtype: 'displayfield',
-	                                fieldLabel: '寄件方式',
-	                                labelWidth: 80,
-	                                labelAlign: 'right',
-	                                width:400
-	            	              },{
-	                                xtype: 'displayfield',
-	                                fieldLabel: '买家编号',
-	                                labelWidth: 80,
-	                                labelAlign: 'right',
-	                                margin: '0 0 0 30'
-	            	              }]
+				                	xtype:'container',
+				                	margin:'5 20 5 0',
+			                    	layout:{
+			                    		align:'stretch',
+			                    		type:'hbox'
+			                    	},
+			                    	items:[{
+		                                xtype: 'displayfield',
+		                                fieldLabel: '寄单号',
+		                                labelWidth: 80,
+		                                labelAlign: 'right',
+		                                width:400
+		            	               },{
+		                                xtype: 'displayfield',
+		                                fieldLabel: '销售编号',
+		                                labelWidth: 80,
+		                                labelAlign: 'right',
+		                                margin: '0 0 0 30'
+		            	              }]
+				                },{
+				                	xtype:'container',
+				                	margin:'5 20 5 0',
+			                    	layout:{
+			                    		align:'stretch',
+			                    		type:'hbox'
+			                    	},
+			                    	items:[{
+		                                xtype: 'displayfield',
+		                                fieldLabel: '寄件方式',
+		                                labelWidth: 80,
+		                                labelAlign: 'right',
+		                                width:400
+		            	              },{
+		                                xtype: 'displayfield',
+		                                fieldLabel: '订单状态',
+		                                labelWidth: 80,
+		                                labelAlign: 'right',
+		                                margin: '0 0 0 30'
+		            	              }]
+				                },{
+				                	xtype:'container',
+				                	margin:'5 20 5 0',
+			                    	layout:{
+			                    		align:'stretch',
+			                    		type:'hbox'
+			                    	},
+			                    	items:[{
+		                                xtype: 'displayfield',
+		                                fieldLabel: '买家',
+		                                labelWidth: 80,
+		                                labelAlign: 'right',
+		                                width:400
+		            	              },{
+		                                xtype: 'displayfield',
+		                                fieldLabel: '快递单号',
+		                                labelWidth: 80,
+		                                labelAlign: 'right',
+		                                margin: '0 0 0 30'
+		            	              }]
+				                }]
 			                },{
             	            	xtype: 'fieldset',
 				                title: '发件人信息',
@@ -334,7 +377,7 @@ Ext.define('App.view.xsgl.xiaoshouView', {
 			                },
 			                {
             	            	xtype: 'fieldset',
-				                title: '其他信息',
+				                title: '产品信息',
 				                margin:'5 20 5 0',
 				                defaultType: 'textfield',
 				                layout: 'anchor',

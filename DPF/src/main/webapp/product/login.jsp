@@ -27,19 +27,19 @@
 	    	}
 	    	db.transaction(function(tx) {
 	            tx.executeSql('SELECT * FROM USER_TABLE ',
-	                    [], function(tx, results) {
-	                        if (results.rows.length > 0) {
-	                            var item = results.rows.item(0);
-	                            showInfor("您已登陆 ( 用户:"+item.NAME+" ) ，无需再次登录。");
-	                            $("#userid").val(item.ID);
-	                            $("#username").val(item.NAME);
-	                            $("#userpassword").val(item.PWD);
-	                            window.localStorage.setItem("USER", item);
-	                        }else{
-	                        	showInfor("无系统用户请注册或登录系统！");
-	                        	window.localStorage.removeItem("USER");
-	                        }
-	                    }, errorCB);
+                    [], function(tx, results) {
+                        if (results.rows.length > 0) {
+                            var item = results.rows.item(0);
+                            showInfor("您已登陆 ( 用户:"+item.NAME+" ) ，无需再次登录。");
+                            $("#userid").val(item.ID);
+                            $("#username").val(item.NAME);
+                            $("#userpassword").val(item.PWD);
+                            window.localStorage.setItem("USER", item);
+                        }else{
+                        	showInfor("无系统用户请注册或登录系统！");
+                        	window.localStorage.removeItem("USER");
+                        }
+                    }, errorCB);
              });
 	    	
 		    $("#loginForm").validate({

@@ -68,13 +68,13 @@
 													postStatus="arrive.png";
 												}else if(xiaoshou.zhuangtai=="5"){
 													zhuangtai="完成";
-													postStatus="complete.png";
+													postStatus="over.png";
 												}else if(xiaoshou.zhuangtai=="6"){
 													zhuangtai="关闭";
 													postStatus="off.png";
 												}
 												htmlStr+="<li>"
-						                    		+"<a href=\'#\' id=\'"+xiaoshou.xiaoshou_id+"\'>"
+						                    		+"<a href=\'<%=hostPath%>product/getOrderDetail.action?xiaoshou_id="+xiaoshou.xiaoshou_id+"\' id=\'"+xiaoshou.xiaoshou_id+"\' >"
 						                    		+"<img src=\'../images/"+postStatus+"\'>"+xiaoshou.xiaoshou_id
 						                    		+"<h2>"+xiaoshou.col1+"</h2>"
 									                +"<p>￥"+xiaoshou.shijishoukuan+" 元</p>"

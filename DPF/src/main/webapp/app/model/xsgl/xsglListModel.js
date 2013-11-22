@@ -6,6 +6,9 @@ Ext.define('App.model.xsgl.xsglListModel', {
             name: 'xiaoshou_id'
         },
         {
+            name: 'product_id'
+        },
+        {
             name: 'kucun_id'
         },
         {
@@ -39,10 +42,19 @@ Ext.define('App.model.xsgl.xsglListModel', {
             name: 'zhuangtai'
         },
         {
+            name: 'express_name'
+        },
+        {
+            name: 'express_code'
+        },
+        {
             name: 'delflg'
         },
         {
             name: 'beizhu'
+        },
+        {
+            name: 'post_type'
         }
     ]
 });

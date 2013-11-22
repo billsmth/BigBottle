@@ -17,6 +17,8 @@ public class Xiaoshou {
     private String delflg;
     private String beizhu;
     private String post_type;
+    private String express_name;
+    private String express_code;
     private String col1;
     private String col2;
     private String col3;
@@ -115,6 +117,18 @@ public class Xiaoshou {
 	}
 	public void setPost_type(String post_type) {
 		this.post_type = post_type;
+	}
+	public String getExpress_name() {
+		return express_name;
+	}
+	public void setExpress_name(String express_name) {
+		this.express_name = express_name;
+	}
+	public String getExpress_code() {
+		return express_code;
+	}
+	public void setExpress_code(String express_code) {
+		this.express_code = express_code;
 	}
 	public String getCol1() {
 		return col1;

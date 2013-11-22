@@ -46,6 +46,12 @@ Ext.define('App.view.xsgl.addXiaoshouWin', {
 	                hidden:true
 	            }, {
 	                xtype:'textfield',
+	                fieldLabel:'产品编号',
+	                id:'product_id',
+	                name:'product_id',
+	                allowBlank: false
+	            }, {
+	                xtype:'textfield',
 	                fieldLabel:'库存编号',
 	                id:'kucun_id',
 	                name:'kucun_id',

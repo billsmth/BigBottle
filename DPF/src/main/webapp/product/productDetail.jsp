@@ -5,9 +5,11 @@
 <%
 	Product p = (Product) request.getAttribute("PRODUCTDETAIL");
 	String imgNames = p.getImage_name();
-	String[] pics = imgNames.split(",");
-	for(int i=0;i<pics.length;i++){
-		pics[i]=pics[i].replace(".", "s.");
+	
+	String[] pics=null;
+	if(imgNames!=null){
+		imgNames = imgNames.replace(".", "s.");
+		pics = imgNames.split(",");
 	}
 	String hostPath=request.getScheme() + "://"
 			+ request.getServerName() + ":" + request.getServerPort()
@@ -28,18 +30,12 @@
 	<div data-role="page" id="product">
 		<script type="text/javascript">
 			function downLoadPics(){
-				//alert("下载此套衣服图片:\n<%=imgNames%>");
 				window.downloader.downloadFile("<%=picPath+p.getProduct_id()%>/", {overwrite: true, pics:"<%=imgNames%>"},   
 					function(res) {  
-						//alert(JSON.stringify(res)); 
 						$('#popupProgress').popup( "open" );
 						$('#fileName').text(res.newfile);  
 						$('#progress').text(res.progress);  
 						if(res.progress==100){
-							//alert("success:"+res.dir+'/'+res.file);
-				         	//$('#filemsg').text('图片成功存入文件夹:\n['+res.dir+']\n新增文件['+res.newfile+']');  
-				         	//$('#popupfile').popup( "open" );
-							//$('#smallImage').attr('src',res.dir+'/'+res.file);
 							$('#popupProgress').popup( "close" );
 						}  
 				           
@@ -65,10 +61,11 @@
 			<a data-role="button" href="#" data-icon="star" data-iconpos="right" onclick="downLoadPics();" class="ui-btn-right">下载</a>
 		</div>
 		<div data-role="content" id="main2Content">
-		<div data-role="popup" id="popupProgress">
-			<p><span id="fileName"></span>&nbsp;&nbsp;<br>progress:<span id="progress"></span>%</p>
-		</div>
-		<%
+			<div data-role="popup" id="popupProgress">
+				<p><span id="fileName"></span></p>
+				<p>下载进度:<span id="progress"></span>%</p>
+			</div>
+			<%
 			for (int i = 0; i < pics.length; i++) {
 			%>
 				<img src="<%=picPath+p.getProduct_id()+"/" + pics[i]%>" style="width:100%">
@@ -79,7 +76,7 @@
 		<div data-role="footer" data-position="fixed">
 			<div data-role="navbar">
 				<ul>
-					<li><a href="./main.jsp" data-icon="grid"  rel="external">主菜单</a></li>
+					<li><a href="./main.jsp" data-icon="grid" rel="external">主菜单</a></li>
 					<li><a href="./createOrder.action?productId=<%=p.getProduct_id()%>" data-icon="info" data-transition="slide">下单</a></li>
 					<li><a href="./setting.jsp" data-icon="gear" rel="external">设置</a></li>
 				</ul>
