@@ -14,6 +14,27 @@ Ext.define('App.view.xsgl.xsglStatusWin', {
     initComponent: function() {
         var me = this;
 
+        var combo = new Ext.form.ComboBox({
+        	fieldLabel: '当前状态',
+        	name:'zhuangtai3',
+            id:'zhuangtai3',
+        	queryMode: 'local',
+        	store: 'com.XiaoshouStatusStore',
+        	displayField: 'value',
+        	valueField: 'key',
+        	allowBlank: true
+        });
+        
+        combo.on('change', function (combo, record, index) {
+        	//alert(record);
+        	Ext.getCmp('express_code').hide();
+            Ext.getCmp('express_name').hide();
+        	if(record=="3"){
+        		Ext.getCmp('express_code').show();
+                Ext.getCmp('express_name').show();
+        	}
+        });
+        
         Ext.applyIf(me, {
             items: [{
                 xtype: 'form',
@@ -43,18 +64,29 @@ Ext.define('App.view.xsgl.xsglStatusWin', {
  		               	id:'product_name3',
  		                labelAlign: 'right',
  		                labelWidth: 90
- 		            },{
-	                    fieldLabel: '当前状态',
-	                    name: 'zhuangtai3',
-	                    id:'zhuangtai3',
+ 		            },
+ 		            combo
+ 		            ,{
+	                    fieldLabel: '快递名称<span style=\'color:red\'>*</span>',
+	                    name: 'express_name',
+	                    emptyText : "请选择快递..", 
+	                    id:'express_name',
 	                    xtype: 'combobox',
-	                    store:'com.XiaoshouStatusStore',
+	                    store:'com.ExpressNameStore',
 		                queryMode: 'local',
 		                displayField: 'value',
-		                valueField: 'key',
+		                valueField: 'value',
 		                triggerAction: 'all',
-                        allowBlank: true
-	                }]
+                        allowBlank: true,
+                        hidden:true
+	                },{
+		                xtype:'textfield',
+		                fieldLabel:'快递单号<span style=\'color:red\'>*</span>',
+		                id:'express_code',
+		                name:'express_code',
+		                allowBlank: true,
+                        hidden:true
+		            }]
 	            }],
 	            buttons:[{
 	                text: '提交',

@@ -180,6 +180,8 @@ public class XiaoshouController {
     	xs.setXiaoshou_id(Long.parseLong(xiaoshou_id3));
     	xs=xiaoshouService.getXiaoshou(xs);
     	xs.setZhuangtai(zhuangtai3);
+    	xs.setExpress_code(request.getParameter("express_code"));
+    	xs.setExpress_name(request.getParameter("express_name"));
     	xiaoshouService.updateXiaoshou(xs);
         return "{'success':true}";
     }

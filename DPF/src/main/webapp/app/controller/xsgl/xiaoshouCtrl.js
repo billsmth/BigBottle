@@ -1,7 +1,7 @@
 Ext.define('App.controller.xsgl.xiaoshouCtrl', {
     extend: 'Ext.app.Controller',
     
-    stores: ['xsgl.xsglStore','com.XiaoshouStatusStore'],
+    stores: ['xsgl.xsglStore', 'com.XiaoshouStatusStore', 'com.ExpressNameStore'],
     views: ['xsgl.xiaoshouView','xsgl.xsglQueryWin','xsgl.addXiaoshouWin','xsgl.xsglStatusWin'],
     
     init: function() {
@@ -52,6 +52,7 @@ Ext.define('App.controller.xsgl.xiaoshouCtrl', {
             
         });
     },
+    
     rowClick : function () {
     	Ext.getCmp('xiaoshouTab').setActiveTab(0);
     	var grid=Ext.ComponentQuery.query('xiaoshouView')[0];
@@ -71,48 +72,70 @@ Ext.define('App.controller.xsgl.xiaoshouCtrl', {
                 temp.setValue(postInfo.POST_INFO.post_id);
                 temp=Ext.ComponentQuery.query('xiaoshouView displayfield')[1];
                 temp.setValue(postInfo.POST_INFO.order_id);
-                temp=Ext.ComponentQuery.query('xiaoshouView displayfield')[2];
                 var postType="<span style=\'color:red;font-weight:bold;\'>上门自取</span>";
                 if(postInfo.POST_INFO.type=="1"){
                 	postType="快递";
                 }
+                temp=Ext.ComponentQuery.query('xiaoshouView displayfield')[2];
                 temp.setValue(postType);
-                temp=Ext.ComponentQuery.query('xiaoshouView displayfield')[3];
-                temp.setValue(postInfo.POST_INFO.people_id);
+            	temp=Ext.ComponentQuery.query('xiaoshouView displayfield')[3];
+                temp.setValue(this.showTypeChange(rowRecord.data.zhuangtai));
                 temp=Ext.ComponentQuery.query('xiaoshouView displayfield')[4];
-                temp.setValue(postInfo.POST_INFO.post_from);
+                temp.setValue(rowRecord.data.maijiaxingming+" [ "+rowRecord.data.maijia_id+" ]");
                 temp=Ext.ComponentQuery.query('xiaoshouView displayfield')[5];
-                temp.setValue(postInfo.POST_INFO.departure);
+                temp.setValue(rowRecord.data.express_name+" [ "+rowRecord.data.express_code+" ]");
                 temp=Ext.ComponentQuery.query('xiaoshouView displayfield')[6];
-                temp.setValue(postInfo.POST_INFO.contact_number_from);
+                temp.setValue(postInfo.POST_INFO.post_from);
                 temp=Ext.ComponentQuery.query('xiaoshouView displayfield')[7];
-                temp.setValue("<b>"+postInfo.POST_INFO.province_from+"</b> [省]  <b>"+postInfo.POST_INFO.city_from+"</b> [市] <b>"+postInfo.POST_INFO.district_from+"</b> [区/县]");
+                temp.setValue(postInfo.POST_INFO.departure);
                 temp=Ext.ComponentQuery.query('xiaoshouView displayfield')[8];
-                temp.setValue(postInfo.POST_INFO.detail_from);
+                temp.setValue(postInfo.POST_INFO.contact_number_from);
                 temp=Ext.ComponentQuery.query('xiaoshouView displayfield')[9];
-                temp.setValue(postInfo.POST_INFO.company_name_from);
+                temp.setValue("<b>"+postInfo.POST_INFO.province_from+"</b> [省]  <b>"+postInfo.POST_INFO.city_from+"</b> [市] <b>"+postInfo.POST_INFO.district_from+"</b> [区/县]");
                 temp=Ext.ComponentQuery.query('xiaoshouView displayfield')[10];
-                temp.setValue(postInfo.POST_INFO.neijian);
+                temp.setValue(postInfo.POST_INFO.detail_from);
                 temp=Ext.ComponentQuery.query('xiaoshouView displayfield')[11];
+                temp.setValue(postInfo.POST_INFO.company_name_from);
+                temp=Ext.ComponentQuery.query('xiaoshouView displayfield')[12];
+                temp.setValue(postInfo.POST_INFO.neijian);
+                temp=Ext.ComponentQuery.query('xiaoshouView displayfield')[13];
                 temp.setValue(postInfo.POST_INFO.note);
                 
                 //收件人区域
-                temp=Ext.ComponentQuery.query('xiaoshouView displayfield')[12];
-                temp.setValue(postInfo.POST_INFO.post_to);
-                temp=Ext.ComponentQuery.query('xiaoshouView displayfield')[13];
-                temp.setValue(postInfo.POST_INFO.destination);
                 temp=Ext.ComponentQuery.query('xiaoshouView displayfield')[14];
-                temp.setValue(postInfo.POST_INFO.contact_number);
+                temp.setValue(postInfo.POST_INFO.post_to);
                 temp=Ext.ComponentQuery.query('xiaoshouView displayfield')[15];
-                temp.setValue("<b>"+postInfo.POST_INFO.province+"</b> [省]  <b>"+postInfo.POST_INFO.city+"</b> [市] <b>"+postInfo.POST_INFO.district+"</b> [区/县]");
+                temp.setValue(postInfo.POST_INFO.destination);
                 temp=Ext.ComponentQuery.query('xiaoshouView displayfield')[16];
-                temp.setValue(postInfo.POST_INFO.detail_to);
+                temp.setValue(postInfo.POST_INFO.contact_number);
                 temp=Ext.ComponentQuery.query('xiaoshouView displayfield')[17];
+                temp.setValue("<b>"+postInfo.POST_INFO.province+"</b> [省]  <b>"+postInfo.POST_INFO.city+"</b> [市] <b>"+postInfo.POST_INFO.district+"</b> [区/县]");
+                temp=Ext.ComponentQuery.query('xiaoshouView displayfield')[18];
+                temp.setValue(postInfo.POST_INFO.detail_to);
+                temp=Ext.ComponentQuery.query('xiaoshouView displayfield')[19];
                 temp.setValue(postInfo.POST_INFO.company_name);
-                
             },
             scope: this
         });
+    },
+    showTypeChange : function(val) {
+        var retVal = '';
+        if (val == 0) {
+            retVal = "待付款";
+        }else if (val == '1') {
+            retVal ='<span style=\'color:red;font-weight:bold;\'>已付款</span>';
+        }else if (val == '2') {
+            retVal ="已确定";
+        }else if (val == '3') {
+            retVal ="已发货";
+        }else if (val == '4') {
+            retVal ="已收货";
+        }else if (val == '5') {
+            retVal ='<span style=\'color:green;font-weight:bold;\'>完成</span>';
+        }else if (val == '6') {
+            retVal ="关闭";
+        }
+        return retVal;
     },
     showQueryXsglView : function () { //打开查询页面信息
         if (this.XsglQuery == null || this.XsglQuery == undefined) {
@@ -208,6 +231,15 @@ Ext.define('App.controller.xsgl.xiaoshouCtrl', {
     	Ext.getCmp('xiaoshou_id3_lab').setValue(rowRecord.data.xiaoshou_id);
     	Ext.getCmp('product_name3').setValue(rowRecord.data.col1);
     	Ext.getCmp('zhuangtai3').setValue(rowRecord.data.zhuangtai);
+    	Ext.getCmp('express_name').setValue(rowRecord.data.express_name);
+    	Ext.getCmp('express_code').setValue(rowRecord.data.express_code);
+    	if(rowRecord.data.zhuangtai=="3"){
+    		Ext.getCmp('express_code').show();
+            Ext.getCmp('express_name').show();
+    	}else{
+    		Ext.getCmp('express_code').hide();
+            Ext.getCmp('express_name').hide();
+    	}
         
         
         this.XsglStatusWin.show();
@@ -219,6 +251,14 @@ Ext.define('App.controller.xsgl.xiaoshouCtrl', {
             Ext.MessageBox.alert("提示", "请选择一行，再进行操作。");
             return;
         }else{
+        	if(rowRecord.data.post_type=="1" && Ext.getCmp('zhuangtai3').value=="3"){
+        		
+        		if(Ext.getCmp('express_code').value==null || Ext.getCmp('express_name').value==null){
+        			Ext.MessageBox.alert("提示", "如果更新销售单状态为[已发货],请输入[快递名称]和[快递单号].");
+        			return;
+        		}
+        	}
+        	
         	var values =this.XsglStatusWin.down('form').getForm().getValues();
         	Ext.Ajax.request({
 	    	    url: 'xiaoshou/changeXiaoshouStatus.action',

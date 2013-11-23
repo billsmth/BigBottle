@@ -202,7 +202,7 @@
 		<div data-role="footer" data-position="fixed" >
 			<div data-role="navbar">
 				<ul>
-					<li><a href="./main.jsp" data-icon="grid"  rel="external">主菜单</a></li>
+					<li><a href="./main.jsp" data-icon="grid" rel="external">主菜单</a></li>
 					<li><a href="./setting.jsp" data-icon="gear" rel="external">设置</a></li>
 				</ul>
 			</div>

@@ -41,7 +41,6 @@ Ext.define('App.view.product.productUpfileWin', {
                         fieldLabel: '上传资料1',
                         labelWidth: 70,
                         msgTarget: 'side',
-                        allowBlank: false,
                         buttonText: '选择...'
                     },{
                         xtype: 'filefield',
@@ -50,7 +49,6 @@ Ext.define('App.view.product.productUpfileWin', {
                         fieldLabel: '上传资料2',
                         labelWidth: 70,
                         msgTarget: 'side',
-                        allowBlank: false,
                         buttonText: '选择...'
                     },{
                         xtype: 'filefield',
@@ -59,7 +57,6 @@ Ext.define('App.view.product.productUpfileWin', {
                         fieldLabel: '上传资料3',
                         labelWidth: 70,
                         msgTarget: 'side',
-                        allowBlank: false,
                         buttonText: '选择...'
                     }
 	                ]

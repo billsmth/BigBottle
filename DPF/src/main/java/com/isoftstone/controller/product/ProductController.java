@@ -236,6 +236,25 @@ public class ProductController {
     	return new ModelAndView("postTo"); 
     }
     
+    @RequestMapping("/getOrderDetail")
+    @ResponseBody
+    public ModelAndView getOrderDetail(HttpServletRequest request, HttpServletResponse response, String xiaoshou_id){
+    	Xiaoshou xs = null;
+    	if(!Tools.isBlank(xiaoshou_id)){
+    		xs = new Xiaoshou();
+        	xs.setXiaoshou_id(Long.parseLong(xiaoshou_id));
+        	xs=xiaoshouService.getXiaoshou(xs);
+        	request.setAttribute("ORDER_DETAIL",xs);
+        	PostAddress pa=new PostAddress();
+        	pa.setOrder_id(Long.parseLong(xiaoshou_id));
+        	pa=postAddressService.getPostAddress(pa);
+        	request.setAttribute("EXPRESS_DETAIL",pa);
+    	}
+    	
+    	
+    	return new ModelAndView("OrderDetail"); 
+    }
+    
     @RequestMapping("/createOrder")
     @ResponseBody
     public ModelAndView createOrder(HttpServletRequest request, HttpServletResponse response,String productId){
@@ -544,10 +563,9 @@ public class ProductController {
     			String productFirstPicName=SaveFileFromInputStream(product.getFiletest1().getInputStream(), target_product_id,fileIndex, product.getFiletest1().getOriginalFilename(), request);     
     			imageNames += productFirstPicName+",";
     			String savePath = request.getSession().getServletContext().getRealPath("/Productlist/");
-    			String productIndexPic = savePath + "/" + target_product_id + "/"+Tools.PROUDCT_INDEX_PIC_NAME;
-    			String productFirstPic = savePath + "/" + target_product_id + "/"+productFirstPicName;
+    			savePath+="/" + target_product_id + "/";
     			
-    			ImageUtils.scale4(productFirstPic,productIndexPic,115,115);
+    			ImageUtils.scale4(savePath + productFirstPicName, savePath + Tools.PROUDCT_INDEX_PIC_NAME,115,115);
     		} catch (IOException e) {
     			System.out.println(e.getMessage());
     			return null;     
@@ -592,7 +610,7 @@ public class ProductController {
         filename=index+filename.substring(filename.lastIndexOf("."));
         File toFile = new File(file, filename);
         OutputStream os = new FileOutputStream(toFile);
-        byte[] buffer = new byte[1024];
+        byte[] buffer = new byte[2048];
         int length = 0;
         while ((length = stream.read(buffer)) > 0) {
             os.write(buffer, 0, length);
