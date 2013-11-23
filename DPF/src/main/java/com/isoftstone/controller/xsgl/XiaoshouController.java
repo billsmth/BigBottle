@@ -1,5 +1,6 @@
 package com.isoftstone.controller.xsgl;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -16,7 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.isoftstone.common.PrintUtil;
 import com.isoftstone.common.Tools;
+import com.isoftstone.common.model.PrintItem;
 import com.isoftstone.model.jxc.Kucun;
 import com.isoftstone.model.jxc.PostAddress;
 import com.isoftstone.model.jxc.Xiaoshou;
@@ -170,6 +173,140 @@ public class XiaoshouController {
     	JSONObject json=new JSONObject();
     	json.put("POST_INFO", pa);
     	return json.toString();
+    }
+    
+    @RequestMapping("/pntExpressForm")
+    @ResponseBody
+    public String pntExpressForm(HttpServletRequest request, HttpServletResponse response,String xiaoshouID){
+    	
+    	Xiaoshou xs=new Xiaoshou();
+    	xs.setXiaoshou_id(Long.parseLong(xiaoshouID));
+    	xs=xiaoshouService.getXiaoshou(xs);
+    	
+    	PostAddress pa=new PostAddress();
+    	pa.setOrder_id(Long.parseLong(xiaoshouID));
+    	pa=postAddressService.getPostAddress(pa);
+    	
+	    boolean flg=PrintUtil.printForm(formatExpress(pa), 16);
+    	
+        return "{'success':"+flg+"}";
+    }
+    private List<PrintItem> formatExpress(PostAddress pa){
+    	List<PrintItem> piList=new ArrayList<PrintItem>();
+    	// from
+    	PrintItem pi=new PrintItem();
+    	pi.setDisX(99.15f);
+	    pi.setDisY(96.32f);
+    	pi.setItemValue(pa.getPost_from());
+    	piList.add(pi);
+    	// departure
+    	pi=new PrintItem();
+    	pi.setDisX(212.48f);
+	    pi.setDisY(96.32f);
+    	pi.setItemValue(pa.getDeparture());
+    	piList.add(pi);
+    	// company
+    	pi=new PrintItem();
+    	pi.setDisX(102f);
+	    pi.setDisY(118.99f);
+    	pi.setItemValue(pa.getCompany_name_from());
+    	piList.add(pi);
+    	// province
+    	pi=new PrintItem();
+    	pi.setDisX(87.82f);
+	    pi.setDisY(147.32f);
+    	pi.setItemValue(pa.getProvince_from());
+    	piList.add(pi);
+    	// city
+    	pi=new PrintItem();
+    	pi.setDisX(152.98f);
+	    pi.setDisY(147.32f);
+    	pi.setItemValue(pa.getCity_from());
+    	piList.add(pi);
+    	// district
+    	pi=new PrintItem();
+    	pi.setDisX(218.14f);
+	    pi.setDisY(147.32f);
+    	pi.setItemValue(pa.getDistrict_from());
+    	piList.add(pi);
+    	// detail
+    	pi=new PrintItem();
+    	pi.setDisX(70.83f);
+	    pi.setDisY(172.81f);
+    	pi.setItemValue(pa.getDetail_from());
+    	piList.add(pi);
+    	// contact
+    	pi=new PrintItem();
+    	pi.setDisX(127.49f);
+	    pi.setDisY(198.31f);
+    	pi.setItemValue(pa.getContact_number_from());
+    	piList.add(pi);
+    	// neijian
+    	pi=new PrintItem();
+    	pi.setDisX(113.32f);
+	    pi.setDisY(215.31f);
+    	pi.setItemValue(pa.getNeijian());
+    	piList.add(pi);
+    	
+    	// -----------------------------------------
+
+	    // to
+    	pi=new PrintItem();
+	    pi.setDisX(371.12f);
+	    pi.setDisY(96.32f);
+	    pi.setItemValue(pa.getPost_to());
+	    piList.add(pi);
+
+	    // destination
+	    pi=new PrintItem();
+	    pi.setDisX(498.61f);
+	    pi.setDisY(96.32f);
+	    pi.setItemValue(pa.getDestination());
+	    piList.add(pi);	    
+
+	    // company
+	    pi=new PrintItem();
+	    pi.setDisX(379.62f);
+	    pi.setDisY(118.99f);
+	    pi.setItemValue(pa.getCompany_name());
+	    piList.add(pi);
+	    
+	    // province
+	    pi=new PrintItem();
+	    pi.setDisX(362.62f);
+	    pi.setDisY(147.32f);
+	    pi.setItemValue(pa.getProvince());
+	    piList.add(pi);
+
+	    // city
+	    pi=new PrintItem();
+	    pi.setDisX(433.45f);
+	    pi.setDisY(147.32f);
+	    pi.setItemValue(pa.getCity());
+	    piList.add(pi);
+
+	    // district
+	    pi=new PrintItem();
+	    pi.setDisX(498.61f);
+	    pi.setDisY(147.32f);
+	    pi.setItemValue(pa.getDistrict());
+	    piList.add(pi);
+
+	    // detail
+	    pi=new PrintItem();
+	    pi.setDisX(339.96f);
+	    pi.setDisY(172.81f);
+	    pi.setItemValue(pa.getDetail_to());
+	    piList.add(pi);
+
+	    // contact
+	    pi=new PrintItem();
+	    pi.setDisX(405.12f);
+	    pi.setDisY(198.31f);
+	    pi.setItemValue(pa.getContact_number());
+	    piList.add(pi);
+	    
+	    return piList;
     }
     
     @RequestMapping("/changeXiaoshouStatus")

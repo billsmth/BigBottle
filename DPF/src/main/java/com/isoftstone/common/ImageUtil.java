@@ -18,7 +18,7 @@ import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 
-public class ImageUtils {
+public class ImageUtil {
 	/**
      * 几种常见的图片格式
      */
@@ -35,10 +35,10 @@ public class ImageUtils {
     public static void main(String[] args) {
         // 1-缩放图像：
         // 方法一：按比例缩放
-        ImageUtils.scale("d:/20130817_105741.jpg", "d:/abc_scale.jpg", 2, false);//测试OK
+        ImageUtil.scale("d:/20130817_105741.jpg", "d:/abc_scale.jpg", 2, false);//测试OK
         // 方法二：按高度和宽度缩放
         //ImageUtils.scale2("d:/20130817_105741.jpg", "d:/abc_scale2.jpg", 800, 600, false);//测试OK
-        ImageUtils.scale4("d:/20130817_105741.jpg", "d:/abc_scale2.jpg", 800, 500);//测试OK
+        ImageUtil.scale4("d:/20130817_105741.jpg", "d:/abc_scale2.jpg", 800, 500);//测试OK
         // 2-切割图像：
         // 方法一：按指定起点坐标和宽高切割
 //        ImageUtils.cut("e:/abc.jpg", "e:/abc_cut.jpg", 0, 0, 400, 400 );//测试OK

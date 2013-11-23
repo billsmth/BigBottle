@@ -48,8 +48,9 @@ Ext.define('App.controller.xsgl.xiaoshouCtrl', {
             'addXiaoshouWin button[action=xsgl_cancel_xiaoshou_act]': {
             	click:this.xsglcancelAddEvent
             },
-            
-            
+            'xiaoshouView button[action=xsgl_print_form_act]': {
+            	click:this.xsglPrintFormEvent
+            }
         });
     },
     
@@ -154,6 +155,35 @@ Ext.define('App.controller.xsgl.xiaoshouCtrl', {
                 this.cancelXsglQueryEvent();
             }
         });
+    },
+    xsglPrintFormEvent : function () {
+    	var grid=Ext.ComponentQuery.query('xiaoshouView')[0];
+        var rowRecord=grid.getSelectionModel().selected.items[0];
+        if(rowRecord==undefined) {
+            Ext.MessageBox.alert("提示", "请选择一行，再进行操作。");
+            return;
+        }
+        if(rowRecord.data.express_name==null||rowRecord.data.express_name==""){
+        	Ext.MessageBox.alert("提示", "尚未指定快递名称，无法打印快递单。");
+            return;
+        }
+        Ext.Ajax.request({
+            url : 'xiaoshou/pntExpressForm.action',
+            actionMethods:{
+				read:'POST'        
+	        },
+            params : {
+            	xiaoshouID : rowRecord.data.xiaoshou_id
+            },
+            success : function(response, option) {
+            	Ext.Msg.alert('提示','快递单打印成功');	
+            },
+            failure : function() {
+                Ext.Msg.alert('提示','快递单打印失败');
+            },
+            scope: this
+        });
+        
     },
     xsglRukuEvent : function (obj, event) {
 		var grid = obj.up('xiaoshouView');

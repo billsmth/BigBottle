@@ -39,13 +39,13 @@ Ext.define('App.view.xsgl.xiaoshouView', {
             },'-', {
                 id:'xsgl_status_id',
                 text:'销售状态',
-                iconCls:'icon-checkin',
+                iconCls:'icon-order-edit',
                 action:'xsgl_status_act'
             },'-', {
-                id:'xsgl_edit_id',
-                text:'编辑',
-                iconCls:'icon-edit',
-                action:'xsgl_list_edit_act'
+                id:'xsgl_print_id',
+                text:'打印快递单',
+                iconCls:'icon-printer',
+                action:'xsgl_print_form_act'
             },'-', {
                 id:'xsgl_del_id',
                 text:'删除',

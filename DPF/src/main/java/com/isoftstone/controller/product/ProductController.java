@@ -27,7 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.isoftstone.common.ImageUtils;
+import com.isoftstone.common.ImageUtil;
 import com.isoftstone.common.Tools;
 import com.isoftstone.model.acl.User;
 import com.isoftstone.model.jxc.Kucun;
@@ -512,7 +512,7 @@ public class ProductController {
 		if (file.exists()) {
 			file.delete();
 		}
-		ImageUtils.scale4(productFilePic,productIndexPic,115,115);
+		ImageUtil.scale4(productFilePic,productIndexPic,115,115);
     	
     	System.out.println("Product>>createIndexPic>>end");
     	return "{'success':true}";
@@ -565,7 +565,7 @@ public class ProductController {
     			String savePath = request.getSession().getServletContext().getRealPath("/Productlist/");
     			savePath+="/" + target_product_id + "/";
     			
-    			ImageUtils.scale4(savePath + productFirstPicName, savePath + Tools.PROUDCT_INDEX_PIC_NAME,115,115);
+    			ImageUtil.scale4(savePath + productFirstPicName, savePath + Tools.PROUDCT_INDEX_PIC_NAME,115,115);
     		} catch (IOException e) {
     			System.out.println(e.getMessage());
     			return null;     
@@ -633,6 +633,6 @@ public class ProductController {
     	String fB=filePath+fileName;
     	String fS=filePath+ fileName.replace(".", "s.");
     	
-    	ImageUtils.scale4(fB,fS,Tools.PRODUCT_DESP_HEIGHT,Tools.PRODUCT_DESP_WIDTH);
+    	ImageUtil.scale4(fB,fS,Tools.PRODUCT_DESP_HEIGHT,Tools.PRODUCT_DESP_WIDTH);
     }
 }

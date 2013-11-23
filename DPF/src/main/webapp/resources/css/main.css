@@ -28,6 +28,15 @@
 .icon-report-add {
     background-image:url(../img/report_add.png) !important;
 }
+.icon-printer {
+    background-image:url(../img/printer.png) !important;
+}
+.icon-order-edit {
+    background-image:url(../img/script_edit.png) !important;
+}
+.icon-picture-add {
+    background-image:url(../img/picture_add.png) !important;
+}
 .icon-user-add {
     background-image:url(../img/user_add.png) !important;
 }
