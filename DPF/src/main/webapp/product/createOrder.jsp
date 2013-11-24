@@ -173,28 +173,28 @@
 				<label>收件人地址</label>
 				<ul data-role="listview" data-inset="true">
 	        		<li data-role="fieldcontain">
-	                	<input type="text" id="post_to" name="post_to" value="测试收件人" data-clear-btn="true" placeholder="收件人姓名" >
+	                	<input type="text" id="post_to" name="post_to" value="" data-clear-btn="true" placeholder="收件人姓名" >
 	                </li>
 	                <li data-role="fieldcontain">
-	                	<input type="text" id="destination" name="destination" value="广州" data-clear-btn="true" placeholder="目的地" >
+	                	<input type="text" id="destination" name="destination" value="" data-clear-btn="true" placeholder="目的地" >
 	                </li>
 	                <li data-role="fieldcontain">
-	                	<input type="text" id="province" name="province" value="广东" data-clear-btn="true" placeholder="收件省份" >
+	                	<input type="text" id="province" name="province" value="" data-clear-btn="true" placeholder="收件省份" >
 	                </li>
 	                <li data-role="fieldcontain">
-	                	<input type="text" id="city" name="city" value="广州市" data-clear-btn="true" placeholder="收件城市" >
+	                	<input type="text" id="city" name="city" value="" data-clear-btn="true" placeholder="收件城市" >
 	                </li>
 	                <li data-role="fieldcontain">
-	                	<input type="text" id="district" name="district" value="十三行" data-clear-btn="true" placeholder="收件区县" >
+	                	<input type="text" id="district" name="district" value="" data-clear-btn="true" placeholder="收件区县" >
 	                </li>
 	                <li data-role="fieldcontain">
-	                	<input type="text" id="company_name" name="company_name" value="美错之家" data-clear-btn="true" placeholder="单位名称" >
+	                	<input type="text" id="company_name" name="company_name" value="" data-clear-btn="true" placeholder="单位名称" >
 	                </li>
 	                <li data-role="fieldcontain">
-	                	<input type="text" id="detail_to" name="detail_to" value="汇鑫路53号" data-clear-btn="true" placeholder="详细地址" >
+	                	<input type="text" id="detail_to" name="detail_to" value="" data-clear-btn="true" placeholder="详细地址" >
 	                </li>
 	                <li data-role="fieldcontain">
-	                	<input type="text" id="contact_number" name="contact_number" value="134875382736" data-clear-btn="true" placeholder="联系电话" >
+	                	<input type="text" id="contact_number" name="contact_number" value="" data-clear-btn="true" placeholder="联系电话" >
 	                </li>
 	            </ul>
 			</div>

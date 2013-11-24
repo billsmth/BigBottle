@@ -102,6 +102,7 @@ public class ProductController {
         }else{
         	product.setCol3(request.getParameter("col3"));
         }
+        product.setCol4(request.getParameter("col4"));
         User user = (User) request.getSession().getAttribute("user");
         
         product.setUpdater_id(user.getPeopleId());
