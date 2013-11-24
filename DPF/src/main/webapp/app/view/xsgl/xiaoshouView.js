@@ -42,6 +42,11 @@ Ext.define('App.view.xsgl.xiaoshouView', {
                 iconCls:'icon-order-edit',
                 action:'xsgl_status_act'
             },'-', {
+                id:'xsgl_express_edit_id',
+                text:'编辑快递单',
+                iconCls:'icon-order-edit',
+                action:'xsgl_express_Form_edit_act'
+            },'-', {
                 id:'xsgl_print_id',
                 text:'打印快递单',
                 iconCls:'icon-printer',

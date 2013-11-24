@@ -50,7 +50,17 @@ Ext.define('App.controller.xsgl.xiaoshouCtrl', {
             },
             'xiaoshouView button[action=xsgl_print_form_act]': {
             	click:this.xsglPrintFormEvent
+            },
+            'xiaoshouView button[action=xsgl_express_Form_edit_act]': {
+            	click:this.xsglExpressFormEditEvent
+            },
+            'editExpressFormWin button[action=xsgl_submit_express_form_act]': {
+            	click:this.xsglSubmitExpressEditEvent
+            },
+            'editExpressFormWin button[action=xsgl_cancel_express_form_act]': {
+            	click:this.xsglcancelExpressEditEvent
             }
+            
         });
     },
     
@@ -167,23 +177,92 @@ Ext.define('App.controller.xsgl.xiaoshouCtrl', {
         	Ext.MessageBox.alert("提示", "尚未指定快递名称，无法打印快递单。");
             return;
         }
+        
+        Ext.Msg.confirm("请确认", "确认要打印快递单吗?", function(id){
+    		if (id == "yes") {
+    			Ext.Ajax.request({
+    	            url : 'xiaoshou/pntExpressForm.action',
+    	            actionMethods:{
+    					read:'POST'        
+    		        },
+    	            params : {
+    	            	xiaoshouID : rowRecord.data.xiaoshou_id
+    	            },
+    	            success : function(response, option) {
+    	            	Ext.Msg.alert('提示','快递单打印成功');	
+    	            },
+    	            failure : function() {
+    	                Ext.Msg.alert('提示','快递单打印失败');
+    	            },
+    	            scope: this
+    	        });
+    		}
+        });
+    },
+    xsglExpressFormEditEvent : function () {
+    	var grid=Ext.ComponentQuery.query('xiaoshouView')[0];
+        var rowRecord=grid.getSelectionModel().selected.items[0];
+        if(rowRecord==undefined) {
+            Ext.MessageBox.alert("提示", "请选择一行，再进行操作。");
+            return;
+        }
+        if (this.ExpressFormWin == null || this.ExpressFormWin == undefined) {
+            this.ExpressFormWin = Ext.create('App.view.xsgl.editExpressFormWin');
+        }
+        
         Ext.Ajax.request({
-            url : 'xiaoshou/pntExpressForm.action',
+            url : 'xiaoshou/getPostInfo.action',
             actionMethods:{
 				read:'POST'        
 	        },
             params : {
-            	xiaoshouID : rowRecord.data.xiaoshou_id
+            	xiaoshouId : rowRecord.data.xiaoshou_id
             },
             success : function(response, option) {
-            	Ext.Msg.alert('提示','快递单打印成功');	
+            	var result = Ext.decode(response.responseText);
+            	
+            	if(result.POST_INFO.post_id!="0"){
+	            	if(result.POST_INFO.type=="1"){
+	            		Ext.getCmp('post_type_1').setValue(true);
+	            	}else{
+	            		Ext.getCmp('post_type_0').setValue(true);
+	            	}
+	            	Ext.getCmp('post_id').setValue(result.POST_INFO.post_id);
+	            	Ext.getCmp('order_id').setValue(result.POST_INFO.order_id);
+	            	Ext.getCmp('people_id').setValue(result.POST_INFO.people_id);
+	            	
+	            	Ext.getCmp('post_from').setValue(result.POST_INFO.post_from);
+	            	Ext.getCmp('departure').setValue(result.POST_INFO.departure);
+	            	Ext.getCmp('company_name_from').setValue(result.POST_INFO.company_name_from);
+	            	Ext.getCmp('province_from').setValue(result.POST_INFO.province_from);
+	            	Ext.getCmp('city_from').setValue(result.POST_INFO.city_from);
+	            	Ext.getCmp('district_from').setValue(result.POST_INFO.district_from);
+	            	Ext.getCmp('detail_from').setValue(result.POST_INFO.detail_from);
+	            	Ext.getCmp('contact_number_from').setValue(result.POST_INFO.contact_number_from);
+	            	Ext.getCmp('neijian').setValue(result.POST_INFO.neijian);
+	            	
+	            	Ext.getCmp('post_to').setValue(result.POST_INFO.post_to);
+	            	Ext.getCmp('destination').setValue(result.POST_INFO.destination);
+	            	Ext.getCmp('company_name').setValue(result.POST_INFO.company_name);
+	            	Ext.getCmp('province').setValue(result.POST_INFO.province);
+	            	Ext.getCmp('city').setValue(result.POST_INFO.city);
+	            	Ext.getCmp('district').setValue(result.POST_INFO.district);
+	            	Ext.getCmp('detail_to').setValue(result.POST_INFO.detail_to);
+	            	Ext.getCmp('contact_number').setValue(result.POST_INFO.contact_number);
+	            	Ext.getCmp('note').setValue(result.POST_INFO.note);
+            	}else{
+            		Ext.getCmp('xiaoshou_id_lab').setValue(rowRecord.data.xiaoshou_id);
+                    Ext.getCmp('maijia_lab').setValue(rowRecord.data.maijiaxingming+" [ "+rowRecord.data.maijia_id+" ]");
+                    Ext.getCmp('post_to').setValue(rowRecord.data.maijiaxingming);
+            	}
             },
             failure : function() {
-                Ext.Msg.alert('提示','快递单打印失败');
+                Ext.Msg.alert('提示','销售信息导入库存失败');
             },
             scope: this
         });
         
+        this.ExpressFormWin.show();
     },
     xsglRukuEvent : function (obj, event) {
 		var grid = obj.up('xiaoshouView');
@@ -390,6 +469,9 @@ Ext.define('App.controller.xsgl.xiaoshouCtrl', {
     },
     xsglcancelAddEvent:function(obj, event) {
     	this.addXiaoshouWin.hide();
+    },
+    xsglcancelExpressEditEvent:function(obj, event) {
+    	this.ExpressFormWin.hide();
     }
     
 });
