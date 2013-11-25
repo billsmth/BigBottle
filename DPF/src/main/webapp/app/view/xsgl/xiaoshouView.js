@@ -44,7 +44,7 @@ Ext.define('App.view.xsgl.xiaoshouView', {
             },'-', {
                 id:'xsgl_express_edit_id',
                 text:'编辑快递单',
-                iconCls:'icon-order-edit',
+                iconCls:'icon-edit',
                 action:'xsgl_express_Form_edit_act'
             },'-', {
                 id:'xsgl_print_id',
@@ -93,19 +93,23 @@ Ext.define('App.view.xsgl.xiaoshouView', {
 					}, {
 						header:'售价[元]',
 						dataIndex:'shoujia', 
-						width:75
+						width:60
+					}, {
+						header:'运费[元]',
+						dataIndex:'col2', 
+						width:60
 					}, {
 						header:'实收[元]',
 						dataIndex:'shijishoukuan', 
 						width:85
 					}, {
-						header:'买家编号',
-						dataIndex:'maijia_id', 
-						width:60
-					}, {
 						header:'买家姓名',
 						dataIndex:'maijiaxingming', 
 						width:80
+					}, {
+						header:'买家编号',
+						dataIndex:'maijia_id', 
+						width:60
 					}, {
 						header:'状态',
 						dataIndex:'zhuangtai', 

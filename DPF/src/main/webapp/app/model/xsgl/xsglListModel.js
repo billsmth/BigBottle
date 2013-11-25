@@ -15,6 +15,9 @@ Ext.define('App.model.xsgl.xsglListModel', {
             name: 'col1'
         },
         {
+            name: 'col2'
+        },
+        {
             name: 'kuanhao_id'
         },
         {
