@@ -303,7 +303,7 @@ public class ProductController {
         		kucunIds=kucunIds.substring(0,kucunIds.length()-1);
         	}
         	String[] kucun_ids=kucunIds.split(",");
-        	List list=Arrays.asList(kucun_ids);
+        	List<String> list=Arrays.asList(kucun_ids);
         	
         	Map<String,Object> map=new HashMap<String,Object>();
         	map.put("kucunIds", list);
@@ -541,32 +541,35 @@ public class ProductController {
     @ResponseBody
     public String upfile(HttpServletRequest request, Product product, String target_product_id) {
     	
-    	product.setProduct_id(Long.parseLong(target_product_id));
-    	Product targetProduct=productService.getProduct(product);
-    	String imageNames="";
-    	String lastName;
-    	boolean createIndexFlg=false;
-    	if(!Tools.isBlank(targetProduct.getImage_name())){
-    		imageNames=targetProduct.getImage_name();
-    		String[] picNames=imageNames.split(",");
-    		lastName=picNames[picNames.length-1].substring(0,picNames[picNames.length-1].lastIndexOf("."));
-    		lastName=String.valueOf(Long.parseLong(lastName)+1);
-    	}else{
-    		lastName=targetProduct.getProduct_id()+"001";
-    		createIndexFlg=true;
-    		//targetProduct.setImage_name(imageNames);
-    	}
-    	System.out.println("upfile for :"+target_product_id);
-    	long fileIndex=Long.parseLong(lastName);
-    	if(product.getFiletest1().getSize()>0){
+		product.setProduct_id(Long.parseLong(target_product_id));
+		Product targetProduct = productService.getProduct(product);
+		String imageNames = "";
+		String lastName;
+		boolean createIndexFlg = false;
+		if (!Tools.isBlank(targetProduct.getImage_name())) {
+			imageNames = targetProduct.getImage_name();
+			String[] picNames = imageNames.split(",");
+			lastName = picNames[picNames.length - 1].substring(0, picNames[picNames.length - 1].lastIndexOf("."));
+			lastName = String.valueOf(Long.parseLong(lastName) + 1);
+		} else {
+			lastName = targetProduct.getProduct_id() + "001";
+			createIndexFlg = true;
+			// targetProduct.setImage_name(imageNames);
+		}
+		System.out.println("upfile for :" + target_product_id);
+		long fileIndex = Long.parseLong(lastName);
+		if (product.getFiletest1().getSize() > 0) {
     		try {
     			
     			String productFirstPicName=SaveFileFromInputStream(product.getFiletest1().getInputStream(), target_product_id,fileIndex, product.getFiletest1().getOriginalFilename(), request);     
+    			
     			imageNames += productFirstPicName+",";
     			String savePath = request.getSession().getServletContext().getRealPath("/Productlist/");
     			savePath+="/" + target_product_id + "/";
     			
-    			ImageUtil.scale4(savePath + productFirstPicName, savePath + Tools.PROUDCT_INDEX_PIC_NAME,115,115);
+    			if(createIndexFlg){
+    				ImageUtil.scale4(savePath + productFirstPicName, savePath + Tools.PROUDCT_INDEX_PIC_NAME,115,115);
+    			}
     		} catch (IOException e) {
     			System.out.println(e.getMessage());
     			return null;     
@@ -608,21 +611,21 @@ public class ProductController {
 		if (!file.exists()) {
 			file.mkdir();
 		}
-        filename=index+filename.substring(filename.lastIndexOf("."));
-        File toFile = new File(file, filename);
-        OutputStream os = new FileOutputStream(toFile);
-        byte[] buffer = new byte[2048];
-        int length = 0;
-        while ((length = stream.read(buffer)) > 0) {
-            os.write(buffer, 0, length);
-        }
-        stream.close();
-        os.close();
-        
-        //生成展示用的小尺寸图片
-        createSmaillPic(productFileDir, filename);
-        
-        return filename;
+		filename = index + filename.substring(filename.lastIndexOf("."));
+		File toFile = new File(file, filename);
+		OutputStream os = new FileOutputStream(toFile);
+		byte[] buffer = new byte[2048];
+		int length = 0;
+		while ((length = stream.read(buffer)) > 0) {
+			os.write(buffer, 0, length);
+		}
+		stream.close();
+		os.close();
+
+		// 生成展示用的小尺寸图片
+		createSmaillPic(productFileDir, filename);
+
+		return filename;
 	}
     
     /**

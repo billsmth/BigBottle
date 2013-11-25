@@ -113,10 +113,11 @@ public class ImageUtil {
      */
     public final static void scale2(String srcImageFile, String result, int height, int width, boolean bb) {
         try {
-            double ratio = 0.0; // 缩放比例
+            double ratio = 1; // 缩放比例
             File f = new File(srcImageFile);
             BufferedImage bi = ImageIO.read(f);
             Image itemp = bi.getScaledInstance(width, height, bi.SCALE_SMOOTH);
+            AffineTransformOp op;
             // 计算比例
             if ((bi.getHeight() > height) || (bi.getWidth() > width)) {
                 if (bi.getHeight() > bi.getWidth()) {
@@ -124,9 +125,12 @@ public class ImageUtil {
                 } else {
                     ratio = (new Integer(width)).doubleValue() / bi.getWidth();
                 }
-                AffineTransformOp op = new AffineTransformOp(AffineTransform.getScaleInstance(ratio, ratio), null);
-                itemp = op.filter(bi, null);
+                op = new AffineTransformOp(AffineTransform.getScaleInstance(ratio, ratio), null);
+            } else {
+            	op = new AffineTransformOp(AffineTransform.getScaleInstance(ratio, ratio), null);
             }
+            itemp = op.filter(bi, null);
+            
             if (bb) {//补白
                 BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
                 Graphics2D g = image.createGraphics();
