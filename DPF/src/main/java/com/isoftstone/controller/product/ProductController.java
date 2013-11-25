@@ -94,7 +94,6 @@ public class ProductController {
         product.setType(request.getParameter("type"));
         product.setNote(request.getParameter("note"));
         product.setKucun_ids(request.getParameter("kucun_ids"));
-        product.setNew_flg(request.getParameter("new_flg"));
         product.setCol1(request.getParameter("col1"));
         product.setCol2(request.getParameter("col2"));
         if(Tools.isBlank(request.getParameter("col3"))){
@@ -129,7 +128,11 @@ public class ProductController {
             product.setCreater_name(user.getPeopleName());
             
             product.setStatus("0");
-            product.setNew_flg("0");
+            if(!Tools.isBlank(request.getParameter("new_flg"))){
+            	product.setNew_flg(request.getParameter("new_flg"));
+            }else{
+            	product.setNew_flg("0");
+            }
         	
             productService.saveProduct(product);
         } else if ("2".equals(editType)) {

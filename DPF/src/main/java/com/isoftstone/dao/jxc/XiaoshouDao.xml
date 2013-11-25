@@ -188,7 +188,8 @@
         , maijia_id = #{maijia_id}
         , maijiaxingming = #{maijiaxingming} 
         , zhuangtai = #{zhuangtai} 
-        , beizhu = #{beizhu}
+        , beizhu = #{beizhu} 
+        , post_type = #{post_type} 
         , express_name = #{express_name} 
         , express_code = #{express_code} 
         where xiaoshou_id = #{xiaoshou_id}

@@ -63,15 +63,108 @@ public class XiaoshouController {
         mav.setViewName("xiaoshou/productxiaoshouapprove");
         return mav;
     }
+    
+    @RequestMapping("/saveExpress")
+    @ResponseBody
+    public String saveExpress(String editType3, HttpServletRequest request) {
+    	
+    	if(Tools.isBlank(editType3)){
+    		return "{'error':1}";
+    	}
+    	
+    	PostAddress pa;
+    	
+        
+    	
+    	// create Express Form
+    	if(editType3.equals("1")){
+    		
+    		pa = postAddressService.getMaxID();
+        	if(pa==null){
+        		pa=new PostAddress();
+        		pa.setPost_id(0l);
+        	}
+        	
+    		Long postID=pa.getPost_id();
+    		postID=postID/10000;
+    		Long dateStr = Tools.getDataStr();
+    		
+	        if(dateStr>postID){
+	        	pa.setPost_id(Long.parseLong(""+dateStr+"0001"));
+	        }else{
+	        	pa.setPost_id(pa.getPost_id()+1);
+	        }
+	        
+	        pa.setOrder_id(Long.parseLong(request.getParameter("order_id")));
+	        pa.setPeople_id(request.getParameter("people_id"));
+	        pa.setType(request.getParameter("type"));
+	        pa.setPost_from(request.getParameter("post_from"));
+	        pa.setDeparture(request.getParameter("departure"));
+	        pa.setCompany_name_from(request.getParameter("company_name_from"));
+	        pa.setProvince_from(request.getParameter("province_from"));
+	        pa.setCity_from(request.getParameter("city_from"));
+	        pa.setDistrict_from(request.getParameter("district_from"));
+	        pa.setDetail_from(request.getParameter("detail_from"));
+	        pa.setContact_number_from(request.getParameter("contact_number_from"));
+	        pa.setNeijian(request.getParameter("neijian"));
+	        
+	        pa.setPost_to(request.getParameter("post_to"));
+	        pa.setDestination(request.getParameter("destination"));
+	        pa.setCompany_name(request.getParameter("company_name"));
+	        pa.setProvince(request.getParameter("province"));
+	        pa.setCity(request.getParameter("city"));
+	        pa.setDistrict(request.getParameter("district"));
+	        pa.setDetail_to(request.getParameter("detail_to"));
+	        pa.setContact_number(request.getParameter("contact_number"));
+	        pa.setNote(request.getParameter("note"));
+	        
+	        postAddressService.savePostAddress(pa);
+	        
+    	// update Express Form
+    	}else if(editType3.equals("2")){
+    		pa=new PostAddress();
+    		pa.setPost_id(Long.parseLong(request.getParameter("post_id")));
+    		pa=postAddressService.getPostAddress(pa);
+    		
+	        pa.setType(request.getParameter("type"));
+	        pa.setPost_from(request.getParameter("post_from"));
+	        pa.setDeparture(request.getParameter("departure"));
+	        pa.setCompany_name_from(request.getParameter("company_name_from"));
+	        pa.setProvince_from(request.getParameter("province_from"));
+	        pa.setCity_from(request.getParameter("city_from"));
+	        pa.setDistrict_from(request.getParameter("district_from"));
+	        pa.setDetail_from(request.getParameter("detail_from"));
+	        pa.setContact_number_from(request.getParameter("contact_number_from"));
+	        pa.setNeijian(request.getParameter("neijian"));
+	        
+	        pa.setPost_to(request.getParameter("post_to"));
+	        pa.setDestination(request.getParameter("destination"));
+	        pa.setCompany_name(request.getParameter("company_name"));
+	        pa.setProvince(request.getParameter("province"));
+	        pa.setCity(request.getParameter("city"));
+	        pa.setDistrict(request.getParameter("district"));
+	        pa.setDetail_to(request.getParameter("detail_to"));
+	        pa.setContact_number(request.getParameter("contact_number"));
+	        pa.setNote(request.getParameter("note"));
+    		
+    		postAddressService.updatePostAddress(pa);
+    	}else{
+    		return "{'error':1}";
+    	}
+    	
+    	return "{'success':true}";
+    }
 
     @RequestMapping("/savexiaoshou")
     @ResponseBody
-    public String saveXiaoshou(String editType,String xiaoshou_id, String kucun_id, String col1, String kuanhao_id, String yanse, String chima, String shuliang,String shoujia, String shijishoukuan, String maijia_id, String maijiaxingming, String zhuangtai, String delflg, String beizhu) {
+    public String saveXiaoshou(String editType,String xiaoshou_id, String kucun_id, String product_id, String col1, String col2, String kuanhao_id, String yanse, String chima, String shuliang,String shoujia, String shijishoukuan, String maijia_id, String maijiaxingming, String zhuangtai, String delflg, String post_type, String beizhu) {
 
-    	Kucun kucun=new Kucun(Long.parseLong(kucun_id));
-    	kucun=kucunService.getKucun(kucun);
-    	if(kucun==null){
-    		return  "{'error':1}";
+    	if(!Tools.isBlank(kucun_id)){
+    		Kucun kucun=new Kucun(Long.parseLong(kucun_id));
+    		kucun=kucunService.getKucun(kucun);
+    		if(kucun==null){
+    			return  "{'error':1}";
+    		}
     	}
     	
     	Xiaoshou xiaoshou = xiaoshouService.getMaxID();
@@ -96,23 +189,27 @@ public class XiaoshouController {
     		xiaoshou.setZhuangtai(zhuangtai);
     		xiaoshou.setDelflg(delflg);
     	}
-    	xiaoshou.setKucun_id(Long.parseLong(kucun_id));
+    	
+    	if(!Tools.isBlank(kucun_id)){
+    		xiaoshou.setKucun_id(Long.parseLong(kucun_id));
+    	}
     	xiaoshou.setCol1(col1);
+    	xiaoshou.setCol2(col2);
         xiaoshou.setKuanhao_id(kuanhao_id);
+        xiaoshou.setProduct_id(Long.parseLong(product_id));
         xiaoshou.setYanse(yanse);
         xiaoshou.setChima(chima);
         xiaoshou.setShuliang(Integer.valueOf(shuliang));
         xiaoshou.setShoujia(Float.valueOf(shoujia));
         xiaoshou.setShijishoukuan(Float.valueOf(shijishoukuan));
         xiaoshou.setMaijia_id(maijia_id);
+        xiaoshou.setPost_type(post_type);
         xiaoshou.setMaijiaxingming(maijiaxingming);
         xiaoshou.setBeizhu(beizhu);
         
         if ("1".equals(editType)) {
-
             xiaoshouService.saveXiaoshou(xiaoshou);
         } else if ("2".equals(editType)) {
-
             xiaoshouService.updateXiaoshou(xiaoshou);
         }
 

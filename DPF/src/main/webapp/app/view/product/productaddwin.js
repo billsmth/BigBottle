@@ -53,6 +53,7 @@ Ext.define('App.view.product.productaddwin', {
  		                fieldLabel: '产品名称',
  		                name:'product_name',
  		                labelAlign: 'right',
+ 		                emptyText:"输入产品名称",
  		                labelWidth: 90
  		            },{
  		                xtype: 'textfield',
@@ -60,6 +61,7 @@ Ext.define('App.view.product.productaddwin', {
  		                fieldLabel: '产品发布路径',
  		                name:'path',
  		                labelAlign: 'right',
+ 		                emptyText:"输入产品发布路径,开发中。。。",
  		                labelWidth: 90
  		            },{
  		                xtype: 'textfield',
@@ -67,6 +69,7 @@ Ext.define('App.view.product.productaddwin', {
  		                fieldLabel: '模板编号',
  		                name:'template_id',
  		                labelAlign: 'right',
+ 		                emptyText:"输入模板编号,开发中。。。",
  		                labelWidth: 90
  		            },{
  		                xtype: 'textfield',
@@ -74,6 +77,7 @@ Ext.define('App.view.product.productaddwin', {
  		                fieldLabel: '产品种类',
  		                name:'type',
  		                labelAlign: 'right',
+ 		                emptyText:"输入产品分类,开发中。。。",
  		                labelWidth: 90
  		            },{
 	                    fieldLabel: '销售分类',
@@ -84,6 +88,7 @@ Ext.define('App.view.product.productaddwin', {
 		                displayField: 'value',
 		                valueField: 'key',
 		                triggerAction: 'all',
+		                emptyText:"选择销售分类,默认为普通商品",
                         allowBlank: true
 	                },{
  		                xtype: 'textfield',
@@ -121,6 +126,7 @@ Ext.define('App.view.product.productaddwin', {
 	     		                name:'col1',
 	     		                labelAlign: 'right',
 	     		                labelWidth: 90,
+	     		                emptyText:"如需要可添加产品链接地址",
 	     		                width:450
 	     		            }]
 	                },{
@@ -185,6 +191,7 @@ Ext.define('App.view.product.productaddwin', {
 	     		                name:'desp',
 			                    maxLength: 300,
 	     		                labelAlign: 'right',
+	     		                emptyText:"如需要可添加产品描述信息",
 	     		                labelWidth: 90,
 	     		                width:450
 	     		            }]
@@ -202,6 +209,7 @@ Ext.define('App.view.product.productaddwin', {
 	     		                name:'note',
 			                    maxLength: 300,
 	     		                labelAlign: 'right',
+	     		                emptyText:"如需要可添加备注信息",
 	     		                labelWidth: 90,
 	     		                width:450
 	     		            }]
@@ -213,6 +221,7 @@ Ext.define('App.view.product.productaddwin', {
 	 		                maxLength: 300,
 	 		                labelAlign: 'right',
 	 		                labelWidth: 90,
+	 		                emptyText:"格式: XX颜色:XX尺码;  例如: 黑色:L;白色:XL;",
      		                width:450
 	 		            },{
 		                	xtype:'container',
@@ -228,6 +237,7 @@ Ext.define('App.view.product.productaddwin', {
 		     		                name:'kucun_ids',
 				                    maxLength: 300,
 		     		                labelAlign: 'right',
+		     		                emptyText:"添加库存列表,格式: XXXX,XXXX,XXXX,",
 		     		                labelWidth: 90,
 		     		                width:450
 		     		            }]

@@ -227,6 +227,8 @@ Ext.define('App.controller.xsgl.xiaoshouCtrl', {
 	            	}else{
 	            		Ext.getCmp('post_type_0').setValue(true);
 	            	}
+	            	
+	            	Ext.getCmp('editType3').setValue("2");
 	            	Ext.getCmp('post_id').setValue(result.POST_INFO.post_id);
 	            	Ext.getCmp('order_id').setValue(result.POST_INFO.order_id);
 	            	Ext.getCmp('people_id').setValue(result.POST_INFO.people_id);
@@ -251,6 +253,17 @@ Ext.define('App.controller.xsgl.xiaoshouCtrl', {
 	            	Ext.getCmp('contact_number').setValue(result.POST_INFO.contact_number);
 	            	Ext.getCmp('note').setValue(result.POST_INFO.note);
             	}else{
+            		this.ExpressFormWin.down('form').getForm().reset();
+            		
+            		if(rowRecord.data.post_type=="1"){
+	            		Ext.getCmp('post_type_1').setValue(true);
+	            	}else{
+	            		Ext.getCmp('post_type_0').setValue(true);
+	            	}
+            		
+            		Ext.getCmp('editType3').setValue("1");
+            		Ext.getCmp('order_id').setValue(rowRecord.data.xiaoshou_id);
+            		Ext.getCmp('people_id').setValue(rowRecord.data.maijia_id);
             		Ext.getCmp('xiaoshou_id_lab').setValue(rowRecord.data.xiaoshou_id);
                     Ext.getCmp('maijia_lab').setValue(rowRecord.data.maijiaxingming+" [ "+rowRecord.data.maijia_id+" ]");
                     Ext.getCmp('post_to').setValue(rowRecord.data.maijiaxingming);
@@ -263,6 +276,29 @@ Ext.define('App.controller.xsgl.xiaoshouCtrl', {
         });
         
         this.ExpressFormWin.show();
+    },
+    xsglSubmitExpressEditEvent : function (obj, event) {
+    	var form = Ext.ComponentQuery.query('editExpressFormWin form')[0];
+        if (form.isValid()) {
+        	
+        	Ext.Ajax.request({
+                url: 'xiaoshou/saveExpress.action',
+                actionMethods:{
+    				read:'POST'        
+    	        },
+                //params : editForm.getForm().getValues(),
+                params: this.ExpressFormWin.down('form').getForm().getValues(),
+                success: function (response){
+                	Ext.Msg.alert('成功提示','新增或编辑快递单成功');
+                	this.ExpressFormWin.hide();
+                	this.queryXsglEvent();
+                },
+                failure: function(response) {
+                    Ext.Msg.alert('错误提示','新增或编辑快递单失败');
+                },
+                scope: this
+            });
+        }
     },
     xsglRukuEvent : function (obj, event) {
 		var grid = obj.up('xiaoshouView');
@@ -418,7 +454,15 @@ Ext.define('App.controller.xsgl.xiaoshouCtrl', {
     	
     	var editForm=Ext.ComponentQuery.query('addXiaoshouWin form')[0];
         editForm.getForm().loadRecord(rowRecord);
-        
+        var cnt=parseFloat(Ext.getCmp("col2").getValue())+parseFloat(Ext.getCmp("shuliang").getValue()*Ext.getCmp("shoujia").getValue());
+		Ext.getCmp("count").setValue('<Strong><span style=\'color:red\'>'+cnt+'</span>'+' 元</Strong>');
+		
+		if(rowRecord.data.post_type=="1"){
+    		Ext.getCmp('post_type_11').setValue(true);
+    	}else{
+    		Ext.getCmp('post_type_10').setValue(true);
+    	}
+		
         Ext.getCmp('editType').setValue(2);
     	
         this.addXiaoshouWin.show();

@@ -178,7 +178,7 @@ Ext.define('App.view.xsgl.editExpressFormWin', {
 	        	                xtype:'textfield',
 	        	                fieldLabel:'区/县',
 	        	                id:'district_from',
-	        	                name:'distric_from',
+	        	                name:'district_from',
 	        	                emptyText:"填写区县信息",
 	        	                value:'东城区'
 	        	            },{

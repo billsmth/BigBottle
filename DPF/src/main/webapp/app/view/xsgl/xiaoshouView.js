@@ -89,7 +89,7 @@ Ext.define('App.view.xsgl.xiaoshouView', {
 					}, {
 						header:'数量[件]',
 						dataIndex:'shuliang', 
-						width:70
+						width:60
 					}, {
 						header:'售价[元]',
 						dataIndex:'shoujia', 
@@ -122,7 +122,7 @@ Ext.define('App.view.xsgl.xiaoshouView', {
 					}, {
 						header:'快递单号',
 						dataIndex:'express_code', 
-						width:100
+						width:120
 					}, {
 						header:'删除',
 						dataIndex:'delflg', 
