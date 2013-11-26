@@ -78,7 +78,10 @@ Ext.define('App.view.product.productTypeView', {
 	                xtype: 'gridcolumn',
 	                dataIndex: 'parent_id',
 	                text: '上级分类',
-	                width:60
+	                width:60,
+	                renderer : function(val) {
+	                    return val==0?'顶级':val;
+	                }
 	            }, {
 	                xtype: 'gridcolumn',
 	                dataIndex: 'note',
