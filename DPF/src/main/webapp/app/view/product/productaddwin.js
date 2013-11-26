@@ -72,14 +72,19 @@ Ext.define('App.view.product.productaddwin', {
  		                emptyText:"输入模板编号,开发中。。。",
  		                labelWidth: 90
  		            },{
- 		                xtype: 'textfield',
- 		                flex: 1,
- 		                fieldLabel: '产品种类',
- 		                name:'type',
- 		                labelAlign: 'right',
- 		                emptyText:"输入产品分类,开发中。。。",
- 		                labelWidth: 90
- 		            },{
+	                    fieldLabel: '产品种类',
+	                    name: 'type',
+	                    id: 'type',
+	                    xtype: 'combobox',
+	                    store:'product.ptStore',
+		                queryMode: 'local',
+		                displayField: 'type_name',
+		                valueField: 'type_name',
+		                triggerAction: 'all',
+		                emptyText:"选择产品分类",
+		                editable:false,
+                        allowBlank: false
+	                },{
 	                    fieldLabel: '销售分类',
 	                    name: 'new_flg',
 	                    xtype: 'combobox',

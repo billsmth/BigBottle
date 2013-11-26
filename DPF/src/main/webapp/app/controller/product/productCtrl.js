@@ -1,7 +1,7 @@
 Ext.define('App.controller.product.productCtrl', {
     extend: 'Ext.app.Controller',
     
-    stores: ['product.productStore','com.SaleStore','com.ProductStatusStore'],
+    stores: ['product.productStore','com.SaleStore','com.ProductStatusStore', 'product.ptStore'],
     models: ['product.productModel'],
     views: ['product.productView', 'product.productaddwin', 'product.productUpfileWin','product.productSaleTypeWin','product.productSaleStatusWin'],
     
