@@ -42,7 +42,7 @@ session.removeAttribute("text");
 
 </head>
 <body id="LoginBody">
-<form action="login.action" method="post" name="form1" id="form1" >
+<form action="login.action" method="post" name="form1" id="form" >
 <div id="login">
   <table width="670" border="0" align="center" cellpadding="0" cellspacing="0">
     <tr>

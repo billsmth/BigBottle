@@ -65,6 +65,9 @@
 				<p><span id="fileName"></span></p>
 				<p>下载进度:<span id="progress"></span>%</p>
 			</div>
+			<div data-role="fieldcontain">
+	            <textarea name="product_desc" id="product_desc"><%=p.getDesp()%></textarea>
+	        </div>
 			<%
 			for (int i = 0; i < pics.length; i++) {
 			%>
