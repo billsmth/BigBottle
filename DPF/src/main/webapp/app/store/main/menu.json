@@ -36,6 +36,12 @@
     				"cls" : "forum-ct",
     				"leaf":true,
     				"qtitle" : "productView"
+    			},{
+    				"id":"202",
+    				"text":"产品分类维护",
+    				"cls" : "forum-ct",
+    				"leaf":true,
+    				"qtitle" : "productTypeView"
     			}]
     },
     {

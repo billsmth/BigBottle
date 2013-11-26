@@ -23,7 +23,8 @@ Ext.application({
         'jhgl.jinhuoCtrl',
         'kcgl.kucunCtrl',
         'xsgl.xiaoshouCtrl',
-        'product.productCtrl'
+        'product.productCtrl',
+        'product.productTypeCtrl'
     ],
     models: [
         'main.menuModel',
@@ -43,7 +44,8 @@ Ext.application({
         'jhgl.jhglListModel',
         'kcgl.kcglListModel',
         'xsgl.xsglListModel',
-        'product.productModel'
+        'product.productModel',
+        'product.productTypeModel'
     ],
     stores: [
              'ktsb.ktsbOtherKtStore',
@@ -51,7 +53,8 @@ Ext.application({
              'jhgl.jhglStore',
              'kcgl.kcglStore',
              'xsgl.xsglStore',
-             'product.productStore'
+             'product.productStore',
+             'product.productTypeStore'
     ],
     views: [
         'main.mainView',
@@ -68,6 +71,7 @@ Ext.application({
         'kcgl.kcglView',
         'xsgl.xiaoshouView',
         'product.productView',
+        'product.productTypeView',
         'product.productaddwin',
         'product.productSaleTypeWin'
     ],

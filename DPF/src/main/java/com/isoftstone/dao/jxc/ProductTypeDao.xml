@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.isoftstone.dao.jxc.ProductTypeDao" >
+	<resultMap id="ProductTypeMap" type="com.isoftstone.model.jxc.ProductType" >
+	    <id column="type_id" property="type_id" jdbcType="VARCHAR" />
+	    <result column="type_name" property="type_name" jdbcType="VARCHAR" />
+	    <result column="type_key" property="type_key" jdbcType="VARCHAR" />
+	    <result column="type_status" property="type_status" jdbcType="VARCHAR" />
+	    <result column="parent_id" property="parent_id" jdbcType="VARCHAR" />
+	    <result column="note" property="note" jdbcType="VARCHAR" />
+	</resultMap>
+  
+	<sql id="Base_Column_List" >
+	type_id, type_name, type_key, type_status, parent_id, note 
+	</sql>
+  
+	<select id="findProductType" resultMap="ProductTypeMap" parameterType="com.isoftstone.model.jxc.ProductType" >
+	    select 
+	    <include refid="Base_Column_List" />
+	    from product_type 
+	    where type_id = #{type_id}
+	</select>
+  
+	<select id = "getMaxID" resultMap = "ProductTypeMap">
+    	select max(type_id) type_id from product_type
+	</select>
+  
+	<select id="findAll" resultMap="ProductTypeMap">
+	    select 
+	    <include refid="Base_Column_List" />
+	    from product_type
+	</select>
+	
+	<select id="typeList" resultMap="ProductTypeMap">
+	    select 
+	    <include refid="Base_Column_List" />
+	    from product_type where type_status='1' 
+	</select>
+	
+	<insert id = "saveProductType" parameterType = "com.isoftstone.model.jxc.ProductType">
+		insert into product_type (type_id, type_name, type_key, type_status, parent_id, note) 
+		values (#{type_id}, #{type_name}, #{type_key}, #{type_status}, #{parent_id}, #{note})
+	</insert>
+  
+	<update id = "updateProductType" parameterType = "com.isoftstone.model.jxc.ProductType">
+        update product_type set 
+        	type_name = #{type_name}, 
+			type_key = #{type_key}, 
+			type_status = #{type_status}, 
+			parent_id = #{parent_id}, 
+			note = #{note} 
+        where type_id = #{type_id}
+	</update>
+	
+	<delete id="deleteProductTypeByID" parameterType="com.isoftstone.model.jxc.ProductType">
+        delete from product_type where type_id = #{type_id}
+    </delete>
+</mapper>
