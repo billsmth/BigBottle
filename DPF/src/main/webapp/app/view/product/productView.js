@@ -98,7 +98,14 @@ Ext.define('App.view.product.productView', {
                 xtype: 'gridcolumn',
                 dataIndex: 'image_name',
                 text: '图片',
-                flex:1
+                width:40,
+                renderer : function(val) {
+                    var retVal = '';
+                    if (val != "") {
+                    	retVal='<img src="./images/images.png">';
+                    }
+                    return retVal;
+                }
             }, {
                 xtype: 'gridcolumn',
                 dataIndex: 'template_id',
@@ -164,11 +171,11 @@ Ext.define('App.view.product.productView', {
             }, {
                 xtype: 'gridcolumn',
                 dataIndex: 'col1',
-                text: '货源链接地址',
-                flex:1,
+                text: '货源地址',
+                width:80,
                 renderer : function(val) {
                 	if(val!=null && val!=""){
-                		return "<a href='"+val+"' target='_blank'>"+val+"</a>";
+                		return "<a href='"+val+"' target='_blank'>点击<img src='./images/world_link.png'>查看</a>";
                 	}else{
                 		return val;
                 	}
@@ -212,22 +219,26 @@ Ext.define('App.view.product.productView', {
                 xtype: 'gridcolumn',
                 dataIndex: 'col5',
                 text: '信息5',
-                flex:1
+                flex:1,
+	            hidden:true
             }, {
                 xtype: 'gridcolumn',
                 dataIndex: 'col6',
                 text: '信息6',
-                flex:1
+                flex:1,
+	            hidden:true
             }, {
                 xtype: 'gridcolumn',
                 dataIndex: 'col7',
                 text: '信息7',
-                flex:1
+                flex:1,
+	            hidden:true
             }, {
                 xtype: 'gridcolumn',
                 dataIndex: 'col8',
                 text: '信息8',
-                flex:1
+                flex:1,
+	            hidden:true
             }, {
                 xtype: 'gridcolumn',
                 dataIndex: 'kucun_ids',
