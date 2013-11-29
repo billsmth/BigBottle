@@ -441,7 +441,7 @@ Ext.define('App.controller.product.productCtrl', {
         temp=Ext.ComponentQuery.query('productView displayfield')[10];
         var address=rowRecord.data.col1;
         if(address!=null && address!=""){
-        	address= "<a href='"+address+"' target='_blank'>"+address+"</a>";
+        	address= "<a href='"+address+"' target='_blank'>点击<img src='./images/world_link.png'>查看</a>";
     	}else{
     		address="";
     	}
