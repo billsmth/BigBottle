@@ -27,8 +27,8 @@
 				<li>
 					<a href="./login.jsp" data-transition="slideup" rel="external">
 						<img src="../images/login.png" />
-						<h3>登录</h3>
-						<p>前往登录界面</p>
+						<h3>登&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;陆</h3>
+						<p>前往登陆界面</p>
 					</a>
 				</li>
 				<li>
@@ -41,8 +41,22 @@
 				<li>
 					<a href="#"  rel="external" onclick="reset()">
 						<img src="../images/reset.png" />
-						<h3>重置</h3>
+						<h3>重&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;置</h3>
 						<p>重置系统设置</p>
+					</a>
+				</li>
+				<li>
+					<a href="#helpPage" data-transition="flip" data-inline="true">
+						<img src="../images/help.png" />
+						<h3>帮&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;助</h3>
+						<p>查看帮助信息</p>
+					</a>
+				</li>
+				<li>
+					<a href="#aboutPage" data-transition="flip" data-inline="true">
+						<img src="../images/about.png" />
+						<h3>关&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;于</h3>
+						<p>查看软件信息</p>
 					</a>
 				</li>
 			</ul>
@@ -56,6 +70,64 @@
 			</div>	
 					
 		</div>
+	</div>
+	<div data-role="page" id="helpPage">
+			<div data-role="header" data-position="fixed">
+				<h1>帮&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;助</h1>
+				<a data-shadow="false" data-iconshadow="false" data-icon="back" data-iconpos="notext" data-rel="back" data-ajax="false">Back</a>
+			</div>
+			<div data-role="content" id="help" >
+	            <ul data-role="listview" data-inset="true" id="help_list">
+	            	<li>使用方法:<br>
+	            	&nbsp;&nbsp;&nbsp;&nbsp;1, 点击[设置]菜单项, 界面迁移至[系统设置];<br>
+	            	&nbsp;&nbsp;&nbsp;&nbsp;2, 点选[登陆]菜单项, 界面迁移至[登陆];<br>
+	            	&nbsp;&nbsp;&nbsp;&nbsp;3, 输入[用户名]和[密码], 进行注册或登陆;<br>
+	            	&nbsp;&nbsp;&nbsp;&nbsp;4, 查看登陆结果, 登陆是否成功;<br>
+	            	&nbsp;&nbsp;&nbsp;&nbsp;5, 登陆后可进行购买及查看订单状态等操作了;</li>
+	            	<li>备&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注:<br>
+	            	&nbsp;&nbsp;&nbsp;&nbsp;◇   本软件只需登陆一次（无需重复登陆, 即可保持登陆状态）;<br>
+	            	&nbsp;&nbsp;&nbsp;&nbsp;◇   本软件默认发货地址是苏苏的工作室, 如需变更请自行修改;<br>
+	            	&nbsp;&nbsp;&nbsp;&nbsp;◇   商品图片下载目录为[download]文件夹;<br></li>
+                </ul>
+			</div>
+			<div data-role="footer" data-position="fixed" >
+				<div data-role="navbar">
+					<ul>
+						<li><a href="./main.jsp" data-icon="grid" rel="external">主菜单</a></li>
+						<li><a href="./setting.jsp" data-icon="gear" rel="external">设置</a></li>
+					</ul>
+				</div>
+			</div>
+	</div>
+	<div data-role="page" id="aboutPage">
+			<div data-role="header" data-position="fixed">
+				<h1>关于本软件</h1>
+				<a data-shadow="false" data-iconshadow="false" data-icon="back" data-iconpos="notext" data-rel="back" data-ajax="false">Back</a>
+			</div>
+			<div data-role="content" id="about" >
+	            <ul data-role="listview" data-inset="true" id="about_list">
+		            <li>名称: 微购供货（WGGH）<br>
+		            	版本: 1.00<br>
+		            	用途:<br>
+		            	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;本软件是专为微购5A网分销商量身定做的商品采购移动终端软件。用户如有使用建议, 可以拨打客服电话留下宝贵意见。<br>
+		            	软件功能:<br>
+		            	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;◇ 浏览分类商品, 查询商品;<br>
+		            	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;◇ 下载商品图片;<br>
+		            	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;◇ 订购商品;<br>
+		            	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;◇ 浏览订单状态;<br><br>
+		            	作者: 王占良, 马建强<br>
+		            	联系电话: 13439726001<br>
+		            	E-mail: billsmth@163.com<br></li>
+                </ul>
+			</div>
+			<div data-role="footer" data-position="fixed" >
+				<div data-role="navbar">
+					<ul>
+						<li><a href="./main.jsp" data-icon="grid" rel="external">主菜单</a></li>
+						<li><a href="./setting.jsp" data-icon="gear" rel="external">设置</a></li>
+					</ul>
+				</div>
+			</div>
 	</div>
 </body>
 </html>

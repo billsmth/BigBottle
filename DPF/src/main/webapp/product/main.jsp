@@ -56,10 +56,10 @@
 				<div class="ui-block-c">
 					<center>
 						<a href="./getProductsByType.action?type=3" data-icon="info"  rel="external">
-							<img src="../images/salesProduct.jpg" width="80%"/>
+							<img src="../images/daigou.png" width="80%"/>
 						</a>
 					</center>
-					<p><center>折扣商品</center></p>
+					<p><center>代购商品</center></p>
 				</div>
 			</div>
 			<div class="ui-grid-b">
@@ -73,19 +73,19 @@
 				</div>
 				<div class="ui-block-b">
 					<center>
+						<a href="./getProductsByType.action?type=3" data-icon="info"  rel="external">
+							<img src="../images/salesProduct.jpg" width="80%"/>
+						</a>
+					</center>
+					<p><center>折扣商品</center></p>
+				</div>
+				<div class="ui-block-c">
+					<center>
 						<a href="#" data-icon="info"  rel="external">
 							<img src="../images/product.jpg" width="80%"/>
 						</a>
 					</center>
 					<p><center>商品分类</center></p>
-				</div>
-				<div class="ui-block-c">
-					<center>
-						<a href="./myOrderList.jsp" data-icon="info"  rel="external">
-							<img src="../images/order.png" width="80%"/>
-						</a>
-					</center>
-					<p><center>订单快查</center></p>
 				</div>
 			</div>
 			<div class="ui-grid-b">
@@ -97,7 +97,14 @@
 					</center>
 					<p><center>个人信息</center></p>
 				</div>
-				<div class="ui-block-b"></div>
+				<div class="ui-block-b">
+					<center>
+						<a href="./myOrderList.jsp" data-icon="info"  rel="external">
+							<img src="../images/order.png" width="80%"/>
+						</a>
+					</center>
+					<p><center>订单快查</center></p>
+				</div>
 				<div class="ui-block-c"></div>
 			</div>
 		</div>
