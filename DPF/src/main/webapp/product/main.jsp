@@ -74,7 +74,7 @@
 				<div class="ui-block-b">
 					<center>
 						<a href="./getProductsByType.action?type=3" data-icon="info"  rel="external">
-							<img src="../images/salesProduct.jpg" width="80%"/>
+							<img src="../images/salesProduct.png" width="80%"/>
 						</a>
 					</center>
 					<p><center>折扣商品</center></p>
@@ -82,7 +82,7 @@
 				<div class="ui-block-c">
 					<center>
 						<a href="#" data-icon="info"  rel="external">
-							<img src="../images/product.jpg" width="80%"/>
+							<img src="../images/product.png" width="80%"/>
 						</a>
 					</center>
 					<p><center>商品分类</center></p>
