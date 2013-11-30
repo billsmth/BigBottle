@@ -55,7 +55,7 @@
 				</div>
 				<div class="ui-block-c">
 					<center>
-						<a href="./getProductsByType.action?type=3" data-icon="info"  rel="external">
+						<a href="./getProductsByType.action?type=6" data-icon="info"  rel="external">
 							<img src="../images/daigou.png" width="80%"/>
 						</a>
 					</center>
