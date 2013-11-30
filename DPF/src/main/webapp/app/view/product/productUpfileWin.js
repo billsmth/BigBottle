@@ -64,7 +64,7 @@ Ext.define('App.view.product.productUpfileWin', {
 		        }],
 		        buttons:[{
 		            text: '上传图片',
-		            iconCls : 'icon-search',
+		            iconCls : 'icon-submit',
 		            action:'product_upfile_exec_act'
 		        }, {
 		            text: '关闭',

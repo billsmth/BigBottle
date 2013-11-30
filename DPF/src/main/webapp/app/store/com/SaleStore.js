@@ -9,6 +9,7 @@ Ext.define('App.store.com.SaleStore', {
 		{'key':'2', 'value':'推荐品'},
 		{'key':'3', 'value':'打折品'},
 		{'key':'4', 'value':'畅销品'},
-		{'key':'5', 'value':'定做商品'}
+		{'key':'5', 'value':'定做商品'},
+		{'key':'6', 'value':'代购商品'}
     ]
 });

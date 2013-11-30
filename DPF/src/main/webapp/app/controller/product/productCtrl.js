@@ -412,6 +412,8 @@ Ext.define('App.controller.product.productCtrl', {
     		newFlg= "畅销品";
     	}else if(newFlg==5){
     		newFlg= "定做商品";
+    	}else if(newFlg==6){
+    		newFlg= "代购商品";
     	}
         temp.setValue(newFlg);
         temp=Ext.ComponentQuery.query('productView displayfield')[5];

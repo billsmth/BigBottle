@@ -165,6 +165,8 @@ Ext.define('App.view.product.productView', {
                         retVal = '畅销品';
                     } else if (val == 5) {
                         retVal = '定做商品';
+                    } else if (val == 6) {
+                        retVal = '代购商品';
                     }
                     return retVal;
                 }

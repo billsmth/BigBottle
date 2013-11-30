@@ -251,7 +251,7 @@ Ext.define('App.view.product.productaddwin', {
 		            }],
 		            buttons:[{
 		                text: '提交',
-		                iconCls : 'icon-search',
+		                iconCls : 'icon-submit',
 		                action:'product_add_exec_act'
 		            }, {
 		                text: '关闭',
