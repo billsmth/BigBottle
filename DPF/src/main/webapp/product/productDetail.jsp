@@ -66,6 +66,11 @@
 				<p>下载进度:<span id="progress"></span>%</p>
 			</div>
 			<div data-role="fieldcontain">
+				<label for="p_name">名称：</label>
+    			<input type="text" name="p_name" id="p_name" value="<%=p.getProduct_name() %>"  />
+    			<label for="p_name">费用：</label>
+    			<input type="text" name="p_price" id="p_price" value="单价：<%=p.getCol2() +" 元       运费："+p.getCol3() +" 元"%>"  />
+    			<label for="product_desc">声明/简介：</label>
 	            <textarea name="product_desc" id="product_desc"><%=p.getDesp()%></textarea>
 	        </div>
 			<%
