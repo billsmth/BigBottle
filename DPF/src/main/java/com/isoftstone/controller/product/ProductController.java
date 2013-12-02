@@ -17,6 +17,7 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -426,6 +427,58 @@ public class ProductController {
      * 
      * @return
      */
+    @RequestMapping(value="/getPagedProducts",produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public String getPagedProducts(String type, String pageId) {
+    	Integer pageSize=Tools.PAGE_SIZE,pageNm=0;
+    	Integer min;
+    	boolean lastFlg=false;
+    	Map<String,Object> paramMap=new HashMap<String,Object>();
+    	
+    	if(Tools.isBlank(pageId)){
+    		return "";
+    	}else{
+    		pageNm=Integer.parseInt(pageId);
+    		min=(pageNm-1)*pageSize;
+    		paramMap.put("min", min);
+    		paramMap.put("pageSize", Integer.valueOf(pageSize+1));
+    		paramMap.put("new_flg", type);
+    		paramMap.put("status", "3");
+    	}
+    	
+    	
+        List<Product> list = productService.selectPagedResult(paramMap);
+        
+        if(list.size()<pageSize){
+        	lastFlg=true;
+        }
+        list.remove(pageSize);
+        JSONArray jsonArray=new JSONArray();
+        JSONObject json=new JSONObject();
+        json.accumulate("PRODUCTLIST", list);
+        jsonArray.add(json);
+        json=new JSONObject();
+		json.accumulate("lastFlg", lastFlg);
+		jsonArray.add(json);
+//      JSONObject json=new JSONObject();
+//		json.accumulate("opinionReplay", opinionReplay);
+//		return json.toString();
+        return jsonArray.toString();
+    }
+    
+    /**
+     * 取得产品
+     * 
+     * @param type
+     * '0':'普通产品'
+     * '1':'新产品'
+     * '2':'推荐品'
+     * '3':'打折品'
+     * '4':'畅销品'
+     * '5':'定做商品'
+     * 
+     * @return
+     */
     @RequestMapping(value="/getProducts",produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String getProducts(String type) {
@@ -448,6 +501,33 @@ public class ProductController {
 //		json.accumulate("opinionReplay", opinionReplay);
 //		return json.toString();
         return json.toString();
+    }
+    
+    
+    @RequestMapping(value="/getPagedProductsByType")
+    @ResponseBody
+    public ModelAndView getPagedProductsByType(HttpServletRequest request, HttpServletResponse response, String type, String pageId) {
+    	
+    	Integer pageSize=Tools.PAGE_SIZE,pageNm=0;
+    	Integer min;
+    	Map<String,Object> paramMap=new HashMap<String,Object>();
+    	
+    	if(Tools.isBlank(pageId)){
+    		return new ModelAndView("products"); 
+    	}else{
+    		pageNm=Integer.parseInt(pageId);
+    		min=(pageNm-1)*pageSize;
+    		paramMap.put("min", min);
+    		paramMap.put("pageSize", pageSize);
+    		paramMap.put("new_flg", type);
+    		paramMap.put("status", "3");
+    	}
+    	
+    	
+        List<Product> list = productService.selectPagedResult(paramMap);
+        
+        request.setAttribute("PRODUCTS",list);
+    	return new ModelAndView("products"); 
     }
     
     @RequestMapping(value="/getProductsByType")

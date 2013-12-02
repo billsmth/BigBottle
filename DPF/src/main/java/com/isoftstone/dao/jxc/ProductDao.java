@@ -1,6 +1,7 @@
 package com.isoftstone.dao.jxc;
 
 import java.util.List;
+import java.util.Map;
 
 import com.isoftstone.model.jxc.Product;
 
@@ -19,4 +20,6 @@ public interface ProductDao {
 	public void deleteProductsByID(List<String> product_id);
 	
 	public List<Product> selectWithCondition(Product product);
+	
+	public List<Product> selectPagedResult(Map<String,Object> param);
 }

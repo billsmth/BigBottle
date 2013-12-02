@@ -39,7 +39,7 @@
 			<div class="ui-grid-b">
 				<div class="ui-block-a">
 					<center>
-						<a href="./getProductsByType.action?type=1" data-icon="info"  rel="external">
+						<a href="./getPagedProductsByType.action?type=1&pageId=1" data-icon="info"  rel="external">
 							<img src="../images/newProduct.png" width="80%"/>
 						</a>
 					</center>
@@ -47,7 +47,7 @@
 				</div>
 				<div class="ui-block-b">
 					<center>
-						<a href="./getProductsByType.action?type=2" data-icon="info"  rel="external">
+						<a href="./getPagedProductsByType.action?type=2&pageId=1" data-icon="info"  rel="external">
 							<img src="../images/dztj.png" width="80%"/>
 						</a>
 					</center>
@@ -55,7 +55,7 @@
 				</div>
 				<div class="ui-block-c">
 					<center>
-						<a href="./getProductsByType.action?type=6" data-icon="info"  rel="external">
+						<a href="./getPagedProductsByType.action?type=6&pageId=1" data-icon="info"  rel="external">
 							<img src="../images/daigou.png" width="80%"/>
 						</a>
 					</center>
@@ -65,7 +65,7 @@
 			<div class="ui-grid-b">
 				<div class="ui-block-a">
 					<center>
-						<a href="./getProductsByType.action?type=5" data-icon="info"  rel="external">
+						<a href="./getPagedProductsByType.action?type=5&pageId=1" data-icon="info"  rel="external">
 							<img src="../images/orderSale.png" width="80%"/>
 						</a>
 					</center>
@@ -73,7 +73,7 @@
 				</div>
 				<div class="ui-block-b">
 					<center>
-						<a href="./getProductsByType.action?type=3" data-icon="info"  rel="external">
+						<a href="./getPagedProductsByType.action?type=3&pageId=1" data-icon="info"  rel="external">
 							<img src="../images/salesProduct.png" width="80%"/>
 						</a>
 					</center>
