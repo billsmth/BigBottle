@@ -260,6 +260,31 @@ public class ProductController {
     	return new ModelAndView("OrderDetail"); 
     }
     
+    @RequestMapping("/getOrderDetailJson")
+    @ResponseBody
+    public String getOrderDetailJson(HttpServletRequest request, HttpServletResponse response, String xiaoshouId){
+    	Xiaoshou xs = null;
+    	JSONArray jsonArray=new JSONArray();
+    	if(!Tools.isBlank(xiaoshouId)){
+        	JSONObject json=new JSONObject();
+    		xs = new Xiaoshou();
+        	xs.setXiaoshou_id(Long.parseLong(xiaoshouId));
+        	xs=xiaoshouService.getXiaoshou(xs);
+        	json.accumulate("ORDER", xs);
+            jsonArray.add(json);
+            
+        	PostAddress pa=new PostAddress();
+        	pa.setOrder_id(Long.parseLong(xiaoshouId));
+        	pa=postAddressService.getPostAddress(pa);
+        	json=new JSONObject();
+        	json.accumulate("EXPRESS", pa);
+            jsonArray.add(json);
+        	
+    	}
+    	
+    	return jsonArray.toString(); 
+    }
+    
     @RequestMapping("/createOrder")
     @ResponseBody
     public ModelAndView createOrder(HttpServletRequest request, HttpServletResponse response,String productId){
@@ -403,6 +428,126 @@ public class ProductController {
         
     }
     
+    @RequestMapping(value="/createOrderBaseJson",produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public String createOrderBaseJson(HttpServletRequest request, HttpServletResponse response){
+    	Product p=new Product();
+    	p.setProduct_id(Long.parseLong(request.getParameter("product_id")));
+    	p=productService.getProduct(p);
+    	Kucun kucun=null;
+    	
+    	JSONArray jsonArray=new JSONArray();
+    	JSONObject json=new JSONObject();
+    	
+    	String chimayanse=request.getParameter("radio-choice-cm");
+    	String[] chima_yanse=chimayanse.split(":");
+    	
+    	if(Tools.isBlank(p.getCol4())){
+    		String kucunIds=p.getKucun_ids();
+        	if(kucunIds.endsWith(",")){
+        		kucunIds=kucunIds.substring(0,kucunIds.length()-1);
+        	}
+        	String[] kucun_ids=kucunIds.split(",");
+        	List<String> list=Arrays.asList(kucun_ids);
+        	
+        	Map<String,Object> map=new HashMap<String,Object>();
+        	map.put("kucunIds", list);
+        	
+        	map.put("yanse", chima_yanse[0]);
+        	map.put("chima", chima_yanse[1]);
+        	
+        	List<Kucun> kucunList=kucunService.getKucunFromProduct(map);
+        	if(kucunList.size()<1){
+        		return null;
+        	}
+        	kucun=kucunList.get(0);
+    	}
+    	
+    	Xiaoshou xiaoshou = xiaoshouService.getMaxID();
+    	if(xiaoshou==null){
+    		xiaoshou=new Xiaoshou();
+    		xiaoshou.setXiaoshou_id(0l);
+    	}
+    	Long xiaoshouID=xiaoshou.getXiaoshou_id();
+		xiaoshouID=xiaoshouID/10000;
+		Long dateStr = Tools.getDataStr();
+		
+        if(dateStr>xiaoshouID){
+        	xiaoshou.setXiaoshou_id(Long.parseLong(""+dateStr+"0001"));
+        }else{
+        	xiaoshou.setXiaoshou_id(xiaoshou.getXiaoshou_id()+1);
+        }
+        xiaoshou.setZhuangtai("0");
+        xiaoshou.setDelflg("0");
+        xiaoshou.setProduct_id(Long.parseLong(request.getParameter("product_id")));
+        if(kucun!=null){
+        	xiaoshou.setKucun_id(kucun.getKucun_id());
+        	xiaoshou.setKuanhao_id(kucun.getKuanhao_id());
+        }
+        xiaoshou.setYanse(chima_yanse[0]);
+        xiaoshou.setChima(chima_yanse[1]);
+        xiaoshou.setCol1(request.getParameter("productname"));
+        xiaoshou.setShuliang(Integer.valueOf(request.getParameter("shuliang")));
+        xiaoshou.setShoujia(Float.valueOf(request.getParameter("shoujia")));
+        xiaoshou.setCol2(request.getParameter("yunfei"));
+        xiaoshou.setShijishoukuan((Float.valueOf(request.getParameter("shoujia"))*Integer.valueOf(request.getParameter("shuliang")))+Float.valueOf(request.getParameter("yunfei")));
+        xiaoshou.setMaijia_id(request.getParameter("maijia_id"));
+        xiaoshou.setMaijiaxingming(request.getParameter("maijia_name"));
+        xiaoshou.setBeizhu(request.getParameter("beizhu"));
+        xiaoshou.setPost_type(request.getParameter("radio-choice-post"));
+        
+        
+        xiaoshouService.saveXiaoshou(xiaoshou);
+        json.accumulate("ORDER", xiaoshou);
+        jsonArray.add(json);
+        
+        PostAddress pa = postAddressService.getMaxID();
+    	if(pa==null||pa.getPost_id()==null){
+    		pa=new PostAddress();
+    		pa.setPost_id(0l);
+    	}
+    	Long postID=pa.getPost_id();
+    	postID=postID/10000;
+		
+        if(dateStr>postID){
+        	pa.setPost_id(Long.parseLong(""+dateStr+"0001"));
+        }else{
+        	pa.setPost_id(pa.getPost_id()+1);
+        }
+        
+        pa.setOrder_id(xiaoshou.getXiaoshou_id());
+        pa.setPost_from(request.getParameter("post_from"));
+        pa.setPeople_id(request.getParameter("maijia_id"));
+        pa.setDeparture(request.getParameter("departure"));
+        pa.setProvince_from(request.getParameter("province_from"));
+        pa.setCity_from(request.getParameter("city_from"));
+        pa.setDistrict_from(request.getParameter("district_from"));
+        pa.setCompany_name_from(request.getParameter("company_name_from"));
+        pa.setDetail_from(request.getParameter("detail_from"));
+        pa.setContact_number_from(request.getParameter("contact_number_from"));
+        pa.setPost_to(request.getParameter("post_to"));
+        pa.setDestination(request.getParameter("destination"));
+        pa.setProvince(request.getParameter("province"));
+        pa.setCity(request.getParameter("city"));
+        pa.setDistrict(request.getParameter("district"));
+        pa.setCompany_name(request.getParameter("company_name"));
+        pa.setDetail_to(request.getParameter("detail_to"));
+        pa.setContact_number(request.getParameter("contact_number"));
+        pa.setNeijian(request.getParameter("neijian"));
+        pa.setNote(request.getParameter("post_from_note"));
+        
+        pa.setType(request.getParameter("radio-choice-post"));
+        
+        postAddressService.savePostAddress(pa);
+        
+        json=new JSONObject();
+        json.accumulate("POST", pa);
+        jsonArray.add(json);
+        
+        return jsonArray.toString();
+        
+    }
+    
     @RequestMapping("/getProductByID")
     @ResponseBody
     public ModelAndView getProductByID(HttpServletRequest request, HttpServletResponse response,String productId){
@@ -412,6 +557,55 @@ public class ProductController {
     	
     	request.setAttribute("PRODUCTDETAIL",p);
     	return new ModelAndView("productDetail"); 
+    }
+    
+    @RequestMapping("/getProductJsonByID")
+    @ResponseBody
+    public String getProductJsonByID(HttpServletRequest request, HttpServletResponse response,String productId){
+    	Product p=new Product();
+    	p.setProduct_id(Long.parseLong(productId));
+    	p=productService.getProduct(p);
+    	p.setImage_name(p.getImage_name().replace(".", "s."));
+    	JSONObject json=new JSONObject();
+        json.accumulate("PRODUCT", p);
+        return json.toString();
+    }
+    
+    @RequestMapping("/createOrderJson")
+    @ResponseBody
+    public String createOrderJson(HttpServletRequest request, HttpServletResponse response,String productId){
+    	Product p=new Product();
+    	p.setProduct_id(Long.parseLong(productId));
+    	p=productService.getProduct(p);
+    	JSONArray jsonArray=new JSONArray();
+    	JSONObject json=new JSONObject();
+        json.accumulate("PRODUCT", p);
+        jsonArray.add(json);
+        
+    	List<String> chimaList=new ArrayList<String>();
+    	if(Tools.isBlank(p.getCol4())){
+    		
+    		String kucunIds=p.getKucun_ids();
+    		String [] kucun_Ids=kucunIds.split(",");
+    		List<String> list=Arrays.asList(kucun_Ids);
+    		Map<String,Object> map=new HashMap<String,Object>();
+    		map.put("kucunIds", list);
+    		List<Kucun> kucunList=kucunService.getKucunFromProduct(map);
+    		
+    		for(Kucun k:kucunList){
+    			chimaList.add(k.getYanse()+":"+k.getChima());
+    		}
+    	}else{
+    		String cima=p.getCol4();
+    		chimaList=Arrays.asList(cima.split(";"));
+    	}
+    	
+    	request.setAttribute("PRODUCT_CHIMA",chimaList);
+    	json=new JSONObject();
+        json.accumulate("PRODUCT_CHIMA", chimaList);
+        jsonArray.add(json);
+    	
+        return jsonArray.toString();
     }
 
     /**
