@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+    <meta http-equiv="Content-type" name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width">
+	<link rel="stylesheet" href="../css/jquery.mobile-1.3.2.css" />
+	<script src="../js/cordova.js"></script>
+	<script src="../js/jquery-1.9.1.min.js"></script>
+	<script src="../js/jquery.mobile-1.3.2.min.js"></script>
+</head>
+<body>
+	<div data-role="page" id="product">
+	<script type="text/javascript">
+			var productId=window.localStorage.getItem("productId");
+			var p;
+			$(document).bind('pageinit',function(e,data){
+				$.ajax({
+				  type: 'POST',
+				  url: "http://192.168.1.7:8080/product/getProductJsonByID.action",
+				  data: {
+					  productId:productId
+				  },
+				  success: function(data,status){
+					p=data.PRODUCT; 
+				  	var imgs=p.image_name;
+			  		imgs=imgs.substring(0,imgs.length-1);
+			  		var pics = imgs.split(",");
+			  		
+				  	var i=0,htmlStr;
+				  	for(;i<pics.length;i++){
+						$("#pic_content").append('<img src="http://192.168.1.7:8080/productlist/'+p.product_id+'/'+pics[i]+'" style="width:100%" />');
+				  	}
+				  	$("#p_name").val(p.product_name);
+				  	$("#p_price").val("单价："+p.col2 +" 元       运费："+p.col3 +" 元"); 
+				  	$("#product_desc").val(p.desp);
+				  },
+				  dataType: "json"
+				});
+			});	
+		
+			function downLoadPics(){
+				window.downloader.downloadFile('http://192.168.1.7:8080/productlist/'+p.product_id+'/', {overwrite: true, pics:p.image_name},   
+					function(res) {  
+						$('#popupProgress').popup( "open" );
+						$('#fileName').text(res.newfile);  
+						$('#progress').text(res.progress);  
+						if(res.progress==100){
+							$('#popupProgress').popup( "close" );
+						}  
+				           
+					}, function(error) {
+						alert("下载出错:"+error);  
+					}  
+				);
+			}
+			
+			function Downloader() {}  
+  
+			Downloader.prototype.downloadFile = function(fileUrl, params, win, fail) {  
+				if (!fail){
+		        	win = params;  
+				}
+		    	cordova.exec(win, fail, "Downloader", "downloadFile", [ fileUrl, params ]);  
+			};  
+			window.downloader =  new Downloader();
+		</script>
+	    <div data-role="header" data-position="fixed">
+			<h1>商品展示</h1>
+			<a data-shadow="false" data-iconshadow="false" data-icon="back" data-iconpos="notext" data-rel="back" data-ajax="false">Back</a>
+			<a data-role="button" href="#" data-icon="star" data-iconpos="right" onclick="downLoadPics();" class="ui-btn-right">下载</a>
+		</div>
+		<div data-role="content" id="main2Content">
+			<div data-role="popup" id="popupProgress">
+				<p><span id="fileName"></span></p>
+				<p>下载进度:<span id="progress"></span>%</p>
+			</div>
+			<div data-role="fieldcontain" id="pic_content">
+				<label for="p_name">名称：</label>
+    			<input type="text" name="p_name" id="p_name" value=""  />
+    			<label for="p_price">费用：</label>
+    			<input type="text" name="p_price" id="p_price" value=""  />
+    			<label for="product_desc">声明/简介：</label>
+	            <textarea name="product_desc" id="product_desc"></textarea>
+	            <br>
+	        </div>
+		</div>
+		<div data-role="footer" data-position="fixed">
+			<div data-role="navbar">
+				<ul>
+					<li><a href="./main.html" data-icon="grid" rel="external">主菜单</a></li>
+					<li><a href="./createOrder.html" data-icon="info" rel="external">下单</a></li>
+					<li><a href="./setting.html" data-icon="gear" rel="external">设置</a></li>
+				</ul>
+			</div>		
+		</div>
+	</div>
+</body>
+</html>

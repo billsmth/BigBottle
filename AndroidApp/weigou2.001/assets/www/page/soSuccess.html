@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+    <meta http-equiv="Content-type" name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width">
+	<link rel="stylesheet" href="../css/jquery.mobile-1.3.2.css" />
+	
+	<script type="text/javascript" src="../js/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="../js/cordova.js"></script>
+	<script type="text/javascript" src="../js/jquery.mobile-1.3.2.min.js"></script>
+	
+</head>
+<body>
+	<div data-role="page" id="order">
+		<div data-role="header" data-position="fixed">
+			<h1>购买成功</h1>
+			<a data-shadow="false" data-iconshadow="false" data-icon="back" data-iconpos="notext" data-rel="back" data-ajax="false">Back</a>
+		</div>
+		<div data-role="content" id="payMethodContent" >
+			<table border="1px" width=100%>
+				<tr style="background:#009900">
+					<td colspan="4" align="center"><Strong>订单信息</Strong></td>
+				</tr>
+				<tr>
+					<td align="right" width=30%>订单编号</td><td colspan="3"><Strong><span id="order_id"></span></Strong></td>
+				</tr>
+				<tr>
+					<td align="right">产品名称</td><td colspan="3"><span id="product_name"></span></td>
+				</tr>
+				<tr>
+					<td align="right">颜色尺码</td><td><span id="yanse"></span>/<span id="chima"></span></td><td align="right">数量</td><td><span id="shuliang"></span>件</td>
+				</tr>
+				<tr>
+					<td align="right">订单状态</td><td colspan="3">等待付款</td>
+				</tr>
+				<tr>
+					<td align="right">价格</td><td><span id="shoujia"></span>元</td><td align="right">运费</td><td><span id="col2"></span>元</td>
+				</tr>
+				<tr>
+					<td align="right">汇总</td><td colspan="3"><span id="shijishoukuan"></span>元</td>
+				</tr>
+			</table>
+			<br>
+			<table border="1px" width=100%>
+				<tr style="background:#009900">
+					<td colspan="3" align="center"><Strong>付款方法</Strong></td>
+				</tr>
+				<tr>
+					<td align="center">支付宝</td><td colspan="2">13810840866</td>
+				</tr>
+				<tr style="background:#009850">
+					<td align="center">开户行</td><td align="center">账户</td><td align="center">银行账号</td>
+				</tr>
+				<tr>
+					<td align="center">农行</td><td align="center">王占良</td><td>622848 0018100503079</td>
+				</tr>
+				<tr>
+					<td align="center">建行</td><td align="center">苏哲芳</td><td>6227 0002 1010 0142 452</td>
+				</tr>
+			</table>
+			<br>
+			<table border="1px" width=100%>
+				<tr style="background:#009900">
+					<td colspan="3" align="center"><Strong>服务信息</Strong></td>
+				</tr>
+				<tr>
+					<td align="center">客服微信</td><td colspan="2">18618166418</td>
+				</tr>
+				<tr>
+					<td align="center">服务电话</td><td colspan="2">18618166418 ; 13810840866</td>
+				</tr>
+			</table>
+		
+		</div>
+		<div data-role="footer" data-position="fixed" >
+			<div data-role="navbar">
+				<ul>
+					<li><a href="./main.html" data-icon="grid" rel="external">主菜单</a></li>
+					<li><a href="./setting.html" data-icon="gear" rel="external">设置</a></li>
+				</ul>
+			</div>
+		</div>
+		<script type="text/javascript">
+			$( "div" ).on( "pageshow", function( event, ui ) {
+				$("#order_id").append(window.localStorage.getItem("order_id"));
+				$("#product_name").append(window.localStorage.getItem("product_name"));
+				$("#yanse").append(window.localStorage.getItem("yanse"));
+				$("#chima").append(window.localStorage.getItem("chima"));
+				$("#shuliang").append(window.localStorage.getItem("shuliang"));
+				$("#shoujia").append(window.localStorage.getItem("shoujia"));
+				$("#col2").append(window.localStorage.getItem("col2"));
+				$("#shijishoukuan").append(window.localStorage.getItem("shijishoukuan"));
+			});
+		</script>	
+	</div>
+</body>
+</html>

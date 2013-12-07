@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+    <meta http-equiv="Content-type" name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width">
+	<link rel="stylesheet" href="../css/jquery.mobile-1.3.2.css" />
+	
+	<script type="text/javascript" src="../js/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="../js/cordova.js"></script>
+	<script type="text/javascript" src="../js/jquery.mobile-1.3.2.min.js"></script>
+	<script type="text/javascript" src="../js/common.js"></script>
+	<script type="text/javascript">
+		$(document).bind('pageinit',function(e,data){
+			var productId=window.localStorage.getItem("productId");
+			$.ajax({
+				type: 'POST',
+				url: "http://192.168.1.7:8080/product/createOrderJson.action",
+				data: {
+				productId:productId
+			},
+			success: function(data,status){
+				var product=data[0].PRODUCT;
+				var chima=data[1].PRODUCT_CHIMA;
+			  	var i=0, htmlStr, checkStr='';
+			  	for(;i<chima.length;i++){
+		  			if(i==0){ 
+		  				checkStr=' checked="checked"';
+		  			}else{
+		  				checkStr='';
+		  			}
+			  		htmlStr= '<input type="radio" data-theme="a" name="radio-choice-cm" id="radio-choice-t-cm'+i+'" value="'+chima[i]+'"'+checkStr+'>'
+				        +'<label for="radio-choice-t-cm'+i+'">'+chima[i]+'</label>';
+			  			
+			        $("#chima_list").append(htmlStr);
+			  	}
+			  	//$("#chima_list").listview('refresh');
+			  	
+			  	$("#product_id").val(product.product_id);
+			  	$("#productname").val(product.product_name);
+			  	$("#shoujia").val(product.col2);
+			  	$("#yunfei").val(product.col3);
+			  	$("#danjia_lab").append('单价:'+product.col2+' 元');
+			  	$("#yufei_lab").append('运费:'+product.col3+' 元');
+			},
+			dataType: "json"
+		});
+			
+		if (db == null) {
+	    	db = window.openDatabase("wg5adb", "1.0", "database", 200000);
+    	}
+	    	
+    	db.transaction(function(tx) {
+           	tx.executeSql('SELECT * FROM USER_TABLE ',
+                [], function(tx, results) {
+                    if (results.rows.length > 0) {
+                        var item = results.rows.item(0);
+                        $("#maijia_id").val(item.ID);
+                        $("#maijia_name").val(item.NAME);
+                        $("#post_to").val(item.NAME);
+                        
+                        window.localStorage.setItem("USER", item);
+                    }else{
+                    	showInfor("您还没有登录，购买将以匿名方式购买，请注意填写收货地址。");
+                    	window.localStorage.removeItem("USER");
+                    }
+                }, errorCB);
+			});
+		});
+		
+		function createSaleOrder(){
+			$.ajax({
+				type: 'POST',
+				url: "http://192.168.1.7:8080/product/createOrderBaseJson.action",
+				data: $('#orderBaseForm').serialize(),
+				success: function(data,status){
+					var order=data[0].ORDER;
+					window.localStorage.setItem("order_id", order.xiaoshou_id);
+					window.localStorage.setItem("product_name", order.col1);
+					window.localStorage.setItem("yanse", order.yanse);
+					window.localStorage.setItem("chima", order.chima);
+					window.localStorage.setItem("shuliang", order.shuliang);
+					window.localStorage.setItem("shoujia", order.shoujia);
+					window.localStorage.setItem("col2", order.col2);
+					window.localStorage.setItem("shijishoukuan", order.shijishoukuan);
+					
+					$.mobile.changePage('./soSuccess.html', "slide",false,true);
+				},
+				dataType: "json"
+			});
+		}
+	</script>
+</head>
+<body>
+	<div data-role="page" id="order">
+		<div data-role="header" data-position="fixed">
+			<h1>订单</h1>
+			<a data-shadow="false" data-iconshadow="false" data-icon="back" data-iconpos="notext" data-rel="back" data-ajax="false">Back</a>
+		</div>
+		<form id="orderBaseForm" method="POST" >
+			<div data-role="content" id="orderContent" >
+				<ul data-role="listview" data-inset="true">
+	        		<li data-role="fieldcontain">
+	        			<input type="hidden" id="product_id" name="product_id" value="" data-clear-btn="true" placeholder="产品编号" >
+	        			<input type="hidden" id="maijia_id" name="maijia_id" value="100">
+	        			<input type="hidden" id="maijia_name" name="maijia_name" value="匿名">
+	                	<input type="text" id="productname" name="productname" value="" data-clear-btn="true" placeholder="产品名称" >
+	        			<input type="hidden" id="shoujia" name="shoujia" value="" placeholder="售价" >
+	                </li>
+	                <li data-role="fieldcontain">
+		                <fieldset data-role="controlgroup" data-type="horizontal" id="chima_list">
+					        <legend>颜色:尺码</legend>
+					    </fieldset>
+	                </li>
+	                <li data-role="fieldcontain">
+		                <fieldset data-role="controlgroup" data-type="horizontal">
+		                	<input type="hidden" id="yunfei" name="yunfei" value="">
+					        <label id="danjia_lab"></label>&nbsp;&nbsp;&nbsp;<label id="yufei_lab"></label>
+					    </fieldset>
+	                </li>
+	                <li data-role="fieldcontain">
+		                <input type="number" data-clear-btn="true" name="shuliang" pattern="[0-9]*" placeholder="购买数量" id="shuliang" value="1">
+	                </li>
+	           </ul>
+	           <label>送货方式</label>
+	           <ul data-role="listview" data-inset="true">
+				    <li data-role="fieldcontain">
+					    <fieldset data-role="controlgroup" data-type="horizontal">
+					        <input type="radio" data-theme="b" name="radio-choice-post" id="radio-choice-post0" value="0">
+					        <label for="radio-choice-post0">上门自取</label>
+					        <input type="radio" data-theme="b" name="radio-choice-post" id="radio-choice-post1" value="1" checked="checked">
+					        <label for="radio-choice-post1">快递送货</label>
+					    </fieldset>
+					</li>
+				    <li data-role="fieldcontain">
+				    	<div data-role="navbar" data-iconpos="left">
+				            <ul id="post_list">
+				                <li>
+				                    <a href="#left-panel" id="post_people_from" data-transition="fade" data-theme="" data-icon="edit">
+				                       	寄件人
+				                    </a>
+				                </li>
+				                <li>
+				                    <a href="#right-panel" id="post_people_to" data-transition="fade" data-theme="" data-icon="edit">
+				                     	收件人
+				                    </a>
+				                </li>
+				            </ul>
+				        </div>
+	                </li>
+				    <li data-role="fieldcontain">
+		                <label for="beizhu">留言</label>
+					    <textarea cols="40" rows="8" name="beizhu" id="beizhu">备注信息</textarea>
+				    </li>
+				    <li data-role="fieldcontain">
+				    	<fieldset class="ui-grid-a">
+			                <div class="ui-block-b"><button data-theme="b" onclick="createSaleOrder()">提交</button></div>
+			                <div class="ui-block-b"><button data-theme="b" data-rel="back" data-ajax="false">取消</button></div>
+					     </fieldset>
+				     </li>
+			    </ul>
+			</div>
+			<div data-role="panel" id="left-panel" data-display="overlay" data-position="left" data-theme="c">
+				<label>我的地址</label>
+				<ul data-role="listview" data-inset="true">
+	        		<li data-role="fieldcontain">
+	        			<input type="hidden" id="people_id" name="people_id" value="100" data-clear-btn="true" placeholder="寄件人编号" >
+	                	<input type="text" id="post_from" name="post_from" value="苏苏" data-clear-btn="true" placeholder="寄件人姓名" >
+	                </li>
+	                <li data-role="fieldcontain">
+	                	<input type="text" id="departure" name="departure" value="北京" data-clear-btn="true" placeholder="始发地" >
+	                </li>
+	                <li data-role="fieldcontain">
+	                	<input type="text" id="province_from" name="province_from" value="北京" data-clear-btn="true" placeholder="寄件省份" >
+	                </li>
+	                <li data-role="fieldcontain">
+	                	<input type="text" id="city_from" name="city_from" value="北京" data-clear-btn="true" placeholder="寄件城市" >
+	                </li>
+	                <li data-role="fieldcontain">
+	                	<input type="text" id="district_from" name="district_from" value="东城区" data-clear-btn="true" placeholder="寄件区县" >
+	                </li>
+	                <li data-role="fieldcontain">
+	                	<input type="text" id="company_name_from" name="company_name_from" value="" data-clear-btn="true" placeholder="单位名称" >
+	                </li>
+	                <li data-role="fieldcontain">
+	                	<input type="text" id="detail_from" name="detail_from" value="安德路55号院16号楼 2门 106室" data-clear-btn="true" placeholder="详细地址" >
+	                </li>
+	                <li data-role="fieldcontain">
+	                	<input type="text" id="contact_number_from" name="contact_number_from" value="13810840866" data-clear-btn="true" placeholder="联系电话" >
+	                </li>
+	                <li data-role="fieldcontain">
+	                	<input type="text" id="neijian" name="neijian" value="" data-clear-btn="true" placeholder="输入内件名" >
+	                </li>
+	                <li data-role="fieldcontain">
+	                	<textarea name="post_from_note" id="post_from_note" placeholder="输入寄件备注信息" data-clear-btn="true"></textarea>
+	                </li>
+			    </ul>
+			</div>
+			<div data-role="panel" id="right-panel" data-display="overlay" data-position="right" data-theme="c">
+				<label>收件人地址</label>
+				<ul data-role="listview" data-inset="true">
+	        		<li data-role="fieldcontain">
+	                	<input type="text" id="post_to" name="post_to" value="" data-clear-btn="true" placeholder="收件人姓名" >
+	                </li>
+	                <li data-role="fieldcontain">
+	                	<input type="text" id="destination" name="destination" value="" data-clear-btn="true" placeholder="目的地" >
+	                </li>
+	                <li data-role="fieldcontain">
+	                	<input type="text" id="province" name="province" value="" data-clear-btn="true" placeholder="收件省份" >
+	                </li>
+	                <li data-role="fieldcontain">
+	                	<input type="text" id="city" name="city" value="" data-clear-btn="true" placeholder="收件城市" >
+	                </li>
+	                <li data-role="fieldcontain">
+	                	<input type="text" id="district" name="district" value="" data-clear-btn="true" placeholder="收件区县" >
+	                </li>
+	                <li data-role="fieldcontain">
+	                	<input type="text" id="company_name" name="company_name" value="" data-clear-btn="true" placeholder="单位名称" >
+	                </li>
+	                <li data-role="fieldcontain">
+	                	<input type="text" id="detail_to" name="detail_to" value="" data-clear-btn="true" placeholder="详细地址" >
+	                </li>
+	                <li data-role="fieldcontain">
+	                	<input type="text" id="contact_number" name="contact_number" value="" data-clear-btn="true" placeholder="联系电话" >
+	                </li>
+	            </ul>
+			</div>
+		</form>
+		<div data-role="footer" data-position="fixed" >
+			<div data-role="navbar">
+				<ul>
+					<li><a href="./main.html" data-icon="grid" rel="external">主菜单</a></li>
+					<li><a href="./setting.html" data-icon="gear" rel="external">设置</a></li>
+				</ul>
+			</div>
+		</div>		
+	</div>
+</body>
+</html>
