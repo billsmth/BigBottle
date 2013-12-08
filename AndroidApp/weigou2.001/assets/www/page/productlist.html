@@ -15,23 +15,23 @@
 	<script type="text/javascript" src="../js/jquery.mobile-1.3.2.min.js"></script>
 	<script type="text/javascript" src="../js/common.js"></script>
 	<script type="text/javascript" src="../js/iscroll.js"></script>
-    <script type="text/javascript" src="../js/jquery.mobile.iscrollview.js"></script>
     <script type="text/javascript" src="../js/wg5aCroll.js"></script>
+    <script type="text/javascript" src="../js/jquery.mobile.iscrollview.js"></script>
 	<script type="text/javascript">
+		var productType=window.localStorage.getItem("productType");
 		$(document).bind('pageinit',function(e,data){
-			var product_type=window.localStorage.getItem("productType");
 			$.ajax({
 			  type: 'POST',
-			  url: "http://192.168.1.7:8080/product/getPagedProducts.action",
+			  url: "http://www.wg5a.com/product/getPagedProducts.action",
 			  data: {
-				  type:product_type,
+				  type:productType,
 				  pageId:'1'
 			  },
 			  success: function(data,status){
 			  	var i=0,htmlStr;
 			  	for(;i<data[0].PRODUCTLIST.length;i++){
-			  		htmlStr='<li><a href="./productDetail.html" onclick="showProductDetail('+data[0].PRODUCTLIST[i].product_id+')">'
-		            		+'<img src="http://192.168.1.7:8080/productlist/'+data[0].PRODUCTLIST[i].product_id+'/indexPic.jpg">'
+			  		htmlStr='<li><a href="./productDetail.html" rel="external" onclick="showProductDetail('+data[0].PRODUCTLIST[i].product_id+')">'
+		            		+'<img src="http://www.wg5a.com/productlist/'+data[0].PRODUCTLIST[i].product_id+'/indexPic.jpg">'
 			            	+'<h2>'+data[0].PRODUCTLIST[i].product_name+'</h2>'
 			                +'<p>单价:'+data[0].PRODUCTLIST[i].col2+' 元</p>'
 			                +'<p class="ui-li-aside">运费:'+data[0].PRODUCTLIST[i].col3+' 元</p>'
@@ -55,7 +55,7 @@
 			<h1>商品列表</h1>
 			<a data-shadow="false" data-iconshadow="false" data-icon="back" data-iconpos="notext" data-rel="back">Back</a>
 		</div>
-		<div data-role="content" id="main2Content" >
+		<div data-iscroll="" data-role="content" id="main2Content" >
 	        <ul data-role="listview" data-inset="true" id='p_ul'>
 	        </ul>
 	        <div class="iscroll-pullup">

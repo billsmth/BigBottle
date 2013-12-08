@@ -34,7 +34,7 @@
 		                        	//alert("dfsdfs"+item.ID+item.NAME+item.PWD);
 									$.ajax({
 										type: 'POST',
-										url: "http://192.168.1.7:8080/xiaoshou/json/list.action?maijia_id="+item.ID,
+										url: "http://www.wg5a.com/xiaoshou/json/list.action?maijia_id="+item.ID,
 										success: function(data,statu){
 											//alert(data.length);
 											var htmlStr="";
@@ -67,7 +67,7 @@
 													postStatus="off.png";
 												}
 												htmlStr+="<li>"
-						                    		+"<a href=\'./orderDetail.html\' id=\'"+xiaoshou.xiaoshou_id+"\' onclick=\"showOrderDetail("+xiaoshou.xiaoshou_id+")\" >"
+						                    		+"<a href=\'./orderDetail.html\' id=\'"+xiaoshou.xiaoshou_id+"\' rel='external' onclick=\"showOrderDetail("+xiaoshou.xiaoshou_id+")\" >"
 						                    		+"<img src=\'../images/"+postStatus+"\'>"+xiaoshou.xiaoshou_id
 						                    		+"<h2>"+xiaoshou.col1+"</h2>"
 									                +"<p>￥"+xiaoshou.shijishoukuan+" 元</p>"

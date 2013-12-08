@@ -10,11 +10,10 @@
 	<script type="text/javascript" src="../js/jquery.mobile-1.3.2.min.js"></script>
 	<script type="text/javascript" src="../js/common.js"></script>
 	<script type="text/javascript">
-		$(document).bind('pageinit',function(e,data){
 			var productId=window.localStorage.getItem("productId");
 			$.ajax({
 				type: 'POST',
-				url: "http://192.168.1.7:8080/product/createOrderJson.action",
+				url: "http://www.wg5a.com/product/createOrderJson.action",
 				data: {
 				productId:productId
 			},
@@ -65,14 +64,17 @@
                     }
                 }, errorCB);
 			});
-		});
-		
 		function createSaleOrder(){
+    		alert("jinru");
+    		alert($('form#orderBaseForm').serialize());
+    		alert($('form#orderBaseForm').serialize().length);
 			$.ajax({
-				type: 'POST',
-				url: "http://192.168.1.7:8080/product/createOrderBaseJson.action",
-				data: $('#orderBaseForm').serialize(),
+				type: 'post',
+				url: 'http://www.wg5a.com/product/createOrderBaseJson.action',
+				data: $('form#orderBaseForm').serialize(),
+				dataType: "json",
 				success: function(data,status){
+					alert(data);
 					var order=data[0].ORDER;
 					window.localStorage.setItem("order_id", order.xiaoshou_id);
 					window.localStorage.setItem("product_name", order.col1);
@@ -82,12 +84,21 @@
 					window.localStorage.setItem("shoujia", order.shoujia);
 					window.localStorage.setItem("col2", order.col2);
 					window.localStorage.setItem("shijishoukuan", order.shijishoukuan);
-					
+					alert(order.shijishoukuan);
 					$.mobile.changePage('./soSuccess.html', "slide",false,true);
+					return false;
 				},
-				dataType: "json"
+				error: function(XMLHttpRequest, textStatus, errorThrown) {
+					console.log("XMLHttpRequest.status:"+XMLHttpRequest.status);
+					console.log("XMLHttpRequest.readyState:"+XMLHttpRequest.readyState);
+					console.log("textStatus:"+textStatus);
+					console.log("errorThrown:"+errorThrown);
+					$.mobile.changePage('./soSuccess.html', "slide",false,true);
+					return false;
+				}
 			});
 		}
+		
 	</script>
 </head>
 <body>
@@ -96,7 +107,7 @@
 			<h1>订单</h1>
 			<a data-shadow="false" data-iconshadow="false" data-icon="back" data-iconpos="notext" data-rel="back" data-ajax="false">Back</a>
 		</div>
-		<form id="orderBaseForm" method="POST" >
+		<form id="orderBaseForm" method="POST">
 			<div data-role="content" id="orderContent" >
 				<ul data-role="listview" data-inset="true">
 	        		<li data-role="fieldcontain">

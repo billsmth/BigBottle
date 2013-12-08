@@ -18,13 +18,12 @@ var currentPage=1, lastFlg=false;
   function gotPullUpData(event, data) {
 	var iscrollview = data.iscrollview,
     newContent = "";
-    
 	if(!lastFlg){
 		currentPage++;
 		$.ajax({
 			url: "http://www.wg5a.com/product/getPagedProducts.action",
 			data: { 
-				type: type,
+				type: productType,
 				pageId:currentPage
 					},
 			async: false,

@@ -16,7 +16,7 @@
 			$(document).bind('pageinit',function(e,data){
 				$.ajax({
 				  type: 'POST',
-				  url: "http://192.168.1.7:8080/product/getProductJsonByID.action",
+				  url: "http://www.wg5a.com/product/getProductJsonByID.action",
 				  data: {
 					  productId:productId
 				  },
@@ -28,7 +28,7 @@
 			  		
 				  	var i=0,htmlStr;
 				  	for(;i<pics.length;i++){
-						$("#pic_content").append('<img src="http://192.168.1.7:8080/productlist/'+p.product_id+'/'+pics[i]+'" style="width:100%" />');
+						$("#pic_content").append('<img src="http://www.wg5a.com/productlist/'+p.product_id+'/'+pics[i]+'" style="width:100%" />');
 				  	}
 				  	$("#p_name").val(p.product_name);
 				  	$("#p_price").val("单价："+p.col2 +" 元       运费："+p.col3 +" 元"); 
@@ -39,7 +39,7 @@
 			});	
 		
 			function downLoadPics(){
-				window.downloader.downloadFile('http://192.168.1.7:8080/productlist/'+p.product_id+'/', {overwrite: true, pics:p.image_name},   
+				window.downloader.downloadFile('http://www.wg5a.com/productlist/'+p.product_id+'/', {overwrite: true, pics:p.image_name},   
 					function(res) {  
 						$('#popupProgress').popup( "open" );
 						$('#fileName').text(res.newfile);  
